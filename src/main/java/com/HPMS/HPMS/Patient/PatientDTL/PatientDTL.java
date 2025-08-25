@@ -5,63 +5,79 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
+@Table(name="TBL_PATIENT_DTL")
 public class PatientDTL {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Integer id;
 
-    @OneToOne
+    //FK
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PA_ID", nullable = false)
     private PatientM patientM;
 
-    @Column(length = 20)
-    private String moPhoneNumber;
-    @Column(length = 20)
-    private String homePhoneNumber;
-    @Column(length = 20)
-    private String officePhoneNumber;
-    @Column(length = 50)
+    @Column(name = "MO_PHONE_NUM", nullable = false, length = 20)
+    private String mobilePhone;
+
+    @Column(name = "HOME_PHONE_NUM", length = 20)
+    private String homePhone;
+
+    @Column(name = "OFFICE_PHONE_NUM", length = 20)
+    private String officePhone;
+
+    @Column(name = "EMAIL", length = 50)
     private String email;
-    @Column(length = 20)
+
+    @Column(name = "FAX", length = 20)
     private String fax;
 
-    @Column(length = 50)
-    private String guardTel;
-    @Column(length = 50)
-    private String guardRela;
-    @Column(length = 50)
-    private String guardFName;
-    @Column(length = 50)
-    private String guardLName;
-    @Column(length = 50)
-    private String guardMName;
+    @Column(name = "GURAD_TEL", nullable = false, length = 20)
+    private String guardianTel;
 
-    @Column(length = 10)
-    private String curHomePcd;
-    @Column(length = 255)
+    @Column(name = "GURAD_RELA", nullable = false, length = 20)
+    private String guardianRelation;
+
+    @Column(name = "GURAD_F_NAME", nullable = false, length = 50)
+    private String guardianFirstName;
+
+    @Column(name = "GURAD_L_NAME", nullable = false, length = 50)
+    private String guardianLastName;
+
+    @Column(name = "GURAD_M_NAME", length = 50)
+    private String guardianMiddleName;
+
+    @Column(name = "CUR_HOME_PCD", length = 10)
+    private String curHomePCD;
+
+    @Column(name = "CUR_HOME_DEF_ADD", length = 255)
     private String curHomeDefAdd;
-    @Column(length = 255)
+
+    @Column(name = "CUR_HOME_DET_ADD", length = 255)
     private String curHomeDetAdd;
 
-    @Column(length = 10)
-    private String regHomePcd;
-    @Column(length = 255)
+    @Column(name = "REG_HOME_PCD", length = 10)
+    private String regHomePCD;
+
+    @Column(name = "REG_HOME_DEF_ADD", length = 255)
     private String regHomeDefAdd;
-    @Column(length = 255)
+
+    @Column(name = "REG_HOME_DET_ADD", length = 255)
     private String regHomeDetAdd;
 
-    @Column(length = 50)
+    @Column(name = "OCCUPATION", length = 50)
     private String occupation;
 
-    private LocalDateTime lastvistDate;
+    @Column(name = "LASTVISIT_DATE", nullable = false,
+            columnDefinition = "DATETIME DEFAULT NOW()")
+    private java.time.LocalDateTime lastVisitDate;
 
-    @Column(length = 50)
+    @Column(name = "NATN", length = 50)
     private String natn;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "NOTE", columnDefinition = "TEXT")
     private String note;
 }

@@ -1,8 +1,7 @@
 package com.HPMS.HPMS.Patient.PatientM;
 
+
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
-
-
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -14,41 +13,49 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name="TBL_PATIENT_M")
 public class PatientM {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @Column(name = "ID")
     private Integer id;
 
-    @NotNull
-    @Column(length = 50)
-    private String fName;
-    @NotNull
-    @Column(length = 50)
-    private String lName;
-    @Column(length = 50)
-    private String mName;
-    @Column(length = 50)
-    private String passFName;
-    @Column(length = 50)
-    private String passLName;
-    @Column(length = 50)
-    private String passMName;
+    @Column(name = "F_NAME", nullable = false, length = 50)
+    private String firstName;
 
-    @NotNull
-    @Column(length = 50)
+    @Column(name = "L_NAME", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(name = "M_NAME", length = 50)
+    private String middleName;
+
+    @Column(name = "PASS_F_NAME", length = 50)
+    private String passFirstName;
+
+    @Column(name = "PASS_L_NAME", length = 50)
+    private String passLastName;
+
+    @Column(name = "PASS_M_NAME", length = 50)
+    private String passMiddleName;
+
+    @Column(name = "GENDER", nullable = false, length = 1)
     private String gender;
-    @NotNull
-    private Integer dayOfBirth;
-    @NotNull
-    private Integer foreigner;
-    @Column(length = 20)
+
+    @Column(name = "DAY_OF_BIRTH", nullable = false)
+    private Integer dayOfBirth;  // INT(8) → YYYYMMDD 형태
+
+    @Column(name = "FOREIGNER", nullable = false, length=1)
+    private String foreigner;   // 0=내국인, 1=외국인
+
+    @Column(name = "PASSPORT", length = 20)
     private String passport;
-    @NotNull
+
+    @Column(name = "CREATEDATE", nullable = false)
     private LocalDateTime createDate;
 
-    private Integer delStaus;
+    @Column(name = "DEL_STATUS")
+    private Integer delStatus;
 
-    @OneToOne(mappedBy = "patientM", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "patientM", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PatientDTL patientDTL;
 }
