@@ -1,7 +1,9 @@
-package com.HPMS.HPMS.PatientDTL;
+package com.HPMS.HPMS.Patient.PatientH;
 
-import com.HPMS.HPMS.PatientM.PatientM;
+import com.HPMS.HPMS.Patient.PatientM.PatientM;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +12,39 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class PatientDTL {
+public class PatientH {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @OneToOne
     private PatientM patientM;
+
+    @NotNull
+    @Column(length = 50)
+    private String fName;
+    @NotNull
+    @Column(length = 50)
+    private String lName;
+    @Column(length = 50)
+    private String mName;
+    @Column(length = 50)
+    private String passFName;
+    @Column(length = 50)
+    private String passLName;
+    @Column(length = 50)
+    private String passMName;
+
+    @NotNull
+    @Column(length = 50)
+    private String gender;
+    @NotNull
+    private Integer dayOfBirth;
+    @NotNull
+    private Integer foreigner;
+    @Column(length = 20)
+    private String passport;
+    private Integer delStaus;
 
     @Column(length = 20)
     private String moPhoneNumber;

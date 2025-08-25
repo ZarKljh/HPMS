@@ -1,8 +1,11 @@
-package com.HPMS.HPMS.PatientM;
+package com.HPMS.HPMS.Patient.PatientM;
 
-import com.HPMS.HPMS.PatientDTL.PatientDTL;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
+
+
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
