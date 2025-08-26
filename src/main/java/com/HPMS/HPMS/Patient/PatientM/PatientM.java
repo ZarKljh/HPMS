@@ -53,6 +53,9 @@ public class PatientM {
     @Column(name = "CREATEDATE", nullable = false)
     private LocalDateTime createDate;
 
+    @Column(name = "UPDATEDATE", nullable = false)
+    private LocalDateTime updateDate;
+
     @Column(name = "DEL_STATUS")
     private Integer delStatus;
 
