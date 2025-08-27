@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -60,6 +59,6 @@ public class NurseMain {
     @Column(nullable = false, name = "MODIFY_DATE")
     private LocalDateTime modifyDate;
 
-    @OneToOne(mappedBy = "NurseMain", cascade = CascadeType.REMOVE)
-    private List<NurseInformation> nurseInformationList;
+    @OneToOne(mappedBy = "nurseId", cascade = CascadeType.REMOVE)
+    private NurseInformation nurseInformation;
 }

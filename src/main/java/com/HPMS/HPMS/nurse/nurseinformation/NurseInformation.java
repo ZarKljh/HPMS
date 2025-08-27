@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.nurseinformation;
 
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,9 @@ public class NurseInformation {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(nullable = false, name = "NURSE_ID")
-    private Integer nurseId;
+    @ManyToOne
+    @JoinColumn(name = "NURSE_ID")
+    private NurseMain nurseId;
 
     @Column(length = 50, name = "FIRST_NAME")
     private String firstName;

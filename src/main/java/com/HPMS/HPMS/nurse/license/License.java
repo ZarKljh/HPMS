@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.license;
 
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,9 @@ public class License {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(nullable = false, name = "NURSE_ID")
-    private Integer nurseId;
+    @ManyToOne
+    @JoinColumn(name = "NURSE_ID", nullable = false)
+    private NurseMain nurseId;
 
     @Column(length = 250, name = "LI")
     private String li;
