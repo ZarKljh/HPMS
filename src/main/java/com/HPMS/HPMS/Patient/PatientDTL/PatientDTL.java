@@ -41,13 +41,13 @@ public class PatientDTL {
     @Column(name = "GURAD_RELA", nullable = false, length = 20)
     private String guardianRelation;
 
-    @Column(name = "GURAD_F_NAME", nullable = false, length = 50)
+    @Column(name = "GURAD_FIRST_NAME", nullable = false, length = 50)
     private String guardianFirstName;
 
-    @Column(name = "GURAD_L_NAME", nullable = false, length = 50)
+    @Column(name = "GURAD_LAST_NAME", nullable = false, length = 50)
     private String guardianLastName;
 
-    @Column(name = "GURAD_M_NAME", length = 50)
+    @Column(name = "GURAD_MIDDLE_NAME", length = 50)
     private String guardianMiddleName;
 
     @Column(name = "CUR_HOME_PCD", length = 10)

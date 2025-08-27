@@ -20,22 +20,22 @@ public class PatientM {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "F_NAME", nullable = false, length = 50)
+    @Column(name = "FIRST_NAME", nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "L_NAME", nullable = false, length = 50)
+    @Column(name = "LAST_NAME", nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "M_NAME", length = 50)
+    @Column(name = "MIDDLE_NAME", length = 50)
     private String middleName;
 
-    @Column(name = "PASS_F_NAME", length = 50)
+    @Column(name = "PASS_FIRST_NAME", length = 50)
     private String passFirstName;
 
-    @Column(name = "PASS_L_NAME", length = 50)
+    @Column(name = "PASS_LAST_NAME", length = 50)
     private String passLastName;
 
-    @Column(name = "PASS_M_NAME", length = 50)
+    @Column(name = "PASS_MIDDLE_NAME", length = 50)
     private String passMiddleName;
 
     @Column(name = "GENDER", nullable = false, length = 1)
