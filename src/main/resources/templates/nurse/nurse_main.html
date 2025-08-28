@@ -2,17 +2,37 @@
     <thead>
     <tr>
         <th>번호</th>
+        <th>부서</th>
+        <th>직급</th>
         <th>이름</th>
+        <th>성별</th>
+        <th>생년월일</th>
+        <th>입사일</th>
+        <th>상태</th>
+        <th>근무형태</th>
+        <th>작성자</th>
         <th>작성일시</th>
+        <th>수정자</th>
+        <th>수정일시</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="nurseMain, index : ${nurseMainList}">
         <td th:text="${nurseMain.id}"></td>
+        <td th:text="${nurseMain.dept}"></td>
+        <td th:text="${nurseMain.rank}"></td>
         <td>
-            <a th:href="@{|/nurseMain/detail/${nurseMain.id}|}" th:text="${nurseMain.firstName} + ' ' + ${nurseMain.lastName}"></a>
+            <a th:href="@{|/nurse/information/${nurseMain.id}|}" th:text="${nurseMain.firstName} + ' ' + ${nurseMain.middleName} + ' ' + ${nurseMain.lastName}"></a>
         </td>
+        <td th:text="${nurseMain.gender}"></td>
+        <td th:text="${nurseMain.dateOfBirth}"></td>
+        <td th:text="${nurseMain.hireDate}"></td>
+        <td th:text="${nurseMain.sts}"></td>
+        <td th:text="${nurseMain.wt}"></td>
+        <td th:text="${nurseMain.writer}"></td>
         <td th:text="${nurseMain.createDate}"></td>
+        <td th:text="${nurseMain.modifier}"></td>
+        <td th:text="${nurseMain.modifyDate}"></td>
     </tr>
     </tbody>
 </table>
