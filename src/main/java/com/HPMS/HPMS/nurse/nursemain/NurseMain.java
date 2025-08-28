@@ -18,46 +18,46 @@ public class NurseMain {
     private Integer id;
 
     @Column(nullable = false, length = 10, name = "DEPT")
-    private String dept;
+    private String dept; //부서
 
     @Column(nullable = false, length = 4, name = "RANK")
-    private String rank;
+    private String rank; //직급
 
     @Column(nullable = false, length = 50, name = "FIRST_NAME")
-    private String firstName;
+    private String firstName; //이름
 
     @Column(length = 50, name = "LAST_NAME")
-    private String lastName;
+    private String lastName; //성
 
     @Column(length = 50, name = "MIDDLE_NAME")
-    private String middleName;
+    private String middleName; //중간이름
 
     @Column(nullable = false, length = 1, name = "GENDER")
-    private String gender;
+    private String gender; //성별 (F / M)
 
     @Column(nullable = false, name = "DATE_OF_BIRTH")
-    private Integer dateOfBirth;
+    private Integer dateOfBirth; //생일 8자리
 
     @Column(nullable = false, name = "HIREDATE")
-    private Integer hireDate;
+    private Integer hireDate; //입사일
 
     @Column(nullable = false, length = 3, name = "STS")
-    private String sts;
+    private String sts; //상태 (재직중 / 휴직 / 퇴직 등)
 
     @Column(nullable = false, length = 4, name = "WT")
-    private String wt;
+    private String wt; //근무형태 (정규직 / 계약직 / 파트타임 등)
 
     @Column(nullable = false, name = "WRITER")
-    private String writer;
+    private String writer; //작성자
 
     @Column(nullable = false, name = "CREATE_DATE")
-    private LocalDateTime createDate;
+    private LocalDateTime createDate; //작성시간
 
     @Column(nullable = false, name = "MODIFIER")
-    private String modifier;
+    private String modifier; //수정자
 
     @Column(nullable = false, name = "MODIFY_DATE")
-    private LocalDateTime modifyDate;
+    private LocalDateTime modifyDate; //수정시간
 
     @OneToOne(mappedBy = "nurseId", cascade = CascadeType.REMOVE)
     private NurseInformation nurseInformation;
