@@ -11,11 +11,11 @@ import java.util.List;
 public class NurseMainController {
 
     @Autowired
-    private NurseMainRepository nurseMainRepository;
+    private NurseMainService nurseMainService;
 
     @GetMapping("/nurse/list")
     private String list(Model model) {
-        List<NurseMain> nurseMainList = this.nurseMainRepository.findAll();
+        List<NurseMain> nurseMainList = this.nurseMainService.getAll();
         model.addAttribute("nurseMainList", nurseMainList);
         return "nurse/nurse_main";
     }
