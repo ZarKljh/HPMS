@@ -17,7 +17,9 @@
     <tbody>
     <tr th:each="patient : ${patients}">
         <td th:text="${patient.id}"></td>
-        <td th:text="${patient.name}"></td>
+        <td>
+            <a th:href="@{|/patient/detail/${patient.id}|}" th:text="${patient.name}"></a>
+        </td>
         <td th:text="${patient.gender}"></td>
         <td th:text="${#temporals.format(patient.birth,'yyyy-MM-dd')}"></td>
         <td th:text="${patient.foreigner == '1' ? '외국인' : '내국인'}"></td>

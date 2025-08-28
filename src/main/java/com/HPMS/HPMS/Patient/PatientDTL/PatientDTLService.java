@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.Patient.PatientDTL;
 
+import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,8 @@ import java.util.Optional;
 public class PatientDTLService {
     private final PatientDTLRepository patientDTLRepository;
 
-    public PatientDTL getPatientDTLByPatientId(Integer id){
-        Optional<PatientDTL> dtl = this.patientDTLRepository.findById(id);
+    public PatientDTL getPatientDTLByPatientId(PatientM m){
+        Optional<PatientDTL> dtl = this.patientDTLRepository.findByPatientM(m);
         if (dtl.isPresent()) {
             return dtl.get();
         } else {

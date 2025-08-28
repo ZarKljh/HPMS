@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.Patient.PatientDTO;
+package com.HPMS.HPMS.Patient.PatientDTO.PatientListDTO;
 
 import lombok.Getter;
 import lombok.Setter;
