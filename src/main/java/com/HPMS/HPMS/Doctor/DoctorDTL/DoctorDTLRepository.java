@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface DoctorDTLRepository extends JpaRepository<DoctorDTL, Integer> {
-    DoctorDTL findBySubject(String subject);
-    DoctorDTL findBySubjectAndContent(String subject, String content);
-    List<DoctorDTL> findBySubjectLike(String subject);
-    Page<DoctorDTL> findAll(Pageable pageable);
+//    DoctorDTL findBySubject(String subject);
+//    DoctorDTL findBySubjectAndContent(String subject, String content);
+//    List<DoctorDTL> findBySubjectLike(String subject);
+//    Page<DoctorDTL> findAll(Pageable pageable);
 }

@@ -9,9 +9,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class DoctorMService {
-    private final DoctorMRepository doctorMRepository;
-
-    public List<DoctorM> getList(){
-        return DoctorMRepository.findAll();
-    }
+//    private final DoctorMRepository doctorMRepository;
+//
+//    public List<DoctorM> getList(){
+//        return DoctorMRepository.findAll();
+//    }
 }

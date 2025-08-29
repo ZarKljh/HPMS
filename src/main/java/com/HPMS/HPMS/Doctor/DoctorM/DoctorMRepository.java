@@ -10,11 +10,11 @@ import java.util.List;
 
 @Repository
     public interface DoctorMRepository extends JpaRepository<DoctorM, Integer> {
-    DoctorM findBySubject(String subject);
-
-    DoctorM findBySubjectAndContent(String subject, String content);
-
-    List<DoctorM> findBySubjectLike(String subject);
-
-    Page<DoctorM> findAll(Pageable pageable);
+//    DoctorM findBySubject(String subject);
+//
+//    DoctorM findBySubjectAndContent(String subject, String content);
+//
+//    List<DoctorM> findBySubjectLike(String subject);
+//
+//    Page<DoctorM> findAll(Pageable pageable);
 }
