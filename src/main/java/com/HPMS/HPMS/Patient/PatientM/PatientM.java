@@ -3,8 +3,6 @@ package com.HPMS.HPMS.Patient.PatientM;
 
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
 import jakarta.persistence.*;
-
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

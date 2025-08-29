@@ -1,0 +1,111 @@
+CREATE TABLE HOSPITAL (
+	ID INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '테이블 고유값, 자동 증가, 병원 고유 ID',
+	HOSPITAL_GROUP ENUM('GP', 'SH', 'GH') NOT NULL COMMENT '병원 분류: GP(1차), SH(2차), GH(3차), "GP,SH,GH"만 입력 가능',
+   H_NAME VARCHAR(250) NOT NULL COMMENT '병원 이름',
+   H_PCD INT(6) NOT NULL COMMENT '병원 우편번호',
+   DEF_ADD VARCHAR(250) NOT NULL COMMENT '병원 기본주소',
+   DET_ADD VARCHAR(250) COMMENT '병원 상세주소',
+   GDN VARCHAR(12) COMMENT '병원 대표번호',
+   DOCTOR INT(4) COMMENT '근무하는 의사의 수',
+   NURSE INT(4) COMMENT '근무하는 간호사의 수',
+   STS VARCHAR(10) COMMENT '상태(운영중, 폐업 등)',
+   NOTE VARCHAR(250)
+);
+CREATE TABLE MEDICAL_DEPARTMENT (
+   ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '고유 ID',
+   KOREAN_NAME VARCHAR(100) NOT NULL COMMENT '과목명(한글)',
+   CODE VARCHAR(20) NOT NULL COMMENT '과목 코드 (약어)',
+   ENGLISH_NAME VARCHAR(200) NOT NULL COMMENT '과목명(영문)',
+   UNIQUE (KOREAN_NAME, CODE) -- 동일 과목명 + 코드 중복 방지
+);
+INSERT INTO MEDICAL_DEPARTMENT (KOREAN_NAME, CODE, ENGLISH_NAME) VALUES
+('마취통증의학과', 'AN', 'Anesthesiology'),
+('치과', 'DEN', 'Dentistry'),
+('피부과', 'DER', 'Dermatology'),
+('응급의학과', 'EM', 'Emergency Medicine'),
+('이비인후과', 'ENT', 'Otorhinolaryngology (ENT: Ear, Nose & Throat)'),
+('안과', 'OPH', 'Ophthalmology'),
+('가정의학과', 'FM', 'Family Medicine'),
+('외과', 'GS', 'General Surgery'),
+('내과', 'IM', 'Internal Medicine'),
+('진단검사의학과', 'LM', 'Laboratory Medicine'),
+('진단검사의학과', 'CP', 'Clinical Pathology'),
+('핵의학과', 'NM', 'Nuclear Medicine'),
+('신경과', 'NR', 'Neurology'),
+('신경과', 'NU', 'Neurology'),
+('신경외과', 'NS', 'Neurosurgery'),
+('산부인과', 'OBGY', 'Obstetrics & Gynecology'),
+('직업환경의학과', 'OEM', 'Occupational & Environmental Medicine'),
+('정형외과', 'OS', 'Orthopedic Surgery'),
+('병리과', 'PA', 'Pathology'),
+('병리과', 'PATH', 'Pathology'),
+('소아청소년과', 'PED', 'Pediatrics'),
+('예방의학과', 'PM', 'Preventive Medicine'),
+('성형외과', 'PS', 'Plastic Surgery'),
+('정신건강의학과', 'PSI', 'Psychiatry'),
+('방사선과', 'RD', 'Radiology'),
+('영상의학과', 'RAD', 'Diagnostic Radiology / Imaging Medicine'),
+('재활의학과', 'RM', 'Rehabilitation Medicine / Physical Medicine & Rehabilitation'),
+('방사선종양학과', 'RO', 'Radiation Oncology'),
+('결핵과', 'TB', 'Tuberculosis Medicine'),
+('흉부외과', 'TS', 'Thoracic & Cardiovascular Surgery'),
+('비뇨기과', 'UR', 'Urology'),
+('비뇨의학과', 'UR', 'Urology');
+CREATE TABLE HOSPITAL_ADMINISTRATION_DEPT (
+   ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '고유 ID',
+   CODE VARCHAR(10) NOT NULL UNIQUE COMMENT '부서 코드',
+   DISPLAY_NAME VARCHAR(100) NOT NULL COMMENT '부서 국문명',
+   ENG_NAME VARCHAR(200) NOT NULL COMMENT '부서 영문명',
+   CATEGORY VARCHAR(50) DEFAULT '병원 행정' COMMENT '구분 카테고리'
+);
+INSERT INTO HOSPITAL_ADMINISTRATION_DEPT (CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('PAD', '원무팀', 'Patient Administration Department'),
+('GAD', '총무팀', 'General Affairs Department'),
+('PLD', '구매물류팀', 'Procurement & Logistics Department'),
+('SPBD', '기획예산팀', 'Strategic Planning & Budget Department'),
+('HRD', '인사팀', 'Human Resources Department'),
+('METD', '교육수련팀', 'Medical Education & Training Department'),
+('HIMD', '의무기록팀', 'Health Information Management Department');
+CREATE TABLE HOSPITAL_ADMINISTRATION_TASK (
+   ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '고유 ID',
+   DEPT_CODE VARCHAR(10) NOT NULL COMMENT '부서 코드 (FK)',
+   CODE VARCHAR(10) NOT NULL COMMENT '업무 코드',
+   DISPLAY_NAME VARCHAR(100) NOT NULL COMMENT '업무 국문명',
+   ENG_NAME VARCHAR(200) NOT NULL COMMENT '업무 영문명',
+   FOREIGN KEY (DEPT_CODE) REFERENCES HOSPITAL_ADMINISTRATION_DEPT(CODE)
+);
+-- PAD (원무팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('PAD', 'OPM', '외래 원무 관리', 'Outpatient Management'),
+('PAD', 'IDA', '입, 퇴원 원무 관리', 'Inpatient & Discharge Administration'),
+('PAD', 'MBM', '진료비관리', 'Medical Billing Management'),
+('PAD', 'MCRS', '진료비심사청구', 'Medical Claims Review & Submission'),
+('PAD', 'PCSM', '고객관리', 'Patient & Customer Service Management');
+-- GAD (총무팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('GAD', 'GAM', '병원총무관리', 'General Affairs Management'),
+('GAD', 'FMG', '병원시설관리', 'Facility Management'),
+('GAD', 'CAS', '병원 출납·결산', 'Cashiering & Settlement');
+-- PLD (구매물류팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('PLD', 'PMT', '병원 구매 관리', 'Procurement Management');
+-- SPBD (기획예산팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('SPBD', 'SP', '병원 경영기획', 'Strategic Planning'),
+('SPBD', 'FMG', '병원 재무 관리', 'Financial Management'),
+('SPBD', 'TM', '병원세무관리', 'Tax Management'),
+('SPBD', 'PE', '병원 경영평가', 'Performance Evaluation'),
+('SPBD', 'EBS', '원장, 이사회 지원', 'Executive & Board Support'),
+('SPBD', 'CES', '사장(경영진) 지원', 'CEO/Executive Support');
+-- HRD (인사팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('HRD', 'LRM', '병원 노무 관리', 'Labor Relations Management'),
+('HRD', 'PRM', '병원 급여 관리', 'Payroll Management'),
+('HRD', 'HRM', '병원 인적 자원 관리', 'Human Resources Management');
+-- METD (교육수련팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('METD', 'RSM', '병원 연구 지원 관리', 'Research Support Management'),
+('METD', 'MTP', '의료진 및 직원 교육 프로그램 운영', 'Medical Staff & Employee Training Programs');
+-- HIMD (의무기록팀)
+INSERT INTO HOSPITAL_ADMINISTRATION_TASK (DEPT_CODE, CODE, DISPLAY_NAME, ENG_NAME) VALUES
+('HIMD', 'HIM', '환자 진료 기록 관리', 'Health Information Management');
