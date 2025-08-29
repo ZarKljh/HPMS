@@ -22,7 +22,7 @@
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>
-                <a th:href="@{|/nurse/information/${nurseMain.id}|}" th:text="${nurseMain.firstName} + ' ' + ${nurseMain.middleName} + ' ' + ${nurseMain.lastName}"></a>
+                <a th:href="@{|/nurse/information/${nurseMain.id}|}" th:text="|${nurseMain?.firstName} ${nurseMain?.middleName} ${nurseMain?.lastName}|"></a>
             </td>
             <td th:text="${nurseMain.gender}"></td>
             <td th:text="${nurseMain.dateOfBirth}"></td>

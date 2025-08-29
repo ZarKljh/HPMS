@@ -64,7 +64,7 @@ CREATE TABLE LICENSE (
 	);
 
 
--- nursemain -> 테스트 정보
+-- NURSE_MAIN -> 테스트 정보
 INSERT INTO NURSE_MAIN
 (DEPT, RANK, FIRST_NAME, LAST_NAME, MIDDLE_NAME, GENDER, DATE_OF_BIRTH, HIREDATE, STS, WT, WRITER, CREATE_DATE, MODIFIER, MODIFY_DATE)
 VALUES
@@ -78,3 +78,18 @@ VALUES
 ('PAD', 'RN', 'Nari', 'Han', 'E', 'F', 19940228, 20210301, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
 ('GAD', 'SN', 'Joon', 'Lim', 'P', 'M', 19900130, 20200715, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
 ('PLD', 'RN', 'Hana', 'Cho', 'Q', 'F', 19920725, 20201210, '재직', '파트타임', 'admin', NOW(), NULL, NOW());
+
+-- NURSE_INFORMATION -> 테스트 정보
+INSERT INTO NURSE_INFORMATION
+(NURSE_ID, FIRST_NAME, LAST_NAME, MIDDLE_NAME, TEL, EMGC_CNTC, EMGC_F_NAME, EMGC_L_NAME, EMGC_M_NAME, EMGC_REL, EMGC_NOTE, EMAIL, PCD, DEF_ADD, DET_ADD, RN_NO, EDBC, GRAD_DATE, FL, MS, NATN, DSS, CARR, PICTURE, NOTE)
+VALUES
+(1, 'Jisun', 'Kim', 'A', '010-1111-0001', '010-9999-0001', 'Min', 'Kim', 'B', 'Father', 'N/A', 'jisun1@test.com', 123456, 'Seoul', 'Gangnam', 'RN001', 'Bachelor', 20180101, 'English', 'N', 'Korean', 'N', 12, 'pic1.jpg', 'Test note 1'),
+(2, 'Hana', 'Lee', 'C', '010-1111-0002', '010-9999-0002', 'Jun', 'Lee', 'D', 'Mother', 'N/A', 'hana2@test.com', 123457, 'Seoul', 'Jongno', 'RN002', 'Master', 20170201, 'Japanese', 'N', 'Korean', 'N', 24, 'pic2.jpg', 'Test note 2'),
+(3, 'Minho', 'Park', 'E', '010-1111-0003', '010-9999-0003', 'Soo', 'Park', 'F', 'Father', 'N/A', 'minho3@test.com', 123458, 'Busan', 'Haeundae', 'RN003', 'Bachelor', 20190315, 'Chinese', 'Y', 'Korean', 'N', 36, 'pic3.jpg', 'Test note 3'),
+(4, 'Jiwon', 'Choi', 'G', '010-1111-0004', '010-9999-0004', 'Hye', 'Choi', 'H', 'Mother', 'N/A', 'jiwon4@test.com', 123459, 'Incheon', 'Bupyeong', 'RN004', 'Bachelor', 20180420, 'French', 'N', 'Korean', 'Y', 48, 'pic4.jpg', 'Test note 4'),
+(5, 'Soojin', 'Jung', 'I', '010-1111-0005', '010-9999-0005', 'Dong', 'Jung', 'J', 'Father', 'N/A', 'soojin5@test.com', 123460, 'Daegu', 'Suseong', 'RN005', 'Master', 20190110, 'German', 'N', 'Korean', 'N', 60, 'pic5.jpg', 'Test note 5'),
+(6, 'Hyun', 'Yoon', 'K', '010-1111-0006', '010-9999-0006', 'Eun', 'Yoon', 'L', 'Mother', 'N/A', 'hyun6@test.com', 123461, 'Daejeon', 'Yuseong', 'RN006', 'Bachelor', 20170505, 'Spanish', 'Y', 'Korean', 'N', 72, 'pic6.jpg', 'Test note 6'),
+(7, 'Taehyung', 'Kang', 'M', '010-1111-0007', '010-9999-0007', 'Ji', 'Kang', 'N', 'Father', 'N/A', 'taehyung7@test.com', 123462, 'Gwangju', 'Buk', 'RN007', 'Bachelor', 20200101, 'English', 'N', 'Korean', 'N', 84, 'pic7.jpg', 'Test note 7'),
+(8, 'Nari', 'Shin', 'O', '010-1111-0008', '010-9999-0008', 'Hoon', 'Shin', 'P', 'Mother', 'N/A', 'nari8@test.com', 123463, 'Suwon', 'Gwonseon', 'RN008', 'Master', 20180606, 'Japanese', 'N', 'Korean', 'N', 96, 'pic8.jpg', 'Test note 8'),
+(9, 'Dongho', 'Lim', 'Q', '010-1111-0009', '010-9999-0009', 'Sang', 'Lim', 'R', 'Father', 'N/A', 'dongho9@test.com', 123464, 'Ulsan', 'Nam', 'RN009', 'Bachelor', 20190303, 'Chinese', 'Y', 'Korean', 'N', 108, 'pic9.jpg', 'Test note 9'),
+(10, 'Yuna', 'Han', 'S', '010-1111-0010', '010-9999-0010', 'Ji', 'Han', 'T', 'Mother', 'N/A', 'yuna10@test.com', 123465, 'Jeju', 'Jeju-si', 'RN010', 'Master', 20190202, 'French', 'N', 'Korean', 'N', 120, 'pic10.jpg', 'Test note 10');
