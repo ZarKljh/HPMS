@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "TBL_DOCTOR_DTL")
 public class DoctorDTL {
@@ -193,12 +191,12 @@ public class DoctorDTL {
     private String note;
 
     /** 생성/수정 자동 세팅 */
-    @PrePersist
+    @PrePersist //DB에 INSERT 직전에 메서드 실행
     protected void onCreate() {
         if (this.createDate == null) this.createDate = LocalDateTime.now();
     }
 
-    @PreUpdate
+    @PreUpdate  //DB에 UPDATE 직전에 메서드 실행
     protected void onUpdate() {
         this.modifyDate = LocalDateTime.now();
     }
