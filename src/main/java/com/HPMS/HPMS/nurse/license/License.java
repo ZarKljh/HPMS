@@ -17,20 +17,20 @@ public class License {
 
     @ManyToOne
     @JoinColumn(name = "NURSE_ID", nullable = false)
-    private NurseMain nurseId;
+    private NurseMain nurseId; //간호사 번호
 
     @Column(length = 250, name = "LI")
-    private String li;
+    private String li; //자격증 이름
 
     @Column(length = 20, name = "LICENSE_NO")
-    private String licenseNo;
+    private String licenseNo; //자격증 번호
 
     @Column(length = 8, name = "ISSUE_DATE")
-    private String issueDate;
+    private String issueDate; //발급날짜
 
     @Column(length = 8, name = "EXPIRY_DATE")
-    private String expiryDate;
+    private String expiryDate; //유효날짜
 
     @Column(length = 250, name = "NOTE")
-    private String note;
+    private String note; //비고
 }

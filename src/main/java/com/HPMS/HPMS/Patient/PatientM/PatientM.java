@@ -3,8 +3,6 @@ package com.HPMS.HPMS.Patient.PatientM;
 
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
 import jakarta.persistence.*;
-
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,9 +50,6 @@ public class PatientM {
 
     @Column(name = "CREATEDATE", nullable = false)
     private LocalDateTime createDate;
-
-    @Column(name = "UPDATEDATE", nullable = false)
-    private LocalDateTime updateDate;
 
     @Column(name = "DEL_STATUS")
     private Integer delStatus;
