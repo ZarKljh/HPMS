@@ -16,7 +16,7 @@ import java.util.List;
 public class NurseMainController {
 
     @Autowired
-    private NurseMainService nurseMainService;
+    private final NurseMainService nurseMainService;
 
     @GetMapping("")
     private String list(Model model) {

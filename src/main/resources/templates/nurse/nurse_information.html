@@ -1,13 +1,13 @@
-<form th:action="@{|/nurse/information/${nurseInformation.nurseId}|}" method="post">
+<form th:action="@{|/nurse/information/${nurseInformation.nurseMain.id}|}" method="post">
     <h1 th:text="|${nurseMain.firstName} ${nurseMain.lastName}|"></h1>
     <img th:src="${nurseInformation.picture}" alt="nurse Image"/>
     <div class="nursemain">
-        <p>이름</p><span th:text="|${nurseMain.firstName} ${nurseMain.middleName} ${nurseMain.lastName}|"></span>
+        <p>성함</p><span th:text="|${nurseMain.firstName} ${nurseMain.middleName} ${nurseMain.lastName}|"></span>
         <p>부서</p><span th:text="${nurseMain.dept}"></span>
         <p>직급</p><span th:text="${nurseMain.rank}"></span>
         <p>성별</p><span th:text="${nurseMain.gender}"></span>
-        <p>생년월일</p><span th:text="${#dates.format(nurseMain.dateOfBirth, 'yyyy-MM-dd')}"></span>
-        <p>입사일</p><span th:text="${#dates.format(nurseMain.hireDate, 'yyyy-MM-dd')}"></span>
+        <p>생년월일</p><span th:text="${nurseMain.dateOfBirth != null ? #dates.format(nurseMain.dateOfBirth, 'yyyy-MM-dd')}"></span>
+        <p>입사일</p><span th:text="${nurseMain.hireDate != null ? #dates.format(nurseMain.hireDate, 'yyyy-MM-dd')}"></span>
         <p>상태</p><span th:text="${nurseMain.sts}"></span>
         <p>근무형태</p><span th:text="${nurseMain.wt}"></span>
         <p>작성자</p><span th:text="${nurseMain.writer}"></span>
@@ -17,14 +17,10 @@
     </div>
 
     <div class="nurseinformation">
-        <p>서브 이름</p><span th:text="${nurseInformation.firstName}"></span> <!--서브 이름-->
-        <p>서브 성</p><span th:text="${nurseInformation.lastName}"></span> <!--서브 성-->
-        <p>서브 중간이름</p><span th:text="${nurseInformation.middleName}"></span> <!--서브 중간이름-->
+        <p>서브 성함</p><span th:text="|${nurseInformation.firstName} ${nurseInformation.middleName} ${nurseInformation.lastName}|"></span>
         <p>전화번호</p><span th:text="${nurseInformation.tel}"></span>
         <p>비상연락처</p><span th:text="${nurseInformation.emgcCntc}"></span>
-        <p>비상연락처 주인의 이름</p><span th:text="${nurseInformation.emgcFName}"></span>
-        <p>비상연락처 주인의 성</p><span th:text="${nurseInformation.emgcLName}"></span>
-        <p>비상연락처 주인의 중간이름</p><span th:text="${nurseInformation.emgcMName}"></span>
+        <p>비상연락처 주인</p><span th:text="|${nurseInformation.emgcFName} ${nurseInformation.emgcMName} ${nurseInformation.emgcLName}|"></span>
         <p>비상연락처 주인과의 관계</p><span th:text="${nurseInformation.emgcRel}"></span>
         <p>비상연락처 비고</p><span th:text="${nurseInformation.emgcNote}"></span>
         <p>이메일</p><span th:text="${nurseInformation.email}"></span>
@@ -33,7 +29,7 @@
         <p>상세주소</p><span th:text="${nurseInformation.detAdd}"></span>
         <p>간호사 자격증 번호</p><span th:text="${nurseInformation.rnNo}"></span>
         <p>최종학력</p><span th:text="${nurseInformation.edbc}"></span>
-        <p>졸업날짜</p><span th:text="${#dates.format(nurseInformation.gradDate, 'yyyy-MM-dd')}"></span>
+        <p>졸업날짜</p><span th:text="${${nurseInformation.gradDate != null ? #dates.format(nurseInformation.gradDate, 'yyyy-MM-dd') : ''}""></span>
         <p>외국어</p><span th:text="${nurseInformation.fl}"></span>
         <p>병역</p><span th:text="${nurseInformation.ms}"></span>
         <p>국적</p><span th:text="${nurseInformation.natn}"></span>
