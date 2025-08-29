@@ -152,7 +152,7 @@ class HpmsApplicationTests {
 		i.setCarr("30개월");
 		i.setPicture("https://cdn.woodkorea.co.kr/news/photo/202503/84085_96462_4115.png");
 		i.setNote("");
-		i.setNurseId(n);
+		i.setNurseMain(n);
 		this.nurseInformationRepository.save(i);
 	}
 
@@ -161,7 +161,7 @@ class HpmsApplicationTests {
 		Optional<NurseInformation> on = this.nurseInformationRepository.findById(1);
 		assertTrue(on.isPresent());
 		NurseInformation n = on.get();
-		assertEquals(2, n.getNurseId().getId());
+		assertEquals(2, n.getNurseMain().getId());
 	}
 
 	@Transactional
@@ -174,6 +174,6 @@ class HpmsApplicationTests {
 		NurseInformation nurseInformation = n.getNurseInformation();
 
 		assertEquals(1, nurseInformation.getId());
-		assertEquals(2, nurseInformation.getNurseId().getId());
+		assertEquals(2, nurseInformation.getNurseMain().getId());
 	}
 }

@@ -36,7 +36,7 @@ public class NurseMain {
     private String gender; //성별 (F / M)
 
     @Column(nullable = false, name = "DATE_OF_BIRTH")
-    private Integer dateOfBirth; //생일 8자리
+    private Integer dateOfBirth; //생년월일 8자리
 
     @Column(nullable = false, name = "HIREDATE")
     private Integer hireDate; //입사일
@@ -59,6 +59,6 @@ public class NurseMain {
     @Column(nullable = false, name = "MODIFY_DATE")
     private LocalDateTime modifyDate; //수정시간
 
-    @OneToOne(mappedBy = "nurseId", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "nurseMain", cascade = CascadeType.ALL)
     private NurseInformation nurseInformation;
 }

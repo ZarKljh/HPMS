@@ -16,9 +16,9 @@ public class NurseInformation {
     @Column(name = "ID")
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "NURSE_ID")
-    private NurseMain nurseId; //간호사 번호
+    private NurseMain nurseMain; //간호사 번호
 
     @Column(length = 50, name = "FIRST_NAME")
     private String firstName; //서브 이름
@@ -45,7 +45,7 @@ public class NurseInformation {
     private String emgcMName; //비상연락처 주인의 중간이름
 
     @Column(length = 10, name = "EMGC_REL")
-    private String EmgcRel; //비상연락처 주인과의 관계 (부 / 모 / 친척 등)
+    private String emgcRel; //비상연락처 주인과의 관계 (부 / 모 / 친척 등)
 
     @Column(length = 250, name = "EMGC_NOTE")
     private String emgcNote; // 비상연락처 비고
