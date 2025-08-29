@@ -44,7 +44,7 @@ public class PatientDTOService {
             dto.setGender(m.getGender());
             dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
             dto.setForeigner(m.getForeigner());
-            dto.setMobilePhone(dtl.getMobilePhone());
+            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
             dto.setGuardianTel(dtl.getGuardianTel());
             dto.setLastVisitDate(dtl.getLastVisitDate());
             dto.setCreateDate(m.getCreateDate());
@@ -80,15 +80,15 @@ public class PatientDTOService {
         detailDTO.setPassName(m.getPassLastName() + " " + m.getPassFirstName());
         detailDTO.setMiddleName(m.getPassMiddleName());
 
-        detailDTO.setMobilePhone(dtl.getMobilePhone());
+        detailDTO.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
         detailDTO.setHomePhone(dtl.getHomePhone());
-        detailDTO.setOfficePhone(dtl.getOfficePhone());
+        detailDTO.setOfficePhone(formatPhoneNumber(dtl.getOfficePhone()));
         detailDTO.setEmail(dtl.getEmail());
-        detailDTO.setFax(dtl.getFax());
+        detailDTO.setFax(formatPhoneNumber(dtl.getFax()));
 
         detailDTO.setGuardianName(dtl.getGuardianLastName() + " " + dtl.getGuardianFirstName());
         detailDTO.setGuardianMiddleName(dtl.getGuardianMiddleName());
-        detailDTO.setGuardianTel(dtl.getGuardianTel());
+        detailDTO.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
         detailDTO.setGuardianRelation(dtl.getGuardianRelation());
 
         detailDTO.setHomePcd(dtl.getCurHomePCD());
@@ -115,5 +115,66 @@ public class PatientDTOService {
         String birthDateString = String.valueOf(dayOfbirth);
 
         return LocalDate.parse(birthDateString, birthFormatter);
+    }
+
+    /**
+     * 전화번호를 포맷팅하는 메소드
+     * @param phoneNumber DB에서 가져온 원본 전화번호 (숫자 문자열, 0으로 시작)
+     * @return 하이픈(-)이 포함된 전화번호 문자열
+     */
+    public static String formatPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.length() < 4) {
+            return phoneNumber; // 잘못된 데이터는 그대로 반환
+        }
+
+        // 마지막 4자리 분리
+        String lastFour = phoneNumber.substring(phoneNumber.length() - 4);
+        String remain = phoneNumber.substring(0, phoneNumber.length() - 4);
+
+        int remainLength = remain.length();
+        String formatted = null;
+
+        switch (remainLength) {
+            case 5:
+                // xx-xxx-xxxx
+                formatted = remain.substring(0, 2) + "-" +
+                        remain.substring(2) + "-" +
+                        lastFour;
+                break;
+
+            case 6:
+                // xx-xxxx-xxxx
+                if (remain.startsWith("02")) {
+                    // 02-xxxx-xxxx
+                    formatted = remain.substring(0, 2) + "-" +
+                            remain.substring(2) + "-" +
+                            lastFour;
+                } else {
+                    // xxx-xxx-xxxx
+                    formatted = remain.substring(0, 3) + "-" +
+                            remain.substring(3) + "-" +
+                            lastFour;
+                }
+                break;
+
+            case 7:
+                // xxx-xxxx-xxxx
+                formatted = remain.substring(0, 3) + "-" +
+                        remain.substring(3) + "-" +
+                        lastFour;
+                break;
+
+            case 8:
+                // xxxx-xxxx-xxxx
+                formatted = remain.substring(0, 4) + "-" +
+                        remain.substring(4) + "-" +
+                        lastFour;
+                break;
+
+            default:
+                // 규칙에 없는 경우는 그대로 반환
+                formatted = phoneNumber;
+        }
+        return formatted;
     }
 }

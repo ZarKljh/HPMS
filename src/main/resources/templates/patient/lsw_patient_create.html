@@ -1,0 +1,151 @@
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<h2>신규 환자 등록</h2>
+<form th:action="@{/patient/create}" th:object="${patientForm}" method="post">
+    <div class="patient-info">
+
+        <!-- 인적사항 -->
+        <div class="group-personal">
+            <div>
+                <label>생년월일</label>
+                <input type="date" th:field="*{birth}" required>
+            </div>
+            <div>
+                <label>성별</label>
+                <select th:field="*{gender}" required>
+                    <option value="">선택하세요</option>
+                    <option value="M">남</option>
+                    <option value="F">여</option>
+                    <option value="X">그외</option>
+                </select>
+            </div>
+            <div>
+                <label>내/외국인</label>
+                <select th:field="*{foreigner}">
+                    <option value="0">내국인</option>
+                    <option value="1">외국인</option>
+                </select>
+            </div>
+            <div>
+                <label>성명</label>
+                <label>성</label>
+                <input type="text" th:field="*{lastName}" required>
+                <label>이름</label>
+                <input type="text" th:field="*{firstName}" required>
+                <label>중간이름</label>
+                <input type="text" th:field="*{middleName}">
+            </div>
+            <div>
+                <label>여권번호</label>
+                <input type="text" th:field="*{passport}">
+            </div>
+            <div>
+                <label>여권성명</label>
+                <label>성</label>
+                <input type="text" th:field="*{passLastName}" required>
+                <label>이름</label>
+                <input type="text" th:field="*{passFirstName}" required>
+                <label>중간이름</label>
+                <input type="text" th:field="*{passMiddleName}">
+            </div>
+        </div>
+
+        <!-- 연락처 -->
+        <div class="group-contact">
+            <div>
+                <label>MOBILE</label>
+                <input type="text" th:field="*{mobilePhone}" required>
+            </div>
+            <div>
+                <label>HOME</label>
+                <input type="text" th:field="*{homePhone}">
+            </div>
+            <div>
+                <label>OFFICE</label>
+                <input type="text" th:field="*{officePhone}">
+            </div>
+            <div>
+                <label>EMAIL</label>
+                <input type="email" th:field="*{email}">
+            </div>
+            <div>
+                <label>FAX</label>
+                <input type="text" th:field="*{fax}">
+            </div>
+        </div>
+
+        <!-- 보호자 정보 -->
+        <div class="group-guardian">
+            <div>
+                <label>보호자 성명</label>
+                <input type="text" th:field="*{guardianName}">
+            </div>
+            <div>
+                <label>보호자 연락처</label>
+                <input type="text" th:field="*{guardianTel}">
+            </div>
+            <div>
+                <label>보호자 관계</label>
+                <input type="text" th:field="*{guardianRelation}">
+            </div>
+        </div>
+
+        <!-- 주소 -->
+        <div class="group-address">
+            <div>
+                <label>실거주지</label>
+                <div>
+                    <label>우편번호</label>
+                    <input type="text" th:field="*{homePcd}">
+                </div>
+                <div>
+                    <label>기본주소</label>
+                    <input type="text" th:field="*{homeDefAdd}">
+                </div>
+                <div>
+                    <label>상세주소</label>
+                    <input type="text" th:field="*{homeDetAdd}">
+                </div>
+            </div>
+
+            <div>
+                <label>등록주소</label>
+                <div>
+                    <label>등록주소(우편번호)</label>
+                    <input type="text" th:field="*{regPcd}">
+                </div>
+                <div>
+                    <label>등록주소(기본주소)</label>
+                    <input type="text" th:field="*{regDefAdd}">
+                </div>
+                <div>
+                    <label>등록주소(상세주소)</label>
+                    <input type="text" th:field="*{regDetAdd}">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 기타 -->
+        <div class="group-extra">
+            <div>
+                <label>직업</label>
+                <input type="text" th:field="*{occupation}">
+            </div>
+            <div>
+                <label>국적</label>
+                <input type="text" th:field="*{natn}">
+            </div>
+            <div>
+                <label>특이사항</label>
+                <textarea th:field="*{note}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">등록하기</button>
+            <a th:href="@{/patient/list}">취소</a>
+        </div>
+
+    </div>
+</form>
+</html>

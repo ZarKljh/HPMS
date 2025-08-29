@@ -5,12 +5,13 @@ import com.HPMS.HPMS.Patient.PatientDTO.PatientDetailDTO.PatientDetailDTO;
 import com.HPMS.HPMS.Patient.PatientDTO.PatientListDTO.PatientListDTO;
 import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import com.HPMS.HPMS.Patient.PatientM.PatientMRepository;
+import com.HPMS.HPMS.Patient.patientForm.PatientCreateForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +46,20 @@ public class PatientController {
         PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         model.addAttribute("detailDTO", detailDTO);
         return "patient/lsw_patient_detail";
+    }
+
+    @GetMapping("/patient/create")
+    public String patientCreate(){
+        return "lse_patient_create";
+    }
+
+    @PostMapping("/patient/create")
+    public String questionCreate(@Valid PatientCreateForm patientCreateForm, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "lse_patient_create";
+        }
+        // TODO 질문을 저장한다.
+        return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
     }
 
 

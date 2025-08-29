@@ -56,5 +56,8 @@
     <div><strong>특이사항</strong> <span th:text="${detailDTO.note}"></span></div>
   </div>
 
+  <a th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+
+
 </div>
 </html>
