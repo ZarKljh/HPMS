@@ -40,6 +40,7 @@ CREATE TABLE TBL_PATIENT_DTL (
     CONSTRAINT FK_PATIENT FOREIGN KEY (PA_ID) REFERENCES TBL_PATIENT_M(ID)
 );
 
+
 CREATE TABLE TBL_PATIENT_H (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     PA_ID INT NOT NULL,
@@ -78,3 +79,32 @@ CREATE TABLE TBL_PATIENT_H (
     NOTE TEXT,
     CONSTRAINT FK_PATIENT_H FOREIGN KEY (PA_ID) REFERENCES TBL_PATIENT_M(ID)
 );
+
+
+
+INSERT INTO TBL_PATIENT_M (FIRST_NAME, LAST_NAME, MIDDLE_NAME, PASS_FIRST_NAME, PASS_LAST_NAME, PASS_MIDDLE_NAME, GENDER, DAY_OF_BIRTH, FOREIGNER, PASSPORT)
+VALUES
+('우진', '김', NULL, NULL, NULL, NULL, 'M', 19890115, 'N', NULL),
+('수진', '박', NULL, NULL, NULL, NULL, 'F', 19920308, 'N', NULL),
+('민호', '이', NULL, NULL, NULL, NULL, 'M', 19851123, 'N', NULL),
+('하나', '최', NULL, NULL, NULL, NULL, 'F', 20000417, 'N', NULL),
+('지훈', '정', NULL, NULL, NULL, NULL, 'M', 19791225, 'N', NULL),
+('에밀리', '브라운', NULL, 'Emily', 'Brown', NULL, 'F', 19950630, 'Y', 'P1234567'),
+('마이클', '스미스', NULL, 'Michael', 'Smith', NULL, 'M', 19880412, 'Y', 'M7654321'),
+('대현', '조', NULL, NULL, NULL, NULL, 'M', 19911211, 'N', NULL),
+('사라', '임', NULL, 'Sarah', 'Lim', NULL, 'F', 19870521, 'Y', 'S1112223'),
+('유나', '강', NULL, NULL, NULL, NULL, 'F', 20020105, 'N', NULL),
+('다니엘', '김', NULL, 'Daniel', 'Kim', NULL, 'M', 19991022, 'Y', 'D9988776'),
+('올리비아', '테일러', NULL, 'Olivia', 'Taylor', NULL, 'F', 19930814, 'Y', 'O9876543'),
+('이선', '윌슨', NULL, 'Ethan', 'Wilson', NULL, 'M', 19830603, 'Y', 'E5432198'),
+('상우', '한', NULL, NULL, NULL, NULL, 'M', 19951227, 'N', NULL),
+('미나', '신', NULL, NULL, NULL, NULL, 'F', 19970202, 'N', NULL),
+('크리스', '존슨', NULL, 'Chris', 'Johnson', NULL, 'M', 19800119, 'Y', 'C3344556'),
+('소피아', '앤더슨', NULL, 'Sophia', 'Anderson', NULL, 'F', 19981108, 'Y', 'S7788990'),
+('현우', '장', NULL, NULL, NULL, NULL, 'M', 19860405, 'N', NULL),
+('아라', '문', NULL, NULL, NULL, NULL, 'F', 19940516, 'N', NULL),
+('루카스', '마르티네즈', NULL, 'Lucas', 'Martinez', NULL, 'M', 19921129, 'Y', 'L1122334');
+
+
+select * from TBL_PATIENT_M;
+
