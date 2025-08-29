@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)   // ✅ 추가
+@AllArgsConstructor
 @Entity
 @Table(name = "TBL_DOCTOR_M")
 public class DoctorM {
