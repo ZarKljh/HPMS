@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NurseInformationService {
 
-    private NurseInformationRepository nurseInformationRepository;
+    private final NurseInformationRepository nurseInformationRepository;
 
     public NurseInformation create (NurseMain nurseMain, String firstName, String lastName, String middleName, String tel, String emgcCntc, String emgcFName, String emgcLName, String emgcMName, String emgcRel, String emgcNote, String email, Integer pcd, String defAdd, String detAdd, String rnNo, String edbc, Integer gradDate, String fl, String ms, String natn, String dss, String carr, String picture, String note) {
         NurseInformation nurseInformation = new NurseInformation();
@@ -41,7 +41,7 @@ public class NurseInformationService {
     }
 
     public NurseInformation findByNurseMainId(Integer id) {
-        return nurseInformationRepository.findByNurseMain_Id(id)
+        return nurseInformationRepository.findByNurseMainId(id)
                 .orElse(null);
     }
 }

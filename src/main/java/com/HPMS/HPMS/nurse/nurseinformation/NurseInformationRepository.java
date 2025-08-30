@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface NurseInformationRepository extends JpaRepository<NurseInformation ,Integer> {
-    Optional<NurseInformation> findByNurseMain_Id(Integer nurseId);
+    Optional<NurseInformation> findByNurseMainId(Integer nurseId);
 }
