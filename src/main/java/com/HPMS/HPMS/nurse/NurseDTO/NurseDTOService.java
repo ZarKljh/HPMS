@@ -140,4 +140,10 @@ public class NurseDTOService {
         if (str == null || str.isEmpty()) return null;
         return Integer.parseInt(str.replace("-", "")); // "1989-03-15" → 19890315
     }
+
+    public void delete(NurseDTO nurseDTO) {
+        NurseMain nurseMain = nurseMainRepository.findById(nurseDTO.getNurseMain().getId())
+                .orElseThrow(() -> new RuntimeException("삭제할 간호사가 없습니다."));
+        nurseMainRepository.delete(nurseMain);
+    }
 }

@@ -1,9 +1,12 @@
 package com.HPMS.HPMS.nurse.NurseDTO;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RequestMapping("/nurse")
 @Controller
@@ -38,5 +41,16 @@ public class NurseDTOController {
         NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
         model.addAttribute("nurseDTO", nurseDTO);
         return "nurse/nurse_modify_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String nurseDelete(Principal principal, @PathVariable("id") Integer id) {
+        NurseDTO nurseDTO = this.nurseDTOService.getNurseDTO(id);
+//        if (!nurseDTO.getNurseMain().getFirstName().equals(principal.getName())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+//        }
+        this.nurseDTOService.delete(nurseDTO);
+        return "redirect:/nurse";
     }
 }
