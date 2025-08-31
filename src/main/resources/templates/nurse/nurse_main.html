@@ -23,7 +23,6 @@
         <tbody>
         <tr th:each="nurseMain, loop : ${paging}">
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-            <td th:text="${loop.count}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>

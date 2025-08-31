@@ -3,6 +3,7 @@
   <h1 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h1>
 
   <form class="card my-3" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <div>
       <label>부서:</label>
       <input type="text" th:field="*{dept}" required />

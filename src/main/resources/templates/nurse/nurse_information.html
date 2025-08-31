@@ -48,5 +48,10 @@
             <p>경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
             <p>비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
         </div>
+        <div class="my-3">
+            <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="btn btn-sm btn-outline-secondary" th:text="수정"></a>
+<!--               sec:authorize="isAuthenticated()" th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"-->
+
+        </div>
     </form>
 </div>
