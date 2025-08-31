@@ -5,10 +5,6 @@ import com.HPMS.HPMS.nurse.nursemain.NurseMainRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @Service
@@ -53,21 +49,9 @@ public class NurseInformationService {
     }
 
     @Transactional
-    public void saveWithMainAndFile(Integer nurseId, NurseInformation info, MultipartFile file) throws IOException {
+    public void saveWithMain(Integer nurseId, NurseInformation info) {
         NurseMain main = nurseMainRepository.findById(nurseId)
                 .orElseThrow(() -> new RuntimeException("NurseMain not found"));
-
-        // 사진 업로드 처리
-        if (!file.isEmpty()) {
-            String uploadDir = "uploads/nurse/"; // 실제 저장 경로
-            File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs();
-
-            String filePath = uploadDir + file.getOriginalFilename();
-            file.transferTo(new File(filePath));
-            info.setPicture(filePath);
-        }
-
         info.setNurseMain(main);
         main.setNurseInformation(info);
 

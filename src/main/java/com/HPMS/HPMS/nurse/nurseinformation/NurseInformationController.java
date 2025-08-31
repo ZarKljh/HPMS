@@ -1,13 +1,13 @@
 package com.HPMS.HPMS.nurse.nurseinformation;
 
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/nurse")
+@RequestMapping("/nurse/create/info")
 @RequiredArgsConstructor
 @Controller
 public class NurseInformationController {
@@ -15,19 +15,27 @@ public class NurseInformationController {
     private final NurseMainService nurseMainService;
     private final NurseInformationService nurseInformationService;
 
-    @GetMapping("/create/info/{nurseId}")
-    public String createInfoForm(@PathVariable Integer nurseId, Model model) {
-        model.addAttribute("nurseId", nurseId);
+    @GetMapping("/{nurseId}")
+    public String createForm(@PathVariable Integer nurseId, Model model) {
+        NurseMain main = nurseMainService.getNurseMain(nurseId);
+        model.addAttribute("nurseMain", main);
+        model.addAttribute("nurseId", main.getId());
         model.addAttribute("nurseInformation", new NurseInformation());
         return "nurse/nurse_info_form";
     }
 
-    @PostMapping("/create/info/{nurseId}")
+    @PostMapping("/{nurseId}")
     public String createInfo(@PathVariable Integer nurseId,
-                             @ModelAttribute NurseInformation nurseInformation,
-                             @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+                             @ModelAttribute NurseInformation info) {
+        NurseMain main = nurseMainService.getNurseMain(nurseId);
 
-        nurseInformationService.saveWithMainAndFile(nurseId, nurseInformation, pictureFile);
-        return "redirect:/nurse/info/" + nurseId; // 등록 후 상세페이지로 이동
+        // 양방향 연결
+        info.setNurseMain(main);
+        main.setNurseInformation(info);
+
+        // main 저장 → cascade.ALL로 info도 저장
+        nurseMainService.save(main);
+
+        return "redirect:/nurse";
     }
 }

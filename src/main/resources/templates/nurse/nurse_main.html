@@ -1,5 +1,7 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container my-3">
+    <h1>간호사 리스트</h1>
+
     <table class="table">
         <thead class="table-dark">
         <tr>
@@ -24,7 +26,6 @@
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>
-                <!-- 클릭 시 상세 페이지로 이동 -->
                 <a th:href="@{/nurse/info/{id}(id=${nurseMain.id})}"
                    th:text="|${nurseMain.firstName} ${nurseMain.middleName != null ? nurseMain.middleName + ' ' : ''}${nurseMain.lastName}|">
                 </a>
@@ -41,7 +42,6 @@
         </tr>
         </tbody>
     </table>
-    <button>
-        <a th:href="@{/nurse/create}">등록</a>
-    </button>
+    <a th:href="@{/nurse/create}" class="btn btn-primary">등록</a>
 </div>
+</html>

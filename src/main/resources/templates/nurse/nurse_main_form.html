@@ -1,72 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>신규 간호사 등록 - 기본 정보</title>
-</head>
-<body>
-<h1>신규 간호사 등록 - 기본 정보</h1>
+<html layout:decorate="~{nurse/nurse_layout}">
+<div layout:fragment="content" class="container my-3">
+  <h1>신규 간호사 등록 - 기본 정보</h1>
 
-<form th:action="@{/nurse/create-main}" th:object="${nurseMain}" method="post">
-  <div>
-    <label>부서:</label>
-    <input type="text" th:field="*{dept}" required/>
-  </div>
-  <div>
-    <label>직급:</label>
-    <input type="text" th:field="*{rank}" required/>
-  </div>
-  <div>
-    <label>이름:</label>
-    <input type="text" th:field="*{firstName}" placeholder="이름" required/>
-    <input type="text" th:field="*{lastName}" placeholder="성" required/>
-    <input type="text" th:field="*{middleName}" placeholder="중간이름"/>
-  </div>
-  <div>
-    <label>성별:</label>
-    <select th:field="*{gender}" required>
-      <option value="">선택</option>
-      <option value="M">남</option>
-      <option value="F">여</option>
-    </select>
-  </div>
-  <div>
-    <label>생년월일:</label>
-    <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required/>
-  </div>
-  <div>
-    <label>입사일:</label>
-    <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" required/>
-  </div>
-  <div>
-    <label>상태:</label>
-    <input type="text" th:field="*{sts}" required/>
-  </div>
-  <div>
-    <label>근무형태:</label>
-    <input type="text" th:field="*{wt}" required/>
-  </div>
-  <div>
-    <label>작성자:</label>
-    <input type="text" th:field="*{writer}" required/>
-  </div>
-  <div>
-    <label>작성시간:</label>
-    <input type="datetime-local" th:field="*{createDate}" required/>
-  </div>
-  <div>
-    <label>수정자:</label>
-    <input type="text" th:field="*{modifier}" required/>
-  </div>
-  <div>
-    <label>수정시간:</label>
-    <input type="datetime-local" th:field="*{modifyDate}" required/>
-  </div>
+  <form th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+    <div>
+      <label>부서:</label>
+      <input type="text" th:field="*{dept}" required />
+    </div>
+    <div>
+      <label>직급:</label>
+      <input type="text" th:field="*{rank}" required />
+    </div>
+    <div>
+      <label>성함:</label>
+      <input type="text" th:field="*{firstName}" placeholder="이름" required />
+      <input type="text" th:field="*{lastName}" placeholder="성" required />
+      <input type="text" th:field="*{middleName}" placeholder="중간이름" />
+    </div>
+    <div>
+      <label>성별:</label>
+      <select th:field="*{gender}" required>
+        <option value="">선택</option>
+        <option value="M">남</option>
+        <option value="F">여</option>
+      </select>
+    </div>
+    <div>
+      <label>생년월일:</label>
+      <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
+    </div>
+    <div>
+      <label>입사일:</label>
+      <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
+    </div>
+    <div>
+      <label>상태:</label>
+      <input type="text" th:field="*{sts}" required />
+    </div>
+    <div>
+      <label>근무형태:</label>
+      <input type="text" th:field="*{wt}" required />
+    </div>
+    <div>
+      <label>작성자:</label>
+      <input type="text" th:field="*{writer}" required />
+    </div>
+    <div>
+      <label>수정자:</label>
+      <input type="text" th:field="*{modifier}" required />
+    </div>
 
-  <div>
-    <button type="submit">다음 단계</button>
-  </div>
-</form>
-
-</body>
-</html>
+    <div>
+      <button class="btn btn-primary" type="submit">다음 단계</button>
+    </div>
+  </form>
+</div>

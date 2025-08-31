@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>신규 간호사 등록 - 상세 정보</title>
-</head>
-<body>
+<html layout:decorate="~{nurse/nurse_layout}">
+<div layout:fragment="content" class="container my-3">
 <h1>신규 간호사 등록 - 상세 정보</h1>
 
-<form th:action="@{|/nurse/create-info/${nurseId}|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
+<form th:action="@{|/nurse/create/info/${nurseId}|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
 
-  <h2>이름</h2>
+  <h2>서브 성함</h2>
   <div>
     <input type="text" th:field="*{firstName}" placeholder="이름"/>
     <input type="text" th:field="*{lastName}" placeholder="성"/>
@@ -26,7 +21,7 @@
     <input type="text" th:field="*{emgcCntc}"/>
   </div>
   <div>
-    <label>비상연락처 이름:</label>
+    <label>비상연락처 성함:</label>
     <input type="text" th:field="*{emgcFName}" placeholder="이름"/>
     <input type="text" th:field="*{emgcLName}" placeholder="성"/>
     <input type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
@@ -94,8 +89,8 @@
 
   <h2>사진 / 비고</h2>
   <div>
-    <label>사진:</label>
-    <input type="file" th:field="*{picture}" accept="image/*"/>
+    <label>사진 URL:</label>
+    <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg"/>
   </div>
   <div>
     <label>비고:</label>
@@ -106,6 +101,4 @@
     <button type="submit">등록 완료</button>
   </div>
 </form>
-
-</body>
-</html>
+</div>

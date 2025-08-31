@@ -1,6 +1,5 @@
 package com.HPMS.HPMS.nurse.nursemain;
 
-import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequestMapping("/nurse")
 @RequiredArgsConstructor
@@ -18,12 +16,10 @@ import java.util.List;
 public class NurseMainController {
 
     private final NurseMainService nurseMainService;
-    private final NurseInformationService nurseInformationService;
 
     @GetMapping("")
     public String list(Model model) {
-        List<NurseMain> nurseMainList = this.nurseMainService.getAll();
-        model.addAttribute("nurseMainList", nurseMainList);
+        model.addAttribute("nurseMainList", nurseMainService.getAll());
         return "nurse/nurse_main";
     }
 
