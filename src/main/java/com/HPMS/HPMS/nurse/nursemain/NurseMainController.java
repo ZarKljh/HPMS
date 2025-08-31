@@ -1,12 +1,10 @@
 package com.HPMS.HPMS.nurse.nursemain;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +16,9 @@ public class NurseMainController {
     private final NurseMainService nurseMainService;
 
     @GetMapping("")
-    public String list(Model model) {
-        model.addAttribute("nurseMainList", nurseMainService.getAll());
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<NurseMain> paging = this.nurseMainService.getList(page);
+        model.addAttribute("paging", paging);
         return "nurse/nurse_main";
     }
 

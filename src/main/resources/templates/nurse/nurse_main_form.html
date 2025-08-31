@@ -1,8 +1,8 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container my-3">
-  <h1>신규 간호사 등록 - 기본 정보</h1>
+  <h1 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h1>
 
-  <form th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+  <form class="card my-3" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
     <div>
       <label>부서:</label>
       <input type="text" th:field="*{dept}" required />
