@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>신규 간호사 등록 - 상세 정보</title>
+</head>
+<body>
+<h1>신규 간호사 등록 - 상세 정보</h1>
+
+<form th:action="@{|/nurse/create-info/${nurseId}|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
+
+  <h2>이름</h2>
+  <div>
+    <input type="text" th:field="*{firstName}" placeholder="이름"/>
+    <input type="text" th:field="*{lastName}" placeholder="성"/>
+    <input type="text" th:field="*{middleName}" placeholder="중간이름"/>
+  </div>
+
+  <h2>연락처</h2>
+  <div>
+    <label>전화번호:</label>
+    <input type="text" th:field="*{tel}"/>
+  </div>
+  <div>
+    <label>비상연락처:</label>
+    <input type="text" th:field="*{emgcCntc}"/>
+  </div>
+  <div>
+    <label>비상연락처 이름:</label>
+    <input type="text" th:field="*{emgcFName}" placeholder="이름"/>
+    <input type="text" th:field="*{emgcLName}" placeholder="성"/>
+    <input type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
+  </div>
+  <div>
+    <label>관계:</label>
+    <input type="text" th:field="*{emgcRel}"/>
+  </div>
+  <div>
+    <label>비고:</label>
+    <input type="text" th:field="*{emgcNote}"/>
+  </div>
+
+  <h2>주소 / 이메일</h2>
+  <div>
+    <label>이메일:</label>
+    <input type="email" th:field="*{email}"/>
+  </div>
+  <div>
+    <label>우편번호:</label>
+    <input type="number" th:field="*{pcd}"/>
+  </div>
+  <div>
+    <label>기본주소:</label>
+    <input type="text" th:field="*{defAdd}"/>
+  </div>
+  <div>
+    <label>상세주소:</label>
+    <input type="text" th:field="*{detAdd}"/>
+  </div>
+
+  <h2>자격 / 학력</h2>
+  <div>
+    <label>간호사 자격증 번호:</label>
+    <input type="text" th:field="*{rnNo}"/>
+  </div>
+  <div>
+    <label>최종학력:</label>
+    <input type="text" th:field="*{edbc}"/>
+  </div>
+  <div>
+    <label>졸업날짜:</label>
+    <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD"/>
+  </div>
+  <div>
+    <label>외국어:</label>
+    <input type="text" th:field="*{fl}"/>
+  </div>
+  <div>
+    <label>병역:</label>
+    <input type="text" th:field="*{ms}"/>
+  </div>
+  <div>
+    <label>국적:</label>
+    <input type="text" th:field="*{natn}"/>
+  </div>
+  <div>
+    <label>장애여부:</label>
+    <input type="text" th:field="*{dss}"/>
+  </div>
+  <div>
+    <label>경력(개월):</label>
+    <input type="text" th:field="*{carr}"/>
+  </div>
+
+  <h2>사진 / 비고</h2>
+  <div>
+    <label>사진:</label>
+    <input type="file" th:field="*{picture}" accept="image/*"/>
+  </div>
+  <div>
+    <label>비고:</label>
+    <input type="text" th:field="*{note}"/>
+  </div>
+
+  <div>
+    <button type="submit">등록 완료</button>
+  </div>
+</form>
+
+</body>
+</html>

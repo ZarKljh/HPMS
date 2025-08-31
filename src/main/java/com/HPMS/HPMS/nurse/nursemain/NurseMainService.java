@@ -25,4 +25,8 @@ public class NurseMainService {
             throw new NurseDataNotFoundException("nurse not found");
         }
     }
+
+    public NurseMain save(NurseMain nurseMain) {
+        return nurseMainRepository.save(nurseMain);
+    }
 }
