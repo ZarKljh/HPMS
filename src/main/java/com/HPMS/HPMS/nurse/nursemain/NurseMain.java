@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,10 +37,10 @@ public class NurseMain {
     private String gender; //성별 (F / M)
 
     @Column(nullable = false, name = "DATE_OF_BIRTH")
-    private Integer dateOfBirth; //생년월일 8자리
+    private LocalDate dateOfBirth; //생년월일 8자리
 
     @Column(nullable = false, name = "HIREDATE")
-    private Integer hireDate; //입사일
+    private LocalDate hireDate; //입사일
 
     @Column(nullable = false, length = 3, name = "STS")
     private String sts; //상태 (재직중 / 휴직 / 퇴직 등)

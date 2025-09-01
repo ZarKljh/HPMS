@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.nurse.NurseDTO;
+package com.HPMS.HPMS.nurse.nursedto;
 
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationRepository;
@@ -7,7 +7,9 @@ import com.HPMS.HPMS.nurse.nursemain.NurseMainRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -75,16 +77,17 @@ public class NurseDTOService {
     }
 
     // Integer 19890315 -> "1989-03-15"
-    private String formatDate(Integer date) {
-        if (date == null) return null;
-        String str = date.toString();
-        if (str.length() != 8) return str;
-        return str.substring(0,4) + "-" + str.substring(4,6) + "-" + str.substring(6,8);
+    private String formatDate(LocalDate date) {
+        if (date == null) return "null";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return date.format(formatter);
     }
 
     public void updateNurse(Integer nurseId, NurseDTO dto) {
         NurseMain nm = nurseMainRepository.findById(nurseId)
                 .orElseThrow(() -> new RuntimeException("간호사 기본 정보 없음"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
         // NurseMain 수정
         NurseMainDTO m = dto.getNurseMain();
@@ -94,8 +97,8 @@ public class NurseDTOService {
         nm.setDept(m.getDept());
         nm.setRank(m.getRank());
         nm.setGender(m.getGender());
-        nm.setDateOfBirth(parseDate(m.getDateOfBirth()));
-        nm.setHireDate(parseDate(m.getHireDate()));
+        nm.setDateOfBirth(LocalDate.parse(m.getDateOfBirth(), formatter));
+        nm.setHireDate(LocalDate.parse(m.getHireDate(), formatter));
         nm.setSts(m.getSts());
         nm.setWt(m.getWt());
         nm.setModifier(m.getModifier());
@@ -124,7 +127,7 @@ public class NurseDTOService {
             ni.setDetAdd(i.getDetAdd());
             ni.setRnNo(i.getRnNo());
             ni.setEdbc(i.getEdbc());
-            ni.setGradDate(parseDate(i.getGradDate()));
+            ni.setGradDate(LocalDate.parse(i.getGradDate(), formatter));
             ni.setFl(i.getFl());
             ni.setMs(i.getMs());
             ni.setNatn(i.getNatn());

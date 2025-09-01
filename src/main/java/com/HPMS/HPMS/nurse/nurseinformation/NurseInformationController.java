@@ -42,7 +42,7 @@ public class NurseInformationController {
 
         session.removeAttribute("tempNurseMain");
 
-        return "redirect:/nurse/info";
+        return "redirect:/nurse/info/" + nurseMain.getId();
     }
 
     @GetMapping("/cancel")

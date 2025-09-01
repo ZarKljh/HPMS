@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -70,7 +72,7 @@ public class NurseInformation {
     private String edbc; //최종학력
 
     @Column(name = "GRAD_DATE")
-    private Integer gradDate; //졸업날짜
+    private LocalDate gradDate; //졸업날짜
 
     @Column(length = 250, name = "FL")
     private String fl; //외국어

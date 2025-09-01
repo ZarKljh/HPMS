@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.nurse.NurseDTO;
+package com.HPMS.HPMS.nurse.nursedto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

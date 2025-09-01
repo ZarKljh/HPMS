@@ -43,12 +43,10 @@
       <input type="text" th:field="*{nurseMain.gender}" class="form-control"/>
 
       <label>생년월일</label>
-      <input type="text" th:field="*{nurseMain.dateOfBirth}"
-             placeholder="YYYY-MM-DD" class="form-control"/>
+      <input type="date" th:field="*{nurseMain.dateOfBirth}" class="form-control"/>
 
       <label>입사일</label>
-      <input type="text" th:field="*{nurseMain.hireDate}"
-             placeholder="YYYY-MM-DD" class="form-control"/>
+      <input type="date" th:field="*{nurseMain.hireDate}" class="form-control"/>
 
       <label>상태</label>
       <input type="text" th:field="*{nurseMain.sts}" class="form-control"/>
@@ -104,8 +102,7 @@
       <input type="text" th:field="*{nurseInformation.edbc}" class="form-control"/>
 
       <label>졸업일</label>
-      <input type="text" th:field="*{nurseInformation.gradDate}"
-             placeholder="YYYY-MM-DD" class="form-control"/>
+      <input type="date" th:field="*{nurseInformation.gradDate}" class="form-control"/>
 
       <label>외국어</label>
       <input type="text" th:field="*{nurseInformation.fl}" class="form-control"/>

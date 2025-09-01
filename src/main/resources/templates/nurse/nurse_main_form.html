@@ -28,11 +28,11 @@
     </div>
     <div>
       <label>생년월일:</label>
-      <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
+      <input type="date" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
     </div>
     <div>
       <label>입사일:</label>
-      <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
+      <input type="date" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
     </div>
     <div>
       <label>상태:</label>
@@ -45,10 +45,6 @@
     <div>
       <label>작성자:</label>
       <input type="text" th:field="*{writer}" required />
-    </div>
-    <div>
-      <label>수정자:</label>
-      <input type="text" th:field="*{modifier}" required />
     </div>
 
     <div>

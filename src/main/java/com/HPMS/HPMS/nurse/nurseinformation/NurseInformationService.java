@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class NurseInformationService {
@@ -13,7 +15,7 @@ public class NurseInformationService {
     private final NurseInformationRepository nurseInformationRepository;
     private final NurseMainRepository nurseMainRepository;
 
-    public NurseInformation create (NurseMain nurseMain, String firstName, String lastName, String middleName, String tel, String emgcCntc, String emgcFName, String emgcLName, String emgcMName, String emgcRel, String emgcNote, String email, Integer pcd, String defAdd, String detAdd, String rnNo, String edbc, Integer gradDate, String fl, String ms, String natn, String dss, String carr, String picture, String note) {
+    public NurseInformation create (NurseMain nurseMain, String firstName, String lastName, String middleName, String tel, String emgcCntc, String emgcFName, String emgcLName, String emgcMName, String emgcRel, String emgcNote, String email, Integer pcd, String defAdd, String detAdd, String rnNo, String edbc, LocalDate gradDate, String fl, String ms, String natn, String dss, String carr, String picture, String note) {
         NurseInformation nurseInformation = new NurseInformation();
         nurseInformation.setFirstName(firstName);
         nurseInformation.setLastName(lastName);
