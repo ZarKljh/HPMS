@@ -1,6 +1,9 @@
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="kr">
 <h2>신규 환자 등록</h2>
-<form th:action="@{/patient/create}" th:object="${patientForm}" method="post">
+<form th:action="@{/patient/create}" th:object="${patientCreateForm}" method="post">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+    </div>
     <div class="patient-info">
 
         <!-- 인적사항 -->
@@ -26,7 +29,6 @@
                 </select>
             </div>
             <div>
-                <label>성명</label>
                 <label>성</label>
                 <input type="text" th:field="*{lastName}" required>
                 <label>이름</label>
@@ -76,8 +78,10 @@
         <!-- 보호자 정보 -->
         <div class="group-guardian">
             <div>
-                <label>보호자 성명</label>
-                <input type="text" th:field="*{guardianName}">
+                <label>보호자 성명 성</label>
+                <input type="text" th:field="*{guardianLastName}">
+                <label>보호자 성명 이름</label>
+                <input type="text" th:field="*{guardianFirstName}">
             </div>
             <div>
                 <label>보호자 연락처</label>

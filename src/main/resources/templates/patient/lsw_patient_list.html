@@ -14,6 +14,7 @@
         <th>등록일</th>
     </tr>
     </thead>
+    <a th:href="@{/patient/create}">질문 등록하기</a>
     <tbody>
     <tr th:each="patient : ${patients}">
         <td th:text="${patient.id}"></td>
