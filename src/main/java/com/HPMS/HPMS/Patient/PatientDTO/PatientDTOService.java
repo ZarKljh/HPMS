@@ -75,9 +75,11 @@ public class PatientDTOService {
         detailDTO.setBirth(stringToLocalDate(m.getDayOfBirth()));
         detailDTO.setGender(m.getGender());
         detailDTO.setForeigner(m.getForeigner());
-        detailDTO.setName(m.getLastName() + " " + m.getFirstName());
+        detailDTO.setFirstName(m.getFirstName());
+        detailDTO.setLastName(m.getLastName());
         detailDTO.setMiddleName(m.getMiddleName());
-        detailDTO.setPassName(m.getPassLastName() + " " + m.getPassFirstName());
+        detailDTO.setPassFirstName(m.getPassFirstName());
+        detailDTO.setPassLastName(m.getPassLastName());
         detailDTO.setMiddleName(m.getPassMiddleName());
 
         detailDTO.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
@@ -86,7 +88,8 @@ public class PatientDTOService {
         detailDTO.setEmail(dtl.getEmail());
         detailDTO.setFax(formatPhoneNumber(dtl.getFax()));
 
-        detailDTO.setGuardianName(dtl.getGuardianLastName() + " " + dtl.getGuardianFirstName());
+        detailDTO.setGuardianFirstName(dtl.getGuardianFirstName());
+        detailDTO.setPassLastName(dtl.getGuardianLastName());
         detailDTO.setGuardianMiddleName(dtl.getGuardianMiddleName());
         detailDTO.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
         detailDTO.setGuardianRelation(dtl.getGuardianRelation());

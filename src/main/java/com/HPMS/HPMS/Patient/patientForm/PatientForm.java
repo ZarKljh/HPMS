@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class PatientCreateForm {
+public class PatientForm {
     private Integer id;
     private String delStatus; // 1 = 종결
     private LocalDateTime createDate;

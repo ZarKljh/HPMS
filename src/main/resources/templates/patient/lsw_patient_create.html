@@ -1,6 +1,6 @@
 <html lang="kr">
 <h2>신규 환자 등록</h2>
-<form th:action="@{/patient/create}" th:object="${patientCreateForm}" method="post">
+<form th:action="@{/patient/create}" th:object="${patientForm}" method="post">
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
         <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>

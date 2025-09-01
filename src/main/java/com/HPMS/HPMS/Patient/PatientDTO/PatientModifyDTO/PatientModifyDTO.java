@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.Patient.PatientDTO.PatientDetailDTO;
+package com.HPMS.HPMS.Patient.PatientDTO.PatientModifyDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,10 +6,9 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 @Getter
 @Setter
-public class PatientDetailDTO {
+public class PatientModifyDTO {
 
     private Integer id;
     private String delStatus; // 1 = 종결
@@ -33,8 +32,7 @@ public class PatientDetailDTO {
     private String email;
     private String fax;
 
-    private String guardianFirstName;
-    private String guardianLastName;
+    private String guardianName; // 보호자성명 (guadianLastName + guardianFirstName)
     private String guardianMiddleName;
     private String guardianTel;
     private String guardianRelation;

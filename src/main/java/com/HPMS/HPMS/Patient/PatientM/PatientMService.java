@@ -2,8 +2,7 @@ package com.HPMS.HPMS.Patient.PatientM;
 
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTLService;
-import com.HPMS.HPMS.Patient.patientForm.PatientCreateForm;
-import jakarta.validation.constraints.NotEmpty;
+import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class PatientMService {
             //throw new DataNotFoundException("question not found");
         }
     }
-    public void createPatientM(PatientCreateForm pf){
+    public void createPatientM(PatientForm pf){
         PatientM m = new PatientM();
         PatientDTL dtl = new PatientDTL();
 

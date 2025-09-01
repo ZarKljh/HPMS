@@ -1,0 +1,70 @@
+<html lang="kr">
+<h2>신규 환자 등록</h2>
+<form th:action="@{/patient/modify}" th:object="${patientForm}" method="post">
+  <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+  </div>
+  <div class="patient-info">
+    <!-- 기본 식별 정보 -->
+    <div class="group-basic">
+      <div><strong>ID</strong><input type="text" th:field="*{detailDTO.id}"/></div>
+      <div><strong>종결여부</strong> <span th:text="${detailDTO.delStatus}"></span></div>
+      <div><strong>최초등록일</strong> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
+      <div><strong>수정일</strong> <span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
+    </div>
+
+    <!-- 인적사항 -->
+    <div class="group-personal">
+      <div><strong>생년월일</strong> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
+      <div><strong>성별</strong> <span th:text="${detailDTO.gender}"></span></div>
+      <div><strong>내/외국인</strong> <span th:text="${detailDTO.foreigner}"></span></div>
+      <div><strong>성명</strong><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
+      <div><strong>중간이름</strong> <span th:text="${detailDTO.middleName}"></span></div>
+      <div><strong>여권번호</strong> <span th:text="${detailDTO.passport}"></span></div>
+      <div><strong>여권성명</strong><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
+      <div><strong>여권중간이름</strong> <span th:text="${detailDTO.passMiddleName}"></span></div>
+    </div>
+
+    <!-- 연락처 -->
+    <div class="group-contact">
+      <div><strong>MOBILE</strong> <span th:text="${detailDTO.mobilePhone}"></span></div>
+      <div><strong>HOME</strong> <span th:text="${detailDTO.homePhone}"></span></div>
+      <div><strong>OFFICE</strong> <span th:text="${detailDTO.officePhone}"></span></div>
+      <div><strong>EMAIL</strong> <span th:text="${detailDTO.email}"></span></div>
+      <div><strong>FAX</strong> <span th:text="${detailDTO.fax}"></span></div>
+    </div>
+
+    <!-- 보호자 정보 -->
+    <div class="group-guardian">
+      <div><strong>보호자 성명</strong> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
+      <div><strong>보호자 연락처</strong> <span th:text="${detailDTO.guardianTel}"></span></div>
+      <div><strong>보호자 관계</strong> <span th:text="${detailDTO.guardianRelation}"></span></div>
+    </div>
+
+    <!-- 주소 -->
+    <div class="group-address">
+      <div><strong>우편번호</strong> <span th:text="${detailDTO.homePcd}"></span></div>
+      <div><strong>기본주소</strong> <span th:text="${detailDTO.homeDefAdd}"></span></div>
+      <div><strong>상세주소</strong> <span th:text="${detailDTO.homeDetAdd}"></span></div>
+      <div><strong>등록주소(우편번호)</strong> <span th:text="${detailDTO.regPcd}"></span></div>
+      <div><strong>등록주소(기본주소)</strong> <span th:text="${detailDTO.regDefAdd}"></span></div>
+      <div><strong>등록주소(상세주소)</strong> <span th:text="${detailDTO.regDetAdd}"></span></div>
+    </div>
+
+    <!-- 기타 -->
+    <div class="group-extra">
+      <div><strong>직업</strong> <span th:text="${detailDTO.occupation}"></span></div>
+      <div><strong>국적</strong> <span th:text="${detailDTO.natn}"></span></div>
+      <div><strong>최종방문일</strong> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
+      <div><strong>특이사항</strong> <span th:text="${detailDTO.note}"></span></div>
+    </div>
+
+
+    <div class="form-actions">
+      <button type="submit">등록하기</button>
+      <a th:href="@{/patient/list}">취소</a>
+    </div>
+
+  </div>
+</form>
+</html>
