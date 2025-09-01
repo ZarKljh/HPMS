@@ -2,7 +2,7 @@
 <div layout:fragment="content" class="container my-3">
 <h1>신규 간호사 등록 - 상세 정보</h1>
 
-<form class="card my-3" th:action="@{|/nurse/create/info/${nurseId}|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
+<form class="card my-3" th:action="@{|/nurse/create/info|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
 
   <h2 class="border-bottom py-2">서브 성함</h2>
   <div>

@@ -22,6 +22,13 @@ public class NurseDTOController {
         return "nurse/nurse_information"; // thymeleaf 뷰 이름
     }
 
+    @GetMapping("/modify/{id}")
+    public String showModifyForm(@PathVariable Integer id, Model model) {
+        NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
+        model.addAttribute("nurseDTO", nurseDTO);
+        return "nurse/nurse_modify_form";
+    }
+
     @PostMapping("/modify/{id}")
     public String modifyNurse(@PathVariable Integer id, @ModelAttribute NurseDTO nurseDTO, Model model) {
         String modifier = nurseDTO.getNurseMain().getModifier();
@@ -34,13 +41,6 @@ public class NurseDTOController {
 
         nurseDTOService.updateNurse(id, nurseDTO);
         return "redirect:/nurse/info/" + id;
-    }
-
-    @GetMapping("/modify/{id}")
-    public String showModifyForm(@PathVariable Integer id, Model model) {
-        NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
-        model.addAttribute("nurseDTO", nurseDTO);
-        return "nurse/nurse_modify_form";
     }
 
     @PreAuthorize("isAuthenticated()")

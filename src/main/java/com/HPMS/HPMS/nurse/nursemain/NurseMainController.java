@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.nursemain;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,8 @@ public class NurseMainController {
     private final NurseMainService nurseMainService;
 
     @GetMapping("")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpSession session) {
+        session.removeAttribute("tempNurseMain");
         Page<NurseMain> paging = this.nurseMainService.getList(page);
         model.addAttribute("paging", paging);
         return "nurse/nurse_main";
@@ -29,12 +31,12 @@ public class NurseMainController {
     }
 
     @PostMapping("/create")
-    public String createMain(@ModelAttribute NurseMain nurseMain) {
+    public String createMain(@ModelAttribute NurseMain nurseMain, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
         nurseMain.setCreateDate(now);
         nurseMain.setModifyDate(now);
 
-        NurseMain savedMain = nurseMainService.save(nurseMain);
-        return "redirect:/nurse/create/info/" + savedMain.getId();
+        session.setAttribute("tempNurseMain", nurseMain);
+        return "redirect:/nurse/create/info";
     }
 }
