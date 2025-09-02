@@ -1,3 +1,5 @@
+USE HPMS;
+
 #지번 테이블
 create table jibun_info_m
 (
@@ -33,5 +35,6 @@ create table juso_info_m
 );
 
 LOAD DATA LOCAL INFILE 'C:\\Users\\SBS\\Downloads\\주소\\지번.txt' INTO TABLE jibun_info_m CHARACTER SET euckr FIELDS TERMINATED BY '|' IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE 'C:\\Users\\SBS\\Downloads\\주소\\도로명.txt' INTO TABLE jibun_info_m CHARACTER SET euckr FIELDS TERMINATED BY '|' IGNORE 1 LINES;
 
-'C:\\Users\\SBS\\Downloads\\주소\\지번.txt' -> 파일이 있는 경로
+C:\\Users\\SBS\\Downloads\\주소\\도로명.txt -> 파일이 있는 경로
