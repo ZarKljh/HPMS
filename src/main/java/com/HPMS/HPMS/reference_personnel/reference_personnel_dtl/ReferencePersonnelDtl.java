@@ -54,4 +54,9 @@ public class ReferencePersonnelDtl {
 
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
+
+    public String getCompanyName() {
+        return companyName != null ? companyName.toUpperCase() : "N/A";
+    }
 }
+

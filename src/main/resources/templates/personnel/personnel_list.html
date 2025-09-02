@@ -1,0 +1,34 @@
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NATIONALITY</th>
+        <th>NAME</th>
+        <th>MIDDLE_NAME</th>
+        <th>EMAIL</th>
+        <th>CELL_PHONE</th>
+        <th>CREATOR	</th>
+        <th>CREATE_DATE</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="referencePersonnels : ${referencePersonnels}">
+        <td>
+            <a th:if="${referencePersonnels.id != null}"
+               th:href="@{/user/detail/{id}(id=${referencePersonnels.id})}"
+               th:text="${referencePersonnels.id}"></a>
+        </td>
+        <td th:text="${referencePersonnels.nationality}"></td>
+        <td >
+            <a th:if="${referencePersonnels.id != null}"
+               th:href="@{/user/detail/{id}(id=${referencePersonnels.id})}"
+               th:text="|${referencePersonnels.lastName} ${referencePersonnels.firstName}|"></a>
+        </td>
+        <td th:text="${referencePersonnels.middleName}"></td>
+        <td th:text="${referencePersonnels.email}"></td>
+        <td th:text="${referencePersonnels.cellPhone}"></td>
+        <td th:text="${referencePersonnels.creator}"></td>
+        <td th:text="${referencePersonnels.createDate}"></td>
+    </tr>
+    </tbody>
+</table>

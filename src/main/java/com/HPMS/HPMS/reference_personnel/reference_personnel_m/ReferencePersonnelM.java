@@ -56,5 +56,13 @@ public class ReferencePersonnelM {
 
     entityManager.persist(m);
     */
+
+    public String getFormattedCellPhone() {
+        if (cellPhone == null || cellPhone.length() < 10) return "관련정보없음";
+
+        // 예: 01012345678 → 010-1234-5678
+        return cellPhone.replaceAll("(\\d{3})(\\d{4})(\\d+)", "$1-$2-$3");
+    }
+
 }
 

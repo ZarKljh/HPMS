@@ -1,0 +1,106 @@
+<head>
+    <link rel="stylesheet" th:href="@{/CSS/chang_css.css}" />
+</head>
+<h2>환자 상세정보</h2>
+<!--<content>
+    <div>
+        <div><strong>ID</strong> <span th:text="${referencePersonnelDtlDTO.id}"></span></div>
+        <div><strong>최초등록일</strong><span th:text="${#temporals.format(referencePersonnelDtlDTO.createDate,'yyyy-MM-dd')}"></span></div>
+    </div>
+</content>>-->
+<table class="tbl_set">
+    <hd></hd>
+    <tbody>
+        <tr>
+            <td class="td_title">등록일시</td>
+            <td><span th:text="${#temporals.format(referencePersonnelDtlDTO.createDate,'yyyy-MM-dd hh:mm a')}"></span></td>
+        </tr>
+        <tr>
+            <td class="td_title">성명</td>
+            <td>
+                <span th:text="|${referencePersonnelDtlDTO.personnel.lastName} ${referencePersonnelDtlDTO.personnel.firstName}|"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">이메일</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.personnel.email}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">휴대전화</td>
+            <td>
+                <span th:if="${referencePersonnelDtlDTO.personnel.cellPhone != null}"
+                      th:text="${referencePersonnelDtlDTO.personnel.formattedCellPhone}"></span>
+                <span th:if="${referencePersonnelDtlDTO.personnel.cellPhone == null}">관련정보없음</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">회사명</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.companyName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">부서명</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.deptName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">직급/직책</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.position}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">근무지 주소</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.officeAddress}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">근무지 상세주소</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.officeDetailAddress}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">사무실 전화번호</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.officeTel}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">사무실 팩스번호</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.officeFax}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">Homepage</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.companyWebsiteUrl}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">Note</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.note}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">Registrator - sys admin</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.creator}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="td_title">Date</td>
+            <td>
+                <span th:text="${referencePersonnelDtlDTO.createDate}"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
