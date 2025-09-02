@@ -1,0 +1,75 @@
+<html lang="kr">
+<h2>신규 환자 등록</h2>
+<form th:object="${patientForm}" method="post">
+
+  <div class="patient-info">
+    <!-- 기본 식별 정보 -->
+    <div class="group-basic">
+      <div><strong>ID</strong><input type="text" th:field="*{id}"/></div>
+      <div><strong>종결여부</strong><input type="text" th:field="*{delStatus}"/></div>
+      <div><strong>최초등록일</strong><input type="text" th:field="*{createDate}"/></div>
+      <div><strong>수정일</strong><input type="text" th:field="*{updateDate}"/></div>
+    </div>
+
+    <!-- 인적사항 -->
+    <div class="group-personal">
+      <div><strong>생년월일</strong><input type="text" th:field="*{birth}"/></div>
+        <div><strong>성별</strong><select th:field="*{gender}">
+            <option value="">선택하세요</option>
+            <option value="M">남</option>
+            <option value="F">여</option>
+            <option value="X">그외</option></select></div>
+      <div><strong>내/외국인</strong><input type="text" th:field="*{foreigner}"/></div>
+      <div><strong>성명 성</strong><input type="text" th:field="*{lastName}"/></div>
+      <div><strong>성명 이름</strong><input type="text" th:field="*{firstName}"/></div>
+      <div><strong>중간이름</strong><input type="text" th:field="*{middleName}"/></div>
+      <div><strong>여권번호</strong><input type="text" th:field="*{passport}"/></div>
+      <div><strong>여권성명 성</strong><input type="text" th:field="*{passLastName}"/></div>
+      <div><strong>여권성명 이름</strong><input type="text" th:field="*{passFirstName}"/></div>
+      <div><strong>여권중간이름</strong><input type="text" th:field="*{passMiddleName}"/></div>
+    </div>
+
+    <!-- 연락처 -->
+    <div class="group-contact">
+      <div><strong>MOBILE</strong><input type="text" th:field="*{mobilePhone}"/></div>
+      <div><strong>HOME</strong><input type="text" th:field="*{homePhone}"/></div>
+      <div><strong>OFFICE</strong><input type="text" th:field="*{officePhone}"/></div>
+      <div><strong>EMAIL</strong><input type="text" th:field="*{email}"/></div>
+      <div><strong>FAX</strong><input type="text" th:field="*{fax}"/></div>
+    </div>
+
+    <!-- 보호자 정보 -->
+    <div class="group-guardian">
+      <div><strong>보호자 성명 성</strong><input type="text" th:field="*{guardianLastName}"/></div>
+      <div><strong>보호자 성명 이름</strong><input type="text" th:field="*{guardianFirstName}"/></div>
+      <div><strong>보호자 연락처</strong><input type="text" th:field="*{guardianTel}"/></div>
+      <div><strong>보호자 관계</strong><input type="text" th:field="*{guardianRelation}"/></div>
+    </div>
+
+    <!-- 주소 -->
+    <div class="group-address">
+      <div><strong>우편번호</strong><input type="text" th:field="*{homePcd}"/></div>
+      <div><strong>기본주소</strong><input type="text" th:field="*{homeDefAdd}"/></div>
+      <div><strong>상세주소</strong><input type="text" th:field="*{homeDetAdd}"/></div>
+      <div><strong>등록주소(우편번호)</strong><input type="text" th:field="*{regPcd}"/></div>
+      <div><strong>등록주소(기본주소)</strong><input type="text" th:field="*{regDefAdd}"/></div>
+      <div><strong>등록주소(상세주소)</strong><input type="text" th:field="*{regDetAdd}"/></div>
+    </div>
+
+    <!-- 기타 -->
+    <div class="group-extra">
+      <div><strong>직업</strong><input type="text" th:field="*{occupation}"/></div>
+      <div><strong>국적</strong><input type="text" th:field="*{natn}"/></div>
+      <div><strong>최종방문일</strong><input type="date" th:field="*{lastVisitDate}"/></div>
+      <div><strong>특이사항</strong><input type="text" th:field="*{note}"/></div>
+    </div>
+
+
+    <div class="form-actions">
+      <button type="submit">등록하기</button>
+      <a th:href="@{/patient/list}">취소</a>
+    </div>
+
+  </div>
+</form>
+</html>

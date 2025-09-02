@@ -24,4 +24,8 @@ public class PatientDTLService {
 
         }
     }
+    public void createPatientDTL(PatientDTL dtl){
+        this.patientDTLRepository.save(dtl);
+    }
+    public void modifyPatientDTL(PatientDTL dtl) { this.patientDTLRepository.save(dtl); }
 }

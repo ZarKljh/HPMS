@@ -15,10 +15,10 @@
     <div><strong>생년월일</strong> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
     <div><strong>성별</strong> <span th:text="${detailDTO.gender}"></span></div>
     <div><strong>내/외국인</strong> <span th:text="${detailDTO.foreigner}"></span></div>
-    <div><strong>성명</strong> <span th:text="${detailDTO.name}"></span></div>
+    <div><strong>성명</strong><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
     <div><strong>중간이름</strong> <span th:text="${detailDTO.middleName}"></span></div>
     <div><strong>여권번호</strong> <span th:text="${detailDTO.passport}"></span></div>
-    <div><strong>여권성명</strong> <span th:text="${detailDTO.passName}"></span></div>
+    <div><strong>여권성명</strong><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
     <div><strong>여권중간이름</strong> <span th:text="${detailDTO.passMiddleName}"></span></div>
   </div>
 
@@ -33,7 +33,7 @@
 
   <!-- 보호자 정보 -->
   <div class="group-guardian">
-    <div><strong>보호자 성명</strong> <span th:text="${detailDTO.guardianName}"></span></div>
+    <div><strong>보호자 성명</strong> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
     <div><strong>보호자 연락처</strong> <span th:text="${detailDTO.guardianTel}"></span></div>
     <div><strong>보호자 관계</strong> <span th:text="${detailDTO.guardianRelation}"></span></div>
   </div>
@@ -55,6 +55,9 @@
     <div><strong>최종방문일</strong> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
     <div><strong>특이사항</strong> <span th:text="${detailDTO.note}"></span></div>
   </div>
+
+  <a th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+  <a th:href="@{|/patient/delete/${detailDTO.id}|}">환자종결</a>
 
 </div>
 </html>
