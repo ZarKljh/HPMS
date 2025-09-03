@@ -92,8 +92,86 @@ div > .btn {
 }
 
 @media screen and (max-width: 993px) {
-	.mobail_hidden {
+	.mobile_hidden {
 		display: none;
 		width: 300px;
+	}
+}
+
+//상세 페이지
+.main, .information {
+	background-color: #f8f9fa;
+	transition: .5s;
+}
+.main {
+	position: relative;
+}
+.m-d-btn_box {
+	position: absolute;
+	top: 25px;
+	right: 20px;
+	width: auto;
+	height: auto;
+	border: 1px solid red;
+}
+.m-btn, .d-btn {
+	width: 50px;
+	height: 30px;
+}
+.image {
+	width: 300px;
+	height: 400px;
+	overflow: hidden;
+	border: 1px solid gray;
+	background-color: white;
+	margin-top: 60px;
+	margin-left: 40px;
+	margin-bottom: 20px;
+}
+.basic_info {
+	position: absolute;
+	top: 220px;
+	left: 330px;
+	width: 965px;
+	height: 200px;
+}
+.info, .info_1 {
+	padding: 10px;
+	margin: 20px;
+	border: 1px solid #dee2e6;
+	background-color: white;
+}
+.info_1 {
+	display: none;
+}
+
+@media screen and (max-width: 1400px) {
+	.basic_info {
+		width: 780px;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.basic_info {
+		width: 600px;
+	}
+}
+
+@media screen and (max-width: 993px) {
+	.basic_info {
+		width: 350px;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.nursemain {
+		display: flex;
+		justify-content: center;
+	}
+	.basic_info {
+		display: none;
+	}
+	.info_1 {
+		display: block;
 	}
 }

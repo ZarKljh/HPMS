@@ -1,22 +1,22 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Nurse List</h2>
-    <table class="table table-hover">
+    <table class="table table-hover card">
         <thead class="table-info">
         <tr class="list text-center">
             <th>번호</th>
             <th>부서</th>
             <th>직급</th>
             <th>이름</th>
-            <th class="mobail_hidden">성별</th>
-            <th class="mobail_hidden">생년월일</th>
-            <th class="mobail_hidden">입사일</th>
+            <th class="mobile_hidden">성별</th>
+            <th class="mobile_hidden">생년월일</th>
+            <th class="mobile_hidden">입사일</th>
             <th>상태</th>
-            <th class="mobail_hidden">근무형태</th>
+            <th class="mobile_hidden">근무형태</th>
             <th>작성자</th>
-            <th class="mobail_hidden">작성일시</th>
-            <th class="mobail_hidden">수정자</th>
-            <th class="mobail_hidden">수정일시</th>
+            <th class="mobile_hidden">작성일시</th>
+            <th class="mobile_hidden">수정자</th>
+            <th class="mobile_hidden">수정일시</th>
         </tr>
         </thead>
 
@@ -30,15 +30,15 @@
                    th:text="|${nurseMain.firstName} ${nurseMain.middleName != null ? nurseMain.middleName + ' ' : ''}${nurseMain.lastName}|">
                 </a>
             </td>
-            <td class="mobail_hidden" th:text="${nurseMain.gender}"></td>
-            <td class="mobail_hidden" th:text="${nurseMain.dateOfBirth}"></td>
-            <td class="mobail_hidden" th:text="${nurseMain.hireDate}"></td>
+            <td class="mobile_hidden" th:text="${nurseMain.gender}"></td>
+            <td class="mobile_hidden" th:text="${nurseMain.dateOfBirth}"></td>
+            <td class="mobile_hidden" th:text="${nurseMain.hireDate}"></td>
             <td th:text="${nurseMain.sts}"></td>
-            <td class="mobail_hidden" th:text="${nurseMain.wt}"></td>
+            <td class="mobile_hidden" th:text="${nurseMain.wt}"></td>
             <td th:text="${nurseMain.writer}"></td>
-            <td class="mobail_hidden" th:text="${#temporals.format(nurseMain.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-            <td class="mobail_hidden" th:text="${nurseMain.modifier}"></td>
-            <td class="mobail_hidden" th:text="${#temporals.format(nurseMain.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="mobile_hidden" th:text="${#temporals.format(nurseMain.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td class="mobile_hidden" th:text="${nurseMain.modifier}"></td>
+            <td class="mobile_hidden" th:text="${#temporals.format(nurseMain.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
