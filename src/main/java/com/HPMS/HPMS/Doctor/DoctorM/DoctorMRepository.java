@@ -1,20 +1,11 @@
 package com.HPMS.HPMS.Doctor.DoctorM;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-
 @Repository
-    public interface DoctorMRepository extends JpaRepository<DoctorM, Integer> {
-//    DoctorM findBySubject(String subject);
-//
-//    DoctorM findBySubjectAndContent(String subject, String content);
-//
-//    List<DoctorM> findBySubjectLike(String subject);
-//
-//    Page<DoctorM> findAll(Pageable pageable);
+public interface DoctorMRepository extends JpaRepository<DoctorM, Integer>, JpaSpecificationExecutor<DoctorM> {
+    // 검색은 Service에서 Specification으로 구현 (모든 컬럼 안전검색)
+
 }

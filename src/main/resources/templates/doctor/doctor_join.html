@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>의사 등록 (메인+디테일)</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 24px; }
+        fieldset { border:1px solid #ddd; border-radius:12px; padding:16px; margin-bottom:16px; }
+        legend { padding:0 8px; color:#333; font-weight:600; }
+        .grid { display:grid; grid-template-columns: 160px 1fr; gap:8px 12px; }
+        .btn { padding:8px 12px; border:1px solid #aaa; border-radius:6px; text-decoration:none; color:#333; }
+        .row { display:flex; gap:8px; align-items:center; margin-top:12px; }
+        .err { color:#c00; font-size:12px; grid-column: 1 / span 2; }
+        input, select { padding:6px; }
+    </style>
+</head>
+<body>
+
+<div class="row">
+    <a class="btn" th:href="@{/doctor}">← 목록</a>
+    <h2>의사 등록 (메인 + 디테일)</h2>
+</div>
+
+<form th:action="@{/doctor/new}" method="post" th:object="${mForm}">
+    <!-- 메인 정보 -->
+    <fieldset>
+        <legend>메인 정보</legend>
+        <div class="grid">
+            <label>부서</label> <input type="text" th:field="*{department}" maxlength="4" required/>
+            <label>진료과</label> <input type="text" th:field="*{medicalDepartment}" maxlength="50"/>
+
+            <label>직급</label> <input type="text" th:field="*{rank}" maxlength="4" required/>
+            <label>직책</label> <input type="text" th:field="*{position}" maxlength="4"/>
+
+            <label>이름</label> <input type="text" th:field="*{firstName}" maxlength="50" required/>
+            <label>성</label>   <input type="text" th:field="*{lastName}" maxlength="50" required/>
+            <label>중간이름</label> <input type="text" th:field="*{middleName}" maxlength="50"/>
+
+            <label>성별</label>
+            <div style="display:flex; gap:12px; align-items:center;">
+                <label><input type="radio" th:field="*{gender}" value="M" required> M</label>
+                <label><input type="radio" th:field="*{gender}" value="F"> F</label>
+            </div>
+
+            <label>생년월일</label> <input type="date" th:field="*{dateOfBirth}" required/>
+            <label>전화번호</label> <input type="text" th:field="*{telephone}" maxlength="20" required/>
+
+            <label>입사일</label> <input type="date" th:field="*{hireDate}" required/>
+
+            <label>상태</label> <input type="text" th:field="*{status}" maxlength="3" required/>
+            <label>근무형태</label> <input type="text" th:field="*{workType}" maxlength="4" required/>
+
+            <!-- 메인 폼 에러 -->
+            <div class="err" th:if="${#fields.hasAnyErrors()}">
+                <div th:each="e: ${#fields.errors('*')}" th:text="${e}">에러</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- 디테일 정보: dForm 바인딩 -->
+    <fieldset th:object="${dForm}">
+        <legend>디테일 정보</legend>
+
+        <div class="grid">
+            <label>이미지 URL</label> <input type="text" th:field="*{image}" maxlength="250" required/>
+            <label>User ID</label>   <input type="text" th:field="*{userId}" maxlength="20" required/>
+            <label>Password</label>  <input type="password" th:field="*{userPassword}" maxlength="100" required/>
+
+            <label>사무실 전화</label> <input type="text" th:field="*{officeTelephone}" maxlength="20" required/>
+            <label>비상연락처</label>  <input type="text" th:field="*{emergencyContact}" maxlength="20"/>
+
+            <label>비상-이름</label> <input type="text" th:field="*{emergencyFirstName}" maxlength="50"/>
+            <label>비상-성</label>   <input type="text" th:field="*{emergencyLastName}" maxlength="50"/>
+            <label>비상-중간이름</label> <input type="text" th:field="*{emergencyMiddleName}" maxlength="50"/>
+            <label>비상-관계</label> <input type="text" th:field="*{emergencyRelation}" maxlength="10"/>
+            <label>비상-비고</label> <input type="text" th:field="*{emergencyNote}" maxlength="250"/>
+
+            <label>이메일</label>    <input type="email" th:field="*{email}" maxlength="250"/>
+            <label>우편번호</label>  <input type="text" th:field="*{postcode}" maxlength="6"/>
+            <label>기본주소</label>  <input type="text" th:field="*{defaultAddress}" maxlength="250"/>
+            <label>상세주소</label>  <input type="text" th:field="*{detailedAddress}" maxlength="250"/>
+
+            <label>면허번호</label>  <input type="text" th:field="*{registrationNumber}" maxlength="10" required/>
+            <label>학력</label>      <input type="text" th:field="*{educationalBackground}" maxlength="100"/>
+            <label>외국어</label>    <input type="text" th:field="*{foreignLanguage}" maxlength="250"/>
+            <label>기타자격증</label> <input type="text" th:field="*{license}" maxlength="250"/>
+
+            <label>전공과</label>    <input type="text" th:field="*{major}" maxlength="50" required/>
+            <label>근무경력</label>  <input type="text" th:field="*{workDependsOnExperience}" maxlength="250"/>
+            <label>수상경력</label>  <input type="text" th:field="*{awards}" maxlength="250"/>
+            <label>학회활동</label>  <input type="text" th:field="*{societyActivity}" maxlength="250"/>
+            <label>학회인증</label>  <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
+
+            <label>병역</label>      <input type="text" th:field="*{militaryService}" maxlength="10"/>
+            <label>국적</label>      <input type="text" th:field="*{nationality}" maxlength="50"/>
+
+            <label>장애 여부</label>
+            <div style="display:flex; gap:12px; align-items:center;">
+                <label><input type="radio" th:field="*{disabilityStatus}" value="Y" required> Y</label>
+                <label><input type="radio" th:field="*{disabilityStatus}" value="N"> N</label>
+            </div>
+            <div class="err"
+                 th:if="${#fields.hasErrors('disabilityStatus')}"
+                 th:errors="*{disabilityStatus}"></div>
+
+            <label>비고</label>
+            <input type="text" th:field="*{note}" maxlength="255"/>
+
+            <!-- 디테일 폼 에러 -->
+            <div class="err" th:if="${#fields.hasAnyErrors()}">
+                <div th:each="e: ${#fields.errors('*')}" th:text="${e}">에러</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="row" style="justify-content:flex-end;">
+        <button class="btn" type="submit">등록</button>
+    </div>
+</form>
+
+</body>
+</html>
