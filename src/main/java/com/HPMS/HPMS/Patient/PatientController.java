@@ -10,6 +10,7 @@ import com.HPMS.HPMS.Patient.PatientM.PatientMService;
 import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,10 +37,17 @@ public class PatientController {
         patientM= this.patientMRepository.getById(1);
         return patientM.getFirstName();
     }
-
+    /*
     @GetMapping("/patient/list")
     public String list(Model model) {
         List<PatientListDTO> patients = this.patientDTOService.getPatientListDTO();
+        model.addAttribute("patients", patients);
+        return "patient/lsw_patient_list";
+    }
+    */
+    @GetMapping("/patient/list")
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        List<PatientListDTO> patients = this.patientDTOService.getPatientListDTO(page);
         model.addAttribute("patients", patients);
         return "patient/lsw_patient_list";
     }

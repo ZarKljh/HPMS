@@ -7,6 +7,7 @@ import com.HPMS.HPMS.Patient.PatientDTO.PatientListDTO.PatientListDTO;
 import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import com.HPMS.HPMS.Patient.PatientM.PatientMService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,16 +24,49 @@ public class PatientDTOService {
     private final PatientMService patientMService;
     private final PatientDTLService patientDTLService;
 
-    public List<PatientListDTO> getPatientListDTO(){
+//    public List<PatientListDTO> getPatientListDTO(){
+//
+//        //환자메인정보 모든 리스트를 service를 통해 가져온다
+//        List<PatientM> patientMs = this.patientMService.getAllPatientM();
+//        //환자리스트html전용 DTO를 담아놓을 신규 List를 생성한다
+//        List<PatientListDTO> dtoList = new ArrayList<>();
+//        //날짜출력용 포멧을 정해놓았다
+//        //DateTimeFormatter birthFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        for( PatientM m : patientMs){
+//            //환자상세정보를 id를 통해 가져온다
+//            PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+//
+//            //환자리스트html 전용 DTO 객체를 선언한다
+//            PatientListDTO dto = new PatientListDTO();
+//
+//            dto.setId(m.getId());
+//            dto.setName(m.getLastName() + " " + m.getFirstName());
+//            dto.setGender(m.getGender());
+//            dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
+//            dto.setForeigner(m.getForeigner());
+//            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+//            dto.setGuardianTel(dtl.getGuardianTel());
+//            dto.setLastVisitDate(dtl.getLastVisitDate());
+//            dto.setCreateDate(m.getCreateDate());
+//
+//            dtoList.add(dto);
+//        }
+//        return dtoList;
+//    }
+
+
+    public List<PatientListDTO> getPatientListDTO(int page){
+
 
         //환자메인정보 모든 리스트를 service를 통해 가져온다
-        List<PatientM> patientMs = this.patientMService.getAllPatientM();
+        Page<PatientM> patientMs = this.patientMService.getAllPatientM(page);
         //환자리스트html전용 DTO를 담아놓을 신규 List를 생성한다
         List<PatientListDTO> dtoList = new ArrayList<>();
         //날짜출력용 포멧을 정해놓았다
         //DateTimeFormatter birthFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        for( PatientM m : patientMs){
+        for( PatientM m : patientMs.getContent()){
             //환자상세정보를 id를 통해 가져온다
             PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
 
@@ -45,7 +79,7 @@ public class PatientDTOService {
             dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
             dto.setForeigner(m.getForeigner());
             dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
-            dto.setGuardianTel(dtl.getGuardianTel());
+            dto.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
             dto.setLastVisitDate(dtl.getLastVisitDate());
             dto.setCreateDate(m.getCreateDate());
 
@@ -53,6 +87,7 @@ public class PatientDTOService {
         }
         return dtoList;
     }
+
 
 
     public PatientDetailDTO getPatientDetailDTO(Integer id){

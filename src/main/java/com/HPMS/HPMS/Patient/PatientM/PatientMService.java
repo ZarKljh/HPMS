@@ -4,6 +4,9 @@ import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTLService;
 import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,9 +21,17 @@ import java.util.Optional;
 public class PatientMService {
     private final PatientMRepository patientMRepository;
     private final PatientDTLService patientDTLService;
+
+    //모든 환자의 Main정보를 가져온다
     public List<PatientM> getAllPatientM(){
         return this.patientMRepository.findAll();
     }
+
+    public Page<PatientM> getAllPatientM(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.patientMRepository.findAll(pageable);
+    }
+
     public PatientM getPatientM(Integer id){
         Optional<PatientM> patientM = this.patientMRepository.findById(id);
         if (patientM.isPresent()) {
