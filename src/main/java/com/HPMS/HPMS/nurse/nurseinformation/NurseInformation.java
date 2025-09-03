@@ -17,7 +17,7 @@ public class NurseInformation {
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "NURSE_ID")
+    @JoinColumn(name = "NURSE_ID", unique = true)
     private NurseMain nurseMain; //간호사 번호
 
     @Column(length = 50, name = "FIRST_NAME")

@@ -1,0 +1,54 @@
+<html layout:decorate="~{nurse/nurse_layout}">
+<div layout:fragment="content" class="container my-3">
+  <h1 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h1>
+
+  <form class="card my-3" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div>
+      <label>부서:</label>
+      <input type="text" th:field="*{dept}" required />
+    </div>
+    <div>
+      <label>직급:</label>
+      <input type="text" th:field="*{rank}" required />
+    </div>
+    <div>
+      <label>성함:</label>
+      <input type="text" th:field="*{firstName}" placeholder="이름" required />
+      <input type="text" th:field="*{lastName}" placeholder="성" required />
+      <input type="text" th:field="*{middleName}" placeholder="중간이름" />
+    </div>
+    <div>
+      <label>성별:</label>
+      <select th:field="*{gender}" required>
+        <option value="">선택</option>
+        <option value="M">남</option>
+        <option value="F">여</option>
+      </select>
+    </div>
+    <div>
+      <label>생년월일:</label>
+      <input type="date" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
+    </div>
+    <div>
+      <label>입사일:</label>
+      <input type="date" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
+    </div>
+    <div>
+      <label>상태:</label>
+      <input type="text" th:field="*{sts}" required />
+    </div>
+    <div>
+      <label>근무형태:</label>
+      <input type="text" th:field="*{wt}" required />
+    </div>
+    <div>
+      <label>작성자:</label>
+      <input type="text" th:field="*{writer}" required />
+    </div>
+
+    <div>
+      <button class="btn btn-primary" type="submit">다음 단계</button>
+    </div>
+  </form>
+</div>

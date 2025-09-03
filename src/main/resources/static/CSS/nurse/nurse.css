@@ -1,0 +1,99 @@
+// 노멀라이징
+body, ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+// 네비게이션
+.navbar-toggle {
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+@media screen and (min-width: 990px) {
+	.navbar-toggle {
+		display: none;
+	}
+}
+.menubox_2 {
+	position: absolute;
+	right: -200px;
+	top: 101%;
+	width: 200px;
+	height: 100vh;
+	border-left: 1px solid #dee2e6;
+	background-color: #f8f9fa;
+	transition: right 0.3s;
+
+}
+.menubox_2.active {
+	right: 0;
+}
+.nav-link {
+	padding: 10px 20px;
+}
+
+// 리스트 페이지
+.container {
+	width: 1920px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.listbox {
+	padding-top: 10px;
+}
+table {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+tr {
+	display: flex;
+	flex-grow: 1;
+	justify-content: space-around;
+}
+.list {
+	justify-content: space-around;
+	text-align: center;
+	line-height: 60px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 70px;
+	background-color: #cff4fc;
+	border-bottom: 1px solid gray;
+}
+th {
+	display: block;
+	width: 80px;
+	text-wrap: nowrap;
+	font-size: 16px;
+}
+td {
+	width: 80px;
+	text-wrap: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-grow: 1;
+	font-size: 12px;
+}
+.page {
+	position: relative;
+}
+div > .btn {
+	position: absolute;
+	bottom: 0;
+	right: 40px;
+	text-wrap: nowrap;
+}
+
+@media screen and (max-width: 993px) {
+	.mobail_hidden {
+		display: none;
+		width: 300px;
+	}
+}
