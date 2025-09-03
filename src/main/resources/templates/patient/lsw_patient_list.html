@@ -1,33 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<table border="1">
-    <thead>
-    <tr>
-        <th>환자ID</th>
-        <th>성명</th>
-        <th>성별</th>
-        <th>생년월일</th>
-        <th>내/외국인</th>
-        <th>휴대전화</th>
-        <th>보호자 연락처</th>
-        <th>최종 방문일</th>
-        <th>등록일</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="patient : ${patients}">
-        <td th:text="${patient.id}"></td>
-        <td>
-            <a th:href="@{|/patient/detail/${patient.id}|}" th:text="${patient.name}"></a>
-        </td>
-        <td th:text="${patient.gender}"></td>
-        <td th:text="${#temporals.format(patient.birth,'yyyy-MM-dd')}"></td>
-        <td th:text="${patient.foreigner == '1' ? '외국인' : '내국인'}"></td>
-        <td th:text="${patient.mobilePhone}"></td>
-        <td th:text="${patient.guardianTel}"></td>
-        <td th:text="${#temporals.format(patient.lastVisitDate,'yyyy-MM-dd')}"></td>
-        <td th:text="${#temporals.format(patient.createDate,'yyyy-MM-dd')}"></td>
-    </tr>
-    </tbody>
-</table>
+<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<div layout:fragment="content" class="container">
+    <h2 class="listbox">Patient List</h2>
+    <table class="table table-hover card">
+        <thead class="table-info">
+        <tr class="list text-center">
+
+            <th class="mobail_hidden">환자ID</th>
+            <th>성명</th>
+            <th>성별</th>
+            <th>생년월일</th>
+            <th  class="mobail_hidden">내/외국인</th>
+            <th>휴대전화</th>
+            <th  class="mobail_hidden">보호자 연락처</th>
+            <th  class="mobail_hidden">최종 방문일</th>
+            <th  class="mobail_hidden">등록일</th>
+        </tr>
+        </thead>
+
+        <tbody class="text-center">
+        <tr class="text-center" th:each="patient : ${patients}">
+
+            <td class="mobail_hidden" th:text="${patient.id}"></td>
+            <td>
+                <a th:href="@{|/patient/detail/${patient.id}|}" th:text="${patient.name}"></a>
+            </td>
+            <td th:text="${patient.gender}"></td>
+            <td th:text="${#temporals.format(patient.birth,'yyyy-MM-dd')}"></td>
+            <td class="mobail_hidden" th:text="${patient.foreigner == '1' ? '외국인' : '내국인'}"></td>
+            <td th:text="${patient.mobilePhone}"></td>
+            <td class="mobail_hidden" th:text="${patient.guardianTel}"></td>
+            <td class="mobail_hidden" th:text="${#temporals.format(patient.lastVisitDate,'yyyy-MM-dd')}"></td>
+            <td class="mobail_hidden" th:text="${#temporals.format(patient.createDate,'yyyy-MM-dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </html>
