@@ -1,17 +1,17 @@
 package com.HPMS.HPMS.Doctor.DoctorDTL;
 
 import com.HPMS.HPMS.Doctor.DoctorM.DoctorM;
-import com.sun.jna.platform.win32.OaIdl;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // ✅ JPA 기본 생성자 추가
+@AllArgsConstructor
 @Entity
 @Table(name = "TBL_DOCTOR_DTL")
 public class DoctorDTL {
@@ -52,9 +52,9 @@ public class DoctorDTL {
     @Column(name = "OFF_TEL", length = 20, nullable = false, unique = true)
     private String officeTelephone;
 
-    /** 비상연락처: VARCHAR(20), UNIQUE (NULL 허용) */
+    /** 비상연락처: VARCHAR(20) */
     @Size(max = 20)
-    @Column(name = "EMGC_CNTC", length = 20, unique = true)
+    @Column(name = "EMGC_CNTC", length = 20)
     private String emergencyContact;
 
     /** 비상연락처-이름: VARCHAR(50) */
@@ -85,7 +85,7 @@ public class DoctorDTL {
     /** 이메일: VARCHAR(250) */
     @Email
     @Size(max = 250)
-    @Column(name = "EMAIL", length = 250)
+    @Column(name = "EMAIL", length = 250, unique = true)
     private String email;
 
     /** 우편번호: VARCHAR(6) */
@@ -191,12 +191,12 @@ public class DoctorDTL {
     private String note;
 
     /** 생성/수정 자동 세팅 */
-    @PrePersist //DB에 INSERT 직전에 메서드 실행
+    @PrePersist
     protected void onCreate() {
         if (this.createDate == null) this.createDate = LocalDateTime.now();
     }
 
-    @PreUpdate  //DB에 UPDATE 직전에 메서드 실행
+    @PreUpdate
     protected void onUpdate() {
         this.modifyDate = LocalDateTime.now();
     }

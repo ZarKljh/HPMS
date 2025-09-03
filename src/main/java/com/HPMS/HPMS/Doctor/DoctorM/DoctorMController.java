@@ -1,28 +1,118 @@
 package com.HPMS.HPMS.Doctor.DoctorM;
 
+import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTL;
+import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTLForm;
+import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTLService;
+import jakarta.persistence.PreRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
 
-/*
-@RequestMapping("/doctor")
-@RequiredArgsConstructor
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 @Controller
+@RequiredArgsConstructor
 public class DoctorMController {
-    private final DoctorMService DoctorMService;
 
-    @GetMapping("/doctor/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw){
-        Page<DoctorM> paging = this.DoctorMService.getList(page,kw);
-        model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
-        return "doctorM_list";
+    private final DoctorMService service;
+    private final DoctorDTLService doctorDTLService;
+
+    /** 목록/검색 (메인만) */
+    @GetMapping("/doctor")
+    public String listPage(@RequestParam(required = false) String q,
+                           @RequestParam(defaultValue = "0") Integer page,
+                           @RequestParam(defaultValue = "10") Integer size,
+                           Model model) {
+        Page<DoctorM> result = service.search(q, page, size);
+        model.addAttribute("q", q);
+        model.addAttribute("page", result);
+        model.addAttribute("currentPage", result.getNumber());
+        model.addAttribute("totalPages", Math.max(result.getTotalPages(), 1));
+        model.addAttribute("totalElements", result.getTotalElements());
+        return "doctor/doctor";
+    }
+
+    /** 신규: 메인+디테일 통합 입력 폼 */
+    @GetMapping("/doctor/new")
+    public String newAllForm(Model model) {
+        if (!model.containsAttribute("mForm")) model.addAttribute("mForm", new DoctorMForm());
+        if (!model.containsAttribute("dForm")) model.addAttribute("dForm", new DoctorDTLForm());
+        return "doctor/doctor_join";
+    }
+
+    /** 신규 처리: 메인+디테일 */
+    @PostMapping("/doctor/new")
+    public String newAllSubmit(@Valid @ModelAttribute("mForm") DoctorMForm mForm,
+                               BindingResult mBinding,
+                               @Valid @ModelAttribute("dForm") DoctorDTLForm dForm,
+                               BindingResult dBinding,
+                               RedirectAttributes redirect) {
+        if (mBinding.hasErrors() || dBinding.hasErrors()) {
+            redirect.addFlashAttribute("org.springframework.validation.BindingResult.mForm", mBinding);
+            redirect.addFlashAttribute("org.springframework.validation.BindingResult.dForm", dBinding);
+            redirect.addFlashAttribute("mForm", mForm);
+            redirect.addFlashAttribute("dForm", dForm);
+            return "redirect:/doctor/new";
+        }
+        Integer id = doctorDTLService.createMainAndDetail(mForm, dForm);
+        return "redirect:/doctor/detail?id=" + id;
+    }
+
+    /** 수정: 메인+디테일 통합 폼 */
+    @GetMapping("/doctor/edit/{id}")
+    public String editAllForm(@PathVariable Integer id, Model model, RedirectAttributes redirect) {
+        try {
+            DoctorM main = service.get(id);
+            if (!model.containsAttribute("mForm")) {
+                DoctorMForm mForm = DoctorMForm.fromEntity(main);
+                model.addAttribute("mForm", mForm);
+            }
+
+            DoctorDTL detail = null;
+            try { detail = doctorDTLService.getByDoctorId(id); } catch (Exception ignore) {}
+            if (!model.containsAttribute("dForm")) {
+                DoctorDTLForm dForm = (detail != null) ? DoctorDTLForm.fromEntity(detail) : new DoctorDTLForm();
+                dForm.setDoctorId(id);
+                model.addAttribute("dForm", dForm);
+            }
+
+            model.addAttribute("doctorId", id);
+            return "doctor/doctor_edit";
+        } catch (IllegalArgumentException e) {
+            redirect.addFlashAttribute("error", "해당 의사 정보가 없습니다.");
+            return "redirect:/doctor";
+        }
+    }
+
+    /** 수정 처리: 메인+디테일 */
+    @PostMapping("/doctor/edit/{id}")
+    public String editAllSubmit(@PathVariable Integer id,
+                                @Valid @ModelAttribute("mForm") DoctorMForm mForm,
+                                BindingResult mBinding,
+                                @Valid @ModelAttribute("dForm") DoctorDTLForm dForm,
+                                BindingResult dBinding,
+                                RedirectAttributes redirect) {
+        if (mBinding.hasErrors() || dBinding.hasErrors()) {
+            redirect.addFlashAttribute("org.springframework.validation.BindingResult.mForm", mBinding);
+            redirect.addFlashAttribute("org.springframework.validation.BindingResult.dForm", dBinding);
+            redirect.addFlashAttribute("mForm", mForm);
+            redirect.addFlashAttribute("dForm", dForm);
+            return "redirect:/doctor/edit/" + id;
+        }
+        doctorDTLService.updateMainAndDetail(id, mForm, dForm);
+        return "redirect:/doctor/detail?id=" + id;
+    }
+
+    /** 삭제: 상세 하단 버튼에서 사용 */
+
+    @GetMapping("/doctor/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirect) {
+        service.delete(id);
+        redirect.addFlashAttribute("msg", "삭제되었습니다.");
+        return "redirect:/doctor";
     }
 }
-
- */

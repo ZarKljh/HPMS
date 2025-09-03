@@ -74,7 +74,7 @@ public class DoctorM {
     /** 전화번호: VARCHAR(20), NOT NULL */
     @NotBlank
     @Size(max = 20)
-    @Column(name = "TEL", length = 20, nullable = false)
+    @Column(name = "TEL", length = 20, nullable = false, unique = true)
     private String telephone;
 
     /** 입사일: INT(8) → LocalDate, NOT NULL */
