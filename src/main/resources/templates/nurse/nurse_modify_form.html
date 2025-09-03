@@ -1,0 +1,132 @@
+<html layout:decorate="~{nurse/nurse_layout}">
+<div layout:fragment="content" class="container my-3">
+  <div th:if="${errorMessage != null}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+  </div>
+  <form th:action="@{/nurse/modify/{id}(id=${nurseDTO.nurseMain.id})}"
+        th:object="${nurseDTO}" method="post">
+
+    <h1 class="border-bottom py-2">간호사 정보 수정</h1>
+
+    <!-- 사진 -->
+    <div>
+      <label>사진 URL</label>
+      <input type="text" th:field="*{nurseInformation.picture}"
+             placeholder="https://example.com/photo.jpg" class="form-control"/>
+      <div class="mt-2">
+        <img th:if="*{nurseInformation.picture != null}"
+             th:src="*{nurseInformation.picture}"
+             alt="nurse Image" style="max-height:150px"/>
+        <span th:if="*{nurseInformation.picture == null}">사진 없음</span>
+      </div>
+    </div>
+
+    <!-- NurseMain 정보 -->
+    <div class="nursemain card my-3 p-3">
+      <h3>기본 정보</h3>
+      <label>이름</label>
+      <input type="text" th:field="*{nurseMain.firstName}" class="form-control"/>
+
+      <label>중간 이름</label>
+      <input type="text" th:field="*{nurseMain.middleName}" class="form-control"/>
+
+      <label>성</label>
+      <input type="text" th:field="*{nurseMain.lastName}" class="form-control"/>
+
+      <label>부서</label>
+      <input type="text" th:field="*{nurseMain.dept}" class="form-control"/>
+
+      <label>직급</label>
+      <input type="text" th:field="*{nurseMain.rank}" class="form-control"/>
+
+      <label>성별</label>
+      <input type="text" th:field="*{nurseMain.gender}" class="form-control"/>
+
+      <label>생년월일</label>
+      <input type="date" th:field="*{nurseMain.dateOfBirth}" class="form-control"/>
+
+      <label>입사일</label>
+      <input type="date" th:field="*{nurseMain.hireDate}" class="form-control"/>
+
+      <label>상태</label>
+      <input type="text" th:field="*{nurseMain.sts}" class="form-control"/>
+
+      <label>근무형태</label>
+      <input type="text" th:field="*{nurseMain.wt}" class="form-control"/>
+
+      <label>수정자</label>
+      <input type="text" th:field="*{nurseMain.modifier}" class="form-control"/>
+    </div>
+
+    <!-- NurseInformation 정보 -->
+    <div class="nurseinformation card my-3 p-3"
+         th:if="*{nurseInformation != null}">
+      <h3>상세 정보</h3>
+
+      <label>서브 이름</label>
+      <input type="text" th:field="*{nurseInformation.firstName}" class="form-control"/>
+
+      <label>전화번호</label>
+      <input type="text" th:field="*{nurseInformation.tel}" class="form-control"/>
+
+      <label>비상연락처</label>
+      <input type="text" th:field="*{nurseInformation.emgcCntc}" class="form-control"/>
+
+      <label>비상연락처주 성함</label>
+      <input type="text" th:field="*{nurseInformation.emgcFName}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcMName}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcLName}" class="form-control"/>
+
+      <label>비상연락처 관계</label>
+      <input type="text" th:field="*{nurseInformation.emgcRel}" class="form-control"/>
+
+      <label>비상연락처 비고</label>
+      <input type="text" th:field="*{nurseInformation.emgcNote}" class="form-control"/>
+
+      <label>이메일</label>
+      <input type="text" th:field="*{nurseInformation.email}" class="form-control"/>
+
+      <label>우편번호</label>
+      <input type="text" th:field="*{nurseInformation.pcd}" class="form-control"/>
+
+      <label>기본주소</label>
+      <input type="text" th:field="*{nurseInformation.defAdd}" class="form-control"/>
+
+      <label>상세주소</label>
+      <input type="text" th:field="*{nurseInformation.detAdd}" class="form-control"/>
+
+      <label>자격증 번호</label>
+      <input type="text" th:field="*{nurseInformation.rnNo}" class="form-control"/>
+
+      <label>최종학력</label>
+      <input type="text" th:field="*{nurseInformation.edbc}" class="form-control"/>
+
+      <label>졸업일</label>
+      <input type="date" th:field="*{nurseInformation.gradDate}" class="form-control"/>
+
+      <label>외국어</label>
+      <input type="text" th:field="*{nurseInformation.fl}" class="form-control"/>
+
+      <label>병역</label>
+      <input type="text" th:field="*{nurseInformation.ms}" class="form-control"/>
+
+      <label>국적</label>
+      <input type="text" th:field="*{nurseInformation.natn}" class="form-control"/>
+
+      <label>장애 여부</label>
+      <input type="text" th:field="*{nurseInformation.dss}" class="form-control"/>
+
+      <label>경력</label>
+      <input type="text" th:field="*{nurseInformation.carr}" class="form-control"/>
+
+      <label>비고</label>
+      <textarea th:field="*{nurseInformation.note}" class="form-control"></textarea>
+    </div>
+
+    <div class="my-3">
+      <button type="submit" class="btn btn-primary">저장</button>
+      <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}"
+         class="btn btn-secondary">취소</a>
+    </div>
+  </form>
+</div>

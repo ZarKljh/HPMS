@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class DoctorMController {
 
+
     private final DoctorMService service;
     private final DoctorDTLService doctorDTLService;
 
@@ -115,4 +116,5 @@ public class DoctorMController {
         redirect.addFlashAttribute("msg", "삭제되었습니다.");
         return "redirect:/doctor";
     }
+
 }

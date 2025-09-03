@@ -17,6 +17,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class DoctorMService {
 
+
     private final DoctorMRepository repository;
 
     public DoctorM get(Integer id) {
@@ -77,4 +78,5 @@ public class DoctorMService {
         if (!repository.existsById(id)) throw new IllegalArgumentException("이미 삭제되었거나 존재하지 않습니다.");
         repository.deleteById(id);
     }
+
 }

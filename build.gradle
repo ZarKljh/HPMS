@@ -37,6 +37,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+/*    implementation 'org.slf4j:slf4j-api:1.7.36' // 또는 최신 버전
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'*/
+    // implementation 'org.slf4j:slf4j-simple:1.7.36' // 콘솔 출력용 - 충돌로 인해 제외함
+
 // jpa
 
 	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.0'
@@ -46,7 +51,8 @@ dependencies {
 // validation
 
 // security
-
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 }
 
 tasks.named('test') {

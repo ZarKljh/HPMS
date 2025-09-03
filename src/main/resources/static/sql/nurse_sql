@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS HPMS;
+CREATE DATABASE HPMS;
+USE HPMS;
+
+
 CREATE TABLE NURSE_MAIN (
 	ID INT(4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '테이블 고유값, 자동 증가, 간호사 고유 ID',
 	DEPT VARCHAR(10) NOT NULL COMMENT '부서',
@@ -23,7 +28,7 @@ CREATE TABLE NURSE_INFORMATION (
 	CONSTRAINT fk_nurse
       FOREIGN KEY (NURSE_ID)
       REFERENCES NURSE_MAIN(ID),
-    FIRST_NAME VARCHAR(50) COMMENT '성명-이름',
+  FIRST_NAME VARCHAR(50) COMMENT '성명-이름',
 	LAST_NAME VARCHAR(50) COMMENT '성명-성',
 	MIDDLE_NAME VARCHAR(50) COMMENT '성명-중간이름',
 	TEL VARCHAR(25) NOT NULL COMMENT '전화번호',
@@ -62,19 +67,3 @@ CREATE TABLE LICENSE (
 	EXPIRY_DATE VARCHAR(8) COMMENT '유효날짜',
 	NOTE VARCHAR(250)
 	);
-
-
--- nursemain -> 테스트 정보
-INSERT INTO NURSE_MAIN
-(DEPT, RANK, FIRST_NAME, LAST_NAME, MIDDLE_NAME, GENDER, DATE_OF_BIRTH, HIREDATE, STS, WT, WRITER, CREATE_DATE, MODIFIER, MODIFY_DATE)
-VALUES
-('PAD', 'RN', 'Jisoo', 'Kim', 'M', 'F', 19900101, 20200101, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('GAD', 'SN', 'Minho', 'Lee', 'J', 'M', 19880512, 20190515, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PLD', 'RN', 'Soyeon', 'Park', 'H', 'F', 19920708, 20210120, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
-('SPBD', 'SN', 'Jiwon', 'Choi', 'K', 'F', 19911222, 20180310, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('HRD', 'RN', 'Hyunwoo', 'Jung', 'L', 'M', 19891205, 20190601, '휴직', '파트타임', 'admin', NOW(), NULL, NOW()),
-('METD', 'SN', 'Seojin', 'Yoon', 'S', 'F', 19930515, 20200201, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('HIMD', 'RN', 'Taeyang', 'Kang', 'D', 'M', 19881010, 20180115, '퇴직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PAD', 'RN', 'Nari', 'Han', 'E', 'F', 19940228, 20210301, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
-('GAD', 'SN', 'Joon', 'Lim', 'P', 'M', 19900130, 20200715, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PLD', 'RN', 'Hana', 'Cho', 'Q', 'F', 19920725, 20201210, '재직', '파트타임', 'admin', NOW(), NULL, NOW());
