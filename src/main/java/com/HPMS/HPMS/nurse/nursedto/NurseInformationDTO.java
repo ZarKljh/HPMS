@@ -20,7 +20,7 @@ public class NurseInformationDTO {
     private String detAdd;
     private String rnNo;
     private String edbc;
-    private String gradDate; // Integer → String
+    private Integer gradDate;
     private String fl;
     private String ms;
     private String natn;
@@ -33,7 +33,7 @@ public class NurseInformationDTO {
                                String emgcCntc, String emgcFName, String emgcLName, String emgcMName,
                                String emgcRel, String emgcNote, String email, Integer pcd,
                                String defAdd, String detAdd, String rnNo, String edbc,
-                               String gradDate, String fl, String ms, String natn,
+                               Integer gradDate, String fl, String ms, String natn,
                                String dss, String carr, String picture, String note) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -15,8 +15,8 @@ public class NurseMainDTO {
     private String dept;
     private String rank;
     private String gender;
-    private String dateOfBirth; // 19890315 -> "1989-03-15"
-    private String hireDate;    // 20190101 -> "2019-01-01"
+    private Integer dateOfBirth; // 19890315 -> "1989-03-15"
+    private Integer hireDate;    // 20190101 -> "2019-01-01"
     private String sts;         // 상태 (재직중 / 휴직 / 퇴직 등)
     private String wt;          // 근무형태 (정규직 / 계약직 / 파트타임 등)
     private String writer;      // 작성자
@@ -26,7 +26,7 @@ public class NurseMainDTO {
 
     // 모든 필드를 포함한 생성자
     public NurseMainDTO(Integer id, String firstName, String middleName, String lastName, String dept,
-                        String rank, String gender, String dateOfBirth, String hireDate,
+                        String rank, String gender, Integer dateOfBirth, Integer hireDate,
                         String sts, String wt, String writer, LocalDateTime createDate,
                         String modifier, LocalDateTime modifyDate) {
         this.id = id;

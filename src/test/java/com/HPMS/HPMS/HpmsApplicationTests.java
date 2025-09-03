@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +34,8 @@ class HpmsApplicationTests {
 		n1.setLastName("김");
 		n1.setMiddleName("");
 		n1.setGender("F");
-		n1.setDateOfBirth(LocalDate.now());
-		n1.setHireDate(LocalDate.now());
+		n1.setDateOfBirth(12312312);
+		n1.setHireDate(12312312);
 		n1.setSts("재직중");
 		n1.setWt("정규직");
 		n1.setWriter("김진혁");
@@ -52,8 +51,8 @@ class HpmsApplicationTests {
 		n2.setLastName("박");
 		n2.setMiddleName("");
 		n2.setGender("F");
-		n2.setDateOfBirth(LocalDate.now());
-		n2.setHireDate(LocalDate.now());
+		n2.setDateOfBirth(12312312);
+		n2.setHireDate(12312312);
 		n2.setSts("재직중");
 		n2.setWt("정규직");
 		n2.setWriter("김주현");
@@ -145,7 +144,7 @@ class HpmsApplicationTests {
 		i.setDetAdd("어딘가");
 		i.setRnNo("123456");
 		i.setEdbc("xx대학교");
-		i.setGradDate(LocalDate.now());
+		i.setGradDate(12312312);
 		i.setFl("영어, 일본어, 중국어");
 		i.setMs("NO");
 		i.setNatn("한국");

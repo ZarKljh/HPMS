@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS HPMS;
+CREATE DATABASE HPMS;
+USE HPMS;
+
+
 CREATE TABLE NURSE_MAIN (
 	ID INT(4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '테이블 고유값, 자동 증가, 간호사 고유 ID',
 	DEPT VARCHAR(10) NOT NULL COMMENT '부서',
@@ -6,8 +11,8 @@ CREATE TABLE NURSE_MAIN (
 	LAST_NAME VARCHAR(50) COMMENT '성명-성',
 	MIDDLE_NAME VARCHAR(50) COMMENT '성명-중간이름',
 	GENDER VARCHAR(1) NOT NULL COMMENT '성별',
-	DATE_OF_BIRTH DATE NOT NULL COMMENT '생년월일',
-	HIREDATE DATE NOT NULL COMMENT '입사일',
+	DATE_OF_BIRTH  INT(8) NOT NULL COMMENT '생년월일',
+	HIREDATE INT(8) NOT NULL COMMENT '입사일',
 	STS VARCHAR(3) NOT NULL COMMENT '상태, 재직중, 휴직, 퇴직 등',
 	WT VARCHAR(4) NOT NULL COMMENT '근무형태, 정규직 / 계약직 / 파트타임',
 	WRITER VARCHAR(250) NOT NULL COMMENT '작성자',
@@ -23,7 +28,7 @@ CREATE TABLE NURSE_INFORMATION (
 	CONSTRAINT fk_nurse
       FOREIGN KEY (NURSE_ID)
       REFERENCES NURSE_MAIN(ID),
-    FIRST_NAME VARCHAR(50) COMMENT '성명-이름',
+  FIRST_NAME VARCHAR(50) COMMENT '성명-이름',
 	LAST_NAME VARCHAR(50) COMMENT '성명-성',
 	MIDDLE_NAME VARCHAR(50) COMMENT '성명-중간이름',
 	TEL VARCHAR(25) NOT NULL COMMENT '전화번호',
@@ -39,7 +44,7 @@ CREATE TABLE NURSE_INFORMATION (
 	DET_ADD VARCHAR(250) COMMENT '상세주소',
 	RN_NO VARCHAR(6) COMMENT '간호사 자격증 번호',
 	EDBC VARCHAR(50) COMMENT '최종 학력',
-	GRAD_DATE DATE COMMENT '졸업날짜',
+	GRAD_DATE INT(8) COMMENT '졸업날짜',
 	FL VARCHAR(250) COMMENT '외국어',
 	MS VARCHAR(10) COMMENT '병역',
 	NATN VARCHAR(50) COMMENT '국적',
@@ -62,34 +67,3 @@ CREATE TABLE LICENSE (
 	EXPIRY_DATE VARCHAR(8) COMMENT '유효날짜',
 	NOTE VARCHAR(250)
 	);
-
-
--- NURSE_MAIN -> 테스트 정보
-INSERT INTO NURSE_MAIN
-(DEPT, RANK, FIRST_NAME, LAST_NAME, MIDDLE_NAME, GENDER, DATE_OF_BIRTH, HIREDATE, STS, WT, WRITER, CREATE_DATE, MODIFIER, MODIFY_DATE)
-VALUES
-('PAD', 'RN', 'Jisoo', 'Kim', 'M', 'F', 19900101, 20200101, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('GAD', 'SN', 'Minho', 'Lee', 'J', 'M', 19880512, 20190515, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PLD', 'RN', 'Soyeon', 'Park', 'H', 'F', 19920708, 20210120, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
-('SPBD', 'SN', 'Jiwon', 'Choi', 'K', 'F', 19911222, 20180310, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('HRD', 'RN', 'Hyunwoo', 'Jung', 'L', 'M', 19891205, 20190601, '휴직', '파트타임', 'admin', NOW(), NULL, NOW()),
-('METD', 'SN', 'Seojin', 'Yoon', 'S', 'F', 19930515, 20200201, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('HIMD', 'RN', 'Taeyang', 'Kang', 'D', 'M', 19881010, 20180115, '퇴직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PAD', 'RN', 'Nari', 'Han', 'E', 'F', 19940228, 20210301, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
-('GAD', 'SN', 'Joon', 'Lim', 'P', 'M', 19900130, 20200715, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
-('PLD', 'RN', 'Hana', 'Cho', 'Q', 'F', 19920725, 20201210, '재직', '파트타임', 'admin', NOW(), NULL, NOW());
-
--- NURSE_INFORMATION -> 테스트 정보
-INSERT INTO NURSE_INFORMATION
-(NURSE_ID, FIRST_NAME, LAST_NAME, MIDDLE_NAME, TEL, EMGC_CNTC, EMGC_F_NAME, EMGC_L_NAME, EMGC_M_NAME, EMGC_REL, EMGC_NOTE, EMAIL, PCD, DEF_ADD, DET_ADD, RN_NO, EDBC, GRAD_DATE, FL, MS, NATN, DSS, CARR, PICTURE, NOTE)
-VALUES
-(1, 'Jisun', 'Kim', 'A', '010-1111-0001', '010-9999-0001', 'Min', 'Kim', 'B', 'Father', 'N/A', 'jisun1@test.com', 123456, 'Seoul', 'Gangnam', 'RN001', 'Bachelor', 20180101, 'English', 'N', 'Korean', 'N', 12, 'pic1.jpg', 'Test note 1'),
-(2, 'Hana', 'Lee', 'C', '010-1111-0002', '010-9999-0002', 'Jun', 'Lee', 'D', 'Mother', 'N/A', 'hana2@test.com', 123457, 'Seoul', 'Jongno', 'RN002', 'Master', 20170201, 'Japanese', 'N', 'Korean', 'N', 24, 'pic2.jpg', 'Test note 2'),
-(3, 'Minho', 'Park', 'E', '010-1111-0003', '010-9999-0003', 'Soo', 'Park', 'F', 'Father', 'N/A', 'minho3@test.com', 123458, 'Busan', 'Haeundae', 'RN003', 'Bachelor', 20190315, 'Chinese', 'Y', 'Korean', 'N', 36, 'pic3.jpg', 'Test note 3'),
-(4, 'Jiwon', 'Choi', 'G', '010-1111-0004', '010-9999-0004', 'Hye', 'Choi', 'H', 'Mother', 'N/A', 'jiwon4@test.com', 123459, 'Incheon', 'Bupyeong', 'RN004', 'Bachelor', 20180420, 'French', 'N', 'Korean', 'Y', 48, 'pic4.jpg', 'Test note 4'),
-(5, 'Soojin', 'Jung', 'I', '010-1111-0005', '010-9999-0005', 'Dong', 'Jung', 'J', 'Father', 'N/A', 'soojin5@test.com', 123460, 'Daegu', 'Suseong', 'RN005', 'Master', 20190110, 'German', 'N', 'Korean', 'N', 60, 'pic5.jpg', 'Test note 5'),
-(6, 'Hyun', 'Yoon', 'K', '010-1111-0006', '010-9999-0006', 'Eun', 'Yoon', 'L', 'Mother', 'N/A', 'hyun6@test.com', 123461, 'Daejeon', 'Yuseong', 'RN006', 'Bachelor', 20170505, 'Spanish', 'Y', 'Korean', 'N', 72, 'pic6.jpg', 'Test note 6'),
-(7, 'Taehyung', 'Kang', 'M', '010-1111-0007', '010-9999-0007', 'Ji', 'Kang', 'N', 'Father', 'N/A', 'taehyung7@test.com', 123462, 'Gwangju', 'Buk', 'RN007', 'Bachelor', 20200101, 'English', 'N', 'Korean', 'N', 84, 'pic7.jpg', 'Test note 7'),
-(8, 'Nari', 'Shin', 'O', '010-1111-0008', '010-9999-0008', 'Hoon', 'Shin', 'P', 'Mother', 'N/A', 'nari8@test.com', 123463, 'Suwon', 'Gwonseon', 'RN008', 'Master', 20180606, 'Japanese', 'N', 'Korean', 'N', 96, 'pic8.jpg', 'Test note 8'),
-(9, 'Dongho', 'Lim', 'Q', '010-1111-0009', '010-9999-0009', 'Sang', 'Lim', 'R', 'Father', 'N/A', 'dongho9@test.com', 123464, 'Ulsan', 'Nam', 'RN009', 'Bachelor', 20190303, 'Chinese', 'Y', 'Korean', 'N', 108, 'pic9.jpg', 'Test note 9'),
-(10, 'Yuna', 'Han', 'S', '010-1111-0010', '010-9999-0010', 'Ji', 'Han', 'T', 'Mother', 'N/A', 'yuna10@test.com', 123465, 'Jeju', 'Jeju-si', 'RN010', 'Master', 20190202, 'French', 'N', 'Korean', 'N', 120, 'pic10.jpg', 'Test note 10');

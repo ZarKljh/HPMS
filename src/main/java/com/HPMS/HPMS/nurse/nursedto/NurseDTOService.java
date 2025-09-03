@@ -24,9 +24,6 @@ public class NurseDTOService {
         if (nmOpt.isEmpty()) return null;
         NurseMain nm = nmOpt.get();
 
-        String dateOfBirthStr = formatDate(nm.getDateOfBirth());
-        String hireDateStr = formatDate(nm.getHireDate());
-
         NurseMainDTO mainDTO = new NurseMainDTO(
                 nm.getId(),
                 nm.getFirstName(),
@@ -35,8 +32,8 @@ public class NurseDTOService {
                 nm.getDept(),
                 nm.getRank(),
                 nm.getGender(),
-                dateOfBirthStr,
-                hireDateStr,
+                nm.getDateOfBirth(),
+                nm.getHireDate(),
                 nm.getSts(),
                 nm.getWt(),
                 nm.getWriter(),
@@ -63,7 +60,7 @@ public class NurseDTOService {
                 ni.getDetAdd(),
                 ni.getRnNo(),
                 ni.getEdbc(),
-                formatDate(ni.getGradDate()),
+                ni.getGradDate(),
                 ni.getFl(),
                 ni.getMs(),
                 ni.getNatn(),
@@ -97,8 +94,8 @@ public class NurseDTOService {
         nm.setDept(m.getDept());
         nm.setRank(m.getRank());
         nm.setGender(m.getGender());
-        nm.setDateOfBirth(LocalDate.parse(m.getDateOfBirth(), formatter));
-        nm.setHireDate(LocalDate.parse(m.getHireDate(), formatter));
+        nm.setDateOfBirth(m.getDateOfBirth());
+        nm.setHireDate(m.getHireDate());
         nm.setSts(m.getSts());
         nm.setWt(m.getWt());
         nm.setModifier(m.getModifier());
@@ -127,7 +124,7 @@ public class NurseDTOService {
             ni.setDetAdd(i.getDetAdd());
             ni.setRnNo(i.getRnNo());
             ni.setEdbc(i.getEdbc());
-            ni.setGradDate(LocalDate.parse(i.getGradDate(), formatter));
+            ni.setGradDate(i.getGradDate());
             ni.setFl(i.getFl());
             ni.setMs(i.getMs());
             ni.setNatn(i.getNatn());
