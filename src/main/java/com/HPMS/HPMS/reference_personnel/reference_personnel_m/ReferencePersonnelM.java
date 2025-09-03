@@ -47,6 +47,7 @@ public class ReferencePersonnelM {
     @OneToOne(mappedBy = "personnel", cascade = CascadeType.ALL)
     private ReferencePersonnelDtl detail;
 
+
     /*
     ReferencePersonnelM m = new ReferencePersonnelM();
     ReferencePersonnelDtl dtl = new ReferencePersonnelDtl();
