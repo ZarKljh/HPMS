@@ -21,7 +21,7 @@
         </thead>
 
         <tbody class="text-center">
-        <tr class="table-group-divider text-center" th:each="nurseMain, loop : ${paging}">
+        <tr class="text-center" th:each="nurseMain, loop : ${paging}">
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
