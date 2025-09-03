@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.global;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import lombok.Setter;
 @Entity
 @Table(
         name = "MEDICAL_DEPARTMENT",
+
+
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"KOREAN_NAME", "CODE"})
         }
@@ -22,6 +25,7 @@ public class MedicalDepartment {
     private Integer id;
 
 
+
     @Column(name = "KOREAN_NAME", nullable = false, length = 100, columnDefinition = "VARCHAR(100) COMMENT '과목명(한글)'")
     private String koreanName;
 
@@ -33,4 +37,5 @@ public class MedicalDepartment {
     @Column(name = "ENGLISH_NAME", nullable = false, length = 200, columnDefinition = "VARCHAR(200) COMMENT '과목명(영문)'")
     private String englishName;
 }
+
 

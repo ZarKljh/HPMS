@@ -1,8 +1,10 @@
 package com.HPMS.HPMS.global;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -10,10 +12,10 @@ import lombok.Setter;
 @Table(name = "HOSPITAL_ADMINISTRATION_DEPT")
 public class HospitalAdministrationDept {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // 고유 ID
+
 
 
     @Column(name = "CODE", nullable = false, unique = true, length = 10)
@@ -31,4 +33,5 @@ public class HospitalAdministrationDept {
     @Column(name = "CATEGORY", length = 50, columnDefinition = "VARCHAR(50) DEFAULT '병원 행정'")
     private String category; // 구분 카테고리
 }
+
 

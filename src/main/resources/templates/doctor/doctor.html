@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>의사 목록</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 24px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border:1px solid #ddd; padding:8px; }
+        th { background:#fafafa; }
+        .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+        .btn { padding:6px 10px; border:1px solid #aaa; border-radius:6px; text-decoration:none; color:#333; }
+    </style>
+</head>
+<body>
+<h2>의사 목록</h2>
+
+<div class="toolbar">
+    <form th:action="@{/doctor}" method="get" style="display:flex; gap:8px;">
+        <input type="text" name="q" th:value="${q}" placeholder="메인 전 컬럼 검색(문자/ID/날짜)"/>
+        <input type="hidden" name="page" value="0"/>
+        <input type="hidden" name="size" value="10"/>
+        <button class="btn" type="submit">검색</button>
+        <a class="btn" th:href="@{/doctor/new}">신규 등록(메인+디테일)</a>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>부서</th>
+        <th>진료과</th>
+        <th>직급</th>
+        <th>직책</th>
+        <th>성명</th>
+        <th>성별</th>
+        <th>생년월일</th>
+        <th>전화</th>
+        <th>입사일</th>
+        <th>상태</th>
+        <th>근무형태</th>
+        <th>더보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${page.content}">
+        <td th:text="${row.id}">1</td>
+        <td th:text="${row.department}">DEPT</td>
+        <td th:text="${row.medicalDepartment}">MED</td>
+        <td th:text="${row.rank}">RNK</td>
+        <td th:text="${row.position}">POS</td>
+        <td th:text="${row.lastName} + ' ' +${row.middleName}+ ' ' + ${row.firstName}">홍 길동</td>
+        <td th:text="${row.gender}">M</td>
+        <td th:text="${row.dateOfBirth}">1990-01-01</td>
+        <td th:text="${row.telephone}">010-0000-0000</td>
+        <td th:text="${row.hireDate}">2020-01-01</td>
+        <td th:text="${row.status}">ACT</td>
+        <td th:text="${row.workType}">FULL</td>
+        <td>
+            <a class="btn" th:href="@{/doctor/detail(id=${row.id})}">더보기</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="toolbar" style="margin-top:12px;">
+    <span th:text="'총 ' + ${totalElements} + '건'">총 0건</span>
+    <div style="margin-left:auto; display:flex; gap:8px;">
+        <a class="btn" th:if="${currentPage>0}"
+           th:href="@{/doctor(q=${q}, page=${currentPage-1}, size=${page.size})}">이전</a>
+        <span th:text="${currentPage+1} + ' / ' + ${totalPages}">1 / 1</span>
+        <a class="btn" th:if="${currentPage+1<totalPages}"
+           th:href="@{/doctor(q=${q}, page=${currentPage+1}, size=${page.size})}">다음</a>
+    </div>
+</div>
+</body>
+</html>

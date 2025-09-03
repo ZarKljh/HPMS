@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
 @Table(name="HOSPITAL")
 public class Hospital {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
@@ -20,6 +20,7 @@ public class Hospital {
     @Enumerated(EnumType.STRING)
     @Column(name = "HOSPITAL_GROUP", nullable = false, columnDefinition = "ENUM('GP','SH','GH') COMMENT '병원 분류: GP(1차), SH(2차), GH(3차)'")
     private HospitalGroup hospitalGroup;
+
 
 
     @Column(name = "H_NAME", nullable = false, length = 250, columnDefinition = "VARCHAR(250) COMMENT '병원 이름'")
@@ -56,6 +57,8 @@ public class Hospital {
 
     @Column(name = "NOTE", length = 250, columnDefinition = "VARCHAR(250) COMMENT '비고'")
     private String note;
+
+
 
 
     // 병원 분류 ENUM

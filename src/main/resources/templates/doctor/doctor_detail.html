@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>의사 상세</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    fieldset { border:1px solid #ddd; border-radius:12px; padding:16px; margin-bottom:16px; }
+    legend { padding:0 8px; color:#333; font-weight:600; }
+    .grid { display:grid; grid-template-columns: 160px 1fr; gap:8px 12px; }
+    .btn { padding:6px 10px; border:1px solid #aaa; border-radius:6px; text-decoration:none; color:#333; }
+  </style>
+</head>
+<body>
+<div style="display:flex; gap:8px; align-items:center;">
+  <a class="btn" th:href="@{/doctor}">← 목록</a>
+  <h2>의사 상세</h2>
+</div>
+
+<fieldset>
+  <legend>메인 정보</legend>
+  <div class="grid">
+    <div>부서</div><div th:text="${main.department}"></div>
+    <div>진료과</div><div th:text="${main.medicalDepartment}"></div>
+    <div>직급</div><div th:text="${main.rank}"></div>
+    <div>직책</div><div th:text="${main.position}"></div>
+    <div>성명</div><div th:text="${main.lastName} + ' ' + ${main.middleName} + ' ' + ${main.firstName}"></div>
+    <div>성별</div><div th:text="${main.gender}"></div>
+    <div>생년월일</div><div th:text="${main.dateOfBirth}"></div>
+    <div>전화</div><div th:text="${main.telephone}"></div>
+    <div>입사일</div><div th:text="${main.hireDate}"></div>
+    <div>상태</div><div th:text="${main.status}"></div>
+    <div>근무형태</div><div th:text="${main.workType}"></div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>디테일 정보</legend>
+  <div style="display:flex; align-items:flex-start; gap:20px;">
+    <div>
+      <img th:if="${detail != null and detail.image != null}"
+           th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${detail.image})}"
+           alt="프로필 사진" style="max-width:200px;">
+      <div th:if="${detail == null or detail.image == null}">
+        등록된 프로필 사진이 없습니다.
+      </div>
+    </div>
+
+    <div class="grid" style="flex:1;">
+      <div>사무실 전화</div><div th:text="${detail.officeTelephone}"></div>
+      <div>비상연락처</div><div th:text="${detail.emergencyContact}"></div>
+      <div>비상연락처 성명</div><div th:text="${detail.emergencyLastName} + ' ' + ${detail.emergencyMiddleName} + ' ' + ${detail.emergencyFirstName}"></div>
+      <div>비상연락처 관계</div><div th:text="${detail.emergencyRelation}"></div>
+      <div>비상연락처 비고</div><div th:text="${detail.emergencyNote}"></div>
+      <div>이메일</div><div th:text="${detail.email}"></div>
+      <div>우편번호</div><div th:text="${detail.postcode}"></div>
+      <div>주소</div><div th:text="${detail.defaultAddress}"></div>
+      <div>상세주소</div><div th:text="${detail.detailedAddress}"></div>
+      <div>면허번호</div><div th:text="${detail.registrationNumber}"></div>
+      <div>학력</div><div th:text="${detail.educationalBackground}"></div>
+      <div>전공과</div><div th:text="${detail.major}"></div>
+      <div>외국어</div><div th:text="${detail.foreignLanguage}"></div>
+      <div>기타 자격증</div><div th:text="${detail.license}"></div>
+      <div>근무경력</div><div th:text="${detail.workDependsOnExperience}"></div>
+      <div>수상경력</div><div th:text="${detail.awards}"></div>
+      <div>학회활동</div><div th:text="${detail.societyActivity}"></div>
+      <div>학회인증</div><div th:text="${detail.certificateOfSociety}"></div>
+      <div>병역</div><div th:text="${detail.militaryService}"></div>
+      <div>국적</div><div th:text="${detail.nationality}"></div>
+      <div>장애여부</div><div th:text="${detail.disabilityStatus}"></div>
+      <div>최초 생성일시</div><div th:text="${detail.createDate}"></div>
+      <div>최초 작성자</div><div th:text="${detail.writer}"></div>
+      <div>최종 수정일시</div><div th:text="${detail.modifyDate}"></div>
+      <div>최종 수정자</div><div th:text="${detail.modifier}"></div>
+      <div>비고</div><div th:text="${detail.note}"></div>
+    </div>
+  </div>
+      <!-- 필요시 나머지 필드도 동일 방식으로 노출 -->
+    </div>
+  </div>
+  <div th:if="${detail == null}">
+    디테일 정보가 없습니다.
+  </div>
+</fieldset>
+
+<hr/>
+<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
+  <a class="btn" th:href="@{/doctor/edit/{id}(id=${main.id})}">수정</a>
+  <a class="btn" th:href="@{/doctor/delete/{id}(id=${main.id})}"
+     onclick="return confirm('삭제할까요?');">삭제</a>
+</div>
+</body>
+</html>

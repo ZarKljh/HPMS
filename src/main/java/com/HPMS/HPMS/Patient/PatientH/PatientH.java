@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name="TBL_PATIENT_H")
 public class PatientH {
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

@@ -1,8 +1,10 @@
 package com.HPMS.HPMS.global;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -22,6 +24,7 @@ public class HospitalAdministrationTask {
     private HospitalAdministrationDept department;
 
 
+
     @Column(name = "CODE", nullable = false, length = 10)
     private String code; // 업무 코드
 
@@ -33,4 +36,5 @@ public class HospitalAdministrationTask {
     @Column(name = "ENG_NAME", nullable = false, length = 200)
     private String engName; // 업무 영문명
 }
+
 

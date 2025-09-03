@@ -17,6 +17,7 @@ public class CountryCode {
     private Integer id;
 
 
+
     @Column(name = "ISO_ALPHA2", nullable = false, length = 2)
     private String isoAlpha2;
 
@@ -43,6 +44,7 @@ public class CountryCode {
 
     @Column(name = "COUNTRY_EN", nullable = false, length = 100)
     private String countryEn;
+
 
 
     @Column(name = "COUNTRY_KR", nullable = false, length = 100)
