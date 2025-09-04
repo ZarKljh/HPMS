@@ -4,14 +4,14 @@
 
   <form class="card my-3" th:action="@{|/nurse/create/info|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
 
-    <h4 class="border-bottom py-2">서브 성함</h4>
     <div class="input-list">
-      <input type="text" th:field="*{firstName}" placeholder="이름"/>
-      <input type="text" th:field="*{lastName}" placeholder="성"/>
-      <input type="text" th:field="*{middleName}" placeholder="중간이름"/>
+      <label>서브 성함:</label>
+      <input class="name" type="text" th:field="*{firstName}" placeholder="이름"/>
+      <input class="name" type="text" th:field="*{lastName}" placeholder="성"/>
+      <input class="name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
     </div>
 
-    <h4 class="border-bottom py-2">연락처</h4>
+    <h4 class="border-bottom py-2 ps-3">연락처</h4>
     <div class="input-list">
       <label>전화번호:</label>
       <input type="text" th:field="*{tel}"/>
@@ -22,9 +22,9 @@
     </div>
     <div class="input-list">
       <label>성함:</label>
-      <input type="text" th:field="*{emgcFName}" placeholder="이름"/>
-      <input type="text" th:field="*{emgcLName}" placeholder="성"/>
-      <input type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
+      <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름"/>
+      <input class="name" type="text" th:field="*{emgcLName}" placeholder="성"/>
+      <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
     </div>
     <div class="input-list">
       <label>관계:</label>
@@ -35,7 +35,7 @@
       <input type="text" th:field="*{emgcNote}"/>
     </div>
 
-    <h4 class="border-bottom py-2">주소 / 이메일</h4>
+    <h4 class="border-bottom py-2 ps-3">주소 / 이메일</h4>
     <div class="input-list">
       <label>이메일:</label>
       <input type="email" th:field="*{email}"/>
@@ -53,7 +53,7 @@
       <input type="text" th:field="*{detAdd}"/>
     </div>
 
-    <h4 class="border-bottom py-2">자격 / 학력</h4>
+    <h4 class="border-bottom py-2 ps-3">자격 / 학력</h4>
     <div class="input-list">
       <label>간호사 자격증 번호:</label>
       <input type="text" th:field="*{rnNo}"/>
@@ -87,16 +87,15 @@
       <input type="text" th:field="*{carr}"/>
     </div>
 
-    <h4 class="border-bottom py-2">사진 / 비고</h4>
+    <h4 class="border-bottom py-2 ps-3">사진 / 비고</h4>
     <div class="input-list">
       <label>사진 URL:</label>
       <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg"/>
     </div>
     <div class="input-list">
       <label>비고:</label>
-      <input type="text" th:field="*{note}"/>
+      <input class="form-control" type="text" th:field="*{note}"/>
     </div>
-
     <div class="create_btn">
       <button class="btn btn-primary" type="submit">등록 완료</button>
     </div>
