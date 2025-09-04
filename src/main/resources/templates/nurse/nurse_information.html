@@ -8,9 +8,9 @@
         <div class="main card my-3">
 
             <div class="m-d-btn">
-                <div class="m-d-btn_box my-3">
-                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn btn btn-sm btn-outline-secondary">수정</a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn delete btn btn-sm btn-outline-secondary">삭제</a>
+                <div class="m-d-btn_box">
+                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
+                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         <!-- Information 정보 -->
-        <div class="iformation card my-3" th:if="${nurseDTO.nurseInformation != null}">
+        <div class="information card my-3" th:if="${nurseDTO.nurseInformation != null}">
             <p class="info">서브 이름 <span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
             <p class="info">전화번호 <span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
             <p class="info">비상연락처 <span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>

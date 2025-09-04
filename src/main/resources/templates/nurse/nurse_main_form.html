@@ -1,24 +1,24 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container my-3">
-  <h1 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h1>
+  <h2 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h2>
 
-  <form class="card my-3" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+  <form class="main-table card" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <div>
+    <div class="input-list">
       <label>부서:</label>
       <input type="text" th:field="*{dept}" required />
     </div>
-    <div>
+    <div class="input-list">
       <label>직급:</label>
       <input type="text" th:field="*{rank}" required />
     </div>
-    <div>
-      <label>성함:</label>
+    <div class="input-list">
+      <label class="name">성함:</label>
       <input type="text" th:field="*{firstName}" placeholder="이름" required />
       <input type="text" th:field="*{lastName}" placeholder="성" required />
       <input type="text" th:field="*{middleName}" placeholder="중간이름" />
     </div>
-    <div>
+    <div class="input-list">
       <label>성별:</label>
       <select th:field="*{gender}" required>
         <option value="">선택</option>
@@ -26,29 +26,28 @@
         <option value="F">여</option>
       </select>
     </div>
-    <div>
+    <div class="input-list">
       <label>생년월일:</label>
-      <input type="date" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
+      <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
     </div>
-    <div>
+    <div class="input-list">
       <label>입사일:</label>
-      <input type="date" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
+      <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
     </div>
-    <div>
+    <div class="input-list">
       <label>상태:</label>
-      <input type="text" th:field="*{sts}" required />
+      <input type="text" th:field="*{sts}" placeholder="재직/휴직/퇴직 등" required />
     </div>
-    <div>
+    <div class="input-list">
       <label>근무형태:</label>
-      <input type="text" th:field="*{wt}" required />
+      <input type="text" th:field="*{wt}" placeholder="정규직/계약직/파트타임 등" required />
     </div>
-    <div>
+    <div class="input-list">
       <label>작성자:</label>
       <input type="text" th:field="*{writer}" required />
     </div>
-
-    <div>
-      <button class="btn btn-primary" type="submit">다음 단계</button>
+    <div class="next_btn_box">
+      <button class="next_btn" type="submit">다음 단계</button>
     </div>
   </form>
 </div>
