@@ -22,8 +22,10 @@ public class ReferencePersonnelDTO {
 
     // ReferencePersonalDtl 관련 필드
     // private ReferencePersonnelM personnel; ViewModel이나 상세 조회용
+    private Integer personnel;
     private String companyName;
     private String deptName;
+    private String position;
     private String officeAddress;
     private String officeDetailAddress;
     private String officeTel;

@@ -1,9 +1,6 @@
-<head>
-    <link rel="stylesheet" th:href="@{/CSS/chang_css.css}" />
-</head>
-<h2 th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></h2>
-<h2 th:unless="${successMessage}">등록정보</h2>
-
+<html lang="kr" layout:decorate="~{personnel/personnel_layout}">
+<HTML layout:fragment="content" class="container">
+<h2 th:unless="${successMessage}">관련자 등록</h2>
 <!--<content>
     <div>
         <div><strong>ID</strong> <span th:text="${referencePersonnelDtlDTO.id}"></span></div>
@@ -11,7 +8,6 @@
     </div>
 </content>>-->
 <table class="tbl_set">
-    <hd></hd>
     <tbody>
         <tr>
             <td class="td_title">등록일시</td>
@@ -105,4 +101,14 @@
         </tr>
     </tbody>
 </table>
-
+    <div class="page-navigation">
+        <div class="pagination">
+            <a th:href="@{/user/list(page=${currentPage}, size=${size})}" class="button-link text-full">목록보기</a>
+            <a th:href="@{/user/list(page=${currentPage}, size=${size})}" class="button-link text-short">목록</a>
+            <a th:href="@{/user/personnel_update}" class="button-link text-full">수정하기</a>
+            <a th:href="@{/user/personnel_update}" class="button-link text-short">수정</a>
+            <a th:href="@{/user/personnel_registration}" class="button-link text-full">삭제하기</a>
+            <a th:href="@{/user/personnel_registration}" class="button-link text-short">삭제</a>
+        </div>
+    </div>
+</HTML>

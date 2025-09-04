@@ -23,28 +23,9 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Controller
 public class ReferencePersonnelController {
-/*
-  // 정상작동확인
-    @GetMapping("/user")
-    @ResponseBody
-    public String index(){
-        String reMessage = "<br><br><br>방가방가";
-        System.out.println(reMessage);
-        return reMessage;
-    }*/
     private final ReferencePersonnelMRepository referencePersonnelMRepository;
     private final ReferencePersonnelDTOService referencePersonnelDTOService;
-    // private final ReferencePersonnelDtlRepository;
 
-    // @GetMapping("/main/personnel/List")
-
-/*    @GetMapping("/user")
-    *//*@ResponseBody*//*
-    public String personnelList(Model model){
-        List<ReferencePersonnelM> referencePersonnelM = this.referencePersonnelMRepository.findAll();
-        model.addAttribute("personnelList",referencePersonnelM);
-        return "personnel/personnel_list";
-    }*/
 /*
     // 아래 내용으로 대체
     @GetMapping("/user/list")
@@ -88,19 +69,56 @@ public class ReferencePersonnelController {
 
         return "personnel/personnel_list";
     }
+    // AJAX 기반 UPDATE
+    @PostMapping("/user/list-fragment")
+    public String getPersonnelListFragment(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size,
+                                           Model model) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<ReferencePersonnelDTO> pagedList = referencePersonnelDTOService.getPagedReferencePersonnel(pageRequest);
 
+        int totalPages = pagedList.getTotalPages();
+        if (page >= totalPages) {
+            page = 0;
+        }
+        int currentPage = page;
 
+        int startPage = Math.max(currentPage - 2, 0);
+        int endPage = Math.min(currentPage + 2, totalPages - 1);
+
+        List<Integer> pageNumbers = IntStream.rangeClosed(startPage, endPage)
+                .boxed()
+                .collect(Collectors.toList());
+
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+
+        model.addAttribute("referencePersonnels", pagedList.getContent());
+        model.addAttribute("size", size);
+        model.addAttribute("personnelPage", pagedList);
+
+        return "personnel/personnel_list :: personnelList"; // fragment 이름
+    }
 
 
 
     @GetMapping("/user/detail/{id}")
-    public String referencePersonnelDtl(Model model, @PathVariable("id") Integer id){
+    public String referencePersonnelDtl(Model model,
+                                        @PathVariable("id") Integer id){
         // PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         ReferencePersonnelDtlDTO referencePersonnelDtlDTO = this.referencePersonnelDTOService.getReferencePersonnelDtlDTO(id);
         model.addAttribute("referencePersonnelDtlDTO",referencePersonnelDtlDTO);
         return "personnel/personnel_detail";
     }
 
+    /*업데이트 화면 전용*/
+    @GetMapping("/user/update/{id}")  //update 화면 호출
+    public String referencePersonnel(Model model, @PathVariable("id") Integer id){
+        ReferencePersonnelDTO referencePersonnelDTO = this.referencePersonnelDTOService.getReferencePersonnelDTO(id);
+        model.addAttribute("referencePersonnelDTO",referencePersonnelDTO);
+        return "personnel/personnel_update";
+    }
 
 
     @GetMapping("/user/personnel_registration")
@@ -121,57 +139,5 @@ public class ReferencePersonnelController {
             return "redirect:/user/personnel_registration";
         }
     }
-    /*
-    @PostMapping("/create/reference_personal")
-    public String createReferencePersonnel(@ModelAttribute ReferencePersonnelDTO dto) {
-        referencePersonnelDTOService.saveReferencePersonnel(dto);
-        // return "redirect:/user/detail/{id}"; // 결과 페이지로 이동
-        return "redirect:/user/list"; // 임시 저장이 완료되면 목록 화면으로 이동
-    }
-*/
-
-    /* 기존
-    @PostMapping("/create/reference_personal")
-    public String createReferencePersonnel(
-        Model model,
-        @RequestParam(value="firstName") String firstName,
-        @RequestParam(value="lastName") String lastName,
-        @RequestParam(value="middleName") String middleName,
-        @RequestParam(value="nationality") String nationality,
-        @RequestParam(value="email") String email,
-        @RequestParam(value="cellPhone") String cellPhone,
-        @RequestParam(value="companyName") String companyName,
-        @RequestParam(value="deptName") String deptName,
-        @RequestParam(value="officeAddress") String officeAddress,
-        @RequestParam(value="officeDetailAddress") String officeDetailAddress,
-        @RequestParam(value="officeTel") String officeTel,
-        @RequestParam(value="officeFax") String officeFax,
-        @RequestParam(value="companyWebsiteUrl") String companyWebsiteUrl,
-        @RequestParam(value="note") String note
-        ) {
-
-        // Question question = this.questionService.getQuestion(id);
-        // TODO: registrate a reference personnel
-        // ReferencePersonalM and ReferencePersonalDtl 엔터티 동시에
-        // return "personnel/personnel_list";
-        return "redirect:/user/list";
-    }
-*/
-
-
-    /*
-
-    */
-/*@ResponseBody*//*
-
-    public String referencePersonnelDtl(Model model, @PathVariable("id") Integer id){
-
-        List<ReferencePersonnelM> referencePersonnelM = this.referencePersonnelMRepository.findAll();
-        model.addAttribute("personnelList",referencePersonnelM);
-        return "personnel/personnel_list";
-
-    }
-*/
-
 
 }

@@ -74,12 +74,12 @@ public class ReferencePersonnelDTOService {
         ReferencePersonnelM referencePersonnelM = this.referencePersonnelMService.getReferencePersonnelM(id);
         // 상세정보를 가져오기 위한 DTO 객체 초기화
         ReferencePersonnelDtlDTO referencePersonnelDtlDTO = new ReferencePersonnelDtlDTO();
+
         ReferencePersonnelDtl referencePersonnelDtl = this.referencePersonnelDtlService.getReferencePersonnelDtlByPersonnel(referencePersonnelM);
         // 관련자 1명의 Integer id 값을 이용하여 상세정보를 가지고 온다.
 
         if (referencePersonnelDtl != null) {
             referencePersonnelDtlDTO.setPersonnel(referencePersonnelM);
-
             referencePersonnelDtlDTO.setId(referencePersonnelDtl.getId());
             referencePersonnelDtlDTO.setCompanyName(referencePersonnelDtl.getCompanyName());
             referencePersonnelDtlDTO.setDeptName(referencePersonnelDtl.getDeptName());
@@ -96,6 +96,35 @@ public class ReferencePersonnelDTOService {
             private ReferencePersonnelM personnel;*/
         }
         return referencePersonnelDtlDTO;
+    }
+
+    // 상위 처리과정 개선을 포함하고 있으며 현재 update 화면에서 form 내용 처리용
+    // presonnelDTO 중심으로 개선
+    public ReferencePersonnelDTO getReferencePersonnelDTO(Integer id){
+        ReferencePersonnelM referencePersonnelM = this.referencePersonnelMService.getReferencePersonnelM(id);
+        ReferencePersonnelDtl referencePersonnelDtl = this.referencePersonnelDtlService.getReferencePersonnelDtlByPersonnel(referencePersonnelM);
+        // 관련자 1명의 Integer id 값을 이용하여 상세정보를 가지고 온다.
+        ReferencePersonnelDTO referencePersonnelDTO = new ReferencePersonnelDTO();
+
+        if (referencePersonnelDTO != null) {
+
+            referencePersonnelDTO.setPersonnel(referencePersonnelDtl.getPersonnel().getId());
+            referencePersonnelDTO.setId(referencePersonnelDtl.getId());
+            referencePersonnelDTO.setCompanyName(referencePersonnelDtl.getCompanyName());
+            referencePersonnelDTO.setDeptName(referencePersonnelDtl.getDeptName());
+            referencePersonnelDTO.setPosition(referencePersonnelDtl.getPosition());
+            referencePersonnelDTO.setOfficeAddress(referencePersonnelDtl.getOfficeAddress());
+            referencePersonnelDTO.setOfficeDetailAddress(referencePersonnelDtl.getOfficeDetailAddress());
+            referencePersonnelDTO.setOfficeTel(referencePersonnelDtl.getOfficeTel());
+            referencePersonnelDTO.setOfficeFax(referencePersonnelDtl.getOfficeFax());
+            referencePersonnelDTO.setCompanyWebsiteUrl(referencePersonnelDtl.getCompanyWebsiteUrl());
+            referencePersonnelDTO.setNote(referencePersonnelDtl.getNote());
+            referencePersonnelDTO.setCreator(referencePersonnelDtl.getCreator());
+            referencePersonnelDTO.setCreateDate(referencePersonnelDtl.getCreateDate());
+        /*  private Integer id;
+            private ReferencePersonnelM personnel;*/
+        }
+        return referencePersonnelDTO;
     }
 
     @Transactional

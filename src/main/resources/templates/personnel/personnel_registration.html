@@ -1,8 +1,8 @@
-<head>
-    <link rel="stylesheet" th:href="@{/CSS/chang_css.css}" />
-</head>
-<div th:if="${warningMessage}" class="alert alert-warning" th:text="${warningMessage}"></div>
-<h2>Reference Personnel Registration</h2>
+<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<div layout:fragment="content" class="container">
+    <div><a th:href="@{/user/personnel_registration}">Regisrate Reference Personnel</a></div>
+    <div th:if="${warningMessage}" class="alert alert-warning" th:text="${warningMessage}"></div>
+    <h2>Reference Personnel Registration</h2>
 <form th:action="@{|/create/reference_personal|}" method="post">
 <table class="tbl_set">
     <thead></thead>

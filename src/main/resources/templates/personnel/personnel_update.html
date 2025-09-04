@@ -1,0 +1,43 @@
+<html lang="kr" layout:decorate="~{personnel/personnel_layout}">
+
+<div layout:fragment="content" class="container">
+    <h2 class="listbox">Reference Personnel List</h2>
+<form method="get" action="/user/list">
+    <label for="size">Row counter:</label>
+    <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
+        <option th:value="5" th:selected="${size == 5}">5</option>
+        <option th:value="10" th:selected="${size == 10}">10</option>
+        <option th:value="20" th:selected="${size == 20}">20</option>
+    </select>
+    <input type="hidden" name="page" value="${currentPage}" />
+</form>
+<!--
+<form method="get" action="/user/list">
+    <label for="size">Row counter:</label>
+    <input name="size" type="text" value="10" onchange="this.form.submit()">
+</form>
+-->
+    <div class="nursemain card my-3 p-3">
+        <h3>기본 정보</h3>
+        <label>이름</label>
+        <input type="text" class="form-control"/>
+        <label>이름</label>
+        <input type="text" class="form-control"/>
+        <label>이름</label>
+        <input type="text" class="form-control"/>
+        <label>이름</label>
+        <input type="text" class="form-control"/>
+        <label>이름</label>
+        <input type="text" class="form-control"/>
+    </div>
+
+<!--start of list navigation -->
+<div class="page-navigation">
+    <div>
+        <a th:href="@{/user/list(page=${currentPage}, size=${size})}" class="button-link text-full">목록보기</a>
+        <a th:href="@{/user/list(page=${currentPage}, size=${size})}" class="button-link text-short">목록</a>
+        <a th:href="@{/user/personnel_registration}" class="button-link text-full">저장하기</a>
+        <a th:href="@{/user/personnel_registration}" class="button-link text-short">저장</a>
+    </div>
+</div>
+</html>
