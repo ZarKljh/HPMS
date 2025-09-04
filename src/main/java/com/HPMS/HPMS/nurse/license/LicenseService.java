@@ -1,0 +1,32 @@
+package com.HPMS.HPMS.nurse.license;
+
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class LicenseService {
+
+    @Autowired
+    private LicenseRepository licenseRepository;
+
+    public List<License> getByNurse(NurseMain nurseMain) {
+        return licenseRepository.findByNurseId(nurseMain);
+    }
+
+    public License getLicense(Integer id) {
+        Optional<License> license = licenseRepository.findById(id);
+        return license.orElseThrow(() -> new RuntimeException("License not found"));
+    }
+
+    public License save(License license) {
+        return licenseRepository.save(license);
+    }
+
+    public void delete(Integer id) {
+        licenseRepository.deleteById(id);
+    }
+}

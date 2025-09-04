@@ -1,6 +1,6 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container ">
-    <form th:action="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" method="post">
+    <form class="info_form" th:action="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" method="post">
 
         <h2 class="border-bottom py-2" th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.lastName}|"></h2>
 
@@ -10,6 +10,7 @@
             <div class="m-d-btn">
                 <div class="m-d-btn_box">
                     <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
+                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="l-btn">자격증 추가</a>
                     <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
                 </div>
             </div>
@@ -62,16 +63,5 @@
             <p class="info">경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
             <p class="info">비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
         </div>
-
-        <script layout:fragment="script" type='text/javascript'>
-            const delete_elements = document.getElementsByClassName("delete");
-            Array.from(delete_elements).forEach(function(element) {
-                element.addEventListener('click', function() {
-                    if (confirm("정말로 삭제하시겠습니까?")) {
-                        location.href = this.dataset.uri;
-                    };
-                });
-            });
-        </script>
     </form>
 </div>
