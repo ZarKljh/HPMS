@@ -1,7 +1,4 @@
 // 노멀라이징
-body {
-    overflow-x: hidden;
-}
 body, ul, li {
 	margin: 0;
 	padding: 0;
