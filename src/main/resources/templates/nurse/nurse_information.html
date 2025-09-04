@@ -6,10 +6,11 @@
 
         <!-- Main 정보 -->
         <div class="main card my-3">
+
             <div class="m-d-btn">
                 <div class="m-d-btn_box my-3">
-                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn btn btn-sm btn-outline-secondary" th:text="수정"></a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn delete btn btn-sm btn-outline-secondary" th:text="삭제"></a>
+                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn delete btn btn-sm btn-outline-secondary">삭제</a>
                 </div>
             </div>
 

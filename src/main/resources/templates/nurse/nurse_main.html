@@ -4,7 +4,10 @@
     <table class="table table-hover card">
         <thead class="table-info">
         <tr class="list text-center">
-            <th>번호</th>
+            <th>번호
+                <span class="down_arrow material-symbols-outlined">arrow_drop_down</span>
+                <span class="up_arrow material-symbols-outlined">arrow_drop_up</span>
+            </th>
             <th>부서</th>
             <th>직급</th>
             <th>이름</th>
@@ -56,7 +59,7 @@
                 th:if="${page >= paging.number-5 and page <= paging.number+5}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
                 <a class="page-link" th:href="@{|?page=${paging.number+1}|}">

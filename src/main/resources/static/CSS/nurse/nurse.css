@@ -25,10 +25,10 @@ a {
 	top: 101%;
 	width: 200px;
 	height: 100vh;
+	z-index: 1;
 	border-left: 1px solid #dee2e6;
 	background-color: #f8f9fa;
 	transition: right 0.3s;
-
 }
 .menubox_2.active {
 	right: 0;
@@ -90,7 +90,10 @@ div > .btn {
 	right: 40px;
 	text-wrap: nowrap;
 }
-
+.down_arrow {display: none;}
+.up_arrow {display: none;}
+.down_arrow.active {display: block;}
+.up_arrow.active {display: block;}
 @media screen and (max-width: 993px) {
 	.mobile_hidden {
 		display: none;
