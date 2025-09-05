@@ -11,12 +11,16 @@ import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -47,15 +51,41 @@ public class PatientController {
     }
     */
 
-
     //@PreAuthorize("isAuthenticated()")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/patient/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
-        List<PatientListDTO> patients = this.patientDTOService.getPatientListDTO(page);
+    public String list(Model model,
+                       @RequestParam(value="page", defaultValue="0") int page,
+                       @RequestParam(value="size", defaultValue="10") int size) {
+        //id 칼럼을 기준으로 오름차순(ascending)
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<PatientListDTO> patients = this.patientDTOService.getPatientListDTO(pageable);
+
+        int totalPages = patients.getTotalPages();
+        if (page >= totalPages) {
+            page = 0;
+        }
+        int currentPage = page;
+
+        int startPage = Math.max(currentPage - 2, 0);
+        int endPage = Math.min(currentPage + 2, totalPages - 1);
+
+        List<Integer> pageNumbers = new ArrayList<>();
+
+        for (int i = startPage; i <= endPage; i++) {
+            pageNumbers.add(i);
+        }
+
         model.addAttribute("patients", patients);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+
+
         return "patient/lsw_patient_list";
     }
+
+
 
 
     @GetMapping("/patient/detail/{id}")

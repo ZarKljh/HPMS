@@ -1,63 +1,67 @@
-<html lang="kr">
-<h2>환자 상세정보</h2>
-<div class="patient-info">
+<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<div layout:fragment="content" class="container">
+  <h2>환자 상세정보</h2>
+  <div class="patient-info">
 
-  <!-- 기본 식별 정보 -->
-  <div class="group-basic">
-    <div><strong>ID</strong> <span th:text="${detailDTO.id}"></span></div>
-    <div><strong>종결여부</strong> <span th:text="${detailDTO.delStatus}"></span></div>
-    <div><strong>최초등록일</strong> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
-    <div><strong>수정일</strong> <span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
+    <!-- 기본 식별 정보 -->
+
+      <div class="form-group group-basic"><label class="form-label">ID</label><span th:text="${detailDTO.id}"></span></div>
+      <div class="form-group group-basic"><label class="form-label">종결여부</label><span th:text="${detailDTO.delStatus}"></span></div>
+      <div class="form-group group-basic"><label class="form-label">최초등록일</label> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
+      <div class="form-group group-basic"><label class="form-label">수정일</label><span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
+
+
+    <!-- 인적사항 -->
+      <div class="form-group group-personal"><label class="form-label">생년월일</label> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">성별</label> <span th:text="${detailDTO.gender}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">내/외국인</label> <span th:text="${detailDTO.foreigner}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">성명</label><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">중간이름</label> <span th:text="${detailDTO.middleName}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">여권번호</label> <span th:text="${detailDTO.passport}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">여권성명</label><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
+      <div class="form-group group-personal"><label class="form-label">여권중간이름</label> <span th:text="${detailDTO.passMiddleName}"></span></div>
+
+
+    <!-- 연락처 -->
+
+      <div class="form-group group-contact"><label class="form-label">MOBILE</label> <span th:text="${detailDTO.mobilePhone}"></span></div>
+      <div class="form-group group-contact"><label class="form-label">HOME</label> <span th:text="${detailDTO.homePhone}"></span></div>
+      <div class="form-group group-contact"><label class="form-label">OFFICE</label> <span th:text="${detailDTO.officePhone}"></span></div>
+      <div class="form-group group-contact"><label class="form-label">EMAIL</label> <span th:text="${detailDTO.email}"></span></div>
+      <div class="form-group group-contact"><label class="form-label">FAX</label> <span th:text="${detailDTO.fax}"></span></div>
+
+
+    <!-- 보호자 정보 -->
+
+      <div class="form-group group-guardian"><label class="form-label">보호자 성명</label> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
+      <div class="form-group group-guardian"><label class="form-label">보호자 연락처<label> <span th:text="${detailDTO.guardianTel}"></span></div>
+      <div class="form-group group-guardian"><label class="form-label">보호자 관계</label> <span th:text="${detailDTO.guardianRelation}"></span></div>
+
+
+    <!-- 주소 -->
+
+      <div class="form-group group-address"><label class="form-label">우편번호</label> <span th:text="${detailDTO.homePcd}"></span></div>
+      <div class="form-group group-address"><label class="form-label">기본주소</label> <span th:text="${detailDTO.homeDefAdd}"></span></div>
+      <div class="form-group group-address"><label class="form-label">상세주소</label> <span th:text="${detailDTO.homeDetAdd}"></span></div>
+      <div class="form-group group-address"><label class="form-label">등록주소(우편번호)</label> <span th:text="${detailDTO.regPcd}"></span></div>
+      <div class="form-group group-address"><label class="form-label">등록주소(기본주소)</label> <span th:text="${detailDTO.regDefAdd}"></span></div>
+      <div class="form-group group-address"><label class="form-label">등록주소(상세주소)</label> <span th:text="${detailDTO.regDetAdd}"></span></div>
+
+
+    <!-- 기타 -->
+
+      <div class="form-group group-extra"><label class="form-label">직업</label> <span th:text="${detailDTO.occupation}"></span></div>
+      <div class="form-group group-extra"><label class="form-label">국적</label> <span th:text="${detailDTO.natn}"></span></div>
+      <div class="form-group group-extra"><label class="form-label">최종방문일</label> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
+      <div class="form-group group-extra"><label class="form-label">특이사항</label> <span th:text="${detailDTO.note}"></span></div>
+
+
+    <a th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+    <a th:href="@{|/patient/delete/${detailDTO.id}|}">환자종결</a>
+
   </div>
-
-  <!-- 인적사항 -->
-  <div class="group-personal">
-    <div><strong>생년월일</strong> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
-    <div><strong>성별</strong> <span th:text="${detailDTO.gender}"></span></div>
-    <div><strong>내/외국인</strong> <span th:text="${detailDTO.foreigner}"></span></div>
-    <div><strong>성명</strong><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
-    <div><strong>중간이름</strong> <span th:text="${detailDTO.middleName}"></span></div>
-    <div><strong>여권번호</strong> <span th:text="${detailDTO.passport}"></span></div>
-    <div><strong>여권성명</strong><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
-    <div><strong>여권중간이름</strong> <span th:text="${detailDTO.passMiddleName}"></span></div>
-  </div>
-
-  <!-- 연락처 -->
-  <div class="group-contact">
-    <div><strong>MOBILE</strong> <span th:text="${detailDTO.mobilePhone}"></span></div>
-    <div><strong>HOME</strong> <span th:text="${detailDTO.homePhone}"></span></div>
-    <div><strong>OFFICE</strong> <span th:text="${detailDTO.officePhone}"></span></div>
-    <div><strong>EMAIL</strong> <span th:text="${detailDTO.email}"></span></div>
-    <div><strong>FAX</strong> <span th:text="${detailDTO.fax}"></span></div>
-  </div>
-
-  <!-- 보호자 정보 -->
-  <div class="group-guardian">
-    <div><strong>보호자 성명</strong> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
-    <div><strong>보호자 연락처</strong> <span th:text="${detailDTO.guardianTel}"></span></div>
-    <div><strong>보호자 관계</strong> <span th:text="${detailDTO.guardianRelation}"></span></div>
-  </div>
-
-  <!-- 주소 -->
-  <div class="group-address">
-    <div><strong>우편번호</strong> <span th:text="${detailDTO.homePcd}"></span></div>
-    <div><strong>기본주소</strong> <span th:text="${detailDTO.homeDefAdd}"></span></div>
-    <div><strong>상세주소</strong> <span th:text="${detailDTO.homeDetAdd}"></span></div>
-    <div><strong>등록주소(우편번호)</strong> <span th:text="${detailDTO.regPcd}"></span></div>
-    <div><strong>등록주소(기본주소)</strong> <span th:text="${detailDTO.regDefAdd}"></span></div>
-    <div><strong>등록주소(상세주소)</strong> <span th:text="${detailDTO.regDetAdd}"></span></div>
-  </div>
-
-  <!-- 기타 -->
-  <div class="group-extra">
-    <div><strong>직업</strong> <span th:text="${detailDTO.occupation}"></span></div>
-    <div><strong>국적</strong> <span th:text="${detailDTO.natn}"></span></div>
-    <div><strong>최종방문일</strong> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
-    <div><strong>특이사항</strong> <span th:text="${detailDTO.note}"></span></div>
-  </div>
-
-  <a th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
-  <a th:href="@{|/patient/delete/${detailDTO.id}|}">환자종결</a>
-
 </div>
+<style>
+  label{ height: 100%;}
+</style>
 </html>

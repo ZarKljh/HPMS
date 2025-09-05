@@ -57,6 +57,7 @@ public class SiteUserService {
         return newsu;
     }
 
+    //signupForm으로 부터 받아온 firstName 과 lastName 과 휴대전화번호로 Role/테이블ID를 가져오는 메소드
     public RoleAndId getRoleAndID(SiteUserForm suf, String formatedPhoneNumber){
         String firstName = suf.getFirstName();
         String lastName = suf.getLastName();
@@ -79,11 +80,10 @@ public class SiteUserService {
                 }
             }
         }
-
         return roleAndId;
     }
 
-
+    //Role과 RoleId를 가져오기 위한 클래스
     public class RoleAndId {
         String role;
         Integer roleId;
