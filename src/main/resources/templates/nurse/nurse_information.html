@@ -70,28 +70,28 @@
         <div th:if="${#lists.isEmpty(nurseDTO.licenseList)}" class="pb-2" id="noLicenseMsg">
             등록된 자격증이 없습니다.
         </div>
+        <div class="text-end li_btn" id="addLicenseBtnBox">
+            <a href="javascript:void(0);" id="showLicenseFormBtn" class="l-btn m-3 my-3 mb-3">자격증 추가</a>
+        </div>
 
         <!-- 자격증이 있을 때 카드로 표시 -->
         <div th:if="${!#lists.isEmpty(nurseDTO.licenseList)}">
             <div class="row" th:each="license : ${nurseDTO.licenseList}">
-                <div class="col-md-4 mb-3" th:id="'license-' + ${license.id}">
-                    <div class="card h-120">
+                <div class="w-100 col-md-4 mb-3 mt-3" th:id="'license-' + ${license.id}">
+                    <div class="card h-100 shadow-sm">
                         <div class="card-body ms-3 p-3">
-                            <p><strong>자격증명:</strong> <span th:text="${license.li}"></span></p>
+                            <p><strong>자격증:</strong> <span th:text="${license.li}"></span></p>
                             <p><strong>번호:</strong> <span th:text="${license.licenseNo}"></span></p>
                             <p><strong>발급일:</strong> <span th:text="${license.issueDate}"></span></p>
                             <p><strong>만료일:</strong> <span th:text="${license.expiryDate}"></span></p>
                             <p><strong>비고:</strong> <span th:text="${license.note}"></span></p>
-                            <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}" class="btn btn-danger btn-sm mt-2 mb-2">삭제</a>
+                            <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}" class="btn btn-danger btn-sm mb-3">삭제</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="text-end li_btn" id="addLicenseBtnBox">
-            <a href="javascript:void(0);" id="showLicenseFormBtn" class="l-btn m-3 my-3">자격증 추가</a>
-        </div>
 
         <!-- 등록폼 (처음 숨김) -->
         <form class="list_form" th:action="@{|/nurse/license/${nurseDTO.nurseMain.id}|}" method="post" id="newLicenseForm" style="display:none;">
