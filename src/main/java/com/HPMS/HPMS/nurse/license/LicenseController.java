@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.license;
 
+import com.HPMS.HPMS.nurse.nursedto.NurseDTO;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import lombok.RequiredArgsConstructor;
@@ -17,24 +18,33 @@ public class LicenseController {
     private final NurseMainService nurseMainService;
     private final LicenseService licenseService;
 
-    @GetMapping("/{nurseId}")
-    public String licenseForm(@PathVariable Integer nurseId, Model model) {
-        NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
-
-        List<License> licenseList = licenseService.getByNurse(nurseMain);
-
-        model.addAttribute("nurseMain", nurseMain);
-        model.addAttribute("license", new License());
-        model.addAttribute("licenseList", licenseList);
-
-        return "nurse/license_form"; // Thymeleaf 폼 페이지
+    // 인라인 수정 저장
+    @PostMapping("/updateAll/{nurseId}")
+    public String updateAllLicenses(@PathVariable Integer nurseId,
+                                    @ModelAttribute NurseDTO nurseDTO) {
+        NurseMain nurse = nurseMainService.getNurseMain(nurseId);
+        if (nurseDTO.getLicenseList() != null) {
+            for (License license : nurseDTO.getLicenseList()) {
+                license.setNurseId(nurse);
+                licenseService.save(license);
+            }
+        }
+        return "redirect:/nurse/info/" + nurseId;
     }
 
+    // 인라인 추가
     @PostMapping("/{nurseId}")
-    public String addLicense(@PathVariable Integer nurseId, @ModelAttribute License license) {
-        NurseMain nurse = nurseMainService.getNurseMain(nurseId); // 서비스 메서드 사용
-        license.setNurseId(nurse); // 양방향 연결은 필요시 NurseMain에도 추가 가능
+    public String addLicense(@PathVariable Integer nurseId, License license) {
+        NurseMain nurse = nurseMainService.getNurseMain(nurseId);
+        license.setNurseId(nurse);
         licenseService.save(license);
-        return "redirect:/nurse/info/" + nurseId; // 저장 후 상세페이지로 리다이렉트
+        return "redirect:/nurse/info/" + nurseId;
+    }
+
+    // 삭제
+    @GetMapping("/delete/{licenseId}/{nurseId}")
+    public String deleteLicense(@PathVariable Integer licenseId, @PathVariable Integer nurseId) {
+        licenseService.delete(licenseId);
+        return "redirect:/nurse/info/" + nurseId;
     }
 }

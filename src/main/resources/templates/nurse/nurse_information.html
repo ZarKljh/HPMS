@@ -10,7 +10,7 @@
             <div class="m-d-btn">
                 <div class="m-d-btn_box">
                     <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
-                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="l-btn">자격증 추가</a>
+                    <a href="javascript:void(0);" id="showLicenseFormBtn" class="l-btn">자격증 추가</a>
                     <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
                 </div>
             </div>
@@ -63,5 +63,56 @@
             <p class="info">경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
             <p class="info">비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
         </div>
+    </form>
+</div>
+<!-- License 정보 -->
+<div class="license card my-3">
+    <h3 class="border-bottom py-2">자격증 정보</h3>
+
+    <!-- 기존 자격증 수정 -->
+    <form th:action="@{|/nurse/license/updateAll/${nurseDTO.nurseMain.id}|}" method="post" th:object="${nurseDTO}">
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+            <tr>
+                <th>자격증명</th>
+                <th>번호</th>
+                <th>발급일</th>
+                <th>만료일</th>
+                <th>비고</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="license, iterStat : *{licenseList}">
+                <input type="hidden" th:field="*{licenseList[__${iterStat.index}__].id}" />
+                <td><input type="text" th:field="*{licenseList[__${iterStat.index}__].li}" class="form-control"/></td>
+                <td><input type="text" th:field="*{licenseList[__${iterStat.index}__].licenseNo}" class="form-control"/></td>
+                <td><input type="text" th:field="*{licenseList[__${iterStat.index}__].issueDate}" class="form-control"/></td>
+                <td><input type="text" th:field="*{licenseList[__${iterStat.index}__].expiryDate}" class="form-control"/></td>
+                <td><input type="text" th:field="*{licenseList[__${iterStat.index}__].note}" class="form-control"/></td>
+                <td>
+                    <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(nurseDTO.licenseList)}">
+                <td colspan="6">등록된 자격증이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="mt-2 text-end">
+            <button type="submit" class="btn btn-success">저장</button>
+        </div>
+    </form>
+
+    <!-- 새 자격증 추가 -->
+    <form th:action="@{|/nurse/license/${nurseDTO.nurseMain.id}|}" method="post" class="mt-3 row g-2" id="licenseForm" style="display:none;">
+        <div class="col"><input type="text" name="li" class="form-control" placeholder="자격증명" required></div>
+        <div class="col"><input type="text" name="licenseNo" class="form-control" placeholder="자격증 번호" required></div>
+        <div class="col"><input type="text" name="issueDate" class="form-control" placeholder="발급일 (YYYYMMDD)"></div>
+        <div class="col"><input type="text" name="expiryDate" class="form-control" placeholder="만료일 (YYYYMMDD)"></div>
+        <div class="col"><input type="text" name="note" class="form-control" placeholder="비고"></div>
+        <div class="col-auto"><button type="submit" class="btn btn-primary">추가</button></div>
     </form>
 </div>

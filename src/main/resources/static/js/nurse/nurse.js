@@ -17,16 +17,14 @@ const delete_elements = document.getElementsByClassName("delete");
                 });
             });
 
-const addBtn = document.getElementById("addLicenseBtn");
-    const cancelBtn = document.getElementById("cancelLicenseBtn");
-    const licenseFormBox = document.getElementById("licenseFormBox");
+const showLicenseFormBtn = document.getElementById('showLicenseFormBtn');
+    const licenseForm = document.getElementById('licenseForm');
 
-    addBtn.addEventListener("click", () => {
-        licenseFormBox.style.display = "block"; // 폼 표시
-        addBtn.style.display = "none";          // 버튼 숨김
-    });
-
-    cancelBtn.addEventListener("click", () => {
-        licenseFormBox.style.display = "none";  // 폼 숨김
-        addBtn.style.display = "inline-block";  // 버튼 다시 표시
+    showLicenseFormBtn.addEventListener('click', function() {
+        // 토글 방식: 숨겨져 있으면 보이게, 보이면 숨기기
+        if (licenseForm.style.display === 'none') {
+            licenseForm.style.display = 'flex'; // form이 row g-2라 flex가 적합
+        } else {
+            licenseForm.style.display = 'none';
+        }
     });

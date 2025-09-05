@@ -17,11 +17,6 @@ public class LicenseService {
         return licenseRepository.findByNurseId(nurseMain);
     }
 
-    public License getLicense(Integer id) {
-        Optional<License> license = licenseRepository.findById(id);
-        return license.orElseThrow(() -> new RuntimeException("License not found"));
-    }
-
     public License save(License license) {
         return licenseRepository.save(license);
     }
