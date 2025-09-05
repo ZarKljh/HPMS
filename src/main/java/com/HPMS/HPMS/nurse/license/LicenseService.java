@@ -17,6 +17,10 @@ public class LicenseService {
         return licenseRepository.findByNurseId(nurseMain);
     }
 
+    public License getById(Integer id) {
+        return licenseRepository.findById(id).orElse(null);
+    }
+
     @Transactional
     public License save(License license) {
         return licenseRepository.save(license);
