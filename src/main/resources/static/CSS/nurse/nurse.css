@@ -119,12 +119,12 @@ div > .btn {
 .m-d-btn_box {
     display: flex;
     justify-content: flex-end;
-	  padding-right: 20px;
-		gap: 10px;
+    padding-right: 20px;
+    gap: 10px;
     width: 100%;
     height: 80px;
 }
-.m-btn, .d-btn, .l-btn {
+.m-btn, .d-btn {
     padding: 5px 10px;
     margin-top: 20px;
     height: 40px;
@@ -133,7 +133,7 @@ div > .btn {
     border: 1px solid #dee2e6;
     border-radius: 5px;
 }
-.m-btn:hover, .l-btn:hover {
+.m-btn:hover {
     background-color: #dee2e6;
 }
 .d-btn:hover {
@@ -194,6 +194,10 @@ div > .btn {
 	.info_1 {
 		display: block;
 	}
+	.image {
+    	margin-left: auto;
+    	margin-right: auto;
+    }
 }
 
 // 수정 페이지
@@ -252,3 +256,31 @@ label {
 	background-color: #0d6efd;
 	color: #fff;
 }
+
+// 자격증 등록
+.li_btn {
+    display: flex;
+    justify-content: flex-end;
+}
+.li_btn > a, .li_c_btn, .li_cancel_btn {
+    padding: 5px 10px;
+    height: 40px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+.li_btn > a:hover, .li_c_btn:hover, .li_cancel_btn:hover {
+    background-color: #dee2e6;
+}
+.list_form {
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    flex-direction: column;
+}
+.li_list_form {
+    display:block;
+    width:100%;
+}
+

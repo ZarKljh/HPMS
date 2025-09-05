@@ -3,9 +3,9 @@ package com.HPMS.HPMS.nurse.license;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LicenseService {
@@ -17,10 +17,12 @@ public class LicenseService {
         return licenseRepository.findByNurseId(nurseMain);
     }
 
+    @Transactional
     public License save(License license) {
         return licenseRepository.save(license);
     }
 
+    @Transactional
     public void delete(Integer id) {
         licenseRepository.deleteById(id);
     }
