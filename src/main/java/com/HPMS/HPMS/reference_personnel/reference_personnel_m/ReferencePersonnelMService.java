@@ -35,4 +35,9 @@ public class ReferencePersonnelMService {
     public ReferencePersonnelDtl saveReferencePersonnelDtl(ReferencePersonnelDtl dtl) {
         return referencePersonnelDtlRepository.save(dtl);
     }
+
+    //이승운추가 firstName 과 lastName 과 cellPhone 으로 referencePersonnelM 을 가져오는 메소드
+    public ReferencePersonnelM getReferencePersonnelMByNameAndCellPhone(String firstName, String lastName, String cellPhone){
+        return this.referencePersonnelMRepository.findByFirstNameAndLastNameAndCellPhone(firstName, lastName, cellPhone);
+    }
 }

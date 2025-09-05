@@ -1,8 +1,12 @@
 package com.HPMS.HPMS.siteuser;
 
+import com.HPMS.HPMS.Doctor.DoctorM.DoctorM;
+import com.HPMS.HPMS.Doctor.DoctorM.DoctorMService;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
+import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelM;
+import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +24,8 @@ public class SiteUserService {
     private final SiteUserRepository siteUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final NurseMainService nurseMainService;
+    private final DoctorMService doctorMService;
+    private final ReferencePersonnelMService referencePersonnelMService;
 
     public SiteUser createSiteUser(SiteUserForm suf){
         SiteUser newsu = new SiteUser();
@@ -39,6 +45,7 @@ public class SiteUserService {
         newsu.setEmail(suf.getEmail());
 
         //성명과 전화번호를 이용해서, role 과 roleid를 가져오는 로직
+        RoleAndId roleAndId = getRoleAndID(suf, formatedPhoneNumber);
 
         newsu.setRole(suf.getRole());
         newsu.setRoleId(suf.getRoleId());
@@ -46,6 +53,7 @@ public class SiteUserService {
         newsu.setCreateDate(LocalDateTime.now());
 
         this.siteUserRepository.save(newsu);
+
         return newsu;
     }
 
@@ -54,15 +62,21 @@ public class SiteUserService {
         String lastName = suf.getLastName();
         RoleAndId roleAndId = new RoleAndId();
 
-
-
-
-        List<NurseMain> nurseMains = this.nurseMainService.getNurseMainByName(firstName, lastName);
-        for(NurseMain nurseMain: nurseMains){
-            if(nurseMain.getNurseInformation().getTel().equals(formatedPhoneNumber)){
-                roleAndId.role = "ROLE_NURSE";
-                roleAndId.roleId = nurseMain.getId();
-
+        DoctorM doctorM = this.doctorMService.getDoctorMByNameAndTelephone(firstName, lastName, formatedPhoneNumber);
+        ReferencePersonnelM referencePersonnelM1 = this.referencePersonnelMService.getReferencePersonnelMByNameAndCellPhone(firstName, lastName, formatedPhoneNumber);
+        if( doctorM!= null){
+            roleAndId.role = "ROLE_DOCTOR";
+            roleAndId.roleId = doctorM.getId();
+        } else if( referencePersonnelM1 !=null ){
+            roleAndId.role = "ROLE_SYSTEM";
+            roleAndId.roleId = referencePersonnelM1.getId();
+        } else {
+            List<NurseMain> nurseMains = this.nurseMainService.getNurseMainByName(firstName, lastName);
+            for (NurseMain nurseMain : nurseMains) {
+                if (nurseMain.getNurseInformation().getTel().equals(formatedPhoneNumber)) {
+                    roleAndId.role = "ROLE_NURSE";
+                    roleAndId.roleId = nurseMain.getId();
+                }
             }
         }
 
@@ -74,6 +88,7 @@ public class SiteUserService {
         String role;
         Integer roleId;
 
+        //초기값-역할 아무권한이 없는 ROLE_USER로 설정
         RoleAndId(){
             this.role = "ROLE_USER";
             this.roleId = 0;
