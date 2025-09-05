@@ -11,9 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -33,16 +32,9 @@ public class LicenseController {
         );
 
         List<License> licenses = licenseService.getByNurse(nurseMain);
-        List<NurseLicenseDTO> licenseDTOList = licenses.stream().map(l -> {
-            NurseLicenseDTO dto = new NurseLicenseDTO();
-            dto.setId(l.getId());
-            dto.setLi(l.getLi());
-            dto.setLicenseNo(l.getLicenseNo());
-            dto.setIssueDate(LocalDate.parse(l.getIssueDate()));      // LocalDate로 그대로 세팅
-            dto.setExpiryDate(LocalDate.parse(l.getExpiryDate()));    // LocalDate로 그대로 세팅
-            dto.setNote(l.getNote());
-            return dto;
-        }).toList();
+        List<NurseLicenseDTO> licenseDTOList = licenses.stream()
+                .map(NurseLicenseDTO::new) // License 객체를 직접 생성자에 전달
+                .collect(Collectors.toList()); // Java 8~11 호환
 
         nurseDTO.setLicenseList(licenseDTOList);
         model.addAttribute("nurseDTO", nurseDTO);
@@ -72,8 +64,8 @@ public class LicenseController {
                 // 2-2. DTO -> Entity 매핑
                 license.setLi(licenseDTO.getLi());
                 license.setLicenseNo(licenseDTO.getLicenseNo());
-                license.setIssueDate(licenseDTO.getIssueDate().format(DateTimeFormatter.BASIC_ISO_DATE));
-                license.setExpiryDate(licenseDTO.getExpiryDate().format(DateTimeFormatter.BASIC_ISO_DATE));
+                license.setIssueDate(licenseDTO.getIssueDate());
+                license.setExpiryDate(licenseDTO.getExpiryDate());
                 license.setNote(licenseDTO.getNote());
                 license.setNurse(nurse);
 
@@ -97,6 +89,30 @@ public class LicenseController {
     @GetMapping("/delete/{licenseId}/{nurseId}")
     public String deleteLicense(@PathVariable Integer licenseId, @PathVariable Integer nurseId) {
         licenseService.delete(licenseId);
-        return "redirect:/nurse/info/" + nurseId;
+
+        // 삭제 후 남은 자격증 리스트 가져오기
+        NurseMain nurseMain = nurseMainService.getById(nurseId);
+        List<License> remainingLicenses = licenseService.getByNurse(nurseMain);
+
+        // 다음 자격증 ID 찾기
+        Integer scrollTargetId = null;
+        for (License license : remainingLicenses) {
+            if (license.getId() > licenseId) {
+                scrollTargetId = license.getId();
+                break;
+            }
+        }
+
+        // 없으면 마지막 자격증으로
+        if (scrollTargetId == null && !remainingLicenses.isEmpty()) {
+            scrollTargetId = remainingLicenses.get(remainingLicenses.size() - 1).getId();
+        }
+
+        // 리다이렉트
+        if (scrollTargetId != null) {
+            return "redirect:/nurse/info/" + nurseId + "#license-" + scrollTargetId;
+        } else {
+            return "redirect:/nurse/info/" + nurseId;
+        }
     }
 }

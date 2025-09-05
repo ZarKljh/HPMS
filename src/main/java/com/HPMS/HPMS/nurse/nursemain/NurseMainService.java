@@ -31,6 +31,10 @@ public class NurseMainService {
         }
     }
 
+    public NurseMain getById(Integer id) {
+        return nurseMainRepository.findById(id).orElse(null);
+    }
+
     public Page<NurseMain> getList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));

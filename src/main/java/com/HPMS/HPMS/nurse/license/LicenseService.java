@@ -14,7 +14,8 @@ public class LicenseService {
     private LicenseRepository licenseRepository;
 
     public List<License> getByNurse(NurseMain nurseMain) {
-        return licenseRepository.findByNurseId(nurseMain);
+        if (nurseMain == null || nurseMain.getId() == null) return List.of();
+        return licenseRepository.findByNurse_Id(nurseMain.getId());
     }
 
     public License getById(Integer id) {

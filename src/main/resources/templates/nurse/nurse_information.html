@@ -74,14 +74,15 @@
         <!-- 자격증이 있을 때 카드로 표시 -->
         <div th:if="${!#lists.isEmpty(nurseDTO.licenseList)}">
             <div class="row" th:each="license : ${nurseDTO.licenseList}">
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
+                <div class="col-md-4 mb-3" th:id="'license-' + ${license.id}">
+                    <div class="card h-120">
+                        <div class="card-body ms-3 p-3">
                             <p><strong>자격증명:</strong> <span th:text="${license.li}"></span></p>
                             <p><strong>번호:</strong> <span th:text="${license.licenseNo}"></span></p>
                             <p><strong>발급일:</strong> <span th:text="${license.issueDate}"></span></p>
                             <p><strong>만료일:</strong> <span th:text="${license.expiryDate}"></span></p>
                             <p><strong>비고:</strong> <span th:text="${license.note}"></span></p>
+                            <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}" class="btn btn-danger btn-sm mt-2 mb-2">삭제</a>
                         </div>
                     </div>
                 </div>
