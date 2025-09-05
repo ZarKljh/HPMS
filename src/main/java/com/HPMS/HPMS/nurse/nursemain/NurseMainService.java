@@ -41,4 +41,8 @@ public class NurseMainService {
     public NurseMain save(NurseMain nurseMain) {
         return nurseMainRepository.save(nurseMain);
     }
+
+    public List<NurseMain> getNurseMainByName(String firstName, String lastName){
+        return this.nurseMainRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
 }

@@ -11,6 +11,7 @@ import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,6 +46,10 @@ public class PatientController {
         return "patient/lsw_patient_list";
     }
     */
+
+
+    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/patient/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
         List<PatientListDTO> patients = this.patientDTOService.getPatientListDTO(page);
