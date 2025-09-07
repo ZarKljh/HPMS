@@ -51,6 +51,19 @@ a {
 .listbox {
 	padding-top: 10px;
 }
+.search_box {
+    display:flex;
+    justify-content: end;
+}
+.search_btn {
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.search_btn:hover {
+    background-color: #dee2e6;
+}
 table {
 	display: flex;
 	justify-content: center;

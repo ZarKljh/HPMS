@@ -1,14 +1,16 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Nurse List</h2>
-    <div class="row my-3">
-        <div class="col-6">
+
+    <div class="search_box row my-3">
+        <div class="col-8 col-md-3">
             <div class="input-group">
-                <input type="text" id="search_kw" class="form-control" th:value="${kw}">
-                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+                <input type="text" id="search_kw" class="form-control" th:value="${kw}"/>
+                <button class="search_btn" type="button" id="btn_search">검색</button>
             </div>
         </div>
     </div>
+
     <table class="table table-hover card">
         <thead class="table-info">
         <tr class="list text-center">
