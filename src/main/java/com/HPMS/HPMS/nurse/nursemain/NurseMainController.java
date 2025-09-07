@@ -17,10 +17,11 @@ public class NurseMainController {
     private final NurseMainService nurseMainService;
 
     @GetMapping("")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpSession session) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpSession session, @RequestParam(value = "kw", defaultValue = "") String kw) {
         session.removeAttribute("tempNurseMain");
-        Page<NurseMain> paging = this.nurseMainService.getList(page);
+        Page<NurseMain> paging = this.nurseMainService.getList(page, kw);
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "nurse/nurse_main";
     }
 

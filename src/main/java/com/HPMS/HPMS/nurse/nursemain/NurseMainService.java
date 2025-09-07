@@ -1,11 +1,14 @@
 package com.HPMS.HPMS.nurse.nursemain;
 
 import com.HPMS.HPMS.nurse.NurseDataNotFoundException;
+import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,14 +38,35 @@ public class NurseMainService {
         return nurseMainRepository.findById(id).orElse(null);
     }
 
-    public Page<NurseMain> getList(int page) {
+    public Page<NurseMain> getList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 15, Sort.by(sorts));
-        return this.nurseMainRepository.findAll(pageable);
+        Specification<NurseMain> spec = search(kw);
+        return this.nurseMainRepository.findAll(spec, pageable);
     }
 
     public NurseMain save(NurseMain nurseMain) {
         return nurseMainRepository.save(nurseMain);
+    }
+
+    private Specification<NurseMain> search(String kw) {
+        return new Specification<>() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Predicate toPredicate(Root<NurseMain> m, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                query.distinct(true);  // 중복을 제거
+                Join<NurseMain, NurseInformation> i = m.join("nurseInformation", JoinType.LEFT);
+                return cb.or(cb.like(m.get("firstName"), "%" + kw + "%"), // 이름
+                        cb.like(m.get("lastName"), "%" + kw + "%"),      // 성
+                        cb.like(m.get("dept"), "%" + kw + "%"),    // 부서
+                        cb.like(m.get("rank"), "%" + kw + "%"),      // 직급
+                        cb.like(m.get("sts"), "%" + kw + "%"),      // 상태
+                        cb.like(m.get("wt"), "%" + kw + "%"),      // 근무형태
+                        cb.like(m.get("writer"), "%" + kw + "%"),      // 작성자
+                        cb.like(i.get("tel"), "%" + kw + "%"),      // 전화번호
+                        cb.like(m.get("modifier"), "%" + kw + "%"));   // 수정자
+            }
+        };
     }
 }
