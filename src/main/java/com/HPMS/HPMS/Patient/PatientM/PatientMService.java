@@ -27,8 +27,7 @@ public class PatientMService {
         return this.patientMRepository.findAll();
     }
 
-    public Page<PatientM> getAllPatientM(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+    public Page<PatientM> getAllPatientM(Pageable pageable) {
         return this.patientMRepository.findAll(pageable);
     }
 

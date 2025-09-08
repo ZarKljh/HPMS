@@ -30,8 +30,6 @@ public class SiteUserController {
             return "global/lsw_signup_form";
         }
 
-        siteUserService.createSiteUser(siteUserForm);
-
         try {
             siteUserService.createSiteUser(siteUserForm);
         }catch(DataIntegrityViolationException e) {

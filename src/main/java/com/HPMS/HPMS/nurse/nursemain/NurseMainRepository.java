@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface NurseMainRepository extends JpaRepository<NurseMain, Integer> {
     NurseMain findByFirstName(String firstName);
-    NurseMain findByFirstNameAndLastName(String firstName, String lastName);
+    List<NurseMain> findByFirstNameAndLastName(String firstName, String lastName);
     List<NurseMain> findByDeptLike(String dept);
     Page<NurseMain> findAll(Pageable pageable);
     Page<NurseMain> findAll(Specification<NurseMain> spec, Pageable pageable);
