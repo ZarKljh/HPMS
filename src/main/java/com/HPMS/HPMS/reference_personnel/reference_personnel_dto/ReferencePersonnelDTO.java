@@ -40,6 +40,12 @@ public class ReferencePersonnelDTO {
     private Long referencePersonalMId;
     // 동시에 다른 데이터를 같이 보여주기 위해 사용 private ReferencePersonnelM personnel;
 
+    // personnel 전체 갯수와 personnel 개별 순번 관리
+    private int currentNum; // 전체 순번
+    private int totalNum;   // 전체 개수
+
+
+
     public String getFirstName(){ return firstName; }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
