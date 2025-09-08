@@ -136,9 +136,9 @@ public class ReferencePersonnelController {
     // 삭제
     private final ReferencePersonnelMService referencePersonnelMService;
     
-    @PostMapping("/user/delete/{id}")
-    public String deleteReferencePersonnel(@PathVariable("id") Integer id,
-                                           RedirectAttributes redirectAttributes,
+    @PostMapping("/user/delete")
+    public String deleteReferencePersonnel(RedirectAttributes redirectAttributes,
+                                           @RequestParam("id") Integer id,
                                            @RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size) {
         try {
