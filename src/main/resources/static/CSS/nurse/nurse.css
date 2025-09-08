@@ -247,6 +247,7 @@ label {
 	width: 100px;
 }
 .input-list {
+    display: flex;
 	padding: 10px;
 	margin: 20px;
 	border: 1px solid #dee2e6;
@@ -296,4 +297,3 @@ label {
     display:block;
     width:100%;
 }
-
