@@ -228,6 +228,7 @@ public class DoctorH {
     @JoinColumn(name = "DOCTOR_ID", nullable = false)
     private DoctorM doctorMain;
 
+    // 안전망
     @PrePersist
     void onPrePersist() {
         if (createDate == null) createDate = LocalDateTime.now();
