@@ -12,6 +12,8 @@ import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonne
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -40,20 +42,36 @@ public class ReferencePersonnelController {
     }
 */
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/list")
     public String referencePersonnelList(@RequestParam(defaultValue = "1") int page,
                                          @RequestParam(defaultValue = "10") int size,
                                          Model model) {
-        int internalPage = page - 1; // 내부는 0부터 시작
-        PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("id").ascending());
+        // personnel 순번처리
+        int internalPage = page - 1; // 내부 논리처리는 0부터 시작
+        PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("createDate").ascending());
         Page<ReferencePersonnelDTO> pagedList = referencePersonnelDTOService.getPagedReferencePersonnel(pageRequest);
+
+        List<ReferencePersonnelDTO> content = pagedList.getContent();
+        int totalElements = (int) pagedList.getTotalElements();
+
+        for (int i = 0; i < content.size(); i++) {
+            ReferencePersonnelDTO dto = content.get(i);
+            int currentNum = internalPage * size + i + 1; // 전체 기준 순번
+            dto.setCurrentNum(currentNum);      // DTO 에 선언된 값을 참조
+            dto.setTotalNum((int) pagedList.getTotalElements());
+        }
+
+        // 페이징 네비게이션
+        // int internalPage = page - 1; // 내부는 0부터 시작
+        //PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("id").ascending());
+        //Page<ReferencePersonnelDTO> pagedList = referencePersonnelDTOService.getPagedReferencePersonnel(pageRequest);
 
         int totalPages = pagedList.getTotalPages();
         if (internalPage >= totalPages) {
             internalPage = 0;
             page = 1;
         }
-
         int startPage = Math.max(page - 2, 1);
         int endPage = Math.min(page + 2, totalPages);
 
@@ -67,6 +85,8 @@ public class ReferencePersonnelController {
         model.addAttribute("referencePersonnels", pagedList.getContent());
         model.addAttribute("size", size);
         model.addAttribute("personnelPage", pagedList);
+        // model.addAttribute("currentNum", currentNum); //DTO에 포함시켜 놓았기 때문에 불필요
+        model.addAttribute("totalNum", totalElements); //DTO에 포함시켜 놓았기 때문에 불필요하지만 화면 출력편의를 위해
 
         return "personnel/personnel_list";
     }
@@ -115,6 +135,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_detail/"+id+"?page="+page+"&size="+size;
     }*/
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/detail/{id}")
     public String referencePersonnelDtl(Model model,
                                         @PathVariable("id") Integer id,
@@ -135,7 +156,8 @@ public class ReferencePersonnelController {
 
     // 삭제
     private final ReferencePersonnelMService referencePersonnelMService;
-    
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/user/delete")
     public String deleteReferencePersonnel(RedirectAttributes redirectAttributes,
                                            @RequestParam("id") Integer id,
@@ -150,6 +172,16 @@ public class ReferencePersonnelController {
         return "redirect:/user/list?page=" + page + "&size=" + size;
     }
 
+    // Start of personnel 목록에서 체크박스 다중 선택 후 삭제하는 기능
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    @PostMapping("/delete/selectedPersonnel")
+    public String deleteSelectedPersonnel(RedirectAttributes redirectAttributes,
+                                           @RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "10") int size){
+        System.out.println("you are here");
+        return "redirect:/user/list?page=" + page + "&size=" + size;
+    }
+
     /*업데이트 화면 전용
     @GetMapping("/user/update/{id}")  //update 화면 호출
     public String referencePersonnel(Model model, @PathVariable("id") Integer id){
@@ -158,6 +190,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_update";
     }
     */
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_update")  //update 화면 채우기
     public String referencePersonnel(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer size, Model model) {
         ReferencePersonnelDTO personnel = this.referencePersonnelDTOService.getReferencePersonnelDTO(id);
@@ -166,7 +199,8 @@ public class ReferencePersonnelController {
         model.addAttribute("size", size);
         return "personnel/personnel_update";
     }
-    
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/update/personnel")    // update 화면에서 값을 받아 저장한 후 상세보기 화면으로 이동하기
     public String updatePersonnel(@ModelAttribute ReferencePersonnelDTO dto,
                                   @RequestParam Integer page,
@@ -186,7 +220,7 @@ public class ReferencePersonnelController {
     }
 
 
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_registration")
     public String personnelRegisration() {
         return "personnel/personnel_registration";
@@ -194,6 +228,7 @@ public class ReferencePersonnelController {
 
 
     //  신규 관련자 등록 시작
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/create/reference_personal")
     public String createReferencePersonnel(@ModelAttribute ReferencePersonnelDTO dto, RedirectAttributes redirectAttributes,
                                            @RequestParam(defaultValue = "1") int page,
