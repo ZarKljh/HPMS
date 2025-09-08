@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.nurseinformation;
 
+import com.HPMS.HPMS.nurse.nursedto.NurseInformationDTO;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,14 @@ public class NurseInformationService {
     public NurseInformation findByNurseMainId(Integer id) {
         return nurseInformationRepository.findByNurseMainId(id)
                 .orElse(null);
+    }
+
+    public NurseInformationDTO getInfoByNurse(NurseMain nurseMain) {
+        NurseInformation info = nurseInformationRepository.findByNurseMainId(nurseMain.getId())
+                .orElse(null);
+        if (info == null) return null;
+
+        return new NurseInformationDTO(info); // DTO로 변환
     }
 
     @Transactional

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtl;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,19 @@ public class ReferencePersonnelMService {
     //이승운추가 firstName 과 lastName 과 cellPhone 으로 referencePersonnelM 을 가져오는 메소드
     public ReferencePersonnelM getReferencePersonnelMByNameAndCellPhone(String firstName, String lastName, String cellPhone){
         return this.referencePersonnelMRepository.findByFirstNameAndLastNameAndCellPhone(firstName, lastName, cellPhone);
+
+    // 삭제를 위해 추가함
+    // private final ReferencePersonnelMRepository referencePersonnelMRepository;
+
+    @Transactional
+    public void deletePersonnel(Integer id) {
+        ReferencePersonnelM master = referencePersonnelMRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 마스터가 존재하지 않습니다: " + id));
+
+        master.setDetail(null); // orphanRemoval 작동
+        referencePersonnelMRepository.delete(master); // 마스터 삭제
+
     }
 }
+
+

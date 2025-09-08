@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.nursedto;
 
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,4 +49,24 @@ public class NurseMainDTO {
 
     // 기본 생성자 (Thymeleaf, Jackson 등에서 필요할 수 있음)
     public NurseMainDTO() {}
+
+    public NurseMainDTO(NurseMain nurse) {
+        if (nurse != null) {
+            this.id = nurse.getId();
+            this.firstName = nurse.getFirstName();
+            this.middleName = nurse.getMiddleName();
+            this.lastName = nurse.getLastName();
+            this.dept = nurse.getDept();
+            this.rank = nurse.getRank();
+            this.gender = nurse.getGender();
+            this.dateOfBirth = nurse.getDateOfBirth();
+            this.hireDate = nurse.getHireDate();
+            this.sts = nurse.getSts();
+            this.wt = nurse.getWt();
+            this.writer = nurse.getWriter();
+            this.createDate = nurse.getCreateDate();
+            this.modifier = nurse.getModifier();
+            this.modifyDate = nurse.getModifyDate();
+        }
+    }
 }
