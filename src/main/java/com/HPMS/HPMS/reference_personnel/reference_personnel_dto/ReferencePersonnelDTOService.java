@@ -1,6 +1,7 @@
 package com.HPMS.HPMS.reference_personnel.reference_personnel_dto;
 
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtl;
+import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_dtl_dto.ReferencePersonnelDtlDTO;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_m_dto.ReferencePersonnelMDTO;
@@ -8,9 +9,11 @@ import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonne
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 // import java.util.logging.Logger;
@@ -20,6 +23,7 @@ import org.slf4j.LoggerFactory;*/
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -107,7 +111,6 @@ public class ReferencePersonnelDTOService {
         ReferencePersonnelDTO referencePersonnelDTO = new ReferencePersonnelDTO();
 
         if (referencePersonnelDTO != null) {
-
             referencePersonnelDTO.setPersonnel(referencePersonnelDtl.getPersonnel().getId());
             referencePersonnelDTO.setId(referencePersonnelDtl.getId());
             referencePersonnelDTO.setCompanyName(referencePersonnelDtl.getCompanyName());
@@ -121,10 +124,64 @@ public class ReferencePersonnelDTOService {
             referencePersonnelDTO.setNote(referencePersonnelDtl.getNote());
             referencePersonnelDTO.setCreator(referencePersonnelDtl.getCreator());
             referencePersonnelDTO.setCreateDate(referencePersonnelDtl.getCreateDate());
+            referencePersonnelDTO.setFirstName(referencePersonnelM.getFirstName());
+            referencePersonnelDTO.setLastName(referencePersonnelM.getLastName());
+            referencePersonnelDTO.setMiddleName(referencePersonnelM.getMiddleName());
+            referencePersonnelDTO.setNationality(referencePersonnelM.getNationality());
+            referencePersonnelDTO.setEmail(referencePersonnelM.getEmail());
+            referencePersonnelDTO.setCellPhone(referencePersonnelM.getCellPhone());
         /*  private Integer id;
             private ReferencePersonnelM personnel;*/
         }
         return referencePersonnelDTO;
+    }
+
+    // 기존 등록된 내용의 수정결과 저장 시작
+    @Transactional
+    public Integer updatePersonnel(ReferencePersonnelDTO dto){
+        //ReferencePersonnelM m = new ReferencePersonnelM();
+        ReferencePersonnelM m = referencePersonnelMService.getReferencePersonnelM(dto.getId());
+        if (m == null) {
+            throw new EntityNotFoundException("지원인력 기본정보를 찾을 수 없습니다. ID: " + dto.getId());
+        }
+
+        m.setFirstName(dto.getFirstName());
+        m.setLastName(dto.getLastName());
+        m.setMiddleName(dto.getMiddleName());
+        m.setNationality(dto.getNationality());
+        m.setEmail(dto.getEmail());
+        m.setCellPhone(dto.getCellPhone());
+        m.setCreator(dto.getCreator());
+        m.setCreateDate(LocalDateTime.now());
+
+        // ReferencePersonnelM savedM = referencePersonnelMService.saveReferencePersonnelM(m);
+        // Integer generatedId = savedM.getId();
+        // ReferencePersonnelDtl dtl = new ReferencePersonnelDtl();
+
+        // ReferencePersonnelDtl dtl = referencePersonnelDtlService.getReferencePersonnelDtlByPersonnel(dto.getId());
+        ReferencePersonnelDtl dtl = referencePersonnelDtlService.getReferencePersonnelDtlByPersonnel(m);
+        if (dtl == null) {
+            dtl = new ReferencePersonnelDtl();
+            dtl.setPersonnel(m); // FK 연결
+            dtl.setCreateDate(LocalDateTime.now()); // 새로 생성된 경우
+        }
+
+
+        dtl.setCompanyName(dto.getCompanyName());
+        dtl.setDeptName(dto.getDeptName());
+        dtl.setOfficeAddress(dto.getOfficeAddress());
+        dtl.setOfficeDetailAddress(dto.getOfficeDetailAddress());
+        dtl.setOfficeTel(dto.getOfficeTel());
+        dtl.setOfficeFax(dto.getOfficeFax());
+        dtl.setCompanyWebsiteUrl(dto.getCompanyWebsiteUrl());
+        dtl.setNote(dto.getNote());
+        dtl.setCreateDate(dto.getCreateDate());
+        dtl.setPersonnel(m); // FK 관계 설정
+        dtl.setCreator(dto.getCreator());
+
+        // dtl.setPersonnel(savedM); // FK 연결
+        referencePersonnelMService.saveReferencePersonnelDtl(dtl);
+        return m.getId();
     }
 
     @Transactional
@@ -136,9 +193,10 @@ public class ReferencePersonnelDTOService {
         m.setNationality(dto.getNationality());
         m.setEmail(dto.getEmail());
         m.setCellPhone(dto.getCellPhone());
-        m.setCreateDate(dto.getCreateDate());
+        // m.setCreateDate(dto.getCreateDate()); 자동
         // login 이 아직 구현되지 않아 Creator 에 "sys_admin"을 임시저장
-        m.setCreator("sys_admin");
+        // m.setCreator("sys_admin");
+        m.setCreator(dto.getCreator());
         //String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         //m.setCreator(currentUsername);
 
@@ -159,7 +217,8 @@ public class ReferencePersonnelDTOService {
         dtl.setNote(dto.getNote());
         dtl.setCreateDate(dto.getCreateDate());
         dtl.setPersonnel(m); // FK 관계 설정
-        dtl.setCreator("sys_admin"); // 로그인 기능 미비에 따른 임시
+        // dtl.setCreator("sys_admin"); // 로그인 기능 미비에 따른 임시
+        dtl.setCreator(dto.getCreator());
         //dtl.setCreator(currentUsername); // 로그인 이후 
         // referencePersonnelMService.saveReferencePersonnelDtl(dtl); // 저장
 
@@ -203,4 +262,18 @@ public class ReferencePersonnelDTOService {
         }
         return dto;
     }
+
+/*
+    // 삭제는 엔터티 레파지토리를 활용
+    private final ReferencePersonnelMRepository referencePersonnelMRepository;
+
+    @Transactional
+    public void deleteDetailOnly(Integer masterId) {
+        ReferencePersonnelM master = referencePersonnelMRepository.findById(masterId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 마스터가 존재하지 않습니다: " + masterId));
+
+        master.setDetail(null); // 관계 끊기
+        referencePersonnelMRepository.save(master); // 변경 감지 → orphanRemoval 작동
+    }
+*/
 }

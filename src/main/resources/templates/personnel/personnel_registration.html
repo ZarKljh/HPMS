@@ -1,10 +1,10 @@
-<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<html lang="kr" layout:decorate="~{personnel/personnel_layout}">
 <div layout:fragment="content" class="container">
-    <div><a th:href="@{/user/personnel_registration}">Regisrate Reference Personnel</a></div>
+    <!--<div><a th:href="@{/user/personnel_registration}">Regisrate Reference Personnel</a></div>-->
     <div th:if="${warningMessage}" class="alert alert-warning" th:text="${warningMessage}"></div>
     <h2>Reference Personnel Registration</h2>
-<form th:action="@{|/create/reference_personal|}" method="post">
-<table class="tbl_set">
+<!--<form th:action="@{|/create/reference_personal|}" method="post">-->
+<!--<table class="tbl_set">
     <thead></thead>
     <tbody>
         <tr>
@@ -62,7 +62,7 @@
         <tr>
             <td class="td_title">Company Homepage</td>
             <td><input name="companyWebsiteUrl" type="TEXT"></td>
-            <!--<td><input name="companyWebsiteUrl" type="url"></td> please enter a url-->
+            &lt;!&ndash;<td><input name="companyWebsiteUrl" type="url"></td> please enter a url&ndash;&gt;
         </tr>
         <tr>
             <td class="td_title">Note</td>
@@ -73,5 +73,78 @@
             <td class="td_title" colspan="2"><input type="submit" value="Registration"></td>
         </tr>
     </tbody>
-</table>
+</table>-->
+    <form class="card my-3 p-3" name="registration" th:action="@{|/create/reference_personal|}" method="post" style="autocomplete=off;">
+        <input type="hidden" name="page" value="0" />
+        <input type="hidden" name="size" value="10" />
+        <h4 class="border-bottom py-2">비상주 지원인력 등록을 위한 공간입니다.</h4>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">국적:</label>
+            <input type="text" name="nationality" placeholder="Nationality"/>
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">성명:</label>
+            <input type="text" name="lastName" placeholder="First Name"/>
+            <input type="text" name="firstName" placeholder="Last Name"/>
+            <input type="text" name="middleName" placeholder="Middle Name"/>
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">이메일 주소:</label>
+            <input type="text" name="email" placeholder="Email Address" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">휴대전화번호:</label>
+            <input type="text" name="cellPhone" placeholder="cell phone number" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">회사명:</label>
+            <input type="text" name="companyName" placeholder="Company" />
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">홈페이지:</label>
+            <input type="text" name="companyWebsiteUrl" placeholder="Website URL" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">직책/직급:</label>
+            <input type="text" name="position" placeholder="Position or Rank" />
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">부서명:</label>
+            <input type="text" name="deptName" placeholder="Department/Division" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">유선전화번호:</label>
+            <input type="text" name="officeTel" placeholder="Telephone number" />
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">팩스번호:</label>
+            <input type="text" name="officeFax" placeholder="Facsimile Number" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">사무실 주소:</label>
+            <input type="text" name="officeAddress" placeholder="Office Address" />
+        </div>
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">&nbsp;</label>
+            <input type="text" name="officeDetailAddress" placeholder="OFFICE DETAIL ADDRESS" />
+        </div>
+        <!--    <div class="m-2">
+                <label class="label-reform text-end">비고:</label>
+                <textarea name="note" placeholder="Etcetera" rows="15" cols="100%"></textarea>
+            </div>
+            <div class="d-flex align-items-start m-2 gap-2">
+                <label class="label-reform pt-2">비고:</label>
+                <textarea name="note" placeholder="Etcetera" rows="4" class="form-control" style="width: 100%;"></textarea>
+            </div>-->
+        <div class="d-flex align-items-start gap-2 mb-3">
+            <label class="label-reform text-end flex-shrink-0" style="width: 100px;">비고:</label>
+            <textarea name="note" placeholder="Etcetera" rows="3" class="form-control" style="flex: 1;"></textarea>
+        </div>
+        <!--<input type="submit" value="Registration">-->
+    </form>
 </form>
+    <div class="page-navigation">
+        <div>
+        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-full">목록보기</a>
+        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-short">목록</a>
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].submit(); return false;">등록하기</a>
+        <a href="#" class="button-link text-short" onclick="document.forms['registration'].submit(); return false;">등록</a>
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].reset(); return false;">초기화하기</a>
+        </div>
+    </div>
+</div>
+</html>

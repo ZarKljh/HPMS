@@ -18,8 +18,8 @@ public class ReferencePersonnelDTO {
     private String nationality;
     private String email;
     private String cellPhone;
+    // 공통사용
     private String creator;
-
     // ReferencePersonalDtl 관련 필드
     // private ReferencePersonnelM personnel; ViewModel이나 상세 조회용
     private Integer personnel;
@@ -40,16 +40,41 @@ public class ReferencePersonnelDTO {
     private Long referencePersonalMId;
     // 동시에 다른 데이터를 같이 보여주기 위해 사용 private ReferencePersonnelM personnel;
 
-    public String getCreator(){
-        return creator;
+    public String getFirstName(){ return firstName; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName(){ return lastName; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleName(){ return middleName; }
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getPosition(){
+        return position;
+    }
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getNationality() {
         return nationality;
     }
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
 
-    public String getMiddleName() {
-        return middleName;
+
+    public String getCreator() {
+        return creator;
+    }
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
 }

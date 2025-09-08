@@ -112,6 +112,14 @@ public class ReferencePersonnelDtlDTO {
         return note != null && !note.trim().isEmpty() ? note : "관련정보없음";
     }
 
+    public ReferencePersonnelM getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(ReferencePersonnelM personnel) {
+        this.personnel = personnel;
+    }
+
 /*    public void setNote(String note) {
         this.note = note;
     }*/
@@ -133,5 +141,4 @@ public class ReferencePersonnelDtlDTO {
         this.createDate = createDate;
     }
 */
-
 }

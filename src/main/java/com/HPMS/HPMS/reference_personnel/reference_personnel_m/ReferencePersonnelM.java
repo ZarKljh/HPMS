@@ -44,7 +44,7 @@ public class ReferencePersonnelM {
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
-    @OneToOne(mappedBy = "personnel", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "personnel", cascade = CascadeType.ALL, orphanRemoval = true)
     private ReferencePersonnelDtl detail;
 
 

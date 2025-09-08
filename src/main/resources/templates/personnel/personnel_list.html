@@ -1,16 +1,24 @@
 <html lang="kr" layout:decorate="~{personnel/personnel_layout}">
 <div layout:fragment="content" class="container">
 <h2 class="listbox">Reference Personnel List</h2>
-
-<form method="get" action="/user/list">
-    <label for="size">Row counter:</label>
-    <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
-        <option th:value="5" th:selected="${size == 5}">5</option>
-        <option th:value="10" th:selected="${size == 10}">10</option>
-        <option th:value="20" th:selected="${size == 20}">20</option>
-    </select>
-    <input type="hidden" name="page" value="${currentPage}" />
-</form>
+<!--  원본  <form method="get" action="/user/list">
+        <label for="size">Row counter:</label>
+        <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
+            <option th:value="5" th:selected="${size == 5}">5</option>
+            <option th:value="10" th:selected="${size == 10}">10</option>
+            <option th:value="20" th:selected="${size == 20}">20</option>
+        </select>
+        <input type="hidden" name="page" value="${page}" />
+    </form>-->
+    <form method="get" action="/user/list">
+        <label for="size">Row counter:</label>
+        <select name="size" id="size" onchange="this.form.submit();">
+            <option th:value="5" th:selected="${size == 5}">5</option>
+            <option th:value="10" th:selected="${size == 10}">10</option>
+            <option th:value="20" th:selected="${size == 20}">20</option>
+            <input type="hidden" name="page" value="1" />
+        </select>
+    </form>
 <!--
 <form method="get" action="/user/list">
     <label for="size">Row counter:</label>
@@ -35,14 +43,27 @@
         <tr th:each="personnel : ${referencePersonnels}">
             <td>
                 <a th:if="${personnel.id != null}"
-                   th:href="@{/user/detail/{id}(id=${personnel.id})}"
+                   th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 0}&page=${page != null ? page : 0}|"
                    th:text="${personnel.id}"></a>
             </td>
+            <!--
+                            <a th:if="${personnel.id != null}"
+                               th:href="@{/user/detail/{id}(id=${personnel.id})}"
+                               th:text="${personnel.id}"></a>
+
+                            <a th:if="${personnel.id != null}"
+                               th:href="@{/user/detail/{id}(id=${personnel.id}) + '?size=' + (${size} != null ? ${size} : 0) + '&page=' + (${page} != null ? ${page} : 0)}"
+                               th:text="${personnel.id}"></a>
+            -->
+
+
             <td th:text="${personnel.nationality}"></td>
             <td>
                 <a th:if="${personnel.id != null}"
-                   th:href="@{/user/detail/{id}(id=${personnel.id})}"
-                   th:text="${personnel.lastName + personnel.firstName}"></a>
+                   th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 10}&page=${currentPage != null ? currentPage : 1}|"
+                   th:text="${personnel.middleName != null && personnel.middleName != ''
+             ? personnel.lastName + ' ' + personnel.middleName + ' ' + personnel.firstName
+             : personnel.lastName + ' ' + personnel.firstName}"></a>
             </td>
             <td th:text="${personnel.middleName}"></td>
             <td th:text="${personnel.email}"></td>
@@ -55,33 +76,46 @@
 </div><!-- end of personnel-list-->
 <div class="page-navigation">
     <div>
-        <form id="registrationForm" method="post" action="/user/personnel_registration">
+<!--        <form id="registrationForm" method="post" action="/user/personnel_registration">
             <input name="size" type="hidden" th:value="${size}" >
-            <!--<input name="page" type="text" th:value="${page}" hidden="hidden">-->
+            &lt;!&ndash;<input name="page" type="text" th:value="${page}" hidden="hidden">&ndash;&gt;
             <input type="hidden" name="page" th:value="${currentPage}" />
             <a href="#" class="button-link text-full" onclick="event.preventDefault();submitForm(event);">
                 등록하기
             </a>
             <a href="#" class="button-link text-short" onclick="event.preventDefault();submitForm(event);">
                 등록
-            </a>
+            </a>-->
+        <a th:href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="button-link text-full">
+            등록하기
+        </a>
+        <a href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="button-link text-short">
+            등록
+        </a>
             <a href="#" class="button-link delete-button" onclick="event.preventDefault(); alert('not ready')">
                 삭제하기
             </a>
-        </form>
+<!--        </form>-->
     </div>
     <div class="pagination">
-        <button onclick="loadPage(0)">처음</button>
-        <button onclick="loadPage(${currentPage - 1})" th:if="${currentPage > 0}">이전</button>
-        <span th:each="pageNum : ${pageNumbers}">
-            <button onclick="loadPage([[${pageNum}]])"
-                    th:class="${pageNum == currentPage} ? 'active-page' : ''">
-                [[${pageNum + 1}]]
-            </button>
-        </span>
-        <button onclick="loadPage(${currentPage + 1})" th:if="${currentPage < totalPages - 1}">다음</button>
-            <button onclick="loadPage(${totalPages - 1})" th:if="${currentPage < totalPages - 1}">끝</button>
-        </div><!-- end of page-navigation -->
-</div>
+        <a th:if="${currentPage > 1}"
+           th:href="@{/user/list(page=1, size=${size})}">처음</a>
 
+        <a th:if="${currentPage > 1}"
+           th:href="@{/user/list(page=${currentPage - 1}, size=${size})}">이전</a>
+
+        <span th:each="pageNum : ${pageNumbers}">
+            <a th:href="@{/user/list(page=${pageNum}, size=${size})}"
+                th:text="${pageNum}"
+                th:class="${pageNum == currentPage} ? 'active-page' : ''"></a>
+        </span>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{/user/list(page=${currentPage + 1}, size=${size})}">다음</a>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{/user/list(page=${totalPages}, size=${size})}">끝</a>
+    </div>
+</div>
+</div>
 </html>
