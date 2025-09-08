@@ -148,6 +148,40 @@ public class PatientDTOService {
         return detailDTO;
     }
 
+//    public Page<PatientListDTO> searchPatients(
+//            List<String> columns,
+//            List<String> operators,
+//            List<String> values,
+//            List<String> logicalOperators,
+//            Pageable pageable
+//    ) {
+//        Page<PatientM> patientMs = this.patientMService.patientMSearch(columns, operators, values, logicalOperators, pageable);
+//
+//        List<PatientListDTO> dtoList = new ArrayList<>();
+//
+//        for( PatientM m : patientMs.getContent()){
+//            PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+//
+//            //환자리스트html 전용 DTO 객체를 선언한다
+//            PatientListDTO dto = new PatientListDTO();
+//
+//            dto.setId(m.getId());
+//            dto.setName(m.getLastName() + " " + m.getFirstName());
+//            dto.setGender(m.getGender());
+//            dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
+//            dto.setForeigner(m.getForeigner());
+//            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+//            dto.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
+//            dto.setLastVisitDate(dtl.getLastVisitDate());
+//            dto.setCreateDate(m.getCreateDate());
+//
+//            dtoList.add(dto);
+//        }
+//
+//        return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
+//    }
+
+
     //Integer 형으로 되어있는 날짜를 LocalDate로 변환하는 메소드
     public LocalDate stringToLocalDate(Integer dayOfbirth){
         //날짜출력용 포멧을 정해놓았다

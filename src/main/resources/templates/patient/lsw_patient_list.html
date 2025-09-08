@@ -2,6 +2,64 @@
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Patient List</h2>
 
+    <!-- 🔍 검색 영역 시작 -->
+    <div class="search-section container my-3">
+        <button type="button" class="btn btn-primary mb-3" onclick="toggleSearchForm()">검색하기</button>
+
+        <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
+            <div id="searchConditions">
+                <!-- 🔹 검색 조건 한 줄 -->
+                <div class="search-row row mb-2">
+                    <div class="col-md-3">
+                        <select name="column[]" class="form-select" onchange="updateOperatorOptions(this)">
+                            <option value="">컬럼 선택</option>
+                            <option value="lastName">성명 성</option>
+                            <option value="firstName">성명 이름</option>
+                            <option value="gender">성별</option>
+                            <option value="birth">생년월일</option>
+                            <option value="foreigner">내/외국인</option>
+                            <option value="mobilePhone">휴대전화(뒷4자리)</option>
+                            <option value="guardianTel">보호자전화(뒷4자리)</option>
+                            <option value="createDate">최초등록일</option>
+                            <option value="lastVisitDate">최종방문일</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select name="operator[]" class="form-select">
+                            <option value="=">=</option>
+                            <option value="like">포함</option>
+                            <option value=">">></option>
+                            <option value="<"><</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="text" name="value[]" class="form-control" placeholder="값 입력">
+                    </div>
+
+                    <div class="col-md-2">
+                        <select name="logicalOperator[]" class="form-select">
+                            <option value="AND">AND</option>
+                            <option value="OR">OR</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success" onclick="addConditionRow()">+</button>
+                        <button type="button" class="btn btn-danger" onclick="removeConditionRow(this)">-</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">검색 실행</button>
+            </div>
+        </form>
+    </div>
+    <!-- 🔍 검색 영역 끝 -->
+
+
     <form method="get" action="/patient/list">
         <label for="size">Row counter:</label>
         <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
@@ -87,4 +145,6 @@
     </div>
 
 </div>
+<!-- ✅ JS 스크립트: 검색 폼 동적 제어 -->
+
 </html>
