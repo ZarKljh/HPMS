@@ -79,4 +79,7 @@ public class DoctorMService {
         repository.deleteById(id);
     }
 
+    public DoctorM getDoctorMByNameAndTelephone( String firstName, String lastName, String telephone){
+        return repository.findByFirstNameAndLastNameAndTelephone(firstName, lastName, telephone);
+    }
 }

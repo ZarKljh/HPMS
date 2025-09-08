@@ -1,0 +1,103 @@
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* 왼쪽 버튼 영역 */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* 버튼 스타일 */
+.button-link {
+  gap:5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  min-height: 42px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-link:hover {
+  background-color: #cce6ff;
+  border-color: #666;
+  color: #000;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+/* 페이징 버튼 영역 */
+.pagination {
+    display: flex;
+    gap: 6px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination a:hover {
+    background-color: #cce6ff;
+    border-color: #99ccff;
+    color: #000;
+}
+
+.pagination .active-page {
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+    pointer-events: none;
+}
+
+
+/* 기본: 데스크탑에서는 전체 텍스트 보이기 */
+.text-full {
+    display: inline;
+}
+.text-short {
+    display: none;
+}
+
+/* 모바일: 768px 이하에서는 짧은 텍스트만 보이기 */
+@media (max-width: 768px) {
+    .text-full { /*모바일에서 버튼 문자열 변경 */
+        display: none;
+    }
+
+    .text-short {
+        display: inline;
+    }
+
+   .delete-button { /*모바일에서 버튼 완전히 가리기 */
+        display: none;
+   }
+
+}
+
+
+
