@@ -1,103 +1,104 @@
 <html layout:decorate="~{nurse/nurse_layout}">
-<div layout:fragment="content" class="container my-3">
-  <h1>신규 간호사 등록 - 상세 정보</h1>
+  <div layout:fragment="content" class="container my-3">
+    <h1>신규 간호사 등록 - 상세 정보</h1>
 
-  <form class="card my-3" th:action="@{|/nurse/create/info|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
+    <form class="card my-3" th:action="@{|/nurse/create/info|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
 
-    <div class="input-list">
-      <label>서브 성명:</label>
-      <input class="name" type="text" th:field="*{firstName}" placeholder="이름"/>
-      <input class="name" type="text" th:field="*{lastName}" placeholder="성"/>
-      <input class="name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
-    </div>
+      <div class="input-list">
+        <label>서브 성명:</label>
+        <input class="name" type="text" th:field="*{firstName}" placeholder="이름"/>
+        <input class="name" type="text" th:field="*{lastName}" placeholder="성"/>
+        <input class="name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
+      </div>
 
-    <h4 class="border-bottom py-2 ps-3">연락처</h4>
-    <div class="input-list">
-      <label>전화번호:</label>
-      <input type="text" th:field="*{tel}"/>
-    </div>
-    <div class="input-list">
-      <label>비상연락:</label>
-      <input type="text" th:field="*{emgcCntc}"/>
-    </div>
-    <div class="input-list">
-      <label>성명:</label>
-      <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름"/>
-      <input class="name" type="text" th:field="*{emgcLName}" placeholder="성"/>
-      <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
-    </div>
-    <div class="input-list">
-      <label>관계:</label>
-      <input type="text" th:field="*{emgcRel}"/>
-    </div>
-    <div class="input-list">
-      <label>비고:</label>
-      <input type="text" th:field="*{emgcNote}"/>
-    </div>
+      <h4 class="border-bottom py-2 ps-3">연락처</h4>
+      <div class="input-list">
+        <label>전화번호:</label>
+        <input type="text" th:field="*{tel}"/>
+      </div>
+      <div class="input-list">
+        <label>비상연락:</label>
+        <input type="text" th:field="*{emgcCntc}"/>
+      </div>
+      <div class="input-list">
+        <label>성명:</label>
+        <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름"/>
+        <input class="name" type="text" th:field="*{emgcLName}" placeholder="성"/>
+        <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
+      </div>
+      <div class="input-list">
+        <label>관계:</label>
+        <input type="text" th:field="*{emgcRel}"/>
+      </div>
+      <div class="input-list">
+        <label>비고:</label>
+        <input type="text" th:field="*{emgcNote}"/>
+      </div>
 
-    <h4 class="border-bottom py-2 ps-3">주소 / 이메일</h4>
-    <div class="input-list">
-      <label>이메일:</label>
-      <input type="email" th:field="*{email}"/>
-    </div>
-    <div class="input-list">
-      <label>우편번호:</label>
-      <input type="number" th:field="*{pcd}"/>
-    </div>
-    <div class="input-list">
-      <label>기본주소:</label>
-      <input type="text" th:field="*{defAdd}"/>
-    </div>
-    <div class="input-list">
-      <label>상세주소:</label>
-      <input type="text" th:field="*{detAdd}"/>
-    </div>
+      <h4 class="border-bottom py-2 ps-3">주소 / 이메일</h4>
+      <div class="input-list">
+        <label>이메일:</label>
+        <input type="email" th:field="*{email}"/>
+      </div>
+      <div class="input-list">
+        <label>우편번호:</label>
+        <input type="number" th:field="*{pcd}"/>
+      </div>
+      <div class="input-list">
+        <label>기본주소:</label>
+        <input type="text" th:field="*{defAdd}"/>
+      </div>
+      <div class="input-list">
+        <label>상세주소:</label>
+        <input type="text" th:field="*{detAdd}"/>
+      </div>
 
-    <h4 class="border-bottom py-2 ps-3">자격 / 학력</h4>
-    <div class="input-list">
-      <label>간호사 자격증 번호:</label>
-      <input type="text" th:field="*{rnNo}"/>
-    </div>
-    <div class="input-list">
-      <label>최종학력:</label>
-      <input type="text" th:field="*{edbc}"/>
-    </div>
-    <div class="input-list">
-      <label>졸업날짜:</label>
-      <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD"/>
-    </div>
-    <div class="input-list">
-      <label>외국어:</label>
-      <input type="text" th:field="*{fl}"/>
-    </div>
-    <div class="input-list">
-      <label>병역:</label>
-      <input type="text" th:field="*{ms}"/>
-    </div>
-    <div class="input-list">
-      <label>국적:</label>
-      <input type="text" th:field="*{natn}"/>
-    </div>
-    <div class="input-list">
-      <label>장애여부:</label>
-      <input type="text" th:field="*{dss}"/>
-    </div>
-    <div class="input-list">
-      <label>경력(개월):</label>
-      <input type="text" th:field="*{carr}"/>
-    </div>
+      <h4 class="border-bottom py-2 ps-3">자격 / 학력</h4>
+      <div class="input-list">
+        <label>간호사 자격증 번호:</label>
+        <input type="text" th:field="*{rnNo}"/>
+      </div>
+      <div class="input-list">
+        <label>최종학력:</label>
+        <input type="text" th:field="*{edbc}"/>
+      </div>
+      <div class="input-list">
+        <label>졸업날짜:</label>
+        <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD"/>
+      </div>
+      <div class="input-list">
+        <label>외국어:</label>
+        <input type="text" th:field="*{fl}"/>
+      </div>
+      <div class="input-list">
+        <label>병역:</label>
+        <input type="text" th:field="*{ms}"/>
+      </div>
+      <div class="input-list">
+        <label>국적:</label>
+        <input type="text" th:field="*{natn}"/>
+      </div>
+      <div class="input-list">
+        <label>장애여부:</label>
+        <input type="text" th:field="*{dss}"/>
+      </div>
+      <div class="input-list">
+        <label>경력(개월):</label>
+        <input type="text" th:field="*{carr}"/>
+      </div>
 
-    <h4 class="border-bottom py-2 ps-3">사진 / 비고</h4>
-    <div class="input-list">
-      <label>사진 URL:</label>
-      <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg"/>
-    </div>
-    <div class="input-list">
-      <label>비고:</label>
-      <input class="form-control" type="text" th:field="*{note}"/>
-    </div>
-    <div class="py-4">
-      <button class="btn btn-primary mb-3" type="submit">등록 완료</button>
-    </div>
-  </form>
-</div>
+      <h4 class="border-bottom py-2 ps-3">사진 / 비고</h4>
+      <div class="input-list">
+        <label>사진 URL:</label>
+        <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg"/>
+      </div>
+      <div class="input-list">
+        <label>비고:</label>
+        <input class="form-control" type="text" th:field="*{note}"/>
+      </div>
+      <div class="py-4">
+        <button class="btn btn-primary mb-3" type="submit">등록 완료</button>
+      </div>
+    </form>
+  </div>
+</html>
