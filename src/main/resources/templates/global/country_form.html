@@ -1,25 +1,24 @@
 <!-- src/main/resources/templates/global/country_form.html -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8"/>
-    <title>국가 선택</title>
+    <title>국적 검색</title>
     <style>
         body { font-family: system-ui, sans-serif; padding: 14px; }
         .searchbar { display:flex; gap:8px; margin-bottom:12px; }
         table { width:100%; border-collapse: collapse; }
         th, td { border:1px solid #ddd; padding:8px; }
         tr:hover { background:#f7f7f7; cursor:pointer; }
-        .pagination { margin-top:12px; display:flex; gap:8px; align-items:center; }
+        .pagination { margin-top: 12px; display:flex; gap:8px; align-items:center; }
     </style>
 </head>
 <body>
 
-<h3>국가 선택</h3>
+<h3>국적 검색</h3>
 
-<!-- 컨트롤러가 return "global/country_form" 을 반환한다고 가정 -->
 <form class="searchbar" method="get" th:action="@{/global/country_form}">
-    <input type="text" name="kw" placeholder="국가명/ISO/숫자" th:value="${kw}">
+    <input type="text" name="kw" placeholder="국가명/ISO/숫자" th:value="${kw}" />
     <button type="submit">검색</button>
     <a th:href="@{/global/country_form}" style="margin-left:auto">전체보기</a>
 </form>
@@ -31,40 +30,38 @@
         <th>ISO2</th>
         <th>ISO3</th>
         <th>NUM</th>
-        <th>국가(한)</th>
-        <th>국가(EN)</th>
+        <th>국가명(한)</th>
+        <th>국가명(EN)</th>
         <th>대륙(공통)</th>
         <th>선택</th>
     </tr>
     </thead>
     <tbody>
-    <!-- ✅ 동적 값은 data-* 로만 내리고, 이벤트는 고정 문자열 -->
     <tr th:each="c : ${page.content}"
-        onclick="rowChoose(this)"
-        th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}">
+        th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}"
+        ondblclick="choose(this.dataset.iso2, this.dataset.country)">
         <td th:text="${c.id}">1</td>
         <td th:text="${c.isoAlpha2}">KR</td>
         <td th:text="${c.isoAlpha3}">KOR</td>
         <td th:text="${c.numeric}">410</td>
         <td th:text="${c.countryKr}">대한민국</td>
         <td th:text="${c.countryEn}">Korea, Republic of</td>
-        <!-- 엔티티 필드명: continentCommon (오타 금지) -->
         <td th:text="${c.continentCommon}">Asia</td>
         <td>
             <button type="button"
-                    onclick="btnChoose(this)"
-                    th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}">
+                    th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}"
+                    onclick="choose(this.dataset.iso2, this.dataset.country)">
                 선택
             </button>
         </td>
     </tr>
-    <tr th:if="${page == null or page.content.isEmpty()}">
-        <td colspan="8" style="text-align:center;">검색 결과가 없습니다.</td>
+    <tr th:if="${page.content.isEmpty()}">
+        <td colspan="8" style="text-align:center">검색 결과가 없습니다.</td>
     </tr>
     </tbody>
 </table>
 
-<div class="pagination" th:if="${page != null and page.totalPages > 1}">
+<div class="pagination" th:if="${page.totalPages > 1}">
     <a th:if="${!page.first}"
        th:href="@{/global/country_form(page=${page.number - 1}, size=${page.size}, kw=${kw})}">&lt; 이전</a>
     <span th:text="|${page.number + 1} / ${page.totalPages}|">1/1</span>
@@ -74,18 +71,11 @@
 
 <script>
     function choose(iso2, countryKr) {
-      if (window.opener && !window.opener.closed) {
+      if (window.opener && !window.opener.closed && typeof window.opener.setCountry === 'function') {
         window.opener.setCountry(iso2, countryKr);
       }
       window.close();
     }
-    function rowChoose(tr) {
-      choose(tr.dataset.iso2, tr.dataset.country);
-    }
-    function btnChoose(btn) {
-      choose(btn.dataset.iso2, btn.dataset.country);
-    }
 </script>
-
 </body>
 </html>

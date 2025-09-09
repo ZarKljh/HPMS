@@ -137,3 +137,73 @@ VALUES
 (48, 'Test48', 'Nurse', 'VV', '010-0000-0048', '010-1111-0048', 'Amelia', 'Martin', 'VV', 'Mother', 'None', 'test48@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1048', 'ED1', '20200417', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note48'),
 (49, 'Test49', 'Nurse', 'WW', '010-0000-0049', '010-1111-0049', 'Matthew', 'Moore', 'WW', 'Father', 'None', 'test49@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1049', 'ED1', '20200418', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note49'),
 (50, 'Test50', 'Nurse', 'XX', '010-0000-0050', '010-1111-0050', 'Zoe', 'King', 'XX', 'Mother', 'None', 'test50@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1050', 'ED1', '20200419', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note50');
+
+-- NURSE_MAIN -> 테스트 정보 * 5번 실행 *
+INSERT INTO NURSE_MAIN
+(DEPT, RANK, FIRST_NAME, LAST_NAME, MIDDLE_NAME, GENDER, DATE_OF_BIRTH, HIREDATE, STS, WT, WRITER, CREATE_DATE, MODIFIER, MODIFY_DATE)
+VALUES
+('PAD', 'RN', 'Jisoo', 'Kim', 'M', 'F', 19900101, 20200101, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
+('GAD', 'SN', 'Minho', 'Lee', 'J', 'M', 19880512, 20190515, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
+('PLD', 'RN', 'Soyeon', 'Park', 'H', 'F', 19920708, 20210120, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
+('SPBD', 'SN', 'Jiwon', 'Choi', 'K', 'F', 19911222, 20180310, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
+('HRD', 'RN', 'Hyunwoo', 'Jung', 'L', 'M', 19891205, 20190601, '휴직', '파트타임', 'admin', NOW(), NULL, NOW()),
+('METD', 'SN', 'Seojin', 'Yoon', 'S', 'F', 19930515, 20200201, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
+('HIMD', 'RN', 'Taeyang', 'Kang', 'D', 'M', 19881010, 20180115, '퇴직', '정규직', 'admin', NOW(), NULL, NOW()),
+('PAD', 'RN', 'Nari', 'Han', 'E', 'F', 19940228, 20210301, '재직', '계약직', 'admin', NOW(), NULL, NOW()),
+('GAD', 'SN', 'Joon', 'Lim', 'P', 'M', 19900130, 20200715, '재직', '정규직', 'admin', NOW(), NULL, NOW()),
+('PLD', 'RN', 'Hana', 'Cho', 'Q', 'F', 19920725, 20201210, '재직', '파트타임', 'admin', NOW(), NULL, NOW());
+
+-- NURSE_INFORMATION -> 테스트 정보 * 1번 실행 *
+INSERT INTO NURSE_INFORMATION
+(NURSE_ID, FIRST_NAME, LAST_NAME, MIDDLE_NAME, TEL, EMGC_CNTC, EMGC_F_NAME, EMGC_L_NAME, EMGC_M_NAME, EMGC_REL, EMGC_NOTE, EMAIL, PCD, DEF_ADD, DET_ADD, RN_NO, EDBC, GRAD_DATE, FL, MS, NATN, DSS, CARR, PICTURE, NOTE)
+VALUES
+(1, 'Test1', 'Nurse', 'A', '010-0000-0001', '010-1111-0001', 'John', 'Doe', 'A', 'Father', 'None', 'test1@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1001', 'ED1', '20200301', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note1'),
+(2, 'Test2', 'Nurse', 'B', '010-0000-0002', '010-1111-0002', 'Jane', 'Doe', 'B', 'Mother', 'None', 'test2@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1002', 'ED1', '20200302', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note2'),
+(3, 'Test3', 'Nurse', 'C', '010-0000-0003', '010-1111-0003', 'Jim', 'Beam', 'C', 'Father', 'None', 'test3@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1003', 'ED1', '20200303', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note3'),
+(4, 'Test4', 'Nurse', 'D', '010-0000-0004', '010-1111-0004', 'Anna', 'Smith', 'D', 'Mother', 'None', 'test4@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1004', 'ED1', '20200304', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note4'),
+(5, 'Test5', 'Nurse', 'E', '010-0000-0005', '010-1111-0005', 'Robert', 'Brown', 'E', 'Father', 'None', 'test5@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1005', 'ED1', '20200305', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note5'),
+(6, 'Test6', 'Nurse', 'F', '010-0000-0006', '010-1111-0006', 'Emily', 'White', 'F', 'Mother', 'None', 'test6@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1006', 'ED1', '20200306', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note6'),
+(7, 'Test7', 'Nurse', 'G', '010-0000-0007', '010-1111-0007', 'Michael', 'Green', 'G', 'Father', 'None', 'test7@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1007', 'ED1', '20200307', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note7'),
+(8, 'Test8', 'Nurse', 'H', '010-0000-0008', '010-1111-0008', 'Sophia', 'Hall', 'H', 'Mother', 'None', 'test8@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1008', 'ED1', '20200308', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note8'),
+(9, 'Test9', 'Nurse', 'I', '010-0000-0009', '010-1111-0009', 'William', 'Young', 'I', 'Father', 'None', 'test9@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1009', 'ED1', '20200309', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note9'),
+(10, 'Test10', 'Nurse', 'J', '010-0000-0010', '010-1111-0010', 'Olivia', 'Allen', 'J', 'Mother', 'None', 'test10@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1010', 'ED1', '20200310', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note10'),
+(11, 'Test11', 'Nurse', 'K', '010-0000-0011', '010-1111-0011', 'James', 'Scott', 'K', 'Father', 'None', 'test11@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1011', 'ED1', '20200311', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note11'),
+(12, 'Test12', 'Nurse', 'L', '010-0000-0012', '010-1111-0012', 'Mia', 'Adams', 'L', 'Mother', 'None', 'test12@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1012', 'ED1', '20200312', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note12'),
+(13, 'Test13', 'Nurse', 'M', '010-0000-0013', '010-1111-0013', 'Benjamin', 'Baker', 'M', 'Father', 'None', 'test13@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1013', 'ED1', '20200313', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note13'),
+(14, 'Test14', 'Nurse', 'N', '010-0000-0014', '010-1111-0014', 'Charlotte', 'Carter', 'N', 'Mother', 'None', 'test14@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1014', 'ED1', '20200314', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note14'),
+(15, 'Test15', 'Nurse', 'O', '010-0000-0015', '010-1111-0015', 'Daniel', 'Evans', 'O', 'Father', 'None', 'test15@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1015', 'ED1', '20200315', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note15'),
+(16, 'Test16', 'Nurse', 'P', '010-0000-0016', '010-1111-0016', 'Amelia', 'Edwards', 'P', 'Mother', 'None', 'test16@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1016', 'ED1', '20200316', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note16'),
+(17, 'Test17', 'Nurse', 'Q', '010-0000-0017', '010-1111-0017', 'Matthew', 'Collins', 'Q', 'Father', 'None', 'test17@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1017', 'ED1', '20200317', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note17'),
+(18, 'Test18', 'Nurse', 'R', '010-0000-0018', '010-1111-0018', 'Ella', 'Stewart', 'R', 'Mother', 'None', 'test18@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1018', 'ED1', '20200318', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note18'),
+(19, 'Test19', 'Nurse', 'S', '010-0000-0019', '010-1111-0019', 'David', 'Morris', 'S', 'Father', 'None', 'test19@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1019', 'ED1', '20200319', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note19'),
+(20, 'Test20', 'Nurse', 'T', '010-0000-0020', '010-1111-0020', 'Ava', 'Murphy', 'T', 'Mother', 'None', 'test20@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1020', 'ED1', '20200320', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note20'),
+(21, 'Test21', 'Nurse', 'U', '010-0000-0021', '010-1111-0021', 'Joseph', 'Cook', 'U', 'Father', 'None', 'test21@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1021', 'ED1', '20200321', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note21'),
+(22, 'Test22', 'Nurse', 'V', '010-0000-0022', '010-1111-0022', 'Grace', 'Bell', 'V', 'Mother', 'None', 'test22@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1022', 'ED1', '20200322', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note22'),
+(23, 'Test23', 'Nurse', 'W', '010-0000-0023', '010-1111-0023', 'Henry', 'Bailey', 'W', 'Father', 'None', 'test23@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1023', 'ED1', '20200323', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note23'),
+(24, 'Test24', 'Nurse', 'X', '010-0000-0024', '010-1111-0024', 'Lily', 'Richardson', 'X', 'Mother', 'None', 'test24@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1024', 'ED1', '20200324', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note24'),
+(25, 'Test25', 'Nurse', 'Y', '010-0000-0025', '010-1111-0025', 'Alexander', 'Wood', 'Y', 'Father', 'None', 'test25@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1025', 'ED1', '20200325', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note25'),
+(26, 'Test26', 'Nurse', 'Z', '010-0000-0026', '010-1111-0026', 'Chloe', 'James', 'Z', 'Mother', 'None', 'test26@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1026', 'ED1', '20200326', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note26'),
+(27, 'Test27', 'Nurse', 'AA', '010-0000-0027', '010-1111-0027', 'Ethan', 'Watson', 'AA', 'Father', 'None', 'test27@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1027', 'ED1', '20200327', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note27'),
+(28, 'Test28', 'Nurse', 'BB', '010-0000-0028', '010-1111-0028', 'Hannah', 'Brooks', 'BB', 'Mother', 'None', 'test28@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1028', 'ED1', '20200328', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note28'),
+(29, 'Test29', 'Nurse', 'CC', '010-0000-0029', '010-1111-0029', 'Jacob', 'Kelly', 'CC', 'Father', 'None', 'test29@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1029', 'ED1', '20200329', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note29'),
+(30, 'Test30', 'Nurse', 'DD', '010-0000-0030', '010-1111-0030', 'Zoe', 'Sanders', 'DD', 'Mother', 'None', 'test30@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1030', 'ED1', '20200330', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note30'),
+(31, 'Test31', 'Nurse', 'EE', '010-0000-0031', '010-1111-0031', 'Liam', 'Price', 'EE', 'Father', 'None', 'test31@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1031', 'ED1', '20200331', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note31'),
+(32, 'Test32', 'Nurse', 'FF', '010-0000-0032', '010-1111-0032', 'Mila', 'Bennett', 'FF', 'Mother', 'None', 'test32@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1032', 'ED1', '20200401', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note32'),
+(33, 'Test33', 'Nurse', 'GG', '010-0000-0033', '010-1111-0033', 'Noah', 'Reed', 'GG', 'Father', 'None', 'test33@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1033', 'ED1', '20200402', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note33'),
+(34, 'Test34', 'Nurse', 'HH', '010-0000-0034', '010-1111-0034', 'Sophia', 'Cook', 'HH', 'Mother', 'None', 'test34@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1034', 'ED1', '20200403', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note34'),
+(35, 'Test35', 'Nurse', 'II', '010-0000-0035', '010-1111-0035', 'Oliver', 'Morgan', 'II', 'Father', 'None', 'test35@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1035', 'ED1', '20200404', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note35'),
+(36, 'Test36', 'Nurse', 'JJ', '010-0000-0036', '010-1111-0036', 'Emma', 'Cooper', 'JJ', 'Mother', 'None', 'test36@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1036', 'ED1', '20200405', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note36'),
+(37, 'Test37', 'Nurse', 'KK', '010-0000-0037', '010-1111-0037', 'Liam', 'Bailey', 'KK', 'Father', 'None', 'test37@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1037', 'ED1', '20200406', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note37'),
+(38, 'Test38', 'Nurse', 'LL', '010-0000-0038', '010-1111-0038', 'Ava', 'Brooks', 'LL', 'Mother', 'None', 'test38@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1038', 'ED1', '20200407', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note38'),
+(39, 'Test39', 'Nurse', 'MM', '010-0000-0039', '010-1111-0039', 'Ethan', 'Cook', 'MM', 'Father', 'None', 'test39@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1039', 'ED1', '20200408', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note39'),
+(40, 'Test40', 'Nurse', 'NN', '010-0000-0040', '010-1111-0040', 'Sophia', 'Davis', 'NN', 'Mother', 'None', 'test40@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1040', 'ED1', '20200409', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note40'),
+(41, 'Test41', 'Nurse', 'OO', '010-0000-0041', '010-1111-0041', 'Oliver', 'Evans', 'OO', 'Father', 'None', 'test41@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1041', 'ED1', '20200410', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note41'),
+(42, 'Test42', 'Nurse', 'PP', '010-0000-0042', '010-1111-0042', 'Emma', 'Frank', 'PP', 'Mother', 'None', 'test42@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1042', 'ED1', '20200411', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note42'),
+(43, 'Test43', 'Nurse', 'QQ', '010-0000-0043', '010-1111-0043', 'James', 'Gonzalez', 'QQ', 'Father', 'None', 'test43@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1043', 'ED1', '20200412', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note43'),
+(44, 'Test44', 'Nurse', 'RR', '010-0000-0044', '010-1111-0044', 'Mia', 'Harris', 'RR', 'Mother', 'None', 'test44@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1044', 'ED1', '20200413', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note44'),
+(45, 'Test45', 'Nurse', 'SS', '010-0000-0045', '010-1111-0045', 'Benjamin', 'Hill', 'SS', 'Father', 'None', 'test45@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1045', 'ED1', '20200414', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note45'),
+(46, 'Test46', 'Nurse', 'TT', '010-0000-0046', '010-1111-0046', 'Charlotte', 'Jackson', 'TT', 'Mother', 'None', 'test46@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1046', 'ED1', '20200415', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note46'),
+(47, 'Test47', 'Nurse', 'UU', '010-0000-0047', '010-1111-0047', 'Daniel', 'Lewis', 'UU', 'Father', 'None', 'test47@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1047', 'ED1', '20200416', 'M', 'Married', 'KOR', '1', '1', NULL, 'Note47'),
+(48, 'Test48', 'Nurse', 'VV', '010-0000-0048', '010-1111-0048', 'Amelia', 'Martin', 'VV', 'Mother', 'None', 'test48@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1048', 'ED1', '20200417', 'F', 'Single', 'KOR', '1', '1', NULL, 'Note48'),
+(49, 'Test49', 'Nurse', 'WW', '010-0000-0049', '010-1111-0049', 'Matthew', 'Moore', 'WW', 'Father', 'None', 'test49@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1049', 'ED1', '20200418', 'M', 'Single', 'KOR', '1', '1', NULL, 'Note49'),
+(50, 'Test50', 'Nurse', 'XX', '010-0000-0050', '010-1111-0050', 'Zoe', 'King', 'XX', 'Mother', 'None', 'test50@nurse.com', '12345', 'Seoul', 'Seoul', 'RN1050', 'ED1', '20200419', 'F', 'Married', 'KOR', '1', '1', NULL, 'Note50');

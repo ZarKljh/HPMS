@@ -1,12 +1,12 @@
 package com.HPMS.HPMS.Doctor.DoctorDTL;
 
+import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTL;
 import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTLForm;
-import com.HPMS.HPMS.Doctor.DoctorH.DoctorH;
-import com.HPMS.HPMS.Doctor.DoctorH.DoctorHRepository;
+import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTLRepository;
 import com.HPMS.HPMS.Doctor.DoctorH.DoctorHService;
 import com.HPMS.HPMS.Doctor.DoctorM.DoctorM;
-import com.HPMS.HPMS.Doctor.DoctorM.DoctorMRepository;
 import com.HPMS.HPMS.Doctor.DoctorM.DoctorMForm;
+import com.HPMS.HPMS.Doctor.DoctorM.DoctorMRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +30,10 @@ public class DoctorDTLService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 의사의 디테일 정보가 없습니다."));
     }
 
-    /** 신규: 메인+디테일 동시 생성 */
+    /** ✅ 신규: 메인 + 디테일 동시 생성 */
     @Transactional
     public Integer createMainAndDetail(DoctorMForm m, DoctorDTLForm d) {
-        // 메인
+        // 메인 저장
         DoctorM main = DoctorM.builder()
                 .department(m.getDepartment())
                 .medicalDepartment(m.getMedicalDepartment())
@@ -51,7 +51,7 @@ public class DoctorDTLService {
                 .build();
         DoctorM savedMain = doctorMRepository.save(main);
 
-        // 디테일
+        // 디테일 저장
         DoctorDTL detail = DoctorDTL.builder()
                 .doctorMain(savedMain)
                 .image(d.getImage())
@@ -78,35 +78,31 @@ public class DoctorDTLService {
                 .societyActivity(d.getSocietyActivity())
                 .certificateOfSociety(d.getCertificateOfSociety())
                 .militaryService(d.getMilitaryService())
-                .nationality(d.getNationality())
+                .nationality(d.getNationality())   // 폼에서 “대한민국 (KR)” 형태로 들어옴
                 .disabilityStatus(d.getDisabilityStatus())
                 .note(d.getNote())
                 .writer("system")
                 .build();
         repository.save(detail);
 
+        // 양방향 연결
         savedMain.setDetail(detail);
+
         return savedMain.getId();
     }
-    @Transactional
-    public void updateNationalityByDoctorId(Integer doctorId, String iso2, String countryKr) {
-        DoctorDTL detail = repository.findByDoctorMainId(doctorId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 의사의 디테일 정보가 없습니다."));
 
-        // 저장 형식은 원하는 대로 통일 (예: "대한민국 (KR)")
-        detail.setNationality(countryKr + " (" + iso2 + ")");
-        detail.setModifier("system");
-
-        // readOnly=false 이므로 save가 실제로 반영됩니다
-        repository.save(detail);
-    }
-    /** 수정: 메인+디테일 동시 수정 (디테일 없으면 생성) */
+    /** ✅ 수정: 메인 + 디테일 동시 수정 (디테일 없으면 생성) */
     @Transactional
     public void updateMainAndDetail(Integer doctorId, DoctorMForm m, DoctorDTLForm d) {
         DoctorM main = doctorMRepository.findById(doctorId)
                 .orElseThrow(() -> new IllegalArgumentException("의사 정보가 없습니다."));
-        DoctorDTL detail = repository.findByDoctorMainId(doctorId).orElseGet(DoctorDTL::new);
+
+        DoctorDTL detail = repository.findByDoctorMainId(doctorId)
+                .orElseGet(DoctorDTL::new);
+
+        // 히스토리 스냅샷 (있다면)
         doctorHService.snapshotBeforeUpdate(main, detail);
+
         // 메인 갱신
         main.setDepartment(m.getDepartment());
         main.setMedicalDepartment(m.getMedicalDepartment());
@@ -123,7 +119,6 @@ public class DoctorDTLService {
         main.setWorkType(m.getWorkType());
 
         // 디테일 갱신/생성
-
         detail.setDoctorMain(main);
         detail.setImage(d.getImage());
         detail.setUserId(d.getUserId());
@@ -151,14 +146,17 @@ public class DoctorDTLService {
         detail.setSocietyActivity(d.getSocietyActivity());
         detail.setCertificateOfSociety(d.getCertificateOfSociety());
         detail.setMilitaryService(d.getMilitaryService());
+
+        // 국적은 폼(hidden)에 값이 들어오므로 그대로 반영
         if (d.getNationality() != null && !d.getNationality().isBlank()) {
             detail.setNationality(d.getNationality());
-            detail.setDisabilityStatus(d.getDisabilityStatus());
-            detail.setNote(d.getNote());
-            detail.setModifier("system");
-
-            repository.save(detail);
-            main.setDetail(detail);
         }
+
+        detail.setDisabilityStatus(d.getDisabilityStatus());
+        detail.setNote(d.getNote());
+        detail.setModifier("system");
+
+        repository.save(detail);
+        main.setDetail(detail);
     }
 }
