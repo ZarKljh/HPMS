@@ -63,64 +63,69 @@
          th:if="*{nurseInformation != null}">
       <h3>상세 정보</h3>
 
-      <label>서브 이름 : </label>
-      <input type="text" th:field="*{nurseInformation.firstName}" class="form-control"/>
+      <label>서브 성명 : </label>
+      <input type="text" th:field="*{nurseInformation.firstName}" maxlength="50" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.lastName}" maxlength="50" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.middleName}" maxlength="50" class="form-control"/>
 
       <label>전화번호 : </label>
-      <input type="text" th:field="*{nurseInformation.tel}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" class="form-control"/>
 
       <label>비상연락처 : </label>
-      <input type="text" th:field="*{nurseInformation.emgcCntc}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcCntc}" maxlength="25" class="form-control"/>
 
       <label>비상연락처주 성명 : </label>
-      <input type="text" th:field="*{nurseInformation.emgcFName}" class="form-control"/>
-      <input type="text" th:field="*{nurseInformation.emgcMName}" class="form-control"/>
-      <input type="text" th:field="*{nurseInformation.emgcLName}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcFName}" maxlength="50" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcLName}" maxlength="50" class="form-control"/>
 
       <label>관계 : </label>
-      <input type="text" th:field="*{nurseInformation.emgcRel}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcRel}" maxlength="10" class="form-control"/>
 
       <label>비고 : </label>
-      <input type="text" th:field="*{nurseInformation.emgcNote}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.emgcNote}" maxlength="250" class="form-control"/>
 
       <label>이메일 : </label>
-      <input type="text" th:field="*{nurseInformation.email}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.email}" maxlength="250" class="form-control"/>
 
       <label>우편번호 : </label>
-      <input type="text" th:field="*{nurseInformation.pcd}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.pcd}" id="addr" maxlength="10" class="form-control"/>
 
-      <label>기본주소 : </label>
-      <input type="text" th:field="*{nurseInformation.defAdd}" class="form-control"/>
+      <label>주소 : </label>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="text" th:field="*{nurseInformation.defAdd}" id="addr1" maxlength="250" class="form-control"/>
+        <button type="button" class="btn" onclick="openRoadPopup()">도로명 검색</button>
+      </div>
 
       <label>상세주소 : </label>
-      <input type="text" th:field="*{nurseInformation.detAdd}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.detAdd}" id="addr2" maxlength="250" class="form-control"/>
 
       <label>자격증 번호 : </label>
-      <input type="text" th:field="*{nurseInformation.rnNo}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.rnNo}" maxlength="6" class="form-control"/>
 
       <label>최종학력 : </label>
-      <input type="text" th:field="*{nurseInformation.edbc}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.edbc}" maxlength="50" class="form-control"/>
 
-      <label>졸업일 : </label>
-      <input type="text" th:field="*{nurseInformation.gradDate}" class="form-control"/>
+      <label>졸업날짜 : </label>
+      <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" class="form-control"/>
 
       <label>외국어 : </label>
-      <input type="text" th:field="*{nurseInformation.fl}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.fl}" maxlength="250" class="form-control"/>
 
       <label>병역 : </label>
-      <input type="text" th:field="*{nurseInformation.ms}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.ms}" maxlength="2" class="form-control"/>
 
       <label>국적 : </label>
       <input type="text" th:field="*{nurseInformation.natn}" class="form-control"/>
 
       <label>장애 여부 : </label>
-      <input type="text" th:field="*{nurseInformation.dss}" class="form-control"/>
+      <input type="text" th:field="*{nurseInformation.dss}" maxlength="1" class="form-control"/>
 
       <label>경력 : </label>
       <input type="text" th:field="*{nurseInformation.carr}" class="form-control"/>
 
       <label>비고 : </label>
-      <textarea th:field="*{nurseInformation.note}" class="form-control"></textarea>
+      <textarea th:field="*{nurseInformation.note}" maxlength="250" class="form-control"></textarea>
     </div>
     <div class="c_c_btn_box">
       <button type="submit" class="c-btn">저장</button>
