@@ -1,10 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- src/main/resources/templates/global/road_popup.html -->
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>도로명 주소 검색</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding:14px; }
+        .searchbar { display:flex; gap:8px; margin-bottom:12px; }
+        table { width:100%; border-collapse:collapse; }
+        th, td { border:1px solid #ddd; padding:8px; }
+        tr:hover { background:#f7f7f7; cursor:pointer; }
+        .pagination { margin-top:12px; display:flex; gap:8px; align-items:center; }
+    </style>
 </head>
 <body>
+<h3>도로명 주소 검색</h3>
 
+<div class="searchbar">
+    <input type="text" id="kw" placeholder="시/군/구/읍면동/도로명/코드"/>
+    <button type="button" onclick="load(0)">검색</button>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>시도</th>
+        <th>시군구</th>
+        <th>읍면동</th>
+        <th>도로명(한)</th>
+        <th>도로코드</th>
+        <th>선택</th>
+    </tr>
+    </thead>
+    <tbody id="rows">
+    <tr><td colspan="6" style="text-align:center;">검색어를 입력하세요.</td></tr>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <button id="prev" onclick="go(prevPage)" disabled>이전</button>
+    <span id="pageInfo">0/0</span>
+    <button id="next" onclick="go(nextPage)" disabled>다음</button>
+</div>
+
+<script>
+    let currentPage = 0, totalPages = 0, prevPage = 0, nextPage = 0, pageSize = 10;
+    function load(page) {
+
+               const kw = document.getElementById('kw').value || '';
+               fetch(`/global/road/search?kw=${encodeURIComponent(kw)}&page=${page}&size=${pageSize}`)
+                 .then(r => r.json())
+                 .then(data => {
+                   currentPage = data.number;
+                   totalPages  = data.totalPages;
+                   prevPage = Math.max(0, currentPage - 1);
+                   nextPage = Math.min(totalPages - 1, currentPage + 1);
+
+                   document.getElementById('prev').disabled = currentPage === 0;
+                   document.getElementById('next').disabled = currentPage >= totalPages - 1 || totalPages === 0;
+                   document.getElementById('pageInfo').textContent = `${totalPages ? (currentPage+1) : 0}/${totalPages}`;
+
+                   const tbody = document.getElementById('rows');
+                   tbody.innerHTML = '';
+                   if (data.content.length === 0) {
+                     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">결과가 없습니다.</td></tr>`;
+                     return;
+                   }
+                   data.content.forEach(a => {
+                     const addrStr = [a.sido_kor, a.sgg_kor, a.emd_kor, a.road_name_kor]
+                                      .filter(Boolean).join(' ');
+                     const tr = document.createElement('tr');
+                     tr.innerHTML = `
+                       <td>${a.sido_kor ?? ''}</td>
+                       <td>${a.sgg_kor ?? ''}</td>
+                       <td>${a.emd_kor ?? ''}</td>
+                       <td>${a.road_name_kor ?? ''}</td>
+                       <td>${a.road_code ?? ''}</td>
+                       <td><button type="button">선택</button></td>`;
+                     tr.ondblclick = () => choose(addrStr, a);
+                     tr.querySelector('button').onclick = () => choose(addrStr, a);
+                     tbody.appendChild(tr);
+                   });
+                 })
+                 .catch(e => {
+                   alert('검색 중 오류가 발생했습니다.');
+                   console.error(e);
+                 });
+             }
+
+             function go(p) { load(p); }
+
+             function choose(addrStr, a) {
+               if (window.opener && !window.opener.closed) {
+                 // 부모에 값만 전달 (부모가 저장 여부 결정)
+                 window.opener.setRoad(addrStr, a.road_code || '', a.emd_seq_no || '');
+               }
+               window.close();
+             }
+            // 팝업에서 호출 (자동 저장 금지, 값만 세팅)
+
+
+</script>
 </body>
 </html>
