@@ -7,15 +7,19 @@
     <div class="input-list">
       <label>부서:</label>
       <input type="text" th:field="*{dept}" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>직급:</label>
       <input type="text" th:field="*{rank}" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label class="name">성명:</label>
       <input type="text" th:field="*{firstName}" placeholder="이름" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       <input type="text" th:field="*{lastName}" placeholder="성" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       <input type="text" th:field="*{middleName}" placeholder="중간이름" />
     </div>
     <div class="input-list">
@@ -25,26 +29,32 @@
         <option value="M">남</option>
         <option value="F">여</option>
       </select>
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>생년월일:</label>
       <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>입사일:</label>
       <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>상태:</label>
       <input type="text" th:field="*{sts}" placeholder="재직/휴직/퇴직 등" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>근무형태:</label>
       <input type="text" th:field="*{wt}" placeholder="정규직/계약직/파트타임 등" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
       <label>작성자:</label>
       <input type="text" th:field="*{writer}" required />
+      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="next_btn_box">
       <button class="next_btn" type="submit">다음 단계</button>

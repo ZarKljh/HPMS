@@ -81,14 +81,12 @@ tr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	height: 70px;
-	background-color: #cff4fc;
-	border-bottom: 1px solid gray;
 }
 th {
-	display: block;
-	width: 80px;
+	width: 100%;
 	text-wrap: nowrap;
 	font-size: 16px;
+	border-right: 1px solid #dee2e6;
 }
 td {
 	width: 80px;
