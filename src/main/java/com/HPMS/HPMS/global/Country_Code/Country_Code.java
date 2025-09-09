@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.global;
+package com.HPMS.HPMS.global.Country_Code;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="COUNTRY_CODE")
-public class CountryCode {
+public class Country_Code {
 
 
     @Id
@@ -31,7 +31,7 @@ public class CountryCode {
 
 
     @Column(name = "CONTINENT_COMMON", length = 50)
-    private String contientCommon;
+    private String continentCommon;
 
 
     @Column(name = "CONTINENT_ADMIN", length = 50)

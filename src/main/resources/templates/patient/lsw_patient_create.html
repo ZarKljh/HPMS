@@ -1,155 +1,137 @@
-<html lang="kr">
+<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<div layout:fragment="content" class="container">
 <h2>신규 환자 등록</h2>
-<form th:action="@{/patient/create}" th:object="${patientForm}" method="post">
+<form  th:action="@{/patient/create}" th:object="${patientForm}" method="post">
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
         <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
     <div class="patient-info">
 
         <!-- 인적사항 -->
-        <div class="group-personal">
-            <div>
-                <label>생년월일</label>
-                <input type="date" th:field="*{birth}" required>
+        <h5 class="mt-3">인적사항</h5>
+        <div class="form-group">
+            <label class="form-label">생년월일</label>
+            <input type="date" class="form-control" th:field="*{birth}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">성별</label>
+            <select class="form-select" th:field="*{gender}" required>
+                <option value="">선택하세요</option>
+                <option value="M">남</option>
+                <option value="F">여</option>
+                <option value="X">그외</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">내/외국인</label>
+            <select class="form-select" th:field="*{foreigner}">
+                <option value="0">내국인</option>
+                <option value="1">외국인</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label  form-group-name" >성명</label>
+            <div class="d-flex flex-wrap gap-2 w-100">
+                <input type="text" class="form-control" th:field="*{lastName}" placeholder="성" required>
+                <input type="text" class="form-control" th:field="*{firstName}" placeholder="이름" required>
+                <input type="text" class="form-control" th:field="*{middleName}" placeholder="중간이름">
             </div>
-            <div>
-                <label>성별</label>
-                <select th:field="*{gender}" required>
-                    <option value="">선택하세요</option>
-                    <option value="M">남</option>
-                    <option value="F">여</option>
-                    <option value="X">그외</option>
-                </select>
-            </div>
-            <div>
-                <label>내/외국인</label>
-                <select th:field="*{foreigner}">
-                    <option value="0">내국인</option>
-                    <option value="1">외국인</option>
-                </select>
-            </div>
-            <div>
-                <label>성</label>
-                <input type="text" th:field="*{lastName}" required>
-                <label>이름</label>
-                <input type="text" th:field="*{firstName}" required>
-                <label>중간이름</label>
-                <input type="text" th:field="*{middleName}">
-            </div>
-            <div>
-                <label>여권번호</label>
-                <input type="text" th:field="*{passport}">
-            </div>
-            <div>
-                <label>여권성명</label>
-                <label>성</label>
-                <input type="text" th:field="*{passLastName}" required>
-                <label>이름</label>
-                <input type="text" th:field="*{passFirstName}" required>
-                <label>중간이름</label>
-                <input type="text" th:field="*{passMiddleName}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">여권번호</label>
+            <input type="text" class="form-control" th:field="*{passport}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">여권성명</label>
+            <div class="d-flex flex-wrap gap-2 w-100">
+                <input type="text" class="form-control" th:field="*{passLastName}" placeholder="성" required>
+                <input type="text" class="form-control" th:field="*{passFirstName}" placeholder="이름" required>
+                <input type="text" class="form-control" th:field="*{passMiddleName}" placeholder="중간이름">
             </div>
         </div>
 
         <!-- 연락처 -->
-        <div class="group-contact">
-            <div>
-                <label>MOBILE</label>
-                <input type="text" th:field="*{mobilePhone}" required>
-            </div>
-            <div>
-                <label>HOME</label>
-                <input type="text" th:field="*{homePhone}">
-            </div>
-            <div>
-                <label>OFFICE</label>
-                <input type="text" th:field="*{officePhone}">
-            </div>
-            <div>
-                <label>EMAIL</label>
-                <input type="email" th:field="*{email}">
-            </div>
-            <div>
-                <label>FAX</label>
-                <input type="text" th:field="*{fax}">
-            </div>
+        <h5 class="mt-4">연락처</h5>
+        <div class="form-group">
+            <label class="form-label">MOBILE</label>
+            <input type="text" class="form-control" th:field="*{mobilePhone}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">HOME</label>
+            <input type="text" class="form-control" th:field="*{homePhone}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">OFFICE</label>
+            <input type="text" class="form-control" th:field="*{officePhone}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">EMAIL</label>
+            <input type="email" class="form-control" th:field="*{email}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">FAX</label>
+            <input type="text" class="form-control" th:field="*{fax}">
         </div>
 
-        <!-- 보호자 정보 -->
-        <div class="group-guardian">
-            <div>
-                <label>보호자 성명 성</label>
-                <input type="text" th:field="*{guardianLastName}">
-                <label>보호자 성명 이름</label>
-                <input type="text" th:field="*{guardianFirstName}">
+        <!-- 보호자 -->
+        <h5 class="mt-4">보호자 정보</h5>
+        <div class="form-group">
+            <label class="form-label">보호자 성명</label>
+            <div class="d-flex flex-wrap gap-2 w-100">
+                <input type="text" class="form-control" th:field="*{guardianLastName}" placeholder="성">
+                <input type="text" class="form-control" th:field="*{guardianFirstName}" placeholder="이름">
             </div>
-            <div>
-                <label>보호자 연락처</label>
-                <input type="text" th:field="*{guardianTel}">
-            </div>
-            <div>
-                <label>보호자 관계</label>
-                <input type="text" th:field="*{guardianRelation}">
-            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">보호자 연락처</label>
+            <input type="text" class="form-control" th:field="*{guardianTel}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">보호자 관계</label>
+            <input type="text" class="form-control" th:field="*{guardianRelation}">
         </div>
 
         <!-- 주소 -->
-        <div class="group-address">
-            <div>
-                <label>실거주지</label>
-                <div>
-                    <label>우편번호</label>
-                    <input type="text" th:field="*{homePcd}">
-                </div>
-                <div>
-                    <label>기본주소</label>
-                    <input type="text" th:field="*{homeDefAdd}">
-                </div>
-                <div>
-                    <label>상세주소</label>
-                    <input type="text" th:field="*{homeDetAdd}">
-                </div>
-            </div>
-
-            <div>
-                <label>등록주소</label>
-                <div>
-                    <label>등록주소(우편번호)</label>
-                    <input type="text" th:field="*{regPcd}">
-                </div>
-                <div>
-                    <label>등록주소(기본주소)</label>
-                    <input type="text" th:field="*{regDefAdd}">
-                </div>
-                <div>
-                    <label>등록주소(상세주소)</label>
-                    <input type="text" th:field="*{regDetAdd}">
-                </div>
+        <h5 class="mt-4">주소</h5>
+        <div class="form-group">
+            <label class="form-label">실거주지</label>
+            <div class="w-100">
+                <input type="text" class="form-control mb-2" th:field="*{homePcd}" placeholder="우편번호">
+                <input type="text" class="form-control mb-2" th:field="*{homeDefAdd}" placeholder="기본주소">
+                <input type="text" class="form-control" th:field="*{homeDetAdd}" placeholder="상세주소">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="form-label">등록주소</label>
+            <div class="w-100">
+                <input type="text" class="form-control mb-2" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
+                <input type="text" class="form-control mb-2" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
+                <input type="text" class="form-control" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
+            </div>
+        </div>
 
         <!-- 기타 -->
-        <div class="group-extra">
-            <div>
-                <label>직업</label>
-                <input type="text" th:field="*{occupation}">
-            </div>
-            <div>
-                <label>국적</label>
-                <input type="text" th:field="*{natn}">
-            </div>
-            <div>
-                <label>특이사항</label>
-                <textarea th:field="*{note}"></textarea>
-            </div>
+        <h5 class="mt-4">기타</h5>
+        <div class="form-group">
+            <label class="form-label">직업</label>
+            <input type="text" class="form-control" th:field="*{occupation}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">국적</label>
+            <input type="text" class="form-control" th:field="*{natn}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">특이사항</label>
+            <textarea class="form-control" th:field="*{note}"></textarea>
         </div>
 
-        <div class="form-actions">
-            <button type="submit">등록하기</button>
-            <a th:href="@{/patient/list}">취소</a>
-        </div>
 
     </div>
+    <!-- 버튼 -->
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">등록하기</button>
+        <a th:href="@{/patient/list}" class="btn btn-secondary">취소</a>
+    </div>
 </form>
+</div>
 </html>
