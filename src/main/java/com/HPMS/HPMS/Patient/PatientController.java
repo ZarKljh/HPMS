@@ -148,7 +148,7 @@ public class PatientController {
             @RequestParam(value="value[]", required=false) List<String> values,
             @RequestParam(value="logicalOperator[]", required=false) List<String> logicalOperators
     ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
         // 🔍 검색 서비스 호출
         Page<PatientListDTO> patients = patientDTOService.searchPatients(columns, operators, values, logicalOperators, pageable);

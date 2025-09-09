@@ -82,16 +82,23 @@ public class PatientMService {
             public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true); // 중복 제거
 
+
+
                 if (columns == null || columns.isEmpty()) {
                     return cb.conjunction(); // 조건이 없으면 전체 검색
                 }
 
+
+
+                // LEFT JOIN 추가: PatientDTL과 조인
+                Join<PatientM, PatientDTL> dtlJoin = root.join("patientDTL", JoinType.LEFT);
+
                 // 첫 번째 조건을 기본으로 설정
-                Predicate combinedPredicate = buildPredicate(cb, root, columns.get(0), operators.get(0), values.get(0));
+                Predicate combinedPredicate = buildPredicate(cb, root, dtlJoin, columns.get(0), operators.get(0), values.get(0));
 
                 // 나머지 조건은 logicalOperators로 연결
                 for (int i = 1; i < columns.size(); i++) {
-                    Predicate nextPredicate = buildPredicate(cb, root, columns.get(i), operators.get(i), values.get(i));
+                    Predicate nextPredicate = buildPredicate(cb, root, dtlJoin, columns.get(i), operators.get(i), values.get(i));
                     String logicalOp = (i - 1 < logicalOperators.size()) ? logicalOperators.get(i - 1) : "AND";
 
                     if ("OR".equalsIgnoreCase(logicalOp)) {
@@ -101,6 +108,10 @@ public class PatientMService {
                     }
                 }
 
+                // delStatus != 1 조건 추가, delStatus=1 종결환자
+                Predicate notDeleted = cb.notEqual(root.get("delStatus"), 1);
+                combinedPredicate = cb.and(combinedPredicate, notDeleted);
+
                 return combinedPredicate;
             }
         };
@@ -109,6 +120,7 @@ public class PatientMService {
     private Predicate buildPredicate(
             CriteriaBuilder cb,
             Root<PatientM> root,
+            Join<PatientM, PatientDTL> dtlJoin,
             String column,
             String operator,
             String value
@@ -117,7 +129,17 @@ public class PatientMService {
             return cb.conjunction(); // 빈 값이면 true
         }
 
-        Path<Object> path = root.get(column);
+        Path<Object> path;
+
+        // 기존: path = root.get(column);
+        // 수정: 휴대전화만 dtlJoin에서 가져오기
+        if ("mobilePhone".equals(column)) {
+            path = dtlJoin.get("mobilePhone");
+        } else if ("guardianTel".equals(column)){
+            path = dtlJoin.get("guardianTel");
+        } else {
+            path = root.get(column);
+        }
 
         return switch (operator) {
             case "=" -> {
