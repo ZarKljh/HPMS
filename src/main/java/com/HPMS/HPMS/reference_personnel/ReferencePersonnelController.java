@@ -154,7 +154,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_detail";
     }
 
-    // 삭제
+    // 상세 화면에서 1건 삭제
     private final ReferencePersonnelMService referencePersonnelMService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
@@ -163,6 +163,7 @@ public class ReferencePersonnelController {
                                            @RequestParam("id") Integer id,
                                            @RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size) {
+
         try {
             referencePersonnelMService.deletePersonnel(id);
             redirectAttributes.addFlashAttribute("successMessage", "삭제가 완료되었습니다.");
@@ -176,9 +177,21 @@ public class ReferencePersonnelController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/delete/selectedPersonnel")
     public String deleteSelectedPersonnel(RedirectAttributes redirectAttributes,
+                                          @RequestParam(value = "checkedIds", required = true) List<Long> ids,
                                            @RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size){
-        System.out.println("you are here");
+        /*
+        1. 컨트롤러에서 수신된 ID 수신(requestParam) 및 검증(is null?)
+        2. 서비스 계층에서 삭제 로직 처리
+        3. Repository에서 실제 삭제 수행
+        4. 삭제 후 리다이렉트
+        * */
+        if (ids == null || ids.isEmpty()) {
+            // return messages
+            return "redirect:/user/list?page=" + page + "&size=" + size;
+        }
+
+        referencePersonnelMService.deleteByIds(ids);
         return "redirect:/user/list?page=" + page + "&size=" + size;
     }
 
