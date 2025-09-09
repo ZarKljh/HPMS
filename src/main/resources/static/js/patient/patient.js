@@ -9,6 +9,23 @@ $('.navbar-toggle').click(function() {
 });
 
 
+    function openCountryPopup() {
+          const w = 780, h = 620;
+          const left = (screen.width - w) / 2;
+          const top = (screen.height - h) / 2;
+          // 팝업 URL은 사용 중인 컨트롤러 경로에 맞춰 통일
+          window.open('/global/country_form', 'countryPopup',
+            `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+    }
+
+        // 팝업에서 호출
+    function setCountry(iso2, countryKr) {
+      const disp = document.getElementById('nationalityDisplay');
+      const input = document.getElementById('nationalityInput');
+      if (disp) disp.textContent = `${countryKr} (${iso2})`;
+      if (input) input.value = countryKr; // 또는 iso2 저장을 원하면 input.value = iso2;
+    }
+
   // 🔹 검색폼 토글
     function toggleSearchForm() {
         const form = document.getElementById('searchForm');
@@ -42,12 +59,43 @@ $('.navbar-toggle').click(function() {
     // 🔹 전화번호 컬럼 선택 시 연산자 제한 및 입력 타입 변경
     function updateOperatorOptions(select) {
         const operatorSelect = select.closest('.search-row').querySelector('select[name="operator[]"]');
+        const valueContainer = select.closest('.search-row');
+
         if (select.value === 'mobilePhone' || select.value === 'guardianTel') {
             operatorSelect.innerHTML = '<option value="like">포함</option>';
         } else if (select.value === 'firstName' || select.value === 'lastName'){
             operatorSelect.innerHTML = '<option value="like">포함</option>';
-        } else if (select.value === 'gender' || select.value === 'foreigner'){
+        } else if (select.value === 'gender'){
             operatorSelect.innerHTML = '<option value="=">=</option>';
+            const oldInput = valueContainer.querySelector('input[name="value[]"]');
+            //input 태그의 타입을 select 로 바꾸고 옵션을 male, female, X 3가지 변경
+            if (oldInput) {
+                const newSelect = document.createElement('select');
+                newSelect.name = 'value[]';
+                newSelect.className = 'form-select';
+                newSelect.innerHTML = `
+                    <option value="">선택</option>
+                    <option value="M">남</option>
+                    <option value="F">여</option>
+                    <option value="X">그외</option>
+                `;
+                oldInput.replaceWith(newSelect);
+            }
+        } else if (select.value === 'foreigner') {
+            operatorSelect.innerHTML = '<option value="=">=</option>';
+            //input 태그의 타입을 select 로 바꾸고 옵션을 내국인, 외국인 2가지 변경
+            const oldInput = valueContainer.querySelector('input[name="value[]"]');
+            if (oldInput) {
+                const newSelect = document.createElement('select');
+                newSelect.name = 'value[]';
+                newSelect.className = 'form-select';
+                newSelect.innerHTML = `
+                    <option value="">선택</option>
+                    <option value="0">내국인</option>
+                    <option value="1">외국인</option>
+                `;
+                oldInput.replaceWith(newSelect);
+            }
         } else {
             operatorSelect.innerHTML = `
                 <option value="=">=</option>
