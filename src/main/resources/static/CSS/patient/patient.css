@@ -103,9 +103,11 @@ div > .btn {
 }
 
 .mt-3, .mt-4 {
-    background-color: #CFF4FC;
+    /*background-color: #CFF4FC; */
     padding: 10px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
+    border-bottom: 1px solid black;
+    font-weight: bold;
 }
 
 h2 {
