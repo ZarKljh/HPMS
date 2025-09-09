@@ -42,8 +42,9 @@ public class ReferencePersonnelMService {
 
     //이승운추가 firstName 과 lastName 과 cellPhone 으로 referencePersonnelM 을 가져오는 메소드
     public ReferencePersonnelM getReferencePersonnelMByNameAndCellPhone(String firstName, String lastName, String cellPhone) {
-        return this.referencePersonnelMRepository.findByFirstNameAndLastNameAndCellPhone(firstName, lastName, cellPhone);    
+        return this.referencePersonnelMRepository.findByFirstNameAndLastNameAndCellPhone(firstName, lastName, cellPhone);
     }
+    
     // 삭제를 위해 추가함
     // private final ReferencePersonnelMRepository referencePersonnelMRepository;
   
