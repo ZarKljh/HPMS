@@ -8,7 +8,7 @@
         <label>서브 성명:</label>
         <input class="name" type="text" th:field="*{firstName}" placeholder="이름"/>
         <input class="name" type="text" th:field="*{lastName}" placeholder="성"/>
-        <input class="name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
+        <input class="name middle_name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
       </div>
 
       <h4 class="border-bottom py-2 ps-3">연락처</h4>
@@ -28,7 +28,7 @@
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         <input class="name" type="text" th:field="*{emgcLName}" placeholder="성" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-        <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
+        <input class="name middle_name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
       </div>
       <div class="input-list">
         <label>관계:</label>
@@ -90,6 +90,7 @@
           <option value="unfulfilled">미필</option>
           <option value="Exempted">면제</option>
         </select>
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>국적:</label>

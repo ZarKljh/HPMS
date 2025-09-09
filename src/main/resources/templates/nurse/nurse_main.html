@@ -51,6 +51,7 @@
             <td class="mobile_hidden" th:text="${#temporals.format(nurseMain.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
+        <a th:href="@{/nurse/create}" class="create_btn btn btn-primary" role="button">등록</a>
     </table>
 
     <!-- 페이징처리 시작 -->
@@ -73,7 +74,7 @@
                 </a>
             </li>
         </ul>
-        <a th:href="@{/nurse/create}" class="btn btn-primary" role="button">등록</a>
+
     </div>
     <!-- 페이징처리 끝 -->
     <form th:action="@{/nurse}" method="get" id="searchForm">
