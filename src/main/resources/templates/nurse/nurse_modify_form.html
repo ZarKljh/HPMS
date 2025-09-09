@@ -94,7 +94,7 @@
       <label>주소 : </label>
       <div style="display:flex; gap:8px; align-items:center;">
         <input type="text" th:field="*{nurseInformation.defAdd}" id="addr1" maxlength="250" class="form-control"/>
-        <button type="button" class="btn" onclick="openRoadPopup()">도로명 검색</button>
+        <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
       </div>
 
       <label>상세주소 : </label>
@@ -119,7 +119,7 @@
       <div>
         <span id="nationalityDisplay" th:text="*{nurseInformation.natn} ?: '-'">-</span>
         <input type="hidden" th:field="*{nurseInformation.natn}" id="nationalityInput"/>
-        <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+        <button type="button" class="btn btn-primary" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
       </div>
 
       <label>장애 여부 : </label>
