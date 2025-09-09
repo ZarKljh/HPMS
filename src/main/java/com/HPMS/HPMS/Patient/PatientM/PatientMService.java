@@ -35,7 +35,19 @@ public class PatientMService {
     }
 
     public Page<PatientM> getAllPatientM(Pageable pageable) {
-        return this.patientMRepository.findAll(pageable);
+
+        Specification<PatientM> spec = findAllExceptDel();
+        return this.patientMRepository.findAll(spec,pageable);
+    }
+
+    private Specification<PatientM> findAllExceptDel(){
+        return new Specification<PatientM>() {
+             @Override
+             public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+
+                 return criteriaBuilder.notEqual(root.get("delStatus"), 1);
+            }
+        };
     }
 
     //다중조건에 따른 환자의 Main정보를 가져온다

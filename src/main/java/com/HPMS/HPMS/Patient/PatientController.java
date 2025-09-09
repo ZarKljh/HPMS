@@ -57,8 +57,9 @@ public class PatientController {
     public String list(Model model,
                        @RequestParam(value="page", defaultValue="0") int page,
                        @RequestParam(value="size", defaultValue="10") int size) {
-        //id 칼럼을 기준으로 오름차순(ascending)
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        //id 칼럼을 기준으로 내림차순(descending())
+        //오름차순으로 하고 싶을 때에는 (ascending()) 변경
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"). descending());
         Page<PatientListDTO> patients = this.patientDTOService.getPatientListDTO(pageable);
 
         int totalPages = patients.getTotalPages();
@@ -80,6 +81,8 @@ public class PatientController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
+
+
 
 
         return "patient/lsw_patient_list";

@@ -26,6 +26,8 @@ public class PatientDTOService {
     private final PatientMService patientMService;
     private final PatientDTLService patientDTLService;
 
+    //환자리스트화면을 위한 DTO service
+    //페이징 기능 추가하기 전의 getPatientListDTO
 //    public List<PatientListDTO> getPatientListDTO(){
 //
 //        //환자메인정보 모든 리스트를 service를 통해 가져온다
@@ -57,7 +59,8 @@ public class PatientDTOService {
 //        return dtoList;
 //    }
 
-
+    //환자리스트화면을 위한 DTO service
+    //페이징 기능 추가된 getPatientListDTO
     public Page<PatientListDTO> getPatientListDTO(Pageable pageable){
 
 
