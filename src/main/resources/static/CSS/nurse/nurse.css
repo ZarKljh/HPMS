@@ -77,10 +77,9 @@ tr {
 .list {
 	justify-content: space-around;
 	text-align: center;
-	line-height: 60px;
+	line-height: 40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 70px;
 }
 th {
 	width: 100%;
@@ -158,8 +157,8 @@ td {
 .basic_info {
 	position: absolute;
 	top: 220px;
-	left: 330px;
-	width: 965px;
+	left: 350px;
+	width: 945px;
 	height: 200px;
 }
 .info, .info_1 {
@@ -171,41 +170,42 @@ td {
 .info_1 {
 	display: none;
 }
-
+strong {
+    display: inline-block;
+    width: 100px;
+}
 @media screen and (max-width: 1400px) {
 	.basic_info {
-		width: 780px;
+		width: 760px;
 	}
 }
 
 @media screen and (max-width: 1200px) {
 	.basic_info {
-		width: 600px;
+		width: 580px;
 	}
 }
 
 @media screen and (max-width: 993px) {
-	.basic_info {
-		width: 350px;
-	}
-}
-
-@media screen and (max-width: 767px) {
 	.nursemain {
-		display: flex;
-		justify-content: center;
-	}
-	.basic_info {
-		display: none;
-	}
-	.info_1 {
-		display: block;
-	}
-	.image {
-    	margin-left: auto;
-    	margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
+    .basic_info {
+        display: none;
+    }
+    .info_1 {
+        display: block;
+    }
+    .image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name_list input {
+        width: 100px;
     }
 }
+
 
 // 수정 페이지
 .c_c_btn_box {
@@ -258,10 +258,22 @@ input {
     .middle_name {
         display: block;
     }
+    .save_btn_1 {
+        display: block;
+    }
+    .save_btn_2 {
+        display: none;
+    }
 }
 @media (max-width: 767px) {
     .middle_name {
         display: none;
+    }
+    .save_btn_1 {
+        display: none;
+    }
+    .save_btn_2 {
+        display: block;
     }
 }
 .next_btn_box {
@@ -313,4 +325,9 @@ input {
 .hover-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+// 상세정보 등록 페이지
+.save_btn_1 {
+    display: block;
 }
