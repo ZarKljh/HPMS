@@ -100,6 +100,8 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
 });
+
+//주소
 function openRoadPopup() {
     const w = 900, h = 640;
     const left = (screen.width - w)/2, top = (screen.height - h)/2;
@@ -123,3 +125,28 @@ function numberMaxLength(e){
         e.value = e.value.slice(0, e.maxLength);
     }
 }
+
+// 국적
+function openCountryPopup() {
+    const w = 780, h = 620;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/country_form', 'countryPopup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+  // 팝업에서 호출 (자동 저장 금지, 값만 세팅)
+  function setCountry(iso2, countryKr) {
+    const disp = document.getElementById('nationalityDisplay');
+    if (disp) disp.textContent = `${countryKr} (${iso2})`;
+
+    const hidden = document.getElementById('nationalityInput');
+    if (hidden) hidden.value = `${countryKr} (${iso2})`;
+  }
+  // 팝업에서 호출: 값만 채움 (저장은 최종 "등록"에서 함께)
+      function setCountry(iso2, countryKr) {
+        const disp  = document.getElementById('nationalityDisplay');
+        const input = document.getElementById('nationalityInput');
+        const combined = `${countryKr} (${iso2})`;
+        if (disp)  disp.textContent = combined;
+        if (input) input.value = combined; // ★ 서버에는 "대한민국 (KR)" 로 저장
+      }

@@ -115,8 +115,12 @@
       <label>병역 : </label>
       <input type="text" th:field="*{nurseInformation.ms}" maxlength="2" class="form-control"/>
 
-      <label>국적 : </label>
-      <input type="text" th:field="*{nurseInformation.natn}" class="form-control"/>
+      <label>국적</label>
+      <div>
+        <span id="nationalityDisplay" th:text="*{nurseInformation.natn} ?: '-'">-</span>
+        <input type="hidden" th:field="*{nurseInformation.natn}" id="nationalityInput"/>
+        <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+      </div>
 
       <label>장애 여부 : </label>
       <input type="text" th:field="*{nurseInformation.dss}" maxlength="1" class="form-control"/>
