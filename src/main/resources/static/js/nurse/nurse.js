@@ -1,57 +1,102 @@
-$('.navbar-toggle').click(function() {
-	let a = $('.menubox_2').hasClass('active');
-
-	if(a) {
-		$('.menubox_2').removeClass('active');
-	} else {
-		$('.menubox_2').addClass('active');
-	}
-});
-
-const delete_elements = document.getElementsByClassName("delete");
-    Array.from(delete_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if (confirm("정말로 삭제하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
-        });
-    });
-
 document.addEventListener("DOMContentLoaded", function() {
-    const showBtn = document.getElementById("showLicenseFormBtn");
-    const cancelBtn = document.getElementById("cancelLicenseFormBtn");
-    const form = document.getElementById("newLicenseForm");
-    const noMsg = document.getElementById("noLicenseMsg");
-    const btnBox = document.getElementById("addLicenseBtnBox");
 
-    // 자격증 추가 버튼 클릭 시
-    showBtn.addEventListener("click", function() {
-        form.style.display = "block";     // 폼 보여주기
-        btnBox.style.display = "none";    // 버튼 숨기기
-        if (noMsg) noMsg.style.display = "none";  // 메시지 숨기기
-        form.scrollIntoView({ behavior: "smooth", block: "start" }); // 스크롤 이동
+  // =======================
+  // 1. Navbar 토글
+  // =======================
+  const navbarToggle = document.querySelector('.navbar-toggle');
+  if (navbarToggle) {
+    navbarToggle.addEventListener('click', () => {
+      const menubox = document.querySelector('.menubox_2');
+      if (menubox) menubox.classList.toggle('active');
     });
+  }
 
-    // 취소 버튼 클릭 시
-    cancelBtn.addEventListener("click", function() {
-        form.style.display = "none";      // 폼 숨기기
-        btnBox.style.display = "block";   // 버튼 복원
-        if (noMsg) noMsg.style.display = "block"; // 메시지 복원
-        btnBox.scrollIntoView({ behavior: "smooth", block: "center" }); // 스크롤 이동
-    });
-});
-
-//검색 스크립트 추가
-const page_elements = document.getElementsByClassName("page-link");
-Array.from(page_elements).forEach(function(element) {
+  // =======================
+  // 2. 삭제 버튼 확인
+  // =======================
+  const deleteElements = document.getElementsByClassName("delete");
+  Array.from(deleteElements).forEach(element => {
     element.addEventListener('click', function() {
-        document.getElementById('page').value = this.dataset.page;
-        document.getElementById('searchForm').submit();
+      if (confirm("정말로 삭제하시겠습니까?")) {
+        location.href = this.dataset.uri;
+      }
     });
-});
-const btn_search = document.getElementById("btn_search");
-btn_search.addEventListener('click', function() {
-    document.getElementById('kw').value = document.getElementById('search_kw').value;
-    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-    document.getElementById('searchForm').submit();
+  });
+
+  // =======================
+  // 3. 자격증 추가 폼
+  // =======================
+  const showBtn = document.getElementById("showLicenseFormBtn");
+  const cancelBtn = document.getElementById("cancelLicenseFormBtn");
+  const form = document.getElementById("newLicenseForm");
+  const noMsg = document.getElementById("noLicenseMsg");
+  const btnBox = document.getElementById("addLicenseBtnBox");
+
+  if (showBtn && form && btnBox) {
+    showBtn.addEventListener("click", () => {
+      form.style.display = "block";
+      btnBox.style.display = "none";
+      if (noMsg) noMsg.style.display = "none";
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      form.style.display = "none";
+      btnBox.style.display = "block";
+      if (noMsg) noMsg.style.display = "block";
+      btnBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  // =======================
+  // 4. 검색 & 페이지 이동
+  // =======================
+  const pageElements = document.getElementsByClassName("page-link");
+  Array.from(pageElements).forEach(element => {
+    element.addEventListener('click', function() {
+      document.getElementById('page').value = this.dataset.page;
+      document.getElementById('searchForm').submit();
+    });
+  });
+
+  const btnSearch = document.getElementById("btn_search");
+  if (btnSearch) {
+    btnSearch.addEventListener('click', () => {
+      document.getElementById('kw').value = document.getElementById('search_kw').value;
+      document.getElementById('page').value = 0;
+      document.getElementById('searchForm').submit();
+    });
+  }
+
+  // =======================
+  // 5. 로그인 탭 & 폼
+  // =======================
+  const tabs = document.querySelectorAll('#myTab button[data-bs-toggle="tab"]');
+    tabs.forEach(tab => {
+      tab.addEventListener('shown.bs.tab', function (event) {
+        const targetId = event.target.getAttribute('data-bs-target');
+        const targetPane = document.querySelector(targetId);
+        if (targetPane) {
+          const firstInput = targetPane.querySelector('input[type="text"]');
+          if (firstInput) {
+            firstInput.focus();
+          }
+        }
+      });
+    });
+
+    // 폼 제출 시 입력 검증 (HTML5 required 속성으로 대체 가능)
+    const loginForms = document.querySelectorAll('#guest-nav-home, #official-nav-home');
+    loginForms.forEach(form => {
+      form.addEventListener('submit', function (e) {
+        const username = this.querySelector('input[name="username"]').value.trim();
+        const password = this.querySelector('input[name="password"]').value.trim();
+
+        if (!username || !password) {
+          e.preventDefault();
+          alert('아이디와 비밀번호를 입력해주세요.');
+          return false;
+        }
+      });
+    });
 });

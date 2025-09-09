@@ -81,14 +81,12 @@ tr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	height: 70px;
-	background-color: #cff4fc;
-	border-bottom: 1px solid gray;
 }
 th {
-	display: block;
-	width: 80px;
+	width: 100%;
 	text-wrap: nowrap;
 	font-size: 16px;
+	border-right: 1px solid #dee2e6;
 }
 td {
 	width: 80px;
@@ -247,6 +245,7 @@ label {
 	width: 100px;
 }
 .input-list {
+    display: flex;
 	padding: 10px;
 	margin: 20px;
 	border: 1px solid #dee2e6;
@@ -297,3 +296,12 @@ label {
     width:100%;
 }
 
+//메인 페이지
+.hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
