@@ -95,10 +95,16 @@
         </select>
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
+
       <div class="input-list">
-        <label>국적:</label>
-        <input type="text" th:field="*{natn}"/>
+        <label>국적</label>
+        <div>
+          <span id="nationalityDisplay" th:text="*{natn} ?: '-'">-</span>
+          <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+        </div>
+        <input type="hidden" th:field="*{natn}" id="nationalityInput"/>
       </div>
+
       <div class="input-list">
         <label>장애여부:</label>
         <select th:field="*{dss}" required>
