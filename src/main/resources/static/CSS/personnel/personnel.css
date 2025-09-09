@@ -1,3 +1,15 @@
+.material-symbols-outlined {/* 붉은 귀 : 필수입력대상*/
+	color: red;
+	font-size: 12px;
+	line-height: 3px;
+}
+
+.input-list {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 14px;
+}
+
 .page-navigation {
     display: flex;
     justify-content: space-between;
