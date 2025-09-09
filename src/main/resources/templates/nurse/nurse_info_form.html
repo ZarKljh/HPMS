@@ -55,7 +55,7 @@
         <label>주소:</label>
         <div style="gap:8px; align-items:center; flex-direction: column;">
           <input type="text" th:field="*{defAdd}" id="addr1" maxlength="250"/>
-          <button type="button" class="btn" onclick="openRoadPopup()">도로명 검색</button>
+          <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
       </div>
@@ -100,7 +100,7 @@
         <label>국적</label>
         <div>
           <span id="nationalityDisplay" th:text="*{natn} ?: '-'">-</span>
-          <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+          <button type="button" class="btn btn-primary" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
         </div>
         <input type="hidden" th:field="*{natn}" id="nationalityInput"/>
       </div>

@@ -10,7 +10,7 @@
             <div class="m-d-btn">
                 <div class="m-d-btn_box">
                     <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
+                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
                 </div>
             </div>
 

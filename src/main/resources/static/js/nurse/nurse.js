@@ -52,13 +52,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // 4. 검색 & 페이지 이동
   // =======================
   const pageElements = document.getElementsByClassName("page-link");
-  Array.from(pageElements).forEach(element => {
-    element.addEventListener('click', function() {
-      document.getElementById('page').value = this.dataset.page;
-      document.getElementById('searchForm').submit();
-    });
-  });
-
+  if (pageElements.length) {
+      Array.from(pageElements).forEach(element => {
+        element.addEventListener('click', function() {
+          document.getElementById('page').value = this.dataset.page;
+          document.getElementById('searchForm').submit();
+        });
+      });
+  }
   const btnSearch = document.getElementById("btn_search");
   if (btnSearch) {
     btnSearch.addEventListener('click', () => {
