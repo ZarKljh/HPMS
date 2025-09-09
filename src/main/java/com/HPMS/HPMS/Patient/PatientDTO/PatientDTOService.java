@@ -8,6 +8,8 @@ import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import com.HPMS.HPMS.Patient.PatientM.PatientMService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +26,8 @@ public class PatientDTOService {
     private final PatientMService patientMService;
     private final PatientDTLService patientDTLService;
 
+    //환자리스트화면을 위한 DTO service
+    //페이징 기능 추가하기 전의 getPatientListDTO
 //    public List<PatientListDTO> getPatientListDTO(){
 //
 //        //환자메인정보 모든 리스트를 service를 통해 가져온다
@@ -55,12 +59,13 @@ public class PatientDTOService {
 //        return dtoList;
 //    }
 
-
-    public List<PatientListDTO> getPatientListDTO(int page){
+    //환자리스트화면을 위한 DTO service
+    //페이징 기능 추가된 getPatientListDTO
+    public Page<PatientListDTO> getPatientListDTO(Pageable pageable){
 
 
         //환자메인정보 모든 리스트를 service를 통해 가져온다
-        Page<PatientM> patientMs = this.patientMService.getAllPatientM(page);
+        Page<PatientM> patientMs = this.patientMService.getAllPatientM(pageable);
         //환자리스트html전용 DTO를 담아놓을 신규 List를 생성한다
         List<PatientListDTO> dtoList = new ArrayList<>();
         //날짜출력용 포멧을 정해놓았다
@@ -85,7 +90,8 @@ public class PatientDTOService {
 
             dtoList.add(dto);
         }
-        return dtoList;
+        return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
+
     }
 
 
@@ -144,6 +150,40 @@ public class PatientDTOService {
 
         return detailDTO;
     }
+
+    public Page<PatientListDTO> searchPatients(
+            List<String> columns,
+            List<String> operators,
+            List<String> values,
+            List<String> logicalOperators,
+            Pageable pageable
+    ) {
+        Page<PatientM> patientMs = this.patientMService.patientMSearch(columns, operators, values, logicalOperators, pageable);
+
+        List<PatientListDTO> dtoList = new ArrayList<>();
+
+        for( PatientM m : patientMs.getContent()){
+            PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+
+            //환자리스트html 전용 DTO 객체를 선언한다
+            PatientListDTO dto = new PatientListDTO();
+
+            dto.setId(m.getId());
+            dto.setName(m.getLastName() + " " + m.getFirstName());
+            dto.setGender(m.getGender());
+            dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
+            dto.setForeigner(m.getForeigner());
+            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+            dto.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
+            dto.setLastVisitDate(dtl.getLastVisitDate());
+            dto.setCreateDate(m.getCreateDate());
+
+            dtoList.add(dto);
+        }
+
+        return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
+    }
+
 
     //Integer 형으로 되어있는 날짜를 LocalDate로 변환하는 메소드
     public LocalDate stringToLocalDate(Integer dayOfbirth){

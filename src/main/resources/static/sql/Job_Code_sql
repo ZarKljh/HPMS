@@ -1,0 +1,54 @@
+CREATE TABLE DOC_RANK(
+ID INT (10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+KOR_NAME VARCHAR(30) NOT NULL,
+ENG_NAME VARCHAR(50) NOT NULL,
+RANK VARCHAR(30) NOT NULL
+);
+INSERT INTO DOC_RANK(
+KOR_NAME, ENG_NAME, RANK)
+VALUES
+('이사장', 'Chairman of the Board','COB'),
+('병원장','Hospital Director','HD'),
+('병원장','Chief Executive Officer','CEO'),
+('부원장','Vice President of Medical Affairs','VPMA'),
+('부장','Director','DIR'),
+('과장','Head of Department','Dept. Head'),
+('팀장','Head of Team','Team. Head');
+CREATE TABLE DOC_POSITION(
+ID INT (10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+KOR_NAME VARCHAR(30) NOT NULL,
+ENG_NAME VARCHAR(50) NOT NULL,
+POSITION VARCHAR(30) NOT NULL
+);
+INSERT INTO DOC_POSITION(
+KOR_NAME, ENG_NAME, POSITION)
+VALUES
+('일반의','General Practitioner','GP'),
+('전문의','Attending Physician','Att.'),
+('전문의','Specialist','SP'),
+('전임의','Clinical Fellow','FELLOW'),
+('전공의','Resident Doctor','RESI'),
+('수련의','Intern Doctor','INTERN'),
+('교수','Professor','PROF'),
+('교수','Faculty','FAC'),
+('의과대학생','medical student','MS');
+CREATE TABLE NURSE_POSITION(
+ID INT (10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+KOR_NAME VARCHAR(30) NOT NULL,
+ENG_NAME VARCHAR(50) NOT NULL,
+POSITION VARCHAR(30) NOT NULL
+);
+INSERT INTO NURSE_POSITION(
+KOR_NAME, ENG_NAME, POSITION
+)VALUES
+('간호부장','Chief Nursing Officer','CNO'),
+('수간호장(파트장)','Head Nurse','HN'),
+('수간호장(파트장)','Nurse Manager','NM'),
+('책임간호사','Charge Nurse','CHARGE'),
+('주임간호사','Senior Staff Nurse','SSN'),
+('일반간호사','Registered Nurse','RN'),
+('신규간호사','New Graduate Nurse','NGN'),
+('간호조무사','Nursing Assistant','NA'),
+('간호학생(실습생)','Student Nurse','SN');
+
+

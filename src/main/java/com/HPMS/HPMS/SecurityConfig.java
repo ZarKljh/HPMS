@@ -31,9 +31,13 @@ public class SecurityConfig {
                         .loginPage("/hpms/login")
                         .defaultSuccessUrl("/"))
                 .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/hpms/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
+//                사용자가 권한부족으로 페이지접속이 거부되는 경우
+//                .exceptionHandling(exception -> exception
+//                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+//                );
         ;
         return http.build();
     }

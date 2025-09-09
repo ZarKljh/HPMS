@@ -1,69 +1,129 @@
 <html layout:decorate="~{nurse/nurse_layout}">
-<div layout:fragment="content" class="container my-3">
-    <form th:action="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" method="post">
+<div layout:fragment="content" class="container">
+    <form class="info_form" th:action="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" method="post">
 
-        <h1 class="border-bottom py-2" th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.lastName}|"></h1>
+        <h2 class="border-bottom py-2" th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.lastName}|"></h2>
 
-        <!-- 사진 -->
-        <div th:if="${nurseDTO.nurseInformation != null}">
-            <img th:if="${nurseDTO.nurseInformation.picture != null}" th:src="${nurseDTO.nurseInformation.picture}" alt="nurse Image"/>
-            <span th:if="${nurseDTO.nurseInformation.picture == null}">사진 없음</span>
+        <!-- Main 정보 -->
+        <div class="main card my-3">
+
+            <div class="m-d-btn">
+                <div class="m-d-btn_box">
+                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
+                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
+                </div>
+            </div>
+
+            <!-- 사진 -->
+            <div class="image" th:if="${nurseDTO.nurseInformation != null}">
+                <img th:if="${nurseDTO.nurseInformation.picture != null}" th:src="${nurseDTO.nurseInformation.picture}" alt="nurse Image" />
+                <span th:if="${nurseDTO.nurseInformation.picture == null}">사진 없음</span>
+            </div>
+
+            <div class="basic_info">
+                <p class="info">성명 <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
+                <p class="info">부서 <span th:text="${nurseDTO.nurseMain.dept}"></span></p>
+                <p class="info">직급 <span th:text="${nurseDTO.nurseMain.rank}"></span></p>
+            </div>
+
+            <p class="info_1">성명 <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
+            <p class="info_1">부서 <span th:text="${nurseDTO.nurseMain.dept}"></span></p>
+            <p class="info_1">직급 <span th:text="${nurseDTO.nurseMain.rank}"></span></p>
+            <p class="info">성별 <span th:text="${nurseDTO.nurseMain.gender}"></span></p>
+            <p class="info">생년월일 <span th:text="${nurseDTO.nurseMain.dateOfBirth}"></span></p>
+            <p class="info">입사일 <span th:text="${nurseDTO.nurseMain.hireDate}"></span></p>
+            <p class="info">상태 <span th:text="${nurseDTO.nurseMain.sts}"></span></p>
+            <p class="info">근무형태 <span th:text="${nurseDTO.nurseMain.wt}"></span></p>
+            <p class="info">작성자 <span th:text="${nurseDTO.nurseMain.writer}"></span></p>
+            <p class="info">작성시간 <span th:text="${nurseDTO.nurseMain.createDate}"></span></p>
+            <p class="info">수정자 <span th:text="${nurseDTO.nurseMain.modifier}"></span></p>
+            <p class="info">수정시간 <span th:text="${nurseDTO.nurseMain.modifyDate}"></span></p>
         </div>
 
-        <!-- NurseMain 정보 -->
-        <div class="nursemain card my-3">
-            <p>성함 <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
-            <p>부서 <span th:text="${nurseDTO.nurseMain.dept}"></span></p>
-            <p>직급 <span th:text="${nurseDTO.nurseMain.rank}"></span></p>
-            <p>성별 <span th:text="${nurseDTO.nurseMain.gender}"></span></p>
-            <p>생년월일 <span th:text="${nurseDTO.nurseMain.dateOfBirth}"></span></p>
-            <p>입사일 <span th:text="${nurseDTO.nurseMain.hireDate}"></span></p>
-            <p>상태 <span th:text="${nurseDTO.nurseMain.sts}"></span></p>
-            <p>근무형태 <span th:text="${nurseDTO.nurseMain.wt}"></span></p>
-            <p>작성자 <span th:text="${nurseDTO.nurseMain.writer}"></span></p>
-            <p>작성시간 <span th:text="${nurseDTO.nurseMain.createDate}"></span></p>
-            <p>수정자 <span th:text="${nurseDTO.nurseMain.modifier}"></span></p>
-            <p>수정시간 <span th:text="${nurseDTO.nurseMain.modifyDate}"></span></p>
+        <!-- Information 정보 -->
+        <div class="information card my-3" th:if="${nurseDTO.nurseInformation != null}">
+            <p class="info">서브 이름 <span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
+            <p class="info">전화번호 <span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
+            <p class="info">비상연락처 <span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>
+            <p class="info">비상연락처주 성함 <span th:text="|${nurseDTO.nurseInformation.emgcFName} ${nurseDTO.nurseInformation.emgcLName} ${nurseDTO.nurseInformation.emgcMName}|"></span></p>
+            <p class="info">비상연락처 관계 <span th:text="${nurseDTO.nurseInformation.emgcRel}"></span></p>
+            <p class="info">비상연락처 비고 <span th:text="${nurseDTO.nurseInformation.emgcNote}"></span></p>
+            <p class="info">이메일 <span th:text="${nurseDTO.nurseInformation.email}"></span></p>
+            <p class="info">우편번호 <span th:text="${nurseDTO.nurseInformation.pcd}"></span></p>
+            <p class="info">기본주소 <span th:text="${nurseDTO.nurseInformation.defAdd}"></span></p>
+            <p class="info">상세주소 <span th:text="${nurseDTO.nurseInformation.detAdd}"></span></p>
+            <p class="info">간호사 자격증 번호 <span th:text="${nurseDTO.nurseInformation.rnNo}"></span></p>
+            <p class="info">최종학력 <span th:text="${nurseDTO.nurseInformation.edbc}"></span></p>
+            <p class="info">졸업날짜 <span th:text="${nurseDTO.nurseInformation.gradDate}"></span></p>
+            <p class="info">외국어 <span th:text="${nurseDTO.nurseInformation.fl}"></span></p>
+            <p class="info">병역 <span th:text="${nurseDTO.nurseInformation.ms}"></span></p>
+            <p class="info">국적 <span th:text="${nurseDTO.nurseInformation.natn}"></span></p>
+            <p class="info">장애여부 <span th:text="${nurseDTO.nurseInformation.dss}"></span></p>
+            <p class="info">경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
+            <p class="info">비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
         </div>
-
-        <!-- NurseInformation 정보 -->
-        <div class="nurseinformation card my-3" th:if="${nurseDTO.nurseInformation != null}">
-            <p>서브 이름 <span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
-            <p>전화번호 <span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
-            <p>비상연락처 <span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>
-            <p>비상연락처주 성함 <span th:text="|${nurseDTO.nurseInformation.emgcFName} ${nurseDTO.nurseInformation.emgcLName} ${nurseDTO.nurseInformation.emgcMName}|"></span></p>
-            <p>비상연락처 주인과의 관계 <span th:text="${nurseDTO.nurseInformation.emgcRel}"></span></p>
-            <p>비상연락처 비고 <span th:text="${nurseDTO.nurseInformation.emgcNote}"></span></p>
-            <p>이메일 <span th:text="${nurseDTO.nurseInformation.email}"></span></p>
-            <p>우편번호 <span th:text="${nurseDTO.nurseInformation.pcd}"></span></p>
-            <p>기본주소 <span th:text="${nurseDTO.nurseInformation.defAdd}"></span></p>
-            <p>상세주소 <span th:text="${nurseDTO.nurseInformation.detAdd}"></span></p>
-            <p>간호사 자격증 번호 <span th:text="${nurseDTO.nurseInformation.rnNo}"></span></p>
-            <p>최종학력 <span th:text="${nurseDTO.nurseInformation.edbc}"></span></p>
-            <p>졸업날짜 <span th:text="${nurseDTO.nurseInformation.gradDate}"></span></p>
-            <p>외국어 <span th:text="${nurseDTO.nurseInformation.fl}"></span></p>
-            <p>병역 <span th:text="${nurseDTO.nurseInformation.ms}"></span></p>
-            <p>국적 <span th:text="${nurseDTO.nurseInformation.natn}"></span></p>
-            <p>장애여부 <span th:text="${nurseDTO.nurseInformation.dss}"></span></p>
-            <p>경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
-            <p>비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
-        </div>
-        <div class="my-3">
-            <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="btn btn-sm btn-outline-secondary" th:text="수정"></a>
-<!--               sec:authorize="isAuthenticated()" th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"-->
-            <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="delete btn btn-sm btn-outline-secondary" th:text="삭제"></a>
-<!--               sec:authorize="isAuthenticated()" th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"-->
-
-        </div>
-        <script layout:fragment="script" type='text/javascript'>
-            const delete_elements = document.getElementsByClassName("delete");
-            Array.from(delete_elements).forEach(function(element) {
-                element.addEventListener('click', function() {
-                    if(confirm("정말로 삭제하시겠습니까?")) {
-                        location.href = this.dataset.uri;
-                    };
-                });
-            });
-        </script>
     </form>
+    <!-- License 정보 -->
+    <div class="license card my-3 p-3">
+        <h3 class="border-bottom py-2">자격증 정보</h3>
+
+        <div th:if="${#lists.isEmpty(nurseDTO.licenseList)}" class="pb-2" id="noLicenseMsg">
+            등록된 자격증이 없습니다.
+        </div>
+        <div class="text-end li_btn" id="addLicenseBtnBox">
+            <a href="javascript:void(0);" id="showLicenseFormBtn" class="l-btn m-3 my-3 mb-3">자격증 추가</a>
+        </div>
+
+        <!-- 자격증이 있을 때 카드로 표시 -->
+        <div th:if="${!#lists.isEmpty(nurseDTO.licenseList)}">
+            <div class="row" th:each="license : ${nurseDTO.licenseList}">
+                <div class="w-100 col-md-4 mb-3 mt-3" th:id="'license-' + ${license.id}">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body ms-3 p-3">
+                            <p><strong>자격증:</strong> <span th:text="${license.li}"></span></p>
+                            <p><strong>번호:</strong> <span th:text="${license.licenseNo}"></span></p>
+                            <p><strong>발급일:</strong> <span th:text="${license.issueDate}"></span></p>
+                            <p><strong>만료일:</strong> <span th:text="${license.expiryDate}"></span></p>
+                            <p><strong>비고:</strong> <span th:text="${license.note}"></span></p>
+                            <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}" class="btn btn-danger btn-sm mb-3">삭제</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 등록폼 (처음 숨김) -->
+        <form class="list_form" th:action="@{|/nurse/license/${nurseDTO.nurseMain.id}|}" method="post" id="newLicenseForm" style="display:none;">
+            <div class="mb-3 li_list_form">
+                <label for="li" class="form-label">자격증명</label>
+                <input type="text" class="form-control" id="li" name="li" placeholder="자격증명" required style="width:100%;">
+            </div>
+
+            <div class="mb-3 li_list_form">
+                <label for="licenseNo" class="form-label">번호</label>
+                <input type="text" class="form-control" id="licenseNo" name="licenseNo" placeholder="자격증 번호" required style="width:100%;">
+            </div>
+
+            <div class="mb-3 li_list_form">
+                <label for="issueDate" class="form-label">발급일</label>
+                <input type="text" class="form-control" id="issueDate" name="issueDate" placeholder="YYYYMMDD" style="width:100%;">
+            </div>
+
+            <div class="mb-3 li_list_form">
+                <label for="expiryDate" class="form-label">만료일</label>
+                <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="YYYYMMDD" style="width:100%;">
+            </div>
+
+            <div class="mb-3 li_list_form">
+                <label for="note" class="form-label">비고</label>
+                <input type="text" class="form-control" id="note" name="note" placeholder="비고" style="width:100%;">
+            </div>
+
+            <div class="text-end mt-3 mb-2">
+                <button type="submit" class="li_c_btn">추가</button>
+                <button type="button" id="cancelLicenseFormBtn" class="li_cancel_btn">취소</button>
+            </div>
+        </form>
+    </div>
 </div>

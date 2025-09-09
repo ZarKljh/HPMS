@@ -92,8 +92,12 @@
             <label>학회인증</label>  <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
 
             <label>병역</label>      <input type="text" th:field="*{militaryService}" maxlength="10"/>
-            <label>국적</label>      <input type="text" th:field="*{nationality}" maxlength="50"/>
-
+            <label>국적</label>
+            <div>
+                <span id="nationalityDisplay" th:text="*{nationality} ?: '-'">-</span>
+                <input type="hidden" th:field="*{nationality}" id="nationalityInput"/>
+                <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+            </div>
             <label>장애 여부</label>
             <div style="display:flex; gap:12px; align-items:center;">
                 <label><input type="radio" th:field="*{disabilityStatus}" value="Y" required> Y</label>
@@ -118,5 +122,29 @@
     </div>
 </form>
 
+<!-- 👇 이 iframe을 바로 밑에 두면 안전 -->
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+    <!-- CSRF 사용 시 추가
+    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    -->
+</form>
+<script>
+    function openCountryPopup() {
+      const w = 780, h = 620;
+      const left = (screen.width - w) / 2;
+      const top = (screen.height - h) / 2;
+      // 팝업 URL은 사용 중인 컨트롤러 경로에 맞춰 통일
+      window.open('/global/country_form', 'countryPopup',
+        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+    }
+
+    // 팝업에서 호출
+    function setCountry(iso2, countryKr) {
+      const disp = document.getElementById('nationalityDisplay');
+      const input = document.getElementById('nationalityInput');
+      if (disp) disp.textContent = `${countryKr} (${iso2})`;
+      if (input) input.value = countryKr; // 또는 iso2 저장을 원하면 input.value = iso2;
+      }
+</script>
 </body>
 </html>

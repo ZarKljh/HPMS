@@ -88,14 +88,25 @@ public class DoctorDTLService {
         savedMain.setDetail(detail);
         return savedMain.getId();
     }
+    @Transactional
+    public void updateNationalityByDoctorId(Integer doctorId, String iso2, String countryKr) {
+        DoctorDTL detail = repository.findByDoctorMainId(doctorId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 의사의 디테일 정보가 없습니다."));
 
+        // 저장 형식은 원하는 대로 통일 (예: "대한민국 (KR)")
+        detail.setNationality(countryKr + " (" + iso2 + ")");
+        detail.setModifier("system");
+
+        // readOnly=false 이므로 save가 실제로 반영됩니다
+        repository.save(detail);
+    }
     /** 수정: 메인+디테일 동시 수정 (디테일 없으면 생성) */
     @Transactional
     public void updateMainAndDetail(Integer doctorId, DoctorMForm m, DoctorDTLForm d) {
         DoctorM main = doctorMRepository.findById(doctorId)
                 .orElseThrow(() -> new IllegalArgumentException("의사 정보가 없습니다."));
         DoctorDTL detail = repository.findByDoctorMainId(doctorId).orElseGet(DoctorDTL::new);
-        doctorHService.snapshotBeforeUpdate(main,detail);
+        doctorHService.snapshotBeforeUpdate(main, detail);
         // 메인 갱신
         main.setDepartment(m.getDepartment());
         main.setMedicalDepartment(m.getMedicalDepartment());
@@ -140,12 +151,14 @@ public class DoctorDTLService {
         detail.setSocietyActivity(d.getSocietyActivity());
         detail.setCertificateOfSociety(d.getCertificateOfSociety());
         detail.setMilitaryService(d.getMilitaryService());
-        detail.setNationality(d.getNationality());
-        detail.setDisabilityStatus(d.getDisabilityStatus());
-        detail.setNote(d.getNote());
-        detail.setModifier("system");
+        if (d.getNationality() != null && !d.getNationality().isBlank()) {
+            detail.setNationality(d.getNationality());
+            detail.setDisabilityStatus(d.getDisabilityStatus());
+            detail.setNote(d.getNote());
+            detail.setModifier("system");
 
-        repository.save(detail);
-        main.setDetail(detail);
+            repository.save(detail);
+            main.setDetail(detail);
+        }
     }
 }

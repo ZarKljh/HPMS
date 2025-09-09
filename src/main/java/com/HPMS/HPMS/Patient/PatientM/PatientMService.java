@@ -3,35 +3,178 @@ package com.HPMS.HPMS.Patient.PatientM;
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTL;
 import com.HPMS.HPMS.Patient.PatientDTL.PatientDTLService;
 import com.HPMS.HPMS.Patient.patientForm.PatientForm;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import static org.springframework.core.annotation.MergedAnnotations.search;
 
 @Service
 @RequiredArgsConstructor
 public class PatientMService {
     private final PatientMRepository patientMRepository;
     private final PatientDTLService patientDTLService;
+    private final EntityManager entityManager;
 
     //모든 환자의 Main정보를 가져온다
     public List<PatientM> getAllPatientM(){
         return this.patientMRepository.findAll();
     }
 
-    public Page<PatientM> getAllPatientM(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
-        return this.patientMRepository.findAll(pageable);
+    public Page<PatientM> getAllPatientM(Pageable pageable) {
+
+        Specification<PatientM> spec = findAllExceptDel();
+        return this.patientMRepository.findAll(spec,pageable);
     }
 
+    private Specification<PatientM> findAllExceptDel(){
+        return new Specification<PatientM>() {
+             @Override
+             public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+
+                 return criteriaBuilder.notEqual(root.get("delStatus"), 1);
+            }
+        };
+    }
+
+    //다중조건에 따른 환자의 Main정보를 가져온다
+    public Page<PatientM>  patientMSearch( List<String> columns,
+                                           List<String> operators,
+                                           List<String> values,
+                                           List<String> logicalOperators,
+                                           Pageable pageable){
+
+
+
+//        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<PatientM> query = cb.createQuery(PatientM.class);
+//        Root<PatientM> root = query.from(PatientM.class);
+
+        // Predicate 생성
+//        List<Predicate> predicates = buildPredicates(cb, root, columns, operators, values);
+        Specification<PatientM> spec = search(columns, operators, values, logicalOperators);
+        return this.patientMRepository.findAll(spec, pageable);
+    }
+
+    private Specification<PatientM> search(
+            List<String> columns,
+            List<String> operators,
+            List<String> values,
+            List<String> logicalOperators
+    ) {
+        return new Specification<>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                query.distinct(true); // 중복 제거
+
+
+
+                if (columns == null || columns.isEmpty()) {
+                    return cb.conjunction(); // 조건이 없으면 전체 검색
+                }
+
+
+
+                // LEFT JOIN 추가: PatientDTL과 조인
+                Join<PatientM, PatientDTL> dtlJoin = root.join("patientDTL", JoinType.LEFT);
+
+                // 첫 번째 조건을 기본으로 설정
+                Predicate combinedPredicate = buildPredicate(cb, root, dtlJoin, columns.get(0), operators.get(0), values.get(0));
+
+                // 나머지 조건은 logicalOperators로 연결
+                for (int i = 1; i < columns.size(); i++) {
+                    Predicate nextPredicate = buildPredicate(cb, root, dtlJoin, columns.get(i), operators.get(i), values.get(i));
+                    String logicalOp = (i - 1 < logicalOperators.size()) ? logicalOperators.get(i - 1) : "AND";
+
+                    if ("OR".equalsIgnoreCase(logicalOp)) {
+                        combinedPredicate = cb.or(combinedPredicate, nextPredicate);
+                    } else {
+                        combinedPredicate = cb.and(combinedPredicate, nextPredicate);
+                    }
+                }
+
+                // delStatus != 1 조건 추가, delStatus=1 종결환자
+                Predicate notDeleted = cb.notEqual(root.get("delStatus"), 1);
+                combinedPredicate = cb.and(combinedPredicate, notDeleted);
+
+                return combinedPredicate;
+            }
+        };
+    }
+
+    private Predicate buildPredicate(
+            CriteriaBuilder cb,
+            Root<PatientM> root,
+            Join<PatientM, PatientDTL> dtlJoin,
+            String column,
+            String operator,
+            String value
+    ) {
+        if (column == null || column.isBlank() || value == null || value.isBlank()) {
+            return cb.conjunction(); // 빈 값이면 true
+        }
+
+        Path<Object> path;
+
+        // 기존: path = root.get(column);
+        // 수정: 휴대전화만 dtlJoin에서 가져오기
+        if ("mobilePhone".equals(column)) {
+            path = dtlJoin.get("mobilePhone");
+        } else if ("guardianTel".equals(column)){
+            path = dtlJoin.get("guardianTel");
+        } else {
+            path = root.get(column);
+        }
+
+        return switch (operator) {
+            case "=" -> {
+                if ("birth".equals(column)) {
+                    yield cb.equal(path.as(Integer.class), Integer.valueOf(value));
+                } else if ("createDate".equals(column) || "lastVisitDate".equals(column)) {
+                    yield cb.equal(path.as(LocalDateTime.class), LocalDate.parse(value).atStartOfDay());
+                } else {
+                    yield cb.equal(path, value);
+                }
+            }
+            case "like" -> cb.like(path.as(String.class), "%" + value + "%");
+            case ">" -> {
+                if ("birth".equals(column)) {
+                    yield cb.greaterThan(path.as(Integer.class), Integer.valueOf(value));
+                } else if ("createDate".equals(column) || "lastVisitDate".equals(column)) {
+                    yield cb.greaterThan(path.as(LocalDateTime.class), LocalDate.parse(value).atStartOfDay());
+                } else {
+                    yield cb.greaterThan(path.as(String.class), value);
+                }
+            }
+            case "<" -> {
+                if ("birth".equals(column)) {
+                    yield cb.lessThan(path.as(Integer.class), Integer.valueOf(value));
+                } else if ("createDate".equals(column) || "lastVisitDate".equals(column)) {
+                    yield cb.lessThan(path.as(LocalDateTime.class), LocalDate.parse(value).atStartOfDay());
+                } else {
+                    yield cb.lessThan(path.as(String.class), value);
+                }
+            }
+            default -> cb.conjunction(); // 알 수 없는 연산자는 true 반환
+        };
+    }
+
+    // 환자1명의 Main정보를 가져온다
     public PatientM getPatientM(Integer id){
         Optional<PatientM> patientM = this.patientMRepository.findById(id);
         if (patientM.isPresent()) {
@@ -151,6 +294,72 @@ public class PatientMService {
 
         return m.getId();
     }
+
+    private List<Predicate> buildPredicates(
+            CriteriaBuilder cb,
+            Root<PatientM> root,
+            List<String> columns,
+            List<String> operators,
+            List<String> values
+    ) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        for (int i = 0; i < columns.size(); i++) {
+            String column = columns.get(i);
+            String operator = operators.get(i);
+            String value = values.get(i);
+
+            Path<Object> path = root.get(column);
+            Predicate predicate = null;
+
+            switch (operator) {
+                case "=" -> predicate = buildEqualPredicate(cb, path, column, value);
+                case "like" -> predicate = cb.like(path.as(String.class), "%" + value + "%");
+                case ">" -> predicate = buildComparisonPredicate(cb, path, column, value, true);
+                case "<" -> predicate = buildComparisonPredicate(cb, path, column, value, false);
+            }
+
+            if (predicate != null) predicates.add(predicate);
+        }
+
+        return predicates;
+    }
+
+    private Predicate buildEqualPredicate(CriteriaBuilder cb, Path<Object> path, String column, String value) {
+        try {
+            return switch (column) {
+                case "birth" -> cb.equal(path.as(Integer.class), Integer.valueOf(value));
+                case "createDate", "lastVisitDate" ->
+                        cb.equal(path.as(LocalDateTime.class), LocalDateTime.parse(value));
+                default -> cb.equal(path, value);
+            };
+        } catch (Exception e) {
+            throw new IllegalArgumentException("잘못된 값: " + value, e);
+        }
+    }
+
+    private Predicate buildComparisonPredicate(
+            CriteriaBuilder cb, Path<Object> path, String column, String value, boolean isGreater) {
+        try {
+            if ("birth".equals(column)) {
+                return isGreater
+                        ? cb.greaterThan(path.as(Integer.class), Integer.valueOf(value))
+                        : cb.lessThan(path.as(Integer.class), Integer.valueOf(value));
+            } else if ("createDate".equals(column) || "lastVisitDate".equals(column)) {
+                LocalDateTime dateTimeValue = LocalDateTime.parse(value);
+                return isGreater
+                        ? cb.greaterThan(path.as(LocalDateTime.class), dateTimeValue)
+                        : cb.lessThan(path.as(LocalDateTime.class), dateTimeValue);
+            } else {
+                return isGreater
+                        ? cb.greaterThan(path.as(String.class), value)
+                        : cb.lessThan(path.as(String.class), value);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("잘못된 값: " + value, e);
+        }
+    }
+
     // LocalDate를 Integer YYYYMMDD 형태로 변환
     public Integer localDateToInteger(LocalDate date) {
         if (date == null) {

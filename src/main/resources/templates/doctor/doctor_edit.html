@@ -21,6 +21,7 @@
   <h2>의사 수정 (메인 + 디테일)</h2>
 </div>
 
+<!-- 메인 저장 폼 (단일 폼만 존재) -->
 <form th:action="@{/doctor/edit/{id}(id=${doctorId})}" method="post" th:object="${mForm}">
   <!-- 메인 정보 -->
   <fieldset>
@@ -59,7 +60,6 @@
   <!-- 디테일 정보 -->
   <fieldset th:object="${dForm}">
     <legend>디테일 정보</legend>
-    <!-- 수정 시에도 dForm 내부에 doctorId 유지 -->
     <input type="hidden" th:field="*{doctorId}"/>
 
     <div class="grid">
@@ -93,7 +93,12 @@
       <label>학회인증</label>  <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
 
       <label>병역</label>      <input type="text" th:field="*{militaryService}" maxlength="10"/>
-      <label>국적</label>      <input type="text" th:field="*{nationality}" maxlength="50"/>
+      <input type="hidden" th:field="*{nationality}" />
+      <label>국적</label>
+      <div>
+        <span id="nationalityDisplay" th:text="*{nationality} ?: '-'">-</span>
+        <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+      </div>
 
       <label>장애 여부</label>
       <div style="display:flex; gap:12px; align-items:center;">
@@ -115,6 +120,50 @@
     <button class="btn" type="submit">수정 저장</button>
   </div>
 </form>
+
+<!-- ✅ 국적 자동저장용 폼을 메인 폼 '바깥'에 둔다 -->
+<!-- 숨김 폼 -->
+<form id="nationalityForm"
+      th:action="@{/doctor/{id}/nationality(id=${doctorId})}"
+      method="post"
+      target="hiddenFrame"
+style="display:none;">
+<input type="hidden" name="iso2" id="nationalityCodeInput"/>
+<input type="hidden" name="countryKr" id="nationalityNameInput"/>
+  <!-- CSRF 사용 시 추가
+   <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+   -->
+</form>
+
+<!-- 👇 이 iframe을 바로 밑에 두면 안전 -->
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+
+
+<script>
+  function openCountryPopup() {
+    const w = 780, h = 620;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    // 팝업 URL은 사용 중인 컨트롤러 경로에 맞춰 통일
+    window.open('/global/country_form', 'countryPopup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+
+
+  function setCountry(iso2, countryKr) {
+  const disp = document.getElementById('nationalityDisplay');
+  if (disp) disp.textContent = `${countryKr} (${iso2})`;
+
+  // 숨김 입력에도 값을 채워서 메인 폼 submit 시 유지되도록
+  const hiddenNationality = document.querySelector('input[name="nationality"]');
+  if (hiddenNationality) hiddenNationality.value = `${countryKr} (${iso2})`;
+
+  // (별도 저장을 계속 쓰신다면) iframe 타겟 폼 제출은 그대로
+  document.getElementById('nationalityCodeInput').value = iso2;
+  document.getElementById('nationalityNameInput').value = countryKr;
+  document.getElementById('nationalityForm').submit();
+}
+</script>
 
 </body>
 </html>

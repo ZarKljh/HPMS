@@ -17,7 +17,7 @@ public class License {
 
     @ManyToOne
     @JoinColumn(name = "NURSE_ID", nullable = false)
-    private NurseMain nurseId; //간호사 번호
+    private NurseMain nurse; //간호사 번호
 
     @Column(length = 250, name = "LI")
     private String li; //자격증 이름

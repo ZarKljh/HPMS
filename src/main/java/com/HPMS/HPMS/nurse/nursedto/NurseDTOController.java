@@ -1,5 +1,10 @@
 package com.HPMS.HPMS.nurse.nursedto;
 
+import com.HPMS.HPMS.nurse.license.License;
+import com.HPMS.HPMS.nurse.license.LicenseService;
+import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationService;
+import com.HPMS.HPMS.nurse.nursemain.NurseMain;
+import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -7,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequestMapping("/nurse")
 @Controller
@@ -14,12 +20,29 @@ import java.security.Principal;
 public class NurseDTOController {
 
     private final NurseDTOService nurseDTOService;
+    private final NurseMainService nurseMainService;
+    private final NurseInformationService nurseInformationService;
+    private final LicenseService licenseService;
 
     @GetMapping("/info/{nurseId}")
-    public String getNurse(@PathVariable Integer nurseId, Model model) {
-        NurseDTO nurseDTO = nurseDTOService.getNurseDTO(nurseId);
+    public String showNurse(@PathVariable Integer nurseId, Model model) {
+        NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
+        NurseInformationDTO infoDTO = nurseInformationService.getInfoByNurse(nurseMain);
+
+        NurseDTO nurseDTO = new NurseDTO(
+                new NurseMainDTO(nurseMain),
+                infoDTO
+        );
+
+        List<License> licenses = licenseService.getByNurse(nurseMain);
+        List<NurseLicenseDTO> licenseDTOs = licenses.stream()
+                .map(NurseLicenseDTO::new)
+                .toList();
+
+        nurseDTO.setLicenseList(licenseDTOs);
         model.addAttribute("nurseDTO", nurseDTO);
-        return "nurse/nurse_information"; // thymeleaf 뷰 이름
+
+        return "nurse/nurse_information"; // 또는 "nurse/detail" 원하는 뷰로
     }
 
     @GetMapping("/modify/{id}")
