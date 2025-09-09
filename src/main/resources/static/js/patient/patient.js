@@ -8,23 +8,41 @@ $('.navbar-toggle').click(function() {
 	}
 });
 
+     function openRoadPopup() {
+          const w = 900, h = 640;
+          const left = (screen.width - w)/2, top = (screen.height - h)/2;
+          window.open('/global/popup', 'roadPopup',
+            `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+        }
+
+        // 도로명 팝업에서 호출: 기본주소만 채움
+        function setRoad(addrStr, roadCode, emdSeqNo) {
+          document.getElementById('addr1').value = addrStr || '';
+          // 필요하면 roadCode/emdSeqNo 숨김 필드 추가 후 주입 가능
+        }
+
+
+
+
 
     function openCountryPopup() {
-          const w = 780, h = 620;
-          const left = (screen.width - w) / 2;
-          const top = (screen.height - h) / 2;
-          // 팝업 URL은 사용 중인 컨트롤러 경로에 맞춰 통일
-          window.open('/global/country_form', 'countryPopup',
-            `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
-    }
+        const w = 780, h = 620;
+        const left = (screen.width - w) / 2;
+        const top = (screen.height - h) / 2;
+        window.open('/global/country_form', 'countryPopup',
+          `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+      }
 
-        // 팝업에서 호출
-    function setCountry(iso2, countryKr) {
-      const disp = document.getElementById('nationalityDisplay');
-      const input = document.getElementById('nationalityInput');
-      if (disp) disp.textContent = `${countryKr} (${iso2})`;
-      if (input) input.value = countryKr; // 또는 iso2 저장을 원하면 input.value = iso2;
-    }
+      // 팝업에서 호출 (자동 저장 금지, 값만 세팅)
+      function setCountry(iso2, countryKr) {
+          // 선택된 국가를 표시하는 요소 (선택사항)
+          const disp = document.getElementById('nationality');
+          if (disp) disp.textContent = `${countryKr} (${iso2})`;
+
+          // hidden input 값 업데이트
+          const hidden = document.getElementById('nationality');
+          if (hidden) hidden.value = `${countryKr} (${iso2})`;
+      }
 
   // 🔹 검색폼 토글
     function toggleSearchForm() {

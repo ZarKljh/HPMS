@@ -91,13 +91,15 @@
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0" style="width: 100px;">실거주지</label>
             <input type="text" class="form-control mb-2" th:field="*{homePcd}" placeholder="우편번호">
-            <input type="text" class="form-control mb-2" th:field="*{homeDefAdd}" placeholder="기본주소">
+            <input type="text" class="form-control mb-2" id="addr1" th:field="*{homeDefAdd}" placeholder="기본주소">
+            <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
             <input type="text" class="form-control" th:field="*{homeDetAdd}" placeholder="상세주소">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0" style="width: 100px;">등록주소</label>
             <input type="text" class="form-control mb-2" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
             <input type="text" class="form-control mb-2" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
+            <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
             <input type="text" class="form-control" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
         </div>
 
@@ -109,8 +111,8 @@
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0" style="width: 100px;">국적</label>
-            <input type="hidden" class="form-control" th:field="*{natn}" id="nationalityInput">
-            <button type="button" class="btn btn-secondry" onclick="openCountryPopup()">국적검색</button>
+            <input type="text" class="form-control" th:field="*{natn}" id="nationality">
+            <button type="button" class="btn btn-primary"  onclick="openCountryPopup()">국적검색</button>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0" style="width: 100px;">특이사항</label>
