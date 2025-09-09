@@ -7,3 +7,5 @@ $('.navbar-toggle').click(function() {
 		$('.menubox_2').addClass('active');
 	}
 });
+
+

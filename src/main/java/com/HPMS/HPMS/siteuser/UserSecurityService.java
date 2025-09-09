@@ -30,8 +30,14 @@ public class UserSecurityService implements UserDetailsService {
         SiteUser siteUser = _siteUser.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("S".equals(siteUser.getRole())) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        if ("ROLE_ADMIN".equals(siteUser.getRole())) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+        } else if ("ROLE_SYSTEM".equals(siteUser.getRole())) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.SYSTEM.getValue()));
+        } else if ("ROLE_DOCTOR".equals(siteUser.getRole())) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.DOCTOR.getValue()));
+        } else if ("ROLE_NURSE".equals(siteUser.getRole())) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.NURSE.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
