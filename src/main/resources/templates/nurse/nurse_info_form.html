@@ -14,25 +14,25 @@
       <h4 class="border-bottom py-2 ps-3">연락처</h4>
       <div class="input-list">
         <label>전화번호:</label>
-        <input type="text" th:field="*{tel}"/>
+        <input type="text" th:field="*{tel}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
-        <label>비상연락:</label>
-        <input type="text" th:field="*{emgcCntc}"/>
+        <label>비상연락처:</label>
+        <input type="text" th:field="*{emgcCntc}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>성명:</label>
-        <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름"/>
+        <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-        <input class="name" type="text" th:field="*{emgcLName}" placeholder="성"/>
+        <input class="name" type="text" th:field="*{emgcLName}" placeholder="성" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
       </div>
       <div class="input-list">
         <label>관계:</label>
-        <input type="text" th:field="*{emgcRel}"/>
+        <input type="text" th:field="*{emgcRel}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
@@ -43,39 +43,39 @@
       <h4 class="border-bottom py-2 ps-3">주소 / 이메일</h4>
       <div class="input-list">
         <label>이메일:</label>
-        <input type="email" th:field="*{email}"/>
+        <input type="email" th:field="*{email}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>우편번호:</label>
-        <input type="number" th:field="*{pcd}"/>
+        <input type="number" th:field="*{pcd}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>기본주소:</label>
-        <input type="text" th:field="*{defAdd}"/>
+        <input type="text" th:field="*{defAdd}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>상세주소:</label>
-        <input type="text" th:field="*{detAdd}"/>
+        <input type="text" th:field="*{detAdd}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
 
       <h4 class="border-bottom py-2 ps-3">자격 / 학력</h4>
       <div class="input-list">
         <label>간호사 자격증 번호:</label>
-        <input type="text" th:field="*{rnNo}"/>
+        <input type="text" th:field="*{rnNo}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>최종학력:</label>
-        <input type="text" th:field="*{edbc}"/>
+        <input type="text" th:field="*{edbc}" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>졸업날짜:</label>
-        <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD"/>
+        <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
@@ -107,7 +107,7 @@
       <h4 class="border-bottom py-2 ps-3">사진 / 비고</h4>
       <div class="input-list">
         <label>사진 URL:</label>
-        <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg"/>
+        <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">

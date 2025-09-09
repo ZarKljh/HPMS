@@ -24,11 +24,14 @@
     </div>
     <div class="input-list">
       <label>성별:</label>
-      <select th:field="*{gender}" required>
-        <option value="">선택</option>
-        <option value="M">남</option>
-        <option value="F">여</option>
-      </select>
+      <div class="form-check">
+        <input type="radio" class="form-check-input" id="validationFormCheck2" value="M" name="radio-stacked" required>
+        <label class="form-check-label" for="validationFormCheck2">남</label>
+      </div>
+      <div class="form-check mb-3">
+        <input type="radio" class="form-check-input" id="validationFormCheck3" value="F" name="radio-stacked" required>
+        <label class="form-check-label" for="validationFormCheck3">여</label>
+      </div>
       <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
     </div>
     <div class="input-list">
