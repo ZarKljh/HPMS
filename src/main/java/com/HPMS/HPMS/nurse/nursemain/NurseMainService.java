@@ -50,9 +50,9 @@ public class NurseMainService {
         return nurseMainRepository.save(nurseMain);
     }
 
-    public List<NurseMain> getNurseMainByName(String firstName, String lastName){
+    public List<NurseMain> getNurseMainByName(String firstName, String lastName) {
         return this.nurseMainRepository.findByFirstNameAndLastName(firstName, lastName);
-
+    }
     private Specification<NurseMain> search(String kw) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;
