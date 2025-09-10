@@ -6,6 +6,8 @@
   <form th:action="@{/nurse/modify/{id}(id=${nurseDTO.nurseMain.id})}"
         th:object="${nurseDTO}" method="post">
 
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
     <h1 class="border-bottom py-2">간호사 정보 수정</h1>
 
     <!-- 사진 -->
@@ -59,8 +61,7 @@
     </div>
 
     <!-- NurseInformation 정보 -->
-    <div class="nurseinformation card my-3 p-3"
-         th:if="*{nurseInformation != null}">
+    <div class="nurseinformation card my-3 p-3">
       <h3>상세 정보</h3>
 
       <label>서브 성명 : </label>
@@ -131,10 +132,12 @@
       <label>비고 : </label>
       <textarea th:field="*{nurseInformation.note}" maxlength="250" class="form-control"></textarea>
     </div>
+
     <div class="c_c_btn_box">
       <button type="submit" class="c-btn">저장</button>
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}"
          class="cancel-btn">취소</a>
     </div>
   </form>
+  <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
 </div>

@@ -1,15 +1,15 @@
 package com.HPMS.HPMS.nurse.nursedto;
 
+import com.HPMS.HPMS.nurse.nursehistory.NurseHistoryService;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationRepository;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -18,6 +18,7 @@ public class NurseDTOService {
 
     private final NurseMainRepository nurseMainRepository;
     private final NurseInformationRepository nurseInformationRepository;
+    private final NurseHistoryService nurseHistoryService;
 
     public NurseDTO getNurseDTO(Integer nurseId) {
         Optional<NurseMain> nmOpt = nurseMainRepository.findById(nurseId);
@@ -73,72 +74,73 @@ public class NurseDTOService {
         return new NurseDTO(mainDTO, infoDTO);
     }
 
-    // Integer 19890315 -> "1989-03-15"
-    private String formatDate(LocalDate date) {
-        if (date == null) return "null";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return date.format(formatter);
-    }
-
+    @Transactional
     public void updateNurse(Integer nurseId, NurseDTO dto) {
         NurseMain nm = nurseMainRepository.findById(nurseId)
                 .orElseThrow(() -> new RuntimeException("간호사 기본 정보 없음"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-
         // NurseMain 수정
         NurseMainDTO m = dto.getNurseMain();
-        nm.setFirstName(m.getFirstName());
-        nm.setMiddleName(m.getMiddleName());
-        nm.setLastName(m.getLastName());
-        nm.setDept(m.getDept());
-        nm.setRank(m.getRank());
-        nm.setGender(m.getGender());
-        nm.setDateOfBirth(m.getDateOfBirth());
-        nm.setHireDate(m.getHireDate());
-        nm.setSts(m.getSts());
-        nm.setWt(m.getWt());
-        nm.setModifier(m.getModifier());
-        nm.setModifyDate(LocalDateTime.now());
-        nurseMainRepository.save(nm);
+        if (m != null) {
+            nm.setFirstName(m.getFirstName() != null ? m.getFirstName() : nm.getFirstName());
+            nm.setMiddleName(m.getMiddleName() != null ? m.getMiddleName() : nm.getMiddleName());
+            nm.setLastName(m.getLastName() != null ? m.getLastName() : nm.getLastName());
+            nm.setDept(m.getDept() != null ? m.getDept() : nm.getDept());
+            nm.setRank(m.getRank() != null ? m.getRank() : nm.getRank());
+            nm.setGender(m.getGender() != null ? m.getGender() : nm.getGender());
+            nm.setDateOfBirth(m.getDateOfBirth() != null ? m.getDateOfBirth() : nm.getDateOfBirth());
+            nm.setHireDate(m.getHireDate() != null ? m.getHireDate() : nm.getHireDate());
+            nm.setSts(m.getSts() != null ? m.getSts() : nm.getSts());
+            nm.setWt(m.getWt() != null ? m.getWt() : nm.getWt());
+            nm.setModifier(m.getModifier() != null ? m.getModifier() : nm.getModifier());
+
+            nm.setModifyDate(LocalDateTime.now());
+            nurseMainRepository.save(nm);
+        }
 
         // NurseInformation 수정
-        NurseInformation ni = nurseInformationRepository.findByNurseMainId(nurseId)
-                .orElse(new NurseInformation()); // 없으면 새로 생성
         NurseInformationDTO i = dto.getNurseInformation();
         if (i != null) {
-            ni.setNurseMain(nm);
-            ni.setFirstName(i.getFirstName());
-            ni.setLastName(i.getLastName());
-            ni.setMiddleName(i.getMiddleName());
-            ni.setTel(i.getTel());
-            ni.setEmgcCntc(i.getEmgcCntc());
-            ni.setEmgcFName(i.getEmgcFName());
-            ni.setEmgcLName(i.getEmgcLName());
-            ni.setEmgcMName(i.getEmgcMName());
-            ni.setEmgcRel(i.getEmgcRel());
-            ni.setEmgcNote(i.getEmgcNote());
-            ni.setEmail(i.getEmail());
-            ni.setPcd(i.getPcd());
-            ni.setDefAdd(i.getDefAdd());
-            ni.setDetAdd(i.getDetAdd());
-            ni.setRnNo(i.getRnNo());
-            ni.setEdbc(i.getEdbc());
-            ni.setGradDate(i.getGradDate());
-            ni.setFl(i.getFl());
-            ni.setMs(i.getMs());
-            ni.setNatn(i.getNatn());
-            ni.setDss(i.getDss());
-            ni.setCarr(i.getCarr());
-            ni.setPicture(i.getPicture());
-            ni.setNote(i.getNote());
+            NurseInformation ni = nurseInformationRepository.findByNurseMainId(nurseId)
+                    .orElseGet(() -> {
+                        NurseInformation newInfo = new NurseInformation();
+                        newInfo.setNurseMain(nm);
+                        nm.setNurseInformation(newInfo);
+                        return newInfo;
+                    });
+
+            // 기존 값 유지하면서 DTO 값이 있으면 덮어쓰기
+            ni.setFirstName(i.getFirstName() != null ? i.getFirstName() : ni.getFirstName());
+            ni.setLastName(i.getLastName() != null ? i.getLastName() : ni.getLastName());
+            ni.setMiddleName(i.getMiddleName() != null ? i.getMiddleName() : ni.getMiddleName());
+            ni.setTel(i.getTel() != null ? i.getTel() : ni.getTel());
+            ni.setEmgcCntc(i.getEmgcCntc() != null ? i.getEmgcCntc() : ni.getEmgcCntc());
+            ni.setEmgcFName(i.getEmgcFName() != null ? i.getEmgcFName() : ni.getEmgcFName());
+            ni.setEmgcLName(i.getEmgcLName() != null ? i.getEmgcLName() : ni.getEmgcLName());
+            ni.setEmgcMName(i.getEmgcMName() != null ? i.getEmgcMName() : ni.getEmgcMName());
+            ni.setEmgcRel(i.getEmgcRel() != null ? i.getEmgcRel() : ni.getEmgcRel());
+            ni.setEmgcNote(i.getEmgcNote() != null ? i.getEmgcNote() : ni.getEmgcNote());
+            ni.setEmail(i.getEmail() != null ? i.getEmail() : ni.getEmail());
+            ni.setPcd(i.getPcd() != null ? i.getPcd() : ni.getPcd());
+            ni.setDefAdd(i.getDefAdd() != null ? i.getDefAdd() : ni.getDefAdd());
+            ni.setDetAdd(i.getDetAdd() != null ? i.getDetAdd() : ni.getDetAdd());
+            ni.setRnNo(i.getRnNo() != null ? i.getRnNo() : ni.getRnNo());
+            ni.setEdbc(i.getEdbc() != null ? i.getEdbc() : ni.getEdbc());
+            ni.setGradDate(i.getGradDate() != null ? i.getGradDate() : ni.getGradDate());
+            ni.setFl(i.getFl() != null ? i.getFl() : ni.getFl());
+            ni.setMs(i.getMs() != null ? i.getMs() : ni.getMs());
+            ni.setNatn(i.getNatn() != null ? i.getNatn() : ni.getNatn());
+            ni.setDss(i.getDss() != null ? i.getDss() : ni.getDss());
+            ni.setCarr(i.getCarr() != null ? i.getCarr() : ni.getCarr());
+            ni.setPicture(i.getPicture() != null ? i.getPicture() : ni.getPicture());
+            ni.setNote(i.getNote() != null ? i.getNote() : ni.getNote());
+
             nurseInformationRepository.save(ni);
         }
-    }
 
-    private Integer parseDate(String str) {
-        if (str == null || str.isEmpty()) return null;
-        return Integer.parseInt(str.replace("-", "")); // "1989-03-15" → 19890315
+        // 🔥 히스토리 저장 (수정 완료 후)
+        String modifier = m != null ? m.getModifier() : "system";
+        nurseHistoryService.saveNurseHistory(nm, i, modifier);
     }
 
     public void delete(NurseDTO nurseDTO) {
