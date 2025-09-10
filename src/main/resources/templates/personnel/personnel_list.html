@@ -1,5 +1,7 @@
 <html lang="kr" layout:decorate="~{personnel/personnel_layout}">
 <div layout:fragment="content" class="container">
+
+
     <h2 class="listbox">Reference Personnel List</h2>
     <form method="get" action="/user/list">
         <div class="mb-3">
@@ -19,36 +21,30 @@
         <form name="selectedPersonnel" th:action="@{/delete/selectedPersonnel}" method="post">
             <input type="hidden" name="page" th:value="${page}" />
             <input type="hidden" name="size" th:value="${size}" />
-        <table class="table table-hover card" style="border:1px;">
+<!--        <table class="table table-hover card" style="border:1px;">
             <thead class="table-info" style="padding:0px;margin:0px;border:1px;">
-                <tr class=" text-center" style="border:1px;">
-                    <th style="width:20px"><input type="checkbox" name="checkedAllIds" value="t" /></th>
-                    <th style="border:1px solid red;">ID</th>
-                    <th>국적</th>
+            <tr class=" text-center" style="border:1px;">-->
+            <table class="table table-hover card chang-table-layout"><!-- 0909-->
+                <thead class="table-light chang-nurse-th">
+                <tr class="list text-center chang-nurse-th">
+                    <th class="chang-checkbox-column"><input type="checkbox" name="checkedAllIds" value="t" /></th>
+                    <th>ID</th>
+                    <th class="mobile_hidden">국적</th>
                     <th>성명</th>
-                    <th>중간이름</th>
+                    <th class="mobile_hidden">중간이름</th>
                     <th>이메일</th>
                     <th>휴대전화</th>
-                    <th>등록자</th>
-                    <th>등록일시</th>
+                    <th class="mobile_hidden">등록자</th>
+                    <th class="mobile_hidden">등록일시</th>
                 </tr>
             </thead>
             <tbody class="text-center">
             <tr th:each="personnel : ${referencePersonnels}">
-                <td>
-                    <!--
-                        <input type="checkbox" th:field="${personnel.id}"/>
-                        th:field는 폼 필드와 모델 객체의 바인딩을 위해 사용되는 속성입니다.
-                        즉, <input>이 form backing bean의 필드와 연결되어야 할 때 사용하는 거예요.
-                        그런데 지금은 단순히 체크박스를 통해 여러 항목을 선택하고 삭제하는 기능을 구현하려는 것이므로,
-                        th:field는 적절하지 않습니다.
-                    -->
-                    <input type="checkbox" th:name="checkedIds" th:value="${personnel.id}" />
-                </td>
-                <td>
+                <td class="chang-checkbox-column"><input type="checkbox" th:name="checkedIds" th:value="${personnel.id}" /></td>
+                <td><div th:text="${personnel.currentNum}">
                     <a th:if="${personnel.id != null}"
                        th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 0}&page=${page != null ? page : 0}|"
-                       th:text="${personnel.id}">
+                       th:text="${personnel.id}"></div>
                     </a>
                 </td>
                 <td th:text="${personnel.nationality}"></td>

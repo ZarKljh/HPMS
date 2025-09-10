@@ -47,17 +47,6 @@ public class ReferencePersonnelM {
     @OneToOne(mappedBy = "personnel", cascade = CascadeType.ALL, orphanRemoval = true)
     private ReferencePersonnelDtl detail;
 
-
-    /*
-    ReferencePersonnelM m = new ReferencePersonnelM();
-    ReferencePersonnelDtl dtl = new ReferencePersonnelDtl();
-
-    dtl.setPersonnel(m);     // FK 설정
-    m.setDetail(dtl);        // 양방향 연결
-
-    entityManager.persist(m);
-    */
-
     public String getFormattedCellPhone() {
         if (cellPhone == null || cellPhone.length() < 10) return "관련정보없음";
 

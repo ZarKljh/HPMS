@@ -1,14 +1,17 @@
 package com.HPMS.HPMS.reference_personnel;
 
+import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.ReferencePersonnelDTOService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_dtl_dto.ReferencePersonnelDtlDTO;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_m_dto.ReferencePersonnelMDTO;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.ReferencePersonnelDTO;
+import com.HPMS.HPMS.reference_personnel.reference_personnel_form.ReferencePersonnelDTOForm;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelM;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,6 +20,7 @@ import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -205,7 +209,14 @@ public class ReferencePersonnelController {
     */
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_update")  //update 화면 채우기
-    public String referencePersonnel(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer size, Model model) {
+    // public String patientCreate(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+    // BindingResult bindingResult){
+    public String referencePersonnel(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+                                     BindingResult bindingResult,
+                                     @RequestParam Integer id,
+                                     @RequestParam Integer page,
+                                     @RequestParam Integer size,
+                                     Model model) {
         ReferencePersonnelDTO personnel = this.referencePersonnelDTOService.getReferencePersonnelDTO(id);
         model.addAttribute("personnel",personnel);
         model.addAttribute("page", page);
@@ -215,7 +226,9 @@ public class ReferencePersonnelController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/update/personnel")    // update 화면에서 값을 받아 저장한 후 상세보기 화면으로 이동하기
-    public String updatePersonnel(@ModelAttribute ReferencePersonnelDTO dto,
+    public String updatePersonnel(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+                                  BindingResult bindingResult,
+                                  @ModelAttribute ReferencePersonnelDTO dto,
                                   @RequestParam Integer page,
                                   @RequestParam Integer size,
                                   RedirectAttributes redirectAttributes,
