@@ -1,4 +1,7 @@
 // 노멀라이징
+body {
+    padding-top: 60px;
+}
 body, ul, li {
 	margin: 0;
 	padding: 0;
@@ -8,8 +11,18 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+#search_kw {
+    font-size: 10px;
+}
 
 // 네비게이션
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
 .navbar-toggle {
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -28,7 +41,7 @@ a {
 	top: 101%;
 	width: 200px;
 	height: 100vh;
-	z-index: 1;
+	z-index: 999;
 	border-left: 1px solid #dee2e6;
 	background-color: #f8f9fa;
 	transition: right 0.3s;
@@ -77,10 +90,9 @@ tr {
 .list {
 	justify-content: space-around;
 	text-align: center;
-	line-height: 60px;
+	line-height: 40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 70px;
 }
 th {
 	width: 100%;
@@ -96,13 +108,10 @@ td {
 	flex-grow: 1;
 	font-size: 12px;
 }
-.page {
-	position: relative;
-}
-div > .btn {
+.create_btn {
 	position: absolute;
-	bottom: 0;
-	right: 40px;
+	top: 90%;
+	right: 15%;
 	text-wrap: nowrap;
 }
 @media screen and (max-width: 993px) {
@@ -112,10 +121,9 @@ div > .btn {
 	}
 }
 @media screen and (max-width: 412px) {
-    div > .btn {
-        top: 100%;
-        bottom: auto;
-        right: 0;
+    .create_btn {
+        top: 90%;
+        right: 5px;
     }
 }
 
@@ -162,8 +170,8 @@ div > .btn {
 .basic_info {
 	position: absolute;
 	top: 220px;
-	left: 330px;
-	width: 965px;
+	left: 350px;
+	width: 945px;
 	height: 200px;
 }
 .info, .info_1 {
@@ -175,41 +183,42 @@ div > .btn {
 .info_1 {
 	display: none;
 }
-
+strong {
+    display: inline-block;
+    width: 100px;
+}
 @media screen and (max-width: 1400px) {
 	.basic_info {
-		width: 780px;
+		width: 760px;
 	}
 }
 
 @media screen and (max-width: 1200px) {
 	.basic_info {
-		width: 600px;
+		width: 580px;
 	}
 }
 
 @media screen and (max-width: 993px) {
-	.basic_info {
-		width: 350px;
-	}
-}
-
-@media screen and (max-width: 767px) {
 	.nursemain {
-		display: flex;
-		justify-content: center;
-	}
-	.basic_info {
-		display: none;
-	}
-	.info_1 {
-		display: block;
-	}
-	.image {
-    	margin-left: auto;
-    	margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
+    .basic_info {
+        display: none;
+    }
+    .info_1 {
+        display: block;
+    }
+    .image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name_list input {
+        width: 100px;
     }
 }
+
 
 // 수정 페이지
 .c_c_btn_box {
@@ -244,6 +253,9 @@ div > .btn {
 label {
 	width: 100px;
 }
+input {
+    border: 1px solid #dee2e6;
+}
 .input-list {
     display: flex;
 	padding: 10px;
@@ -254,6 +266,28 @@ label {
 }
 .name {
     margin-bottom: 5px;
+}
+@media (min-width: 768px) {
+    .middle_name {
+        display: block;
+    }
+    .save_btn_1 {
+        display: block;
+    }
+    .save_btn_2 {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .middle_name {
+        display: none;
+    }
+    .save_btn_1 {
+        display: none;
+    }
+    .save_btn_2 {
+        display: block;
+    }
 }
 .next_btn_box {
     display: flex;
@@ -304,4 +338,45 @@ label {
 .hover-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+// 상세정보 등록 페이지
+.save_btn_1 {
+    display: block;
+}
+
+//히스토리 상세 페이지
+.history-card {
+    margin-bottom: 1.5rem;
+}
+.history-header {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+.history-meta div {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+.section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.info-label {
+    font-w eight: 500;
+}
+.info-value.empty {
+    color: #adb5bd;
+}
+.picture-placeholder {
+    width: 120px;
+    height: 120px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #6c757d;
+    margin-bottom: 1rem;
 }

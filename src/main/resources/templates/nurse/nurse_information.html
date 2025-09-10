@@ -10,7 +10,7 @@
             <div class="m-d-btn">
                 <div class="m-d-btn_box">
                     <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn">삭제</a>
+                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
                 </div>
             </div>
 
@@ -21,46 +21,46 @@
             </div>
 
             <div class="basic_info">
-                <p class="info">성명 <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
-                <p class="info">부서 <span th:text="${nurseDTO.nurseMain.dept}"></span></p>
-                <p class="info">직급 <span th:text="${nurseDTO.nurseMain.rank}"></span></p>
+                <p class="info"><strong>성명:</strong><span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
+                <p class="info"><strong>부서:</strong><span th:text="${nurseDTO.nurseMain.dept}"></span></p>
+                <p class="info"><strong>직급:</strong><span th:text="${nurseDTO.nurseMain.rank}"></span></p>
             </div>
 
-            <p class="info_1">성명 <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
-            <p class="info_1">부서 <span th:text="${nurseDTO.nurseMain.dept}"></span></p>
-            <p class="info_1">직급 <span th:text="${nurseDTO.nurseMain.rank}"></span></p>
-            <p class="info">성별 <span th:text="${nurseDTO.nurseMain.gender}"></span></p>
-            <p class="info">생년월일 <span th:text="${nurseDTO.nurseMain.dateOfBirth}"></span></p>
-            <p class="info">입사일 <span th:text="${nurseDTO.nurseMain.hireDate}"></span></p>
-            <p class="info">상태 <span th:text="${nurseDTO.nurseMain.sts}"></span></p>
-            <p class="info">근무형태 <span th:text="${nurseDTO.nurseMain.wt}"></span></p>
-            <p class="info">작성자 <span th:text="${nurseDTO.nurseMain.writer}"></span></p>
-            <p class="info">작성시간 <span th:text="${nurseDTO.nurseMain.createDate}"></span></p>
-            <p class="info">수정자 <span th:text="${nurseDTO.nurseMain.modifier}"></span></p>
-            <p class="info">수정시간 <span th:text="${nurseDTO.nurseMain.modifyDate}"></span></p>
+            <p class="info_1"><strong>성명:</strong><span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
+            <p class="info_1"><strong>부서:</strong><span th:text="${nurseDTO.nurseMain.dept}"></span></p>
+            <p class="info_1"><strong>직급:</strong><span th:text="${nurseDTO.nurseMain.rank}"></span></p>
+            <p class="info"><strong>성별:</strong><span th:text="${nurseDTO.nurseMain.gender}"></span></p>
+            <p class="info"><strong>생년월일:</strong><span th:text="${nurseDTO.nurseMain.dateOfBirth}"></span></p>
+            <p class="info"><strong>입사일:</strong><span th:text="${nurseDTO.nurseMain.hireDate}"></span></p>
+            <p class="info"><strong>상태:</strong><span th:text="${nurseDTO.nurseMain.sts}"></span></p>
+            <p class="info"><strong>근무형태:</strong><span th:text="${nurseDTO.nurseMain.wt}"></span></p>
+            <p class="info"><strong>작성자:</strong><span th:text="${nurseDTO.nurseMain.writer}"></span></p>
+            <p class="info"><strong>작성시간:</strong><span th:text="${nurseDTO.nurseMain.createDate}"></span></p>
+            <p class="info"><strong>수정자:</strong><span th:text="${nurseDTO.nurseMain.modifier}"></span></p>
+            <p class="info"><strong>수정시간:</strong><span th:text="${nurseDTO.nurseMain.modifyDate}"></span></p>
         </div>
 
         <!-- Information 정보 -->
         <div class="information card my-3" th:if="${nurseDTO.nurseInformation != null}">
-            <p class="info">서브 이름 <span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
-            <p class="info">전화번호 <span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
-            <p class="info">비상연락처 <span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>
-            <p class="info">비상연락처주 성함 <span th:text="|${nurseDTO.nurseInformation.emgcFName} ${nurseDTO.nurseInformation.emgcLName} ${nurseDTO.nurseInformation.emgcMName}|"></span></p>
-            <p class="info">비상연락처 관계 <span th:text="${nurseDTO.nurseInformation.emgcRel}"></span></p>
-            <p class="info">비상연락처 비고 <span th:text="${nurseDTO.nurseInformation.emgcNote}"></span></p>
-            <p class="info">이메일 <span th:text="${nurseDTO.nurseInformation.email}"></span></p>
-            <p class="info">우편번호 <span th:text="${nurseDTO.nurseInformation.pcd}"></span></p>
-            <p class="info">기본주소 <span th:text="${nurseDTO.nurseInformation.defAdd}"></span></p>
-            <p class="info">상세주소 <span th:text="${nurseDTO.nurseInformation.detAdd}"></span></p>
-            <p class="info">간호사 자격증 번호 <span th:text="${nurseDTO.nurseInformation.rnNo}"></span></p>
-            <p class="info">최종학력 <span th:text="${nurseDTO.nurseInformation.edbc}"></span></p>
-            <p class="info">졸업날짜 <span th:text="${nurseDTO.nurseInformation.gradDate}"></span></p>
-            <p class="info">외국어 <span th:text="${nurseDTO.nurseInformation.fl}"></span></p>
-            <p class="info">병역 <span th:text="${nurseDTO.nurseInformation.ms}"></span></p>
-            <p class="info">국적 <span th:text="${nurseDTO.nurseInformation.natn}"></span></p>
-            <p class="info">장애여부 <span th:text="${nurseDTO.nurseInformation.dss}"></span></p>
-            <p class="info">경력 <span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
-            <p class="info">비고 <span th:text="${nurseDTO.nurseInformation.note}"></span></p>
+            <p class="info"><strong>서브 이름:</strong><span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
+            <p class="info"><strong>전화번호:</strong><span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
+            <p class="info"><strong>비상연락처:</strong><span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>
+            <p class="info"><strong>성함:</strong><span th:text="|${nurseDTO.nurseInformation.emgcFName} ${nurseDTO.nurseInformation.emgcLName} ${nurseDTO.nurseInformation.emgcMName}|"></span></p>
+            <p class="info"><strong>관계:</strong><span th:text="${nurseDTO.nurseInformation.emgcRel}"></span></p>
+            <p class="info"><strong>비고:</strong><span th:text="${nurseDTO.nurseInformation.emgcNote}"></span></p>
+            <p class="info"><strong>이메일:</strong><span th:text="${nurseDTO.nurseInformation.email}"></span></p>
+            <p class="info"><strong>우편번호:</strong><span th:text="${nurseDTO.nurseInformation.pcd}"></span></p>
+            <p class="info"><strong>기본주소:</strong><span th:text="${nurseDTO.nurseInformation.defAdd}"></span></p>
+            <p class="info"><strong>상세주소:</strong><span th:text="${nurseDTO.nurseInformation.detAdd}"></span></p>
+            <p class="info"><strong>간호사 자격증 번호:</strong><span th:text="${nurseDTO.nurseInformation.rnNo}"></span></p>
+            <p class="info"><strong>최종학력:</strong><span th:text="${nurseDTO.nurseInformation.edbc}"></span></p>
+            <p class="info"><strong>졸업날짜:</strong><span th:text="${nurseDTO.nurseInformation.gradDate}"></span></p>
+            <p class="info"><strong>외국어:</strong><span th:text="${nurseDTO.nurseInformation.fl}"></span></p>
+            <p class="info"><strong>병역:</strong><span th:text="${nurseDTO.nurseInformation.ms}"></span></p>
+            <p class="info"><strong>국적:</strong><span th:text="${nurseDTO.nurseInformation.natn}"></span></p>
+            <p class="info"><strong>장애여부:</strong><span th:text="${nurseDTO.nurseInformation.dss}"></span></p>
+            <p class="info"><strong>경력:</strong><span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
+            <p class="info"><strong>비고:</strong><span th:text="${nurseDTO.nurseInformation.note}"></span></p>
         </div>
     </form>
     <!-- License 정보 -->
@@ -80,11 +80,11 @@
                 <div class="w-100 col-md-4 mb-3 mt-3" th:id="'license-' + ${license.id}">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body ms-3 p-3">
-                            <p><strong>자격증:</strong> <span th:text="${license.li}"></span></p>
-                            <p><strong>번호:</strong> <span th:text="${license.licenseNo}"></span></p>
-                            <p><strong>발급일:</strong> <span th:text="${license.issueDate}"></span></p>
-                            <p><strong>만료일:</strong> <span th:text="${license.expiryDate}"></span></p>
-                            <p><strong>비고:</strong> <span th:text="${license.note}"></span></p>
+                            <p><strong>자격증:</strong><span th:text="${license.li}"></span></p>
+                            <p><strong>번호:</strong><span th:text="${license.licenseNo}"></span></p>
+                            <p><strong>발급일:</strong><span th:text="${license.issueDate}"></span></p>
+                            <p><strong>만료일:</strong><span th:text="${license.expiryDate}"></span></p>
+                            <p><strong>비고:</strong><span th:text="${license.note}"></span></p>
                             <a th:href="@{|/nurse/license/delete/${license.id}/${nurseDTO.nurseMain.id}|}" class="btn btn-danger btn-sm mb-3">삭제</a>
                         </div>
                     </div>

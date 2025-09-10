@@ -4,100 +4,114 @@
 
     <form class="card my-3" th:action="@{|/nurse/create/info|}" th:object="${nurseInformation}" method="post" enctype="multipart/form-data">
 
-      <div class="input-list">
+      <div class="input-list name_list">
         <label>서브 성명:</label>
-        <input class="name" type="text" th:field="*{firstName}" placeholder="이름"/>
-        <input class="name" type="text" th:field="*{lastName}" placeholder="성"/>
-        <input class="name" type="text" th:field="*{middleName}" placeholder="중간이름"/>
+        <input class="name" type="text" th:field="*{firstName}" maxlength="50" placeholder="이름"/>
+        <input class="name" type="text" th:field="*{lastName}" maxlength="50" placeholder="성"/>
+        <input class="name middle_name" type="text" th:field="*{middleName}" maxlength="50" placeholder="중간이름"/>
       </div>
 
       <h4 class="border-bottom py-2 ps-3">연락처</h4>
       <div class="input-list">
         <label>전화번호:</label>
-        <input type="text" th:field="*{tel}" required />
+        <input type="text" th:field="*{tel}" maxlength="25" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>비상연락처:</label>
-        <input type="text" th:field="*{emgcCntc}" required />
+        <input type="text" th:field="*{emgcCntc}" maxlength="25" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
-      <div class="input-list">
+      <div class="input-list name_list">
         <label>성명:</label>
-        <input class="name" type="text" th:field="*{emgcFName}" placeholder="이름" required />
+        <input class="name" type="text" th:field="*{emgcFName}" maxlength="50" placeholder="이름" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-        <input class="name" type="text" th:field="*{emgcLName}" placeholder="성" required />
+        <input class="name" type="text" th:field="*{emgcLName}" maxlength="50" placeholder="성" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-        <input class="name" type="text" th:field="*{emgcMName}" placeholder="중간이름"/>
+        <input class="name middle_name" type="text" th:field="*{emgcMName}" maxlength="50" placeholder="중간이름"/>
       </div>
       <div class="input-list">
         <label>관계:</label>
-        <input type="text" th:field="*{emgcRel}" required />
+        <input type="text" th:field="*{emgcRel}" maxlength="10" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>비고:</label>
-        <input type="text" th:field="*{emgcNote}"/>
+        <input type="text" th:field="*{emgcNote}" maxlength="250"/>
       </div>
 
       <h4 class="border-bottom py-2 ps-3">주소 / 이메일</h4>
       <div class="input-list">
         <label>이메일:</label>
-        <input type="email" th:field="*{email}" required />
+        <input type="email" th:field="*{email}" maxlength="250" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
+
       <div class="input-list">
         <label>우편번호:</label>
-        <input type="number" th:field="*{pcd}" required />
-        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" oninput="numberMaxLength(this);"/>
       </div>
       <div class="input-list">
-        <label>기본주소:</label>
-        <input type="text" th:field="*{defAdd}" required />
-        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        <label>주소:</label>
+        <div style="gap:8px; align-items:center; flex-direction: column;">
+          <input type="text" th:field="*{defAdd}" id="addr1" maxlength="250"/>
+          <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        </div>
       </div>
       <div class="input-list">
         <label>상세주소:</label>
-        <input type="text" th:field="*{detAdd}" required />
+        <input type="text" th:field="*{detAdd}" id="addr2" maxlength="250"/>
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
 
       <h4 class="border-bottom py-2 ps-3">자격 / 학력</h4>
       <div class="input-list">
         <label>간호사 자격증 번호:</label>
-        <input type="text" th:field="*{rnNo}" required />
+        <input type="text" th:field="*{rnNo}" maxlength="6" oninput="numberMaxLength(this);" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>최종학력:</label>
-        <input type="text" th:field="*{edbc}" required />
+        <input type="text" th:field="*{edbc}" maxlength="50" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>졸업날짜:</label>
-        <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" required />
+        <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>외국어:</label>
-        <input type="text" th:field="*{fl}"/>
+        <input type="text" th:field="*{fl}" maxlength="250"/>
       </div>
       <div class="input-list">
         <label>병역:</label>
         <select th:field="*{ms}" required>
           <option value="">선택</option>
-          <option value="fulfilled">군필</option>
-          <option value="unfulfilled">미필</option>
-          <option value="Exempted">면제</option>
+          <option value="군필">군필</option>
+          <option value="미필">미필</option>
+          <option value="면제">면제</option>
         </select>
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
+
       <div class="input-list">
-        <label>국적:</label>
-        <input type="text" th:field="*{natn}"/>
+        <label>국적</label>
+        <div>
+          <span id="nationalityDisplay" th:text="*{natn} ?: '-'">-</span>
+          <button type="button" class="btn btn-primary" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+        </div>
+        <input type="hidden" th:field="*{natn}" id="nationalityInput"/>
       </div>
+
       <div class="input-list">
         <label>장애여부:</label>
-        <input type="text" th:field="*{dss}"/>
+        <select th:field="*{dss}" required>
+          <option value="">선택</option>
+          <option value="Y">유</option>
+          <option value="N">무</option>
+        </select>
       </div>
       <div class="input-list">
         <label>경력(개월):</label>
@@ -112,10 +126,11 @@
       </div>
       <div class="input-list">
         <label>비고:</label>
-        <input class="form-control" type="text" th:field="*{note}"/>
+        <input class="form-control" type="text" maxlength="250" th:field="*{note}"/>
       </div>
       <div class="py-4">
-        <button class="btn btn-primary mb-3" type="submit">등록 완료</button>
+        <button class="save_btn_1 btn btn-primary mb-3 offset-10" type="submit">등록 완료</button>
+        <button class="save_btn_2 btn btn-primary mb-3 offset-10" type="submit">등록</button>
       </div>
     </form>
   </div>

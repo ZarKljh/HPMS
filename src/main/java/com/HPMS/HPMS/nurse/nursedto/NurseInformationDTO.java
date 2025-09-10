@@ -2,8 +2,12 @@ package com.HPMS.HPMS.nurse.nursedto;
 
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class NurseInformationDTO {
     private String firstName;
     private String lastName;

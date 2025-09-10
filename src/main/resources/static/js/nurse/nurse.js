@@ -52,13 +52,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // 4. 검색 & 페이지 이동
   // =======================
   const pageElements = document.getElementsByClassName("page-link");
-  Array.from(pageElements).forEach(element => {
-    element.addEventListener('click', function() {
-      document.getElementById('page').value = this.dataset.page;
-      document.getElementById('searchForm').submit();
-    });
-  });
-
+  if (pageElements.length) {
+      Array.from(pageElements).forEach(element => {
+        element.addEventListener('click', function() {
+          document.getElementById('page').value = this.dataset.page;
+          document.getElementById('searchForm').submit();
+        });
+      });
+  }
   const btnSearch = document.getElementById("btn_search");
   if (btnSearch) {
     btnSearch.addEventListener('click', () => {
@@ -100,3 +101,53 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
 });
+
+//주소
+function openRoadPopup() {
+    const w = 900, h = 640;
+    const left = (screen.width - w)/2, top = (screen.height - h)/2;
+    window.open('/global/road/popup', 'roadPopup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+
+  // 팝업에서 호출: 값만 채움 (저장은 최종 "수정 저장"에서 함께)
+  function setRoad(addrStr, roadCode, emdSeqNo) {
+    // 기본주소에 도로명 기반 주소를 채우고, 상세주소는 사용자가 이어서 입력
+    document.getElementById('addr1').value = addrStr || '';
+    // 필요하면 숨김 필드로 roadCode/emdSeqNo 따로 보관 가능
+    // 예: <input type="hidden" name="roadCode" id="roadCodeHidden"> 등을 미리 만들어 두고 값만 주입
+    // document.getElementById('roadCodeHidden').value = roadCode || '';
+    // document.getElementById('emdSeqHidden').value  = emdSeqNo || '';
+  }
+
+// input number length
+function numberMaxLength(e){
+    if(e.value.length > e.maxLength){
+        e.value = e.value.slice(0, e.maxLength);
+    }
+}
+
+// 국적
+function openCountryPopup() {
+    const w = 780, h = 620;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/country_form', 'countryPopup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+  // 팝업에서 호출 (자동 저장 금지, 값만 세팅)
+  function setCountry(iso2, countryKr) {
+    const disp = document.getElementById('nationalityDisplay');
+    if (disp) disp.textContent = `${countryKr} (${iso2})`;
+
+    const hidden = document.getElementById('nationalityInput');
+    if (hidden) hidden.value = `${countryKr} (${iso2})`;
+  }
+  // 팝업에서 호출: 값만 채움 (저장은 최종 "등록"에서 함께)
+      function setCountry(iso2, countryKr) {
+        const disp  = document.getElementById('nationalityDisplay');
+        const input = document.getElementById('nationalityInput');
+        const combined = `${countryKr} (${iso2})`;
+        if (disp)  disp.textContent = combined;
+        if (input) input.value = combined; // ★ 서버에는 "대한민국 (KR)" 로 저장
+      }
