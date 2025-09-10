@@ -1,6 +1,5 @@
 package com.HPMS.HPMS.nurse.nursehistory;
 
-import com.HPMS.HPMS.nurse.license.License;
 import com.HPMS.HPMS.nurse.nursedto.NurseInformationDTO;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import jakarta.persistence.*;
@@ -168,8 +167,9 @@ public class NurseHistory {
         if (writer == null || writer.isBlank()) writer = "system";
     }
 
-    /** NurseMain + NurseInformation + License → Snapshot */
-    public static NurseHistory snapshotOf(NurseMain m, NurseInformationDTO i, License l) {
+    /** NurseMain + NurseInformation → Snapshot */
+    public static NurseHistory snapshotOf(NurseMain m, NurseInformationDTO i) {
+
         return NurseHistory.builder()
                 .nurseMain(m)
                 .createDate(LocalDateTime.now())
