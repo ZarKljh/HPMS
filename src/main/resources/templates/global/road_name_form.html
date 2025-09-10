@@ -46,6 +46,7 @@
 <script>
     let currentPage = 0, totalPages = 0, prevPage = 0, nextPage = 0, pageSize = 10;
 
+
     function load(page) {
       const kw = document.getElementById('kw').value || '';
       fetch(`/global/road/search?kw=${encodeURIComponent(kw)}&page=${page}&size=${pageSize}`)

@@ -1,67 +1,73 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
   <h2>환자 상세정보</h2>
-  <div class="patient-info">
 
+  <div class="patient-info card my-3 p-3">
+    <h4 class="border-bottom py-2" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h4>
     <!-- 기본 식별 정보 -->
-
-      <div class="form-group group-basic"><label class="form-label">ID</label><span th:text="${detailDTO.id}"></span></div>
-      <div class="form-group group-basic"><label class="form-label">종결여부</label><span th:text="${detailDTO.delStatus}"></span></div>
-      <div class="form-group group-basic"><label class="form-label">최초등록일</label> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
-      <div class="form-group group-basic"><label class="form-label">수정일</label><span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
+    <h5 class="mt-3">인적사항</h5>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">ID</label><span th:text="${detailDTO.id}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">종결여부</label><span th:text="${detailDTO.delStatus}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">최초등록일</label> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">수정일</label><span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
 
 
     <!-- 인적사항 -->
-      <div class="form-group group-personal"><label class="form-label">생년월일</label> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">성별</label> <span th:text="${detailDTO.gender}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">내/외국인</label> <span th:text="${detailDTO.foreigner}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">성명</label><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">중간이름</label> <span th:text="${detailDTO.middleName}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">여권번호</label> <span th:text="${detailDTO.passport}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">여권성명</label><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
-      <div class="form-group group-personal"><label class="form-label">여권중간이름</label> <span th:text="${detailDTO.passMiddleName}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">생년월일</label> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성별</label> <span th:text="${detailDTO.gender}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">내/외국인</label> <span th:text="${detailDTO.foreigner}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성명</label><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">중간이름</label> <span th:text="${detailDTO.middleName}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권번호</label> <span th:text="${detailDTO.passport}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권성명</label><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권중간이름</label> <span th:text="${detailDTO.passMiddleName}"></span></div>
 
 
     <!-- 연락처 -->
-
-      <div class="form-group group-contact"><label class="form-label">MOBILE</label> <span th:text="${detailDTO.mobilePhone}"></span></div>
-      <div class="form-group group-contact"><label class="form-label">HOME</label> <span th:text="${detailDTO.homePhone}"></span></div>
-      <div class="form-group group-contact"><label class="form-label">OFFICE</label> <span th:text="${detailDTO.officePhone}"></span></div>
-      <div class="form-group group-contact"><label class="form-label">EMAIL</label> <span th:text="${detailDTO.email}"></span></div>
-      <div class="form-group group-contact"><label class="form-label">FAX</label> <span th:text="${detailDTO.fax}"></span></div>
+    <h5 class="mt-3">연락처</h5>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">MOBILE</label> <span th:text="${detailDTO.mobilePhone}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">HOME</label> <span th:text="${detailDTO.homePhone}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">OFFICE</label> <span th:text="${detailDTO.officePhone}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">EMAIL</label> <span th:text="${detailDTO.email}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">FAX</label> <span th:text="${detailDTO.fax}"></span></div>
 
 
     <!-- 보호자 정보 -->
-
-      <div class="form-group group-guardian"><label class="form-label">보호자 성명</label> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
-      <div class="form-group group-guardian"><label class="form-label">보호자 연락처<label> <span th:text="${detailDTO.guardianTel}"></span></div>
-      <div class="form-group group-guardian"><label class="form-label">보호자 관계</label> <span th:text="${detailDTO.guardianRelation}"></span></div>
+    <h5 class="mt-3">보호자정보</h5>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 성명</label> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 연락처</label> <span th:text="${detailDTO.guardianTel}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 관계</label> <span th:text="${detailDTO.guardianRelation}"></span></div>
 
 
     <!-- 주소 -->
-
-      <div class="form-group group-address"><label class="form-label">우편번호</label> <span th:text="${detailDTO.homePcd}"></span></div>
-      <div class="form-group group-address"><label class="form-label">기본주소</label> <span th:text="${detailDTO.homeDefAdd}"></span></div>
-      <div class="form-group group-address"><label class="form-label">상세주소</label> <span th:text="${detailDTO.homeDetAdd}"></span></div>
-      <div class="form-group group-address"><label class="form-label">등록주소(우편번호)</label> <span th:text="${detailDTO.regPcd}"></span></div>
-      <div class="form-group group-address"><label class="form-label">등록주소(기본주소)</label> <span th:text="${detailDTO.regDefAdd}"></span></div>
-      <div class="form-group group-address"><label class="form-label">등록주소(상세주소)</label> <span th:text="${detailDTO.regDetAdd}"></span></div>
+    <h5 class="mt-3">주소</h5>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">우편번호</label> <span th:text="${detailDTO.homePcd}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">기본주소</label> <span th:text="${detailDTO.homeDefAdd}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">상세주소</label> <span th:text="${detailDTO.homeDetAdd}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(우편번호)</label> <span th:text="${detailDTO.regPcd}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(기본주소)</label> <span th:text="${detailDTO.regDefAdd}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(상세주소)</label> <span th:text="${detailDTO.regDetAdd}"></span></div>
 
 
     <!-- 기타 -->
-
-      <div class="form-group group-extra"><label class="form-label">직업</label> <span th:text="${detailDTO.occupation}"></span></div>
-      <div class="form-group group-extra"><label class="form-label">국적</label> <span th:text="${detailDTO.natn}"></span></div>
-      <div class="form-group group-extra"><label class="form-label">최종방문일</label> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
-      <div class="form-group group-extra"><label class="form-label">특이사항</label> <span th:text="${detailDTO.note}"></span></div>
-
-
-    <a th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
-    <a th:href="@{|/patient/delete/${detailDTO.id}|}">환자종결</a>
+    <h5 class="mt-3">기타</h5>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">직업</label> <span th:text="${detailDTO.occupation}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">국적</label> <span th:text="${detailDTO.natn}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">최종방문일</label> <span th:text="${#temporals.format(detailDTO.lastVisitDate,'yyyy-MM-dd')}"></span></div>
+      <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">특이사항</label> <span th:text="${detailDTO.note}"></span></div>
 
   </div>
+
+  <div class="page-navigation">
+    <div class="pagination">
+      <a class="button-link text-full" th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+      <a th:href="@{|/patient/delete/${detailDTO.id}|}" class="button-link text-short">환자종결</a>
+    </div>
+  </div>
+
+
 </div>
 <style>
-  label{ height: 100%;}
+
 </style>
 </html>
