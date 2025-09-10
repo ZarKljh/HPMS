@@ -1,0 +1,95 @@
+<html layout:decorate="~{nurse/nurse_layout}">
+<div layout:fragment="content" class="container my-4">
+
+    <h1 class="border-bottom py-3 mb-4">간호사 정보 수정 히스토리</h1>
+
+    <!-- 검색 폼 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form th:action="@{/nurse/history/search}" method="get" class="row g-3">
+                <div class="col-md-8">
+                    <input type="text"
+                           name="name"
+                           th:value="${searchName}"
+                           class="form-control"
+                           placeholder="간호사 이름으로 검색">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">검색</button>
+                    <a th:href="@{/nurse/history}" class="btn btn-secondary ms-2">전체 조회</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 결과 통계 -->
+    <div class="alert alert-info">
+        총 <strong th:text="${#lists.size(historyList)}">0</strong>건의 수정 이력이 있습니다.
+        <span th:if="${searchName != null and !searchName.isEmpty()}">
+            (검색어: "<span th:text="${searchName}"></span>")
+        </span>
+    </div>
+
+    <!-- 히스토리 테이블 -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                    <tr>
+                        <th>No</th>
+                        <th>수정일시</th>
+                        <th>간호사명</th>
+                        <th>부서</th>
+                        <th>직급</th>
+                        <th>수정자</th>
+                        <th>연락처</th>
+                        <th>상세보기</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${historyList.isEmpty()}">
+                        <td colspan="8" class="text-center text-muted py-4">
+                            수정 이력이 없습니다.
+                        </td>
+                    </tr>
+                    <tr th:each="history, stat : ${historyList}">
+                        <td th:text="${stat.count}">1</td>
+                        <td>
+                            <span th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd')}"></span>
+                            <small class="text-muted d-block"
+                                   th:text="${#temporals.format(history.createDate, 'HH:mm')}"></small>
+                        </td>
+                        <td>
+                            <strong th:text="${history.firstName + ' ' + history.lastName}"></strong>
+                            <small th:if="${history.middleName != null}"
+                                   class="text-muted d-block"
+                                   th:text="'(' + ${history.middleName} + ')'"></small>
+                        </td>
+                        <td>
+                            <span th:text="${history.dept ?: '-'}">-</span>
+                        </td>
+                        <td>
+                            <span th:text="${history.rank ?: '-'}">-</span>
+                        </td>
+                        <td>
+                            <span th:text="${history.modifier ?: nurseHistoryhistory.writer}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${history.tel ?: '-'}">-</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/nurse/history/detail/{id}(id=${history.id})}"
+                               class="btn btn-sm btn-outline-primary">
+                                상세보기
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>
