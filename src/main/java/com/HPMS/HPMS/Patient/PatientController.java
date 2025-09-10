@@ -82,27 +82,24 @@ public class PatientController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
 
-
-
-
         return "patient/lsw_patient_list";
     }
 
 
-
-
+    //환자 1명의 상세정보 id값으로 찾아서 가져옵니다
     @GetMapping("/patient/detail/{id}")
     public String patientDetial(Model model, @PathVariable("id") Integer id){
         PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         model.addAttribute("detailDTO", detailDTO);
         return "patient/lsw_patient_detail";
     }
-
+    //신규환자등록 페이지로 이동합니다
     @GetMapping("/patient/create")
     public String patientCreate(PatientForm patientCreateForm){
         return "patient/lsw_patient_create";
     }
 
+    //신규환자를 저장합니다
     @PostMapping("/patient/create")
     public String patientCreate(@Valid PatientForm patientForm, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
@@ -111,13 +108,14 @@ public class PatientController {
         this.patientMService.createPatientM(patientForm);
         return "redirect:/patient/list"; // 질문 저장후 질문목록으로 이동
     }
-
+    //환자정보 수정페이지로 이동하기 위해 수정대상 정보를 가져옵니다
     @GetMapping("/patient/modify/{id}")
     public String patientModify(Model model, @PathVariable("id") Integer id){
         PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         model.addAttribute("patientForm", detailDTO);
         return "patient/lsw_patient_modify";
     }
+    //수정된 환자정보를 저장합니다
     @PostMapping("/patient/modify/{id}")
     public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult, @PathVariable("id") Integer id){
         PatientM patientM = this.patientMService.getPatientM(id);
@@ -127,7 +125,7 @@ public class PatientController {
         Integer modifiedId = this.patientMService.modifyPatientM(patientM, patientForm);
         return String.format("redirect:/patient/detail/%s", modifiedId);
     }
-
+    //환자를 종결(삭제)처리합니다
     @GetMapping("/patient/delete/{id}")
     public String patientDelete(Model model, BindingResult bindingResult, @PathVariable("id") Integer id){
         PatientM patientM = this.patientMService.getPatientM(id);
@@ -137,7 +135,8 @@ public class PatientController {
         this.patientMService.deletePatientM(patientM);
         return "patient/lsw_patient_list";
     }
-
+    //다중컨디션으로 환자를 검색합니다
+    // columns 칼럼명, operator 비교연산자, value 값, logicalOperator 논리연산자 4개의 변수가 1셋트입니다
     @GetMapping("/patient/search")
     public String searchPatient(
             Model model,
@@ -148,12 +147,14 @@ public class PatientController {
             @RequestParam(value="value[]", required=false) List<String> values,
             @RequestParam(value="logicalOperator[]", required=false) List<String> logicalOperators
     ) {
+        //페이징처리를 위한 pageRequest 생성
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
-        // 🔍 검색 서비스 호출
+        //변수들을 통해 데이터를 가져옵니다
         Page<PatientListDTO> patients = patientDTOService.searchPatients(columns, operators, values, logicalOperators, pageable);
 
         // 페이지네이션 처리
+        // patient/list 의 페이지처리와 동일합니다
         int totalPages = patients.getTotalPages();
         int currentPage = Math.min(page, totalPages - 1);
         int startPage = Math.max(currentPage - 2, 0);
@@ -167,7 +168,8 @@ public class PatientController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
 
-        return "patient/lsw_patient_list"; // ✅ 기존 리스트 화면 재활용
+        // 기존 patient/list 의 화면 폼을 그대로 사용합니다
+        return "patient/lsw_patient_list";
     }
 
 
