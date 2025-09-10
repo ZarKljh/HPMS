@@ -1,4 +1,7 @@
 // 노멀라이징
+body {
+    padding-top: 60px;
+}
 body, ul, li {
 	margin: 0;
 	padding: 0;
@@ -13,6 +16,13 @@ a {
 }
 
 // 네비게이션
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
 .navbar-toggle {
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -31,7 +41,7 @@ a {
 	top: 101%;
 	width: 200px;
 	height: 100vh;
-	z-index: 1;
+	z-index: 999;
 	border-left: 1px solid #dee2e6;
 	background-color: #f8f9fa;
 	transition: right 0.3s;

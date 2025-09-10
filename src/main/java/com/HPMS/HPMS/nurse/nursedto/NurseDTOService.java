@@ -138,7 +138,7 @@ public class NurseDTOService {
             nurseInformationRepository.save(ni);
         }
 
-        // 🔥 히스토리 저장 (수정 완료 후)
+        // 히스토리 저장 (수정 완료 후)
         String modifier = m != null ? m.getModifier() : "system";
         nurseHistoryService.saveNurseHistory(nm, i, modifier);
     }

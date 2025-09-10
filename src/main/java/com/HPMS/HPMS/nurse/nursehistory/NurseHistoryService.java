@@ -1,7 +1,5 @@
 package com.HPMS.HPMS.nurse.nursehistory;
 
-import com.HPMS.HPMS.nurse.license.License;
-import com.HPMS.HPMS.nurse.license.LicenseService;
 import com.HPMS.HPMS.nurse.nursedto.NurseInformationDTO;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +16,12 @@ import java.util.List;
 public class NurseHistoryService {
 
     private final NurseHistoryRepository nurseHistoryRepository;
-    private final LicenseService licenseService;
 
     //간호사 정보 수정 시 히스토리 저장
     public void saveNurseHistory(NurseMain nurseMain, NurseInformationDTO nurseInfo, String modifier) {
-        // 첫 번째 라이센스 가져오기 (여러 개 있을 경우)
-        List<License> licenses = licenseService.getByNurse(nurseMain);
-        License firstLicense = licenses.isEmpty() ? null : licenses.get(0);
 
         // 히스토리 생성 및 저장
-        NurseHistory history = NurseHistory.snapshotOf(nurseMain, nurseInfo, firstLicense);
+        NurseHistory history = NurseHistory.snapshotOf(nurseMain, nurseInfo);
         history.setModifier(modifier);
         history.setModifyDate(LocalDateTime.now());
 

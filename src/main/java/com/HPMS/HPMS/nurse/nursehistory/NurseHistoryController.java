@@ -31,18 +31,10 @@ public class NurseHistoryController {
     //특정 간호사의 히스토리 조회
     @GetMapping("/history/{nurseId}")
     public String showNurseHistory(@PathVariable Integer nurseId, Model model) {
-        try {
-            NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
-            List<NurseHistory> historyList = nurseHistoryService.getHistoryByNurse(nurseMain);
-
-            model.addAttribute("historyList", historyList);
-            model.addAttribute("nurseMain", nurseMain);
-        } catch (Exception e) {
-            System.out.println("오류 발생: " + e.getMessage());
-            e.printStackTrace();
-            model.addAttribute("error", "데이터를 불러오는 중 오류가 발생했습니다: " + e.getMessage());
-        }
-
+        NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
+        List<NurseHistory> historyList = nurseHistoryService.getHistoryByNurse(nurseMain);
+        model.addAttribute("historyList", historyList);
+        model.addAttribute("nurseMain", nurseMain);
         return "nurse/nurse_history_detail";
     }
 
