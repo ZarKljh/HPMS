@@ -135,6 +135,7 @@ public class PatientController {
         this.patientMService.deletePatientM(patientM);
         return "patient/lsw_patient_list";
     }
+
     //다중컨디션으로 환자를 검색합니다
     // columns 칼럼명, operator 비교연산자, value 값, logicalOperator 논리연산자 4개의 변수가 1셋트입니다
     @GetMapping("/patient/search")
