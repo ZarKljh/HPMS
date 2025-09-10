@@ -20,11 +20,11 @@ public class Doc_Rank {
 
     @Size(max = 30)
     @Column(name = "KOR_NAME", length = 30, nullable = false)
-    private String kor_name;
+    private String korName;
 
     @Size(max = 30)
     @Column(name = "ENG_NAME", length = 50, nullable = false)
-    private String eng_name;
+    private String engName;
 
     @Size(max = 30)
     @Column(name = "RANK", length = 30, nullable = false)

@@ -13,6 +13,10 @@
         .row { display:flex; gap:8px; align-items:center; margin-top:12px; }
         .err { color:#c00; font-size:12px; grid-column: 1 / span 2; }
         input, select { padding:6px; }
+          /* ✅ 한 줄 전체 폭을 쓰게 하는 유틸 */
+  .full { grid-column: 1 / -1; }
+  /* ✅ 오른쪽 칸만 쓰는 유틸 (라디오/복합 입력에 사용) */
+  .rcol { grid-column: 2 / 3; }
     </style>
 </head>
 <body>
@@ -30,9 +34,11 @@
             <label>부서</label> <input type="text" th:field="*{department}" maxlength="4" required/>
             <label>진료과</label> <input type="text" th:field="*{medicalDepartment}" maxlength="50"/>
 
-            <label>직급</label> <input type="text" th:field="*{rank}" maxlength="4" required/>
-            <label>직책</label> <input type="text" th:field="*{position}" maxlength="4"/>
-
+            <label>직책</label> <input type="text" id="rank" th:field="*{rank}" maxlength="4"/>
+            <label>직급</label> <input type="text" id="position" th:field="*{position}" maxlength="4"/>
+            <div class="full">
+                <button type="button" class="btn" onclick="openJobPopup()">직급/직책 선택</button>
+            </div>
             <label>이름</label> <input type="text" th:field="*{firstName}" maxlength="50" required/>
             <label>성</label>   <input type="text" th:field="*{lastName}" maxlength="50" required/>
             <label>중간이름</label> <input type="text" th:field="*{middleName}" maxlength="50"/>
@@ -140,14 +146,13 @@
     }
 
     // 팝업에서 호출: 값만 채움 (저장은 최종 "등록"에서 함께)
-    function setCountry(iso2, countryKr) {
-      const disp  = document.getElementById('nationalityDisplay');
-      const input = document.getElementById('nationalityInput');
-      const combined = `${countryKr} (${iso2})`;
-      if (disp)  disp.textContent = combined;
-      if (input) input.value = combined; // ★ 서버에는 "대한민국 (KR)" 로 저장
-    }
-
+   function setCountry(iso2, countryKr) {
+  const disp  = document.getElementById('nationalityDisplay'); // ← 올바른 id로 수정
+  const input = document.getElementById('nationalityInput');
+  const combined = `${countryKr} (${iso2})`;
+  if (disp)  disp.textContent = combined;
+  if (input) input.value = combined; // 서버에는 "대한민국 (KR)" 같은 형식으로 저장
+}
     function openRoadPopup() {
       const w = 900, h = 640;
       const left = (screen.width - w)/2, top = (screen.height - h)/2;
@@ -160,6 +165,32 @@
       document.getElementById('addr1').value = addrStr || '';
       // 필요하면 roadCode/emdSeqNo 숨김 필드 추가 후 주입 가능
     }
+ /* 팝업 열기 */
+  function openJobPopup() {
+    const w = 700, h = 520;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/jobcode/popup', 'job_code',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+  function openJobPopup() {
+    const w = 700, h = 520;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/jobcode/popup', 'job_code',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+
+  window.addEventListener('message', (e) => {
+    if (e.data?.source !== 'jobcode-popup') return;
+    const { rankCode, positionCode } = e.data.payload || {};
+
+    const rankInput = document.getElementById('rank');
+    if (rankInput) rankInput.value = rankCode ?? '';
+
+    const positionInput = document.getElementById('position');
+    if (positionInput) positionInput.value = positionCode ?? '';
+  });
 </script>
 
 </body>

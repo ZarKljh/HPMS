@@ -23,7 +23,7 @@
         <div class="label">히스토리 ID</div><div th:text="${h.id}">1</div>
         <div class="label">부서</div><div th:text="${h.department}">DEPT</div>
         <div class="label">진료과</div><div th:text="${h.medicalDepartment}">MED</div>
-        <div class="label">직급</div><div th:text="${h.rank}">RANK</div>
+        <div class="label">직책</div><div th:text="${h.rank}">RANK</div>
 
         <div class="label">이름</div>
         <div th:text="|${h.lastName} ${#strings.defaultString(h.middleName,'')} ${h.firstName}|">홍 길동</div>
