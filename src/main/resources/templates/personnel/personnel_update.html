@@ -1,6 +1,7 @@
 <html lang="kr" layout:decorate="~{personnel/personnel_layout}">
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Reference Personnel List</h2>
+
 <!--<form method="get" action="/user/list">
     <label for="size">Row counter:</label>
     <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
@@ -17,6 +18,10 @@
 </form>
 -->
     <form class="card my-3 p-3" name="updatePersonnel" th:action="@{/update/personnel}" method="post" autocomplete="off">
+<!-- 오류가 있는데 원인을 모르겠음
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>-->
         <input type="hidden" name="id" th:value="${personnel.id}" />
         <input type="hidden" name="page" th:value="${page}" />
         <input type="hidden" name="size" th:value="${size}" />
