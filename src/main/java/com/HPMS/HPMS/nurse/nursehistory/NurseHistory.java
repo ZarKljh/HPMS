@@ -1,4 +1,4 @@
-package com.HPMS.HPMS.nurse.history;
+package com.HPMS.HPMS.nurse.nursehistory;
 
 import com.HPMS.HPMS.nurse.license.License;
 import com.HPMS.HPMS.nurse.nursedto.NurseInformationDTO;
@@ -142,26 +142,6 @@ public class NurseHistory {
     @Column(name = "NOTE", length = 255)
     private String note;
 
-//     라이센스 (스냅샷)
-
-    @Size(max = 100)
-    @Column(name = "LICENSE_NAME", length = 100)
-    private String licenseName;
-
-    @Size(max = 50)
-    @Column(name = "LICENSE_NO", length = 50)
-    private String licenseNo;
-
-    @Column(name = "ISSUE_DATE")
-    private String issueDate;
-
-    @Column(name = "EXPIRY_DATE")
-    private String expiryDate;
-
-    @Size(max = 255)
-    @Column(name = "LICENSE_NOTE", length = 255)
-    private String licenseNote;
-
 //    공통 정보
 
     @Column(name = "CREATE_DATE", nullable = false)
@@ -226,13 +206,6 @@ public class NurseHistory {
                 .disabilityStatus(i != null ? i.getDss() : null)
                 .career(i != null ? i.getCarr() : null)
                 .note(i != null ? i.getNote() : null)
-
-                // license
-                .licenseName(l != null ? l.getLi() : null)
-                .licenseNo(l != null ? l.getLicenseNo() : null)
-                .issueDate(l != null ? l.getIssueDate() : null)
-                .expiryDate(l != null ? l.getExpiryDate() : null)
-                .licenseNote(l != null ? l.getNote() : null)
 
                 .build();
     }

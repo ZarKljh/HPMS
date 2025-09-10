@@ -334,3 +334,39 @@ input {
 .save_btn_1 {
     display: block;
 }
+
+//히스토리 상세 페이지
+.history-card {
+    margin-bottom: 1.5rem;
+}
+.history-header {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+.history-meta div {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+.section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.info-label {
+    font-w eight: 500;
+}
+.info-value.empty {
+    color: #adb5bd;
+}
+.picture-placeholder {
+    width: 120px;
+    height: 120px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
