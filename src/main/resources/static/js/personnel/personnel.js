@@ -71,6 +71,7 @@ function submitFormIfValid() {
    /* 목록화면에서 모든 체크박스 선택하기 시작 - update version */
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.forms["selectedPersonnel"];
+  if(!form) return;
   const masterCheckbox = form.querySelector('input[name="checkedAllIds"]');
   const checkboxes = form.querySelectorAll('input[name="checkedIds"]');
 
