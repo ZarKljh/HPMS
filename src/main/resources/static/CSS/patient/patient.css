@@ -84,7 +84,16 @@ td {
 }
 .page {
 	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
 }
+.page>div {
+    position: absolute;
+    right:0;
+}
+
 .patient-info{
     padding: 10px;
 }
