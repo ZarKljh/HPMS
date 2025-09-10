@@ -45,61 +45,59 @@
 
 <script>
     let currentPage = 0, totalPages = 0, prevPage = 0, nextPage = 0, pageSize = 10;
+
+
     function load(page) {
+      const kw = document.getElementById('kw').value || '';
+      fetch(`/global/road/search?kw=${encodeURIComponent(kw)}&page=${page}&size=${pageSize}`)
+        .then(r => r.json())
+        .then(data => {
+          currentPage = data.number;
+          totalPages  = data.totalPages;
+          prevPage = Math.max(0, currentPage - 1);
+          nextPage = Math.min(totalPages - 1, currentPage + 1);
 
-               const kw = document.getElementById('kw').value || '';
-               fetch(`/global/road/search?kw=${encodeURIComponent(kw)}&page=${page}&size=${pageSize}`)
-                 .then(r => r.json())
-                 .then(data => {
-                   currentPage = data.number;
-                   totalPages  = data.totalPages;
-                   prevPage = Math.max(0, currentPage - 1);
-                   nextPage = Math.min(totalPages - 1, currentPage + 1);
+          document.getElementById('prev').disabled = currentPage === 0;
+          document.getElementById('next').disabled = currentPage >= totalPages - 1 || totalPages === 0;
+          document.getElementById('pageInfo').textContent = `${totalPages ? (currentPage+1) : 0}/${totalPages}`;
 
-                   document.getElementById('prev').disabled = currentPage === 0;
-                   document.getElementById('next').disabled = currentPage >= totalPages - 1 || totalPages === 0;
-                   document.getElementById('pageInfo').textContent = `${totalPages ? (currentPage+1) : 0}/${totalPages}`;
+          const tbody = document.getElementById('rows');
+          tbody.innerHTML = '';
+          if (data.content.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">결과가 없습니다.</td></tr>`;
+            return;
+          }
+          data.content.forEach(a => {
+            const addrStr = [a.sido_kor, a.sgg_kor, a.emd_kor, a.road_name_kor]
+                             .filter(Boolean).join(' ');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${a.sido_kor ?? ''}</td>
+              <td>${a.sgg_kor ?? ''}</td>
+              <td>${a.emd_kor ?? ''}</td>
+              <td>${a.road_name_kor ?? ''}</td>
+              <td>${a.road_code ?? ''}</td>
+              <td><button type="button">선택</button></td>`;
+            tr.ondblclick = () => choose(addrStr, a);
+            tr.querySelector('button').onclick = () => choose(addrStr, a);
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(e => {
+          alert('검색 중 오류가 발생했습니다.');
+          console.error(e);
+        });
+    }
 
-                   const tbody = document.getElementById('rows');
-                   tbody.innerHTML = '';
-                   if (data.content.length === 0) {
-                     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">결과가 없습니다.</td></tr>`;
-                     return;
-                   }
-                   data.content.forEach(a => {
-                     const addrStr = [a.sido_kor, a.sgg_kor, a.emd_kor, a.road_name_kor]
-                                      .filter(Boolean).join(' ');
-                     const tr = document.createElement('tr');
-                     tr.innerHTML = `
-                       <td>${a.sido_kor ?? ''}</td>
-                       <td>${a.sgg_kor ?? ''}</td>
-                       <td>${a.emd_kor ?? ''}</td>
-                       <td>${a.road_name_kor ?? ''}</td>
-                       <td>${a.road_code ?? ''}</td>
-                       <td><button type="button">선택</button></td>`;
-                     tr.ondblclick = () => choose(addrStr, a);
-                     tr.querySelector('button').onclick = () => choose(addrStr, a);
-                     tbody.appendChild(tr);
-                   });
-                 })
-                 .catch(e => {
-                   alert('검색 중 오류가 발생했습니다.');
-                   console.error(e);
-                 });
-             }
+    function go(p) { load(p); }
 
-             function go(p) { load(p); }
-
-             function choose(addrStr, a) {
-               if (window.opener && !window.opener.closed) {
-                 // 부모에 값만 전달 (부모가 저장 여부 결정)
-                 window.opener.setRoad(addrStr, a.road_code || '', a.emd_seq_no || '');
-               }
-               window.close();
-             }
-            // 팝업에서 호출 (자동 저장 금지, 값만 세팅)
-
-
+    function choose(addrStr, a) {
+      if (window.opener && !window.opener.closed) {
+        // 부모에 값만 전달 (부모가 저장 여부 결정)
+        window.opener.setRoad(addrStr, a.road_code || '', a.emd_seq_no || '');
+      }
+      window.close();
+    }
 </script>
 </body>
 </html>

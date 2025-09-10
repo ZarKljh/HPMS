@@ -18,18 +18,20 @@
     <!-- 자바스크립트 End -->
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/nurse/nurse.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/personnel/personnel.css}"><!-- added by chang lee-->
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/personnel/personnel.css}"><!-- added by chang lee-->
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/common_chang.css}"><!-- added by chang lee-->
 </head>
-<body>
+<body style="overflow-x: hidden;">
 <!-- 네비게이션바 -->
 <nav th:replace="~{nurse/navbar :: navbarFragment}"></nav>
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/js/nurse/nurse.js}" defer></script>
-<script th:src="@{/js/personnel/personnel.js}"></script><!-- Added by chang lee-->
+<script th:src="@{/js/personnel/personnel.js}" defer></script><!-- Added by chang lee-->
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>
 <!--AJAX Added by chang lee  -->
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
+<footer th:replace="~{footer :: footerFragment}"></footer>
 </body>
 </html>

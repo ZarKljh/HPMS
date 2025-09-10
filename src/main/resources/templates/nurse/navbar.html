@@ -20,11 +20,11 @@
           <a class="nav-link" href="/user/list">Reference Personnel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/hpms/login}">로그인</a>
-          <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/hpms/logout}">로그아웃</a>
+          <a class="nav-link" sec:authorize="isAnonymous()" href="/hpms/login">로그인</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="/hpms/logout">로그아웃</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/hpms/signup}">회원가입</a>
+          <a class="nav-link" sec:authorize="isAnonymous()" href="/hpms/signup">회원가입</a>
         </li>
       </ul>
     </div>
@@ -45,7 +45,11 @@
           <a class="nav-link" href="/user/list">Reference Personnel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">로그인</a>
+          <a class="nav-link" sec:authorize="isAnonymous()" href="/hpms/login">로그인</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="/hpms/logout">로그아웃</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="isAnonymous()" href="/hpms/signup">회원가입</a>
         </li>
       </ul>
     </div>

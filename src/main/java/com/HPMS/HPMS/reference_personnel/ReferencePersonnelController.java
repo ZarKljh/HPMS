@@ -1,20 +1,26 @@
 package com.HPMS.HPMS.reference_personnel;
 
+import com.HPMS.HPMS.Patient.patientForm.PatientForm;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dtl.ReferencePersonnelDtlService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.ReferencePersonnelDTOService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_dtl_dto.ReferencePersonnelDtlDTO;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.personnel_m_dto.ReferencePersonnelMDTO;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_dto.ReferencePersonnelDTO;
+import com.HPMS.HPMS.reference_personnel.reference_personnel_form.ReferencePersonnelDTOForm;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelM;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMRepository;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,20 +46,36 @@ public class ReferencePersonnelController {
     }
 */
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/list")
     public String referencePersonnelList(@RequestParam(defaultValue = "1") int page,
                                          @RequestParam(defaultValue = "10") int size,
                                          Model model) {
-        int internalPage = page - 1; // 내부는 0부터 시작
-        PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("id").ascending());
+        // personnel 순번처리
+        int internalPage = page - 1; // 내부 논리처리는 0부터 시작
+        PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("createDate").ascending());
         Page<ReferencePersonnelDTO> pagedList = referencePersonnelDTOService.getPagedReferencePersonnel(pageRequest);
+
+        List<ReferencePersonnelDTO> content = pagedList.getContent();
+        int totalElements = (int) pagedList.getTotalElements();
+
+        for (int i = 0; i < content.size(); i++) {
+            ReferencePersonnelDTO dto = content.get(i);
+            int currentNum = internalPage * size + i + 1; // 전체 기준 순번
+            dto.setCurrentNum(currentNum);      // DTO 에 선언된 값을 참조
+            dto.setTotalNum((int) pagedList.getTotalElements());
+        }
+
+        // 페이징 네비게이션
+        // int internalPage = page - 1; // 내부는 0부터 시작
+        //PageRequest pageRequest = PageRequest.of(internalPage, size, Sort.by("id").ascending());
+        //Page<ReferencePersonnelDTO> pagedList = referencePersonnelDTOService.getPagedReferencePersonnel(pageRequest);
 
         int totalPages = pagedList.getTotalPages();
         if (internalPage >= totalPages) {
             internalPage = 0;
             page = 1;
         }
-
         int startPage = Math.max(page - 2, 1);
         int endPage = Math.min(page + 2, totalPages);
 
@@ -67,6 +89,8 @@ public class ReferencePersonnelController {
         model.addAttribute("referencePersonnels", pagedList.getContent());
         model.addAttribute("size", size);
         model.addAttribute("personnelPage", pagedList);
+        // model.addAttribute("currentNum", currentNum); //DTO에 포함시켜 놓았기 때문에 불필요
+        model.addAttribute("totalNum", totalElements); //DTO에 포함시켜 놓았기 때문에 불필요하지만 화면 출력편의를 위해
 
         return "personnel/personnel_list";
     }
@@ -115,6 +139,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_detail/"+id+"?page="+page+"&size="+size;
     }*/
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/detail/{id}")
     public String referencePersonnelDtl(Model model,
                                         @PathVariable("id") Integer id,
@@ -133,20 +158,44 @@ public class ReferencePersonnelController {
         return "personnel/personnel_detail";
     }
 
-    // 삭제
+    // 상세 화면에서 1건 삭제
     private final ReferencePersonnelMService referencePersonnelMService;
-    
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/user/delete")
     public String deleteReferencePersonnel(RedirectAttributes redirectAttributes,
                                            @RequestParam("id") Integer id,
                                            @RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size) {
+
         try {
             referencePersonnelMService.deletePersonnel(id);
             redirectAttributes.addFlashAttribute("successMessage", "삭제가 완료되었습니다.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "삭제 중 오류가 발생했습니다.");
         }
+        return "redirect:/user/list?page=" + page + "&size=" + size;
+    }
+
+    // Start of personnel 목록에서 체크박스 다중 선택 후 삭제하는 기능
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    @PostMapping("/delete/selectedPersonnel")
+    public String deleteSelectedPersonnel(RedirectAttributes redirectAttributes,
+                                          @RequestParam(value = "checkedIds", required = true) List<Long> ids,
+                                           @RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "10") int size){
+        /*
+        1. 컨트롤러에서 수신된 ID 수신(requestParam) 및 검증(is null?)
+        2. 서비스 계층에서 삭제 로직 처리
+        3. Repository에서 실제 삭제 수행
+        4. 삭제 후 리다이렉트
+        * */
+        if (ids == null || ids.isEmpty()) {
+            // return messages
+            return "redirect:/user/list?page=" + page + "&size=" + size;
+        }
+
+        referencePersonnelMService.deleteByIds(ids);
         return "redirect:/user/list?page=" + page + "&size=" + size;
     }
 
@@ -158,17 +207,28 @@ public class ReferencePersonnelController {
         return "personnel/personnel_update";
     }
     */
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_update")  //update 화면 채우기
-    public String referencePersonnel(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer size, Model model) {
+    // public String patientCreate(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+    // BindingResult bindingResult){
+    public String referencePersonnel(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+                                     BindingResult bindingResult,
+                                     @RequestParam Integer id,
+                                     @RequestParam Integer page,
+                                     @RequestParam Integer size,
+                                     Model model) {
         ReferencePersonnelDTO personnel = this.referencePersonnelDTOService.getReferencePersonnelDTO(id);
         model.addAttribute("personnel",personnel);
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         return "personnel/personnel_update";
     }
-    
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/update/personnel")    // update 화면에서 값을 받아 저장한 후 상세보기 화면으로 이동하기
-    public String updatePersonnel(@ModelAttribute ReferencePersonnelDTO dto,
+    public String updatePersonnel(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
+                                  BindingResult bindingResult,
+                                  @ModelAttribute ReferencePersonnelDTO dto,
                                   @RequestParam Integer page,
                                   @RequestParam Integer size,
                                   RedirectAttributes redirectAttributes,
@@ -186,7 +246,7 @@ public class ReferencePersonnelController {
     }
 
 
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_registration")
     public String personnelRegisration() {
         return "personnel/personnel_registration";
@@ -194,6 +254,7 @@ public class ReferencePersonnelController {
 
 
     //  신규 관련자 등록 시작
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/create/reference_personal")
     public String createReferencePersonnel(@ModelAttribute ReferencePersonnelDTO dto, RedirectAttributes redirectAttributes,
                                            @RequestParam(defaultValue = "1") int page,

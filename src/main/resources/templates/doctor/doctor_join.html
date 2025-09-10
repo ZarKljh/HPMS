@@ -76,10 +76,15 @@
             <label>비상-비고</label> <input type="text" th:field="*{emergencyNote}" maxlength="250"/>
 
             <label>이메일</label>    <input type="email" th:field="*{email}" maxlength="250"/>
-            <label>우편번호</label>  <input type="text" th:field="*{postcode}" maxlength="6"/>
-            <label>기본주소</label>  <input type="text" th:field="*{defaultAddress}" maxlength="250"/>
-            <label>상세주소</label>  <input type="text" th:field="*{detailedAddress}" maxlength="250"/>
 
+            <label>주소</label>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <input type="text" th:field="*{defaultAddress}" id="addr1" maxlength="250"/>
+                <button type="button" class="btn" onclick="openRoadPopup()">도로명 검색</button>
+            </div>
+
+            <label>상세주소</label>
+            <input type="text" th:field="*{detailedAddress}" id="addr2" maxlength="250"/>
             <label>면허번호</label>  <input type="text" th:field="*{registrationNumber}" maxlength="10" required/>
             <label>학력</label>      <input type="text" th:field="*{educationalBackground}" maxlength="100"/>
             <label>외국어</label>    <input type="text" th:field="*{foreignLanguage}" maxlength="250"/>
@@ -145,6 +150,23 @@
       if (disp) disp.textContent = `${countryKr} (${iso2})`;
       if (input) input.value = countryKr; // 또는 iso2 저장을 원하면 input.value = iso2;
       }
+
+    function openRoadPopup() {
+    const w = 900, h = 640;
+    const left = (screen.width - w)/2, top = (screen.height - h)/2;
+    window.open('/global/road/popup', 'roadPopup',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+
+  // 팝업에서 호출: 값만 채움 (저장은 최종 "수정 저장"에서 함께)
+  function setRoad(addrStr, roadCode, emdSeqNo) {
+    // 기본주소에 도로명 기반 주소를 채우고, 상세주소는 사용자가 이어서 입력
+    document.getElementById('addr1').value = addrStr || '';
+    // 필요하면 숨김 필드로 roadCode/emdSeqNo 따로 보관 가능
+    // 예: <input type="hidden" name="roadCode" id="roadCodeHidden"> 등을 미리 만들어 두고 값만 주입
+    // document.getElementById('roadCodeHidden').value = roadCode || '';
+    // document.getElementById('emdSeqHidden').value  = emdSeqNo || '';
+  }
 </script>
 </body>
 </html>

@@ -48,6 +48,9 @@ public class NurseDTOController {
     @GetMapping("/modify/{id}")
     public String showModifyForm(@PathVariable Integer id, Model model) {
         NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
+        if (nurseDTO.getNurseInformation() == null) {
+            nurseDTO.setNurseInformation(new NurseInformationDTO());
+        }
         model.addAttribute("nurseDTO", nurseDTO);
         return "nurse/nurse_modify_form";
     }
@@ -55,13 +58,11 @@ public class NurseDTOController {
     @PostMapping("/modify/{id}")
     public String modifyNurse(@PathVariable Integer id, @ModelAttribute NurseDTO nurseDTO, Model model) {
         String modifier = nurseDTO.getNurseMain().getModifier();
-
         if (modifier == null || modifier.trim().isEmpty()) {
             model.addAttribute("errorMessage", "수정자 이름을 입력해야 합니다.");
             model.addAttribute("nurseDTO", nurseDTO);
             return "nurse/nurse_modify_form"; // 입력 폼 다시 보여주기
         }
-
         nurseDTOService.updateNurse(id, nurseDTO);
         return "redirect:/nurse/info/" + id;
     }

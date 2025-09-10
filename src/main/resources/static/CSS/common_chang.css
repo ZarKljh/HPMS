@@ -1,0 +1,90 @@
+/*FOOTER 전체 적용*/
+/*.footer_fixed_bottom{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 60px;   *//* 최소 높이 *//**//*
+  max-height: 60px;   *//**//* 최대 높이 *//**//*
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-top : 1px lightgray solid;
+  overflow: hidden;   *//**//* 내용이 넘치지 않도록 *//**//*
+}*/
+.footer_fixed_bottom{
+  *//*position: fixed;*//*
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 140px;   *//* 최소 높이 *//*
+  max-height: 140px;   *//* 최대 높이 *//*
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  *//*z-index: 1000;*//*
+  *//*border-top : 0px lightgray solid;*//*
+  overflow: hidden;   *//* 내용이 넘치지 않도록 *//*
+}
+
+/* table frame */
+.footer-custom-table {
+  border:0px;
+  width: 1200px;
+  padding: 0px;
+  margin:0px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.footer-custom-table tr:first-child,
+.fotter-custom-table tr:last-child {
+  height: 20px;
+}
+.footer-custom-table td {
+  /*padding: 0px;*/
+  /*border: 1px solid #ccc;*/
+}
+
+/* 첫 번째 컬럼 */
+.footer-custom-table td:first-child {
+  width: 20px;
+}
+
+/* 마지막 컬럼 */
+.footer-custom-table td:last-child {
+  width: 20px;
+}
+
+/* 두 번째 컬럼 (전체 너비에서 20px + 20px 제외 후 70%) */
+.footer-custom-table td:nth-child(2) {
+  /*background-color: lightyellow;*/
+  width: calc((1200px - 40px) * 0.6);
+  text-align: left;
+}
+
+/* 세 번째 컬럼 (전체 너비에서 20px + 20px 제외 후 30%) */
+.footer-custom-table td:nth-child(3) {
+  /*background-color: lightblue;*/
+  width: calc((1200px - 40px) * 0.4);
+  text-align: right;
+}
+/*테이블 내 모든 ul li 기본 세팅*/
+.footer-custom-table td ul li {
+  list-style:none;
+  list-style-type: none; /* 불릿 제거 */
+  margin: 0;              /* 외부 여백 제거 */
+  padding: 0;             /* 내부 여백 제거 */
+}
+
+.inner-ul-menu > li{
+  display:inline-block;
+  /*text-align:center;*/
+  padding-left:10px;
+  padding-right:10px;
+}

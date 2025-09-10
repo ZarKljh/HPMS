@@ -1,3 +1,35 @@
+/* 목록리스트*/
+.chang-table-layout {/* 컬럼 넓이 고정을 강하게 적용하기 위해 */
+    table-layout: fixed;
+}
+.chang-nurse-th { /*nurse.css 내 th overwrite*/
+    width: 100%;
+    text-wrap: nowrap;
+    font-size: 14px;
+    /*border-right: 1px solid #dee2e6;*/
+}
+.chang-checkbox-column {/* 체크박스 컬럼 넓이 고정*/
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+    /*display: flex; */
+    justify-content: center; align-items: center;
+    /*height: 100%;*/
+}
+
+/* 목록리스트*/
+.material-symbols-outlined {/* 붉은 귀 : 필수입력대상*/
+	color: red;
+	font-size: 12px;
+	line-height: 3px;
+}
+
+.input-list {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 14px;
+}
+
 .page-navigation {
     display: flex;
     justify-content: space-between;
