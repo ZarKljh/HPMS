@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RequestMapping("/nurse")
 @RequiredArgsConstructor
@@ -17,11 +20,31 @@ public class NurseMainController {
     private final NurseMainService nurseMainService;
 
     @GetMapping("")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, HttpSession session, @RequestParam(value = "kw", defaultValue = "") String kw) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="size", defaultValue="10") int size, HttpSession session, @RequestParam(value = "kw", defaultValue = "") String kw) {
         session.removeAttribute("tempNurseMain");
-        Page<NurseMain> paging = this.nurseMainService.getList(page, kw);
+
+        // Page 객체 가져오기
+        Page<NurseMain> paging = this.nurseMainService.getList(page, size, kw);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
+        model.addAttribute("size", size);
+
+        // 페이지네이션 계산
+        long totalElements = paging.getTotalElements();
+        int pageSize = paging.getSize();
+        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
+
+        int currentPage = paging.getNumber();
+
+        // 페이지 번호 리스트 생성
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages - 1)
+                .boxed()
+                .collect(Collectors.toList());
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("pageNumbers", pageNumbers);
+
         return "nurse/nurse_main";
     }
 
