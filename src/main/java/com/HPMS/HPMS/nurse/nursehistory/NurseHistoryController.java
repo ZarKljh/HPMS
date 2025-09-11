@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,20 +32,44 @@ public class NurseHistoryController {
     // 특정 간호사 히스토리
     @GetMapping("/{nurseId}")
     public String showNurseHistory(@PathVariable Integer nurseId, Model model) {
-        NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
-        List<NurseHistory> historyList = nurseHistoryService.getHistoryByNurse(nurseMain);
-        model.addAttribute("historyList", historyList);
-        model.addAttribute("nurseMain", nurseMain);
-        return "nurse/nurse_history_detail";
+        try {
+            NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
+            List<NurseHistory> historyList = nurseHistoryService.getHistoryByNurse(nurseMain);
+            model.addAttribute("historyList", historyList);
+            model.addAttribute("nurseMain", nurseMain);
+            return "nurse/nurse_history_detail";
+        } catch (Exception e) {
+            model.addAttribute("error", "간호사 정보를 찾을 수 없습니다.");
+            return "redirect:/nurse/history";
+        }
     }
 
+    // 단일 히스토리 상세보기 - 수정된 버전
     @GetMapping("/detail/{historyId}")
     public String showNurseHistoryDetail(@PathVariable Integer historyId, Model model) {
-        NurseHistory history = nurseHistoryService.getHistoryById(historyId);
-        NurseMain nurseMain = history.getNurse(); // history에 매핑된 nurse 가져오기
-        model.addAttribute("history", history);
-        model.addAttribute("nurseMain", nurseMain);
-        return "nurse/nurse_history_detail";
+        try {
+            NurseHistory history = nurseHistoryService.getHistoryById(historyId);
+
+            // Lazy Loading 문제 해결을 위해 명시적으로 nurseMain 로드
+            NurseMain nurseMain = history.getNurseMain(); // getNurse() 대신 getNurseMain() 사용
+
+            // 디버깅을 위한 로그 추가
+            System.out.println("History ID: " + history.getId());
+            System.out.println("NurseMain: " + (nurseMain != null ? nurseMain.getId() : "null"));
+            System.out.println("First Name: " + history.getFirstName());
+
+            // 단일 히스토리를 리스트로 감싸기
+            List<NurseHistory> historyList = Arrays.asList(history);
+
+            model.addAttribute("historyList", historyList);
+            model.addAttribute("nurseMain", nurseMain);
+
+            return "nurse/nurse_history_detail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "히스토리 정보를 불러올 수 없습니다: " + e.getMessage());
+            return "redirect:/nurse/history";
+        }
     }
 
     // 수정자별 히스토리
