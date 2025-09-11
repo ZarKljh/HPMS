@@ -52,6 +52,9 @@
         </tr>
         </tbody>
         <a th:href="@{/nurse/create}" class="create_btn btn btn-primary" role="button">등록</a>
+        <security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')" class="history_btn">
+            <a href="/nurse/history" class="btn btn-primary">수정내역</a>
+        </security:authorize>
     </table>
 
     <!-- 페이징처리 시작 -->
