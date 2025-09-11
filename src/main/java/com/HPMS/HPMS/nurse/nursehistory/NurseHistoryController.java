@@ -22,6 +22,7 @@ public class NurseHistoryController {
     private final NurseMainService nurseMainService;
 
     // 전체 히스토리
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
     public String showAllHistory(Model model) {
         List<NurseHistory> historyList = nurseHistoryService.getAllHistoryList();
