@@ -53,6 +53,16 @@ public class NurseMainService {
     public List<NurseMain> getNurseMainByName(String firstName, String lastName) {
         return this.nurseMainRepository.findByFirstNameAndLastName(firstName, lastName);
     }
+
+    public Page<NurseMain> getList(int page, int size, String kw) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        if (kw == null || kw.isEmpty()) {
+            return nurseMainRepository.findAll(pageable);
+        } else {
+            return nurseMainRepository.findByFirstNameContaining(kw, pageable);
+        }
+    }
+
     private Specification<NurseMain> search(String kw) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;

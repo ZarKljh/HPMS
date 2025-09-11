@@ -2,14 +2,33 @@
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Nurse List</h2>
 
-    <div class="search_box row my-3">
-        <div class="col-8 col-md-3">
-            <div class="input-group">
-                <input type="text" id="search_kw" class="form-control" placeholder="이름/부서/직급/상태/근무형태/작성자/전화번호/수정자" th:value="${kw}"/>
-                <button class="search_btn" type="button" id="btn_search">검색</button>
+<div class="d-flex flex-wrap justify-content-between align-items-center">
+    <form  method="get" action="/nurse" class="size_bar d-flex align-items-center mb-2 mb-md-0">
+        <div class="d-flex align-items-center">
+            <strong class="me-1">등록 건수:</strong> <span th:text="${totalCount}"></span>명 /
+            <strong class="mx-1">현재 페이지:</strong> <span th:text="${totalCount}"></span> /
+            <strong class="mx-1">페이지당 행 수:</strong>
+            <select name="size" id="size" onchange="this.form.submit();">
+                <option th:value="5" th:selected="${size == 5}">5</option>
+                <option th:value="10" th:selected="${size == 10}">10</option>
+                <option th:value="20" th:selected="${size == 20}">20</option>
+            </select>
+            <input type="hidden" name="page" value="1" />
+        </div>
+    </form>
+
+    <form method="get" action="/nurse" class="d-flex align-items-center">
+        <div class="search_box row my-3">
+            <div>
+                <div class="input-group">
+                    <input type="text" id="search_kw" class="form-control" placeholder="이름/부서/직급/상태/근무형태/작성자/전화번호/수정자" th:value="${kw}"/>
+                    <button class="search_btn" type="submit" id="btn_search">검색</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
+
+</div>
 
     <table class="table table-hover card">
         <thead class="table-light">
@@ -36,7 +55,7 @@
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>
-                <a th:href="@{/nurse/info/{id}(id=${nurseMain.id})}"
+                <a th:href="@{/nurse/info/{id}(id=${nurseMain.id})}" class="name_hover"
                    th:text="|${nurseMain.firstName} ${nurseMain.middleName != null ? nurseMain.middleName + ' ' : ''}${nurseMain.lastName}|">
                 </a>
             </td>
@@ -58,28 +77,23 @@
     </table>
 
     <!-- 페이징처리 시작 -->
-    <div class="page" th:if="${!paging.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                th:classappend="${page == paging.number} ? 'active'"
-                class="page-item">
-                <a th:text="${page + 1}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
-            </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
+    <div class="page-navigation">
+        <div class="pagination">
+            <a th:if="${currentPage > 1}"
+               th:href="@{/nurse(page=${currentPage - 1}, size=${size})}">이전</a>
 
+            <span th:each="pageNum : ${pageNumbers}">
+                <a th:href="@{/nurse(page=${pageNum}, size=${size})}"
+                   th:text="${pageNum}"
+                   th:class="${pageNum == currentPage} ? 'active-page' : ''"></a>
+            </span>
+
+            <a th:if="${currentPage < totalPages}"
+               th:href="@{/nurse(page=${currentPage + 1}, size=${size})}">다음</a>
+        </div>
     </div>
     <!-- 페이징처리 끝 -->
+
     <form th:action="@{/nurse}" method="get" id="searchForm">
         <input type="hidden" id="kw" name="kw" th:value="${kw}">
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
