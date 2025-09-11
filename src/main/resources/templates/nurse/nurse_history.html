@@ -1,95 +1,246 @@
-<html layout:decorate="~{nurse/nurse_layout}">
-<div layout:fragment="content" class="container my-4">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{nurse/nurse_layout}">
 
-    <h1 class="border-bottom py-3 mb-4">간호사 정보 수정 히스토리</h1>
+<div layout:fragment="content" class="container-fluid my-4">
 
-    <!-- 검색 폼 -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <form th:action="@{/nurse/history/search}" method="get" class="row g-3">
-                <div class="col-md-8">
-                    <input type="text"
-                           name="name"
-                           th:value="${searchName}"
-                           class="form-control"
-                           placeholder="간호사 이름으로 검색">
+    <!-- 헤더 섹션 -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">간호사 정보 수정 히스토리</h3>
                 </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary">검색</button>
-                    <a th:href="@{/nurse/history}" class="btn btn-secondary ms-2">전체 조회</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 검색 섹션 -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0 text-secondary">검색 및 필터</h6>
                 </div>
-            </form>
+                <div class="card-body">
+                    <form th:action="@{/nurse/history/search}" method="get" class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <span class="text-muted">🔍</span>
+                                </span>
+                                <input type="text"
+                                       name="name"
+                                       th:value="${searchName}"
+                                       class="form-control border-start-0"
+                                       placeholder="간호사 이름으로 검색하세요...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-dark me-2">검색</button>
+                            <a th:href="@{/nurse/history}" class="btn btn-outline-secondary">전체 조회</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- 결과 통계 -->
-    <div class="alert alert-info">
-        총 <strong th:text="${#lists.size(historyList)}">0</strong>건의 수정 이력이 있습니다.
-        <span th:if="${searchName != null and !searchName.isEmpty()}">
-            (검색어: "<span th:text="${searchName}"></span>")
-        </span>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="alert alert-light border">
+                <div class="d-flex align-items-center">
+                    <span class="text-muted me-2">📊</span>
+                    <span>
+                        총 <strong class="text-dark" th:text="${#lists.size(historyList)}">0</strong>건의 수정 이력이 있습니다.
+                        <span th:if="${searchName != null and !#strings.isEmpty(searchName)}" class="text-muted">
+                            (검색어: "<span class="fw-bold text-dark" th:text="${searchName}"></span>")
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 히스토리 테이블 -->
-    <div class="">
-        <div class="">
-            <div class="card table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                    <tr>
-                        <th>No</th>
-                        <th>수정일시</th>
-                        <th>간호사명</th>
-                        <th>부서</th>
-                        <th>직급</th>
-                        <th>수정자</th>
-                        <th>연락처</th>
-                        <th>상세보기</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:if="${historyList.isEmpty()}">
-                        <td colspan="8" class="text-center text-muted py-4">
-                            수정 이력이 없습니다.
-                        </td>
-                    </tr>
-                    <tr th:each="history, stat : ${historyList}">
-                        <td th:text="${stat.count}">1</td>
-                        <td>
-                            <span th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd')}"></span>
-                            <small class="text-muted d-block"
-                                   th:text="${#temporals.format(history.createDate, 'HH:mm')}"></small>
-                        </td>
-                        <td>
-                            <strong th:text="${history.firstName + ' ' + history.lastName}"></strong>
-                            <small th:if="${history.middleName != null}"
-                                   class="text-muted d-block"
-                                   th:text="'(' + ${history.middleName} + ')'"></small>
-                        </td>
-                        <td>
-                            <span th:text="${history.dept ?: '-'}">-</span>
-                        </td>
-                        <td>
-                            <span th:text="${history.rank ?: '-'}">-</span>
-                        </td>
-                        <td>
-                            <span th:text="${history.modifier ?: nurseHistoryhistory.writer}"></span>
-                        </td>
-                        <td>
-                            <span th:text="${history.tel ?: '-'}">-</span>
-                        </td>
-                        <td>
-                            <a th:href="@{/nurse/history/detail/{id}(id=${history.id})}"
-                               class="btn btn-sm btn-outline-primary">
-                                상세보기
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="card border">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0 text-secondary">수정 히스토리 목록</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                            <tr class="text-nowrap">
+                                <th class="text-center" style="width: 60px;">No</th>
+                                <th style="width: 140px;">수정일시</th>
+                                <th style="width: 180px;">간호사명</th>
+                                <th style="width: 100px;">부서</th>
+                                <th style="width: 100px;">직급</th>
+                                <th style="width: 120px;">수정자</th>
+                                <th style="width: 140px;">연락처</th>
+                                <th class="text-center" style="width: 100px;">상세보기</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${#lists.isEmpty(historyList)}">
+                                <td colspan="8" class="text-center text-muted py-5">
+                                    <div class="mb-3" style="font-size: 2.5rem;">📋</div>
+                                    <div class="mb-2">수정 이력이 없습니다.</div>
+                                    <small>등록된 히스토리가 없습니다.</small>
+                                </td>
+                            </tr>
+                            <tr th:each="history, stat : ${historyList}" class="align-middle">
+                                <td class="text-center">
+                                    <span class="badge bg-secondary" th:text="${stat.count}">1</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold text-dark" th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd')}">2024-01-01</span>
+                                        <small class="text-muted" th:text="${#temporals.format(history.createDate, 'HH:mm')}">10:00</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold text-dark" th:text="${history.firstName + ' ' + history.lastName}">홍길동</span>
+                                        <small th:if="${history.middleName != null and !#strings.isEmpty(history.middleName)}"
+                                               class="text-muted"
+                                               th:text="|중간명: ${history.middleName}|"></small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:if="${history.dept != null and !#strings.isEmpty(history.dept)}"
+                                          class="badge bg-light text-dark border"
+                                          th:text="${history.dept}">부서</span>
+                                    <span th:unless="${history.dept != null and !#strings.isEmpty(history.dept)}"
+                                          class="text-muted">-</span>
+                                </td>
+                                <td>
+                                    <span th:if="${history.rank != null and !#strings.isEmpty(history.rank)}"
+                                          class="badge bg-secondary"
+                                          th:text="${history.rank}">직급</span>
+                                    <span th:unless="${history.rank != null and !#strings.isEmpty(history.rank)}"
+                                          class="text-muted">-</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="small fw-bold" th:text="${history.modifier != null ? history.modifier : history.writer}">작성자</span>
+                                        <span th:if="${history.modifier != null}" class="badge bg-warning text-dark small">수정됨</span>
+                                        <span th:unless="${history.modifier != null}" class="badge bg-light text-dark small">생성</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span th:if="${history.tel != null and !#strings.isEmpty(history.tel)}"
+                                              class="small text-dark"
+                                              th:text="${history.tel}">010-1234-5678</span>
+                                        <span th:unless="${history.tel != null and !#strings.isEmpty(history.tel)}"
+                                              class="small text-muted">연락처 없음</span>
+                                        <span th:if="${history.email != null and !#strings.isEmpty(history.email)}"
+                                              class="small text-muted"
+                                              th:text="${history.email}">email@example.com</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <a th:href="@{|/nurse/history/detail/${history.id}|}"
+                                       class="btn btn-outline-dark btn-sm">
+                                        상세보기
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div th:if="${!#lists.isEmpty(historyList)}" class="card-footer bg-light border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            최신 순으로 정렬되었습니다.
+                        </small>
+                        <small class="text-muted">
+                            총 <span th:text="${#lists.size(historyList)}">0</span>건의 결과
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
+
+<style>
+    /* 테이블 호버 효과 */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0,0,0,0.02);
+    }
+
+    /* 카드 호버 효과 */
+    .card {
+        transition: box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* 검색 입력 필드 */
+    .input-group-text {
+        border-color: #ced4da;
+    }
+
+    .form-control:focus {
+        border-color: #495057;
+        box-shadow: 0 0 0 0.2rem rgba(73, 80, 87, 0.25);
+    }
+
+    /* 배지 스타일 */
+    .badge {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    /* 테이블 반응형 */
+    @media (max-width: 768px) {
+        .table th, .table td {
+            padding: 0.5rem 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* 무채색 테마 */
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+
+    .bg-secondary {
+        background-color: #6c757d !important;
+    }
+
+    .bg-dark {
+        background-color: #343a40 !important;
+    }
+
+    .text-secondary {
+        color: #6c757d !important;
+    }
+
+    .border {
+        border-color: #dee2e6 !important;
+    }
+
+    /* 알림 박스 */
+    .alert-light {
+        background-color: #fefefe;
+        border-color: #dee2e6;
+        color: #495057;
+    }
+</style>
+
 </html>

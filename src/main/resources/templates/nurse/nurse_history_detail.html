@@ -1,110 +1,273 @@
-<html layout:decorate="~{nurse/nurse_layout}">
-<div layout:fragment="content" class="container my-4">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{nurse/nurse_layout}">
 
-  <!-- 헤더 -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 th:if="${nurseMain}" th:text="'간호사 ' + ${nurseMain.firstName} + ' ' + ${nurseMain.lastName} + '의 수정 히스토리'">간호사 히스토리</h4>
-    <h4 th:unless="${nurseMain}">간호사 히스토리</h4>
-    <div>
-      <a th:href="@{/nurse/history}" class="btn btn-outline-primary btn-sm">전체 히스토리</a>
-      <a th:if="${nurseMain}" th:href="@{'/nurse/info/' + ${nurseMain.id}}" class="btn btn-outline-secondary btn-sm">간호사 정보</a>
+<div layout:fragment="content" class="container-fluid my-4">
+
+  <!-- 헤더 섹션 -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h4 class="mb-1" th:if="${nurseMain}" th:text="|간호사 ${nurseMain.firstName} ${nurseMain.lastName}님의 수정 히스토리|">
+                간호사 히스토리
+              </h4>
+              <h4 class="mb-1" th:unless="${nurseMain}">간호사 히스토리</h4>
+              <small class="text-light opacity-75">
+                총 <span th:text="${#lists.size(historyList)}">0</span>건의 수정 이력
+              </small>
+            </div>
+            <div>
+              <a th:href="@{/nurse/history}" class="btn btn-outline-light btn-sm me-2">전체 히스토리</a>
+              <a th:if="${nurseMain}" th:href="@{|/nurse/info/${nurseMain.id}|}" class="btn btn-light btn-sm">간호사 정보</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 히스토리 리스트 -->
-  <div th:if="${historyList != null and !historyList.empty}">
-    <div th:each="history : ${historyList}" class="card mb-3 shadow-sm">
-      <div class="card-header d-flex justify-content-between">
-        <span th:text="'히스토리 ID: ' + ${history.id}"></span>
-        <div class="d-flex gap-3">
-          <span th:text="'작성자: ' + ${history.writer}"></span>
-          <span th:text="'작성일: ' + ${#temporals.format(history.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
-          <span th:if="${history.modifier}" th:text="'수정자: ' + ${history.modifier}"></span>
-          <span th:if="${history.modifyDate}" th:text="'수정일: ' + ${#temporals.format(history.modifyDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
-        </div>
-      </div>
-      <div class="card-body">
-
-        <!-- 기본 정보 -->
-        <div class="mb-3">
-          <div class="section-title">기본 정보</div>
-          <div class="row">
-            <div class="col-md-3 info-label">성 (First Name)</div>
-            <div class="col-md-3 info-value" th:text="${history.firstName}" th:classappend="${#strings.isEmpty(history.firstName)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">이름 (Last Name)</div>
-            <div class="col-md-3 info-value" th:text="${history.lastName}" th:classappend="${#strings.isEmpty(history.lastName)} ? 'empty'">-</div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-3 info-label">중간명</div>
-            <div class="col-md-3 info-value" th:text="${history.middleName}" th:classappend="${#strings.isEmpty(history.middleName)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">부서</div>
-            <div class="col-md-3 info-value" th:text="${history.dept}" th:classappend="${#strings.isEmpty(history.dept)} ? 'empty'">-</div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-3 info-label">직급</div>
-            <div class="col-md-3 info-value" th:text="${history.rank}" th:classappend="${#strings.isEmpty(history.rank)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">성별</div>
-            <div class="col-md-3 info-value" th:text="${history.gender}" th:classappend="${#strings.isEmpty(history.gender)} ? 'empty'">-</div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-3 info-label">생년월일</div>
-            <div class="col-md-3 info-value" th:text="${history.dateOfBirth}" th:classappend="${#strings.isEmpty(history.dateOfBirth)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">입사일</div>
-            <div class="col-md-3 info-value" th:text="${history.hireDate}" th:classappend="${#strings.isEmpty(history.hireDate)} ? 'empty'">-</div>
-          </div>
-        </div>
-
-        <!-- 연락처 정보 -->
-        <div class="mb-3">
-          <div class="section-title">연락처 정보</div>
-          <div class="d-flex align-items-center mb-2">
-            <div th:if="${history.picture != null}">
-              <img th:src="${history.picture}" class="rounded-circle me-3" style="width: 120px; height: 120px; object-fit: cover;">
-            </div>
-            <div th:unless="${history.picture != null}" class="picture-placeholder me-3">사진 없음</div>
-            <div>
-              <div>전화번호: <span th:text="${history.tel}" th:classappend="${#strings.isEmpty(history.tel)} ? 'empty'">-</span></div>
-              <div>이메일: <span th:text="${history.email}" th:classappend="${#strings.isEmpty(history.email)} ? 'empty'">-</span></div>
-              <div>긴급연락처: <span th:text="${history.emergencyContact}" th:classappend="${#strings.isEmpty(history.emergencyContact)} ? 'empty'">-</span></div>
+  <!-- 히스토리 컨텐츠 -->
+  <div th:if="${historyList != null and !#lists.isEmpty(historyList)}">
+    <div th:each="history, stat : ${historyList}" class="row mb-3">
+      <div class="col-12">
+        <div class="card border">
+          <!-- 카드 헤더 -->
+          <div class="card-header bg-light border-bottom">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <h6 class="mb-0 text-dark">히스토리 #<span th:text="${history.id}">1</span></h6>
+              </div>
+              <div class="col-md-8 text-md-end">
+                <div class="d-flex flex-wrap justify-content-md-end gap-2">
+                  <span class="badge bg-secondary">
+                    작성자: <span th:text="${history.writer}">system</span>
+                  </span>
+                  <span class="badge bg-dark">
+                    <span th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd HH:mm')}">2024-01-01 10:00</span>
+                  </span>
+                  <span th:if="${history.modifier}" class="badge bg-secondary">
+                    수정자: <span th:text="${history.modifier}">admin</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 자격/교육 정보 -->
-        <div class="mb-3">
-          <div class="section-title">자격/교육 정보</div>
-          <div class="row">
-            <div class="col-md-3 info-label">간호사 면허번호</div>
-            <div class="col-md-3 info-value" th:text="${history.nurseLicenseNo}" th:classappend="${#strings.isEmpty(history.nurseLicenseNo)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">학력</div>
-            <div class="col-md-3 info-value" th:text="${history.educationalBackground}" th:classappend="${#strings.isEmpty(history.educationalBackground)} ? 'empty'">-</div>
+          <!-- 카드 바디 -->
+          <div class="card-body bg-white">
+            <div class="row">
+              <!-- 기본 정보 -->
+              <div class="col-lg-6 mb-3">
+                <div class="border rounded p-3 h-100 bg-light">
+                  <h6 class="mb-3 text-secondary border-bottom pb-2">기본 정보</h6>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">성</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.firstName != null ? history.firstName : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">이름</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.lastName != null ? history.lastName : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">중간명</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.middleName != null ? history.middleName : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">부서</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.dept != null ? history.dept : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">직급</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.rank != null ? history.rank : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">성별</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.gender != null ? history.gender : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">생년월일</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.dateOfBirth != null ? history.dateOfBirth : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">입사일</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.hireDate != null ? history.hireDate : '-'}">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 연락처 정보 -->
+              <div class="col-lg-6 mb-3">
+                <div class="border rounded p-3 h-100 bg-light">
+                  <h6 class="mb-3 text-secondary border-bottom pb-2">연락처 정보</h6>
+                  <div class="text-center mb-3">
+                    <div th:if="${history.picture != null and !#strings.isEmpty(history.picture)}">
+                      <img th:src="${history.picture}" class="rounded border" style="width: 80px; height: 80px; object-fit: cover;" alt="프로필 사진">
+                    </div>
+                    <div th:unless="${history.picture != null and !#strings.isEmpty(history.picture)}" class="rounded border bg-white d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                      <span class="text-muted small">사진 없음</span>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">전화번호</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.tel != null ? history.tel : '-'}">-</div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">이메일</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.email != null ? history.email : '-'}">-</div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">긴급연락처</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.emergencyContact != null ? history.emergencyContact : '-'}">-</div>
+                    </div>
+                    <div th:if="${history.emergencyFirstName != null or history.emergencyLastName != null}" class="col-12">
+                      <label class="form-label small text-muted mb-1">긴급연락 담당자</label>
+                      <div class="p-2 bg-white border rounded small">
+                        <span th:text="${(history.emergencyFirstName != null ? history.emergencyFirstName : '') + ' ' + (history.emergencyLastName != null ? history.emergencyLastName : '')}"></span>
+                        <span th:if="${history.emergencyRelation != null}" class="badge bg-secondary ms-1 small" th:text="${history.emergencyRelation}"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 자격/교육 정보 -->
+              <div class="col-lg-6 mb-3">
+                <div class="border rounded p-3 h-100 bg-light">
+                  <h6 class="mb-3 text-secondary border-bottom pb-2">자격/교육 정보</h6>
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">간호사 면허번호</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.nurseLicenseNo != null ? history.nurseLicenseNo : '-'}">-</div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">학력</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.educationalBackground != null ? history.educationalBackground : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">졸업일</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.gradDate != null ? history.gradDate : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">외국어</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.foreignLanguage != null ? history.foreignLanguage : '-'}">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 개인 정보 -->
+              <div class="col-lg-6 mb-3">
+                <div class="border rounded p-3 h-100 bg-light">
+                  <h6 class="mb-3 text-secondary border-bottom pb-2">개인 정보</h6>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">국적</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.nationality != null ? history.nationality : '-'}">-</div>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small text-muted mb-1">장애 여부</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.disabilityStatus != null ? history.disabilityStatus : '-'}">-</div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small text-muted mb-1">병역</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.militaryService != null ? history.militaryService : '-'}">-</div>
+                    </div>
+                    <div th:if="${history.career != null and !#strings.isEmpty(history.career)}" class="col-12">
+                      <label class="form-label small text-muted mb-1">경력사항</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.career}"></div>
+                    </div>
+                    <div th:if="${history.note != null and !#strings.isEmpty(history.note)}" class="col-12">
+                      <label class="form-label small text-muted mb-1">비고</label>
+                      <div class="p-2 bg-white border rounded small" th:text="${history.note}"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="row mt-2">
-            <div class="col-md-3 info-label">졸업일</div>
-            <div class="col-md-3 info-value" th:text="${history.gradDate}" th:classappend="${#strings.isEmpty(history.gradDate)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">외국어</div>
-            <div class="col-md-3 info-value" th:text="${history.foreignLanguage}" th:classappend="${#strings.isEmpty(history.foreignLanguage)} ? 'empty'">-</div>
+
+          <!-- 카드 푸터 -->
+          <div class="card-footer bg-light border-top">
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">
+                기록일: <span th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+              </small>
+              <div>
+                <span class="badge bg-secondary small">ID: <span th:text="${history.id}"></span></span>
+                <span th:if="${history.modifier != null}" class="badge bg-dark small ms-1">수정됨</span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- 개인 정보 -->
-        <div>
-          <div class="section-title">개인 정보</div>
-          <div class="row">
-            <div class="col-md-3 info-label">국적</div>
-            <div class="col-md-3 info-value" th:text="${history.nationality}" th:classappend="${#strings.isEmpty(history.nationality)} ? 'empty'">-</div>
-            <div class="col-md-3 info-label">장애 여부</div>
-            <div class="col-md-3 info-value" th:text="${history.disabilityStatus}" th:classappend="${#strings.isEmpty(history.disabilityStatus)} ? 'empty'">-</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 
   <!-- 히스토리 없음 -->
-  <div th:if="${historyList == null or historyList.empty}" class="alert alert-info text-center mt-4">
-    📋 수정 히스토리가 없습니다.
+  <div th:if="${historyList == null or #lists.isEmpty(historyList)}" class="row">
+    <div class="col-12">
+      <div class="card border">
+        <div class="card-body text-center py-4">
+          <div class="text-muted mb-3" style="font-size: 3rem;">📋</div>
+          <h5 class="text-muted mb-2">수정 히스토리가 없습니다</h5>
+          <p class="text-muted mb-3">등록된 수정 이력이 없습니다.</p>
+          <a th:href="@{/nurse/history}" class="btn btn-outline-dark">전체 히스토리 보기</a>
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>
+
+<style>
+  .card {
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .badge {
+    font-size: 0.75rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .card-body img {
+    border: 1px solid #dee2e6;
+  }
+
+  .row.g-2 > * {
+    padding: 0.25rem;
+  }
+
+  .bg-light {
+    background-color: #f8f9fa !important;
+  }
+
+  .bg-secondary {
+    background-color: #6c757d !important;
+  }
+
+  .bg-dark {
+    background-color: #343a40 !important;
+  }
+
+  .text-secondary {
+    color: #6c757d !important;
+  }
+
+  .border {
+    border-color: #dee2e6 !important;
+  }
+</style>
+
 </html>
