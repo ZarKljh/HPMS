@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.Patient.PatientDTL;
 
+import com.HPMS.HPMS.Patient.PatientH.PatientEntityListener;
 import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import jakarta.persistence.*;
 import lombok.Getter;

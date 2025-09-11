@@ -423,3 +423,37 @@ input {
     color: #6c757d;
     margin-bottom: 1rem;
 }
+
+/* footer */
+
+.footer_fixed_bottom {
+
+    width: 100%;           /* 전체 폭 */
+    /*max-width: 1920px;     /* 테이블과 동일한 최대폭 (원하시면 조정 가능) */
+       /* 가운데 정렬 */
+    /*
+    box-sizing: border-box;
+    */
+    border:1px solid red;
+}
+
+
+.footer_fixed_bottom>table {
+
+    border: 1px solid red;
+    width: 100%;
+    table-layout: fixed;
+
+}
+.footer_fixed_bottom>table td:first-child{
+    width: 1px;
+    white-space:nowrap
+}
+.footer_fixed_bottom>table td:last-child{
+    width: 1px;
+    white-space:nowrap
+}
+.footer_fixed_bottom>table td:nth-child(2).
+.footer_fixed_bottom>table td:nth-child(3){
+    width: auto;
+}
