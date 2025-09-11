@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Transactional(readOnly = true)
 public class DoctorHService {
     private final DoctorHRepository HistRepo;
-
+    @Transactional
     public void snapshotBeforeUpdate(DoctorM m, DoctorDTL d) {
         HistRepo.save(DoctorH.snapshotOf(m, d));
     }
