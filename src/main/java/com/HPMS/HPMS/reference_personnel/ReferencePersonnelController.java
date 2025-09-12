@@ -46,7 +46,6 @@ public class ReferencePersonnelController {
     }
 */
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/list")
     public String referencePersonnelList(@RequestParam(defaultValue = "1") int page,
                                          @RequestParam(defaultValue = "10") int size,
