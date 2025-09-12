@@ -1,97 +1,102 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container my-3">
-  <h2 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h2>
+  <h3 class="border-bottom py-2">신규 간호사 등록 - 기본 정보</h3>
 
-  <form class="main-table card" th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <div class="input-list">
-      <label>부서:</label>
-      <select th:field="*{dept}" required>
-        <option value="">선택</option>
-        <option value="AN">마취통증의학과</option>
-        <option value="DEN">치과</option>
-        <option value="DER">피부과</option>
-        <option value="EM">응급의학과</option>
-        <option value="ENT">이비인후과</option>
-        <option value="OPH">안과</option>
-        <option value="FM">가정의학과</option>
-        <option value="GS">외과</option>
-        <option value="IM">내과</option>
-        <option value="LM">진단검사의학과</option>
-        <option value="NM">핵의학과</option>
-        <option value="NR">신경과</option>
-        <option value="NS">신경외과</option>
-        <option value="OBGY">산부인과</option>
-        <option value="OEM">직업환경의학과</option>
-        <option value="OS">정형외과</option>
-        <option value="PA">병리과</option>
-        <option value="PED">소아청소년과</option>
-        <option value="PM">예방의학과</option>
-        <option value="PS">성형외과</option>
-        <option value="PSI">정신건강의학과</option>
-        <option value="RD">방사선과</option>
-        <option value="RAD">영상의학과</option>
-        <option value="RM">재활의학과</option>
-        <option value="RO">방사선종양학과</option>
-        <option value="TB">결핵과</option>
-        <option value="TS">흉부외과</option>
-        <option value="UR">비뇨기과</option>
-        <option value="UR">비뇨의학과</option>
-      </select>
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>직급:</label>
-      <input type="text" th:field="*{rank}" maxlength="4" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list name_list">
-      <label class="name">성명:</label>
-      <input type="text" th:field="*{firstName}" placeholder="이름" maxlength="50" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-      <input type="text" th:field="*{lastName}" placeholder="성" maxlength="50" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-      <input class="middle_name" type="text" th:field="*{middleName}" maxlength="50" placeholder="중간이름" />
-    </div>
-    <div class="input-list">
-      <label>성별:</label>
-      <div class="form-check">
-        <input type="radio" class="form-check-input" id="validationFormCheck2" value="M" name="gender" required>
-        <label class="form-check-label" for="validationFormCheck2">남</label>
+  <form th:action="@{/nurse/create}" th:object="${nurseMain}" method="post">
+    <div class="main-table card my-3 p-3">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      <h4 class="border-bottom py-2">신규 간호사의 기본적인 정보를 적는 페이지 입니다.</h4>
+      <div class="input-list">
+        <label>부서:</label>
+        <select th:field="*{dept}" required>
+          <option value="">선택</option>
+          <option value="AN">마취통증의학과</option>
+          <option value="DEN">치과</option>
+          <option value="DER">피부과</option>
+          <option value="EM">응급의학과</option>
+          <option value="ENT">이비인후과</option>
+          <option value="OPH">안과</option>
+          <option value="FM">가정의학과</option>
+          <option value="GS">외과</option>
+          <option value="IM">내과</option>
+          <option value="LM">진단검사의학과</option>
+          <option value="NM">핵의학과</option>
+          <option value="NR">신경과</option>
+          <option value="NS">신경외과</option>
+          <option value="OBGY">산부인과</option>
+          <option value="OEM">직업환경의학과</option>
+          <option value="OS">정형외과</option>
+          <option value="PA">병리과</option>
+          <option value="PED">소아청소년과</option>
+          <option value="PM">예방의학과</option>
+          <option value="PS">성형외과</option>
+          <option value="PSI">정신건강의학과</option>
+          <option value="RD">방사선과</option>
+          <option value="RAD">영상의학과</option>
+          <option value="RM">재활의학과</option>
+          <option value="RO">방사선종양학과</option>
+          <option value="TB">결핵과</option>
+          <option value="TS">흉부외과</option>
+          <option value="UR">비뇨기과</option>
+          <option value="UR">비뇨의학과</option>
+        </select>
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
-      <div class="form-check mb-3">
-        <input type="radio" class="form-check-input" id="validationFormCheck3" value="F" name="gender" required>
-        <label class="form-check-label" for="validationFormCheck3">여</label>
+      <div class="input-list">
+        <label>직급:</label>
+        <input type="text" th:field="*{rank}" maxlength="4" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>생년월일:</label>
-      <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>입사일:</label>
-      <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>상태:</label>
-      <input type="text" th:field="*{sts}" placeholder="재직/휴직/퇴직 등" maxlength="3" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>근무형태:</label>
-      <input type="text" th:field="*{wt}" placeholder="정규직/계약직/파트타임 등" maxlength="4" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
-    </div>
-    <div class="input-list">
-      <label>작성자:</label>
-      <input type="text" th:field="*{writer}" required />
-      <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      <div class="input-list name_list">
+        <label class="name">성명:</label>
+        <input type="text" th:field="*{firstName}" placeholder="이름" maxlength="50" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        <input type="text" th:field="*{lastName}" placeholder="성" maxlength="50" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        <input class="middle_name" type="text" th:field="*{middleName}" maxlength="50" placeholder="중간이름" />
+      </div>
+      <div class="input-list">
+        <label>성별:</label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="validationFormCheck2" value="M" name="gender" required>
+          <label class="form-check-label" for="validationFormCheck2">남</label>
+        </div>
+        <div class="form-check mb-3">
+          <input type="radio" class="form-check-input" id="validationFormCheck3" value="F" name="gender" required>
+          <label class="form-check-label" for="validationFormCheck3">여</label>
+        </div>
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+      <div class="input-list">
+        <label>생년월일:</label>
+        <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+      <div class="input-list">
+        <label>입사일:</label>
+        <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+      <div class="input-list">
+        <label>상태:</label>
+        <input type="text" th:field="*{sts}" placeholder="재직/휴직/퇴직 등" maxlength="3" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+      <div class="input-list">
+        <label>근무형태:</label>
+        <input type="text" th:field="*{wt}" placeholder="정규직/계약직/파트타임 등" maxlength="4" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+      <div class="input-list">
+        <label>작성자:</label>
+        <input type="text" th:field="*{writer}" required />
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
     </div>
     <div class="next_btn_box">
-      <button class="next_btn" type="submit">다음 단계</button>
+      <button class="button-link" type="submit">다음</button>
+      <button type="reset" class="button-link">초기화</button>
+      <button type="button" class="button-link" th:onclick="'location.href=\'' + @{/nurse(page=${param.page}, size=${param.size})} + '\';'">목록</button>
     </div>
   </form>
 </div>
