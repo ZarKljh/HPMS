@@ -6,7 +6,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/nurse/create/info")
 @RequiredArgsConstructor
@@ -16,6 +19,7 @@ public class NurseInformationController {
     private final NurseMainService nurseMainService;
     private final NurseInformationService nurseInformationService;
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
     public String createInfoForm(Model model, HttpSession session) {
         NurseMain nurseMain = (NurseMain) session.getAttribute("tempNurseMain");
@@ -27,6 +31,7 @@ public class NurseInformationController {
         return "nurse/nurse_info_form";
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("")
     public String createInfo(@ModelAttribute NurseInformation info, HttpSession session) {
         NurseMain nurseMain = (NurseMain) session.getAttribute("tempNurseMain");
@@ -45,6 +50,7 @@ public class NurseInformationController {
         return "redirect:/nurse/info/" + nurseMain.getId();
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/cancel")
     public String cancelCreation(HttpSession session) {
         session.removeAttribute("tempNurseMain");
