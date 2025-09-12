@@ -169,6 +169,12 @@ public class PatientController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
 
+        //검색 조건을 다시 모델에 넣습니다.
+        model.addAttribute("columns", columns);
+        model.addAttribute("operators", operators);
+        model.addAttribute("values", values);
+        model.addAttribute("logicalOperators", logicalOperators);
+
         // 기존 patient/list 의 화면 폼을 그대로 사용합니다
         return "patient/lsw_patient_list";
     }

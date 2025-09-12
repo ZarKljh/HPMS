@@ -1,41 +1,38 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
-  <h2 class="listbox">신규 환자 등록</h2>
+  <h3 class="mt-2">신규 환자 등록</h3>
   <form th:object="${patientForm}" method="post">
+
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
     <input type="hidden" name="page" value="0" />
     <input type="hidden" name="size" value="10" />
-    <h4 class="border-bottom py-2">환자정보 수정을 위한 공간입니다</h4>
-    <div class="patient-info card my-3 p-3">
+
+    <div class="patient-modify patient-info card my-3 p-3">
+      <div class="title-patient-name"><h4 class="title-h4-header" th:text="*{lastName} + ' ' + *{firstName}"></h4><span>님의 환자정보 수정을 위한 공간입니다</span></div>
+
       <!-- 기본 식별 정보 -->
-      <h5 class="mt-3">기본정보</h5>
+      <h5 class="mt-5">기본정보</h5>
       <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width: 200px;">ID</label>
-        <span th:field="*{id}"></span>
+        <label class="label-reform text-end flex-shrink-0 label-modify-id">ID</label>
+        <span th:text="*{id}"></span>
       </div>
-      <div  class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width: 200px;">종결여부</label>
-        <span th:field="*{delStatus}"></span>
-      </div>
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width: 200px;">최초등록일</label>
-        <input type="date" class="form-control" th:field="*{createDate}"/>
-      </div>
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width: 200px;">수정일</label>
-        <input type="text" class="form-control" th:field="*{updateDate}"/>
+      <div th:if="*{delStatus} == 1" class="d-flex align-items-start gap-2 mb-3">
+        <label class="label-reform text-end flex-shrink-0">종결여부</label>
+        <span>치료종결</span>
       </div>
 
       <!-- 인적사항 -->
-      <h5 class="mt-3">인적사항</h5>
+      <h5 class="mt-5">인적사항</h5>
+        <!--
         <div class="d-flex align-items-start gap-2 mb-3">
-          <strong>생년월일</strong>
-          <input type="text" class="form-control" th:field="*{birth}"/>
+          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">생년월일</label>
+          <input type="date" class="form-control" th:field="*{birth}"/>
         </div>
+        -->
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">성별</label>
+          <label class="label-reform text-end flex-shrink-0">성별</label>
           <select class="form-select" th:field="*{gender}">
             <option value="">선택하세요</option>
             <option value="M">남</option>
@@ -46,125 +43,125 @@
         <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">내/외국인</label>
           <input type="text" class="form-control" th:field="*{foreigner}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성명 성</label>
+        <div class="d-flex align-items-start gap-2 mb-3">
+          <label class="label-reform text-end flex-shrink-0">성명 성</label>
           <input type="text" class="form-control" th:field="*{lastName}"/>
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성명 이름</label>
+          <label class="label-reform text-end flex-shrink-0">성명 이름</label>
           <input type="text" class="form-control" th:field="*{firstName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">중간이름</label>
+          <label class="label-reform text-end flex-shrink-0">중간이름</label>
           <input type="text" class="form-control" th:field="*{middleName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권번호</label>
+          <label class="label-reform text-end flex-shrink-0">여권번호</label>
           <input type="text" class="form-control" th:field="*{passport}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권성명 성</label>
+          <label class="label-reform text-end flex-shrink-0">여권성명 성</label>
           <input type="text" class="form-control" th:field="*{passLastName}"/>
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권성명 이름</label>
+          <label class="label-reform text-end flex-shrink-0">여권성명 이름</label>
           <input type="text" class="form-control" th:field="*{passFirstName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권중간이름</label>
+          <label class="label-reform text-end flex-shrink-0">여권중간이름</label>
           <input type="text" class="form-control" th:field="*{passMiddleName}"/>
         </div>
 
 
         <!-- 연락처 -->
-      <h5 class="mt-3">연락처</h5>
+      <h5 class="mt-5">연락처</h5>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">MOBILE</label>
+          <label class="label-reform text-end flex-shrink-0">MOBILE</label>
           <input type="text" class="form-control" th:field="*{mobilePhone}">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">HOME</label>
+          <label class="label-reform text-end flex-shrink-0">HOME</label>
           <input type="text" class="form-control" th:field="*{homePhone}">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">OFFICE</label>
+          <label class="label-reform text-end flex-shrink-0">OFFICE</label>
           <input type="text" class="form-control" th:field="*{officePhone}">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">EMAIL</label>
+          <label class="label-reform text-end flex-shrink-0">EMAIL</label>
           <input type="text" class="form-control" th:field="*{email}">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">FAX</label>
+          <label class="label-reform text-end flex-shrink-0">FAX</label>
           <input type="text" class="form-control" th:field="*{fax}">
         </div>
 
 
         <!-- 보호자 정보 -->
-      <h5 class="mt-3">보호자 정보</h5>
+      <h5 class="mt-5">보호자 정보</h5>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 성명 성</label>
+          <label class="label-reform text-end flex-shrink-0">보호자 성명 성</label>
           <input type="text" class="form-control" th:field="*{guardianLastName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 성명 이름</label>
+          <label class="label-reform text-end flex-shrink-0">보호자 성명 이름</label>
           <input type="text" class="form-control" th:field="*{guardianFirstName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 연락처</label>
+          <label class="label-reform text-end flex-shrink-0">보호자 연락처</label>
           <input type="text" class="form-control" th:field="*{guardianTel}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 관계</label>
+          <label class="label-reform text-end flex-shrink-0">보호자 관계</label>
           <input type="text" class="form-control" th:field="*{guardianRelation}"/>
         </div>
 
 
         <!-- 주소 -->
-        <h5 class="mt-3">보호자 정보</h5>
+        <h5 class="mt-5">보호자 정보</h5>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">우편번호</label>
+            <label class="label-reform text-end flex-shrink-0">우편번호</label>
             <input type="text" class="form-control" th:field="*{homePcd}"/>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">기본주소</label>
+            <label class="label-reform text-end flex-shrink-0">기본주소</label>
             <input type="text" class="form-control" th:field="*{homeDefAdd}"/>
-            <button type="button" class="btn btn-primary" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">상세주소</label>
+            <label class="label-reform text-end flex-shrink-0">상세주소</label>
             <input type="text" class="form-control" th:field="*{homeDetAdd}"/>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(우편번호)</label>
+            <label class="label-reform text-end flex-shrink-0">등록주소(우편번호)</label>
             <input type="text" class="form-control" th:field="*{regPcd}"/>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(기본주소)</label>
+            <label class="label-reform text-end flex-shrink-0">등록주소(기본주소)</label>
             <input type="text" class="form-control" th:field="*{regDefAdd}"/>
-            <button type="button" class="btn btn-primary" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">등록주소(상세주소)</label>
+            <label class="label-reform text-end flex-shrink-0">등록주소(상세주소)</label>
             <input type="text" class="form-control" th:field="*{regDetAdd}"/>
           </div>
 
 
         <!-- 기타 -->
-        <h5 class="mt-3">보호자 정보</h5>
+        <h5 class="mt-5">보호자 정보</h5>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">직업</label>
+            <label class="label-reform text-end flex-shrink-0">직업</label>
             <input type="text" class="form-control" th:field="*{occupation}"/>
           </div>
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">국적</label>
+            <label class="label-reform text-end flex-shrink-0">국적</label>
             <input type="text" class="form-control" th:field="*{natn}"/>
-            <button type="button" class="btn btn-primary"  onclick="openCountryPopup()">국적검색</button>
+            <button type="button" class="btn btn-primary flex-shrink-0"  onclick="openCountryPopup()">국적검색</button>
           </div>
+          <!--
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">최종방문일</label>
+            <label class="label-reform text-end flex-shrink-0">최종방문일</label>
             <input type="date" class="form-control" th:field="*{lastVisitDate}"/>
           </div>
+          -->
           <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" style="width: 200px;">특이사항</label>
+            <label class="label-reform text-end flex-shrink-0">특이사항</label>
             <input type="text" class="form-control" th:field="*{note}"/>
           </div>
 
