@@ -30,17 +30,13 @@ public class NurseMainController {
         model.addAttribute("kw", kw);
         model.addAttribute("size", size);
 
-        // 페이지네이션 계산
-        long totalElements = paging.getTotalElements();
-        int pageSize = paging.getSize();
-        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
-
-        int currentPage = paging.getNumber();
-
         // 페이지 번호 리스트 생성
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages - 1)
+        int totalPages = paging.getTotalPages();
+        List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
                 .boxed()
                 .collect(Collectors.toList());
+
+        int currentPage = paging.getNumber();
 
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", currentPage);
