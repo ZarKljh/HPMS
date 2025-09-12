@@ -3,10 +3,8 @@ package com.HPMS.HPMS.nurse.nursehistory;
 import com.HPMS.HPMS.nurse.nursedto.NurseInformationDTO;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,47 +15,43 @@ public class NurseHistoryService {
 
     private final NurseHistoryRepository nurseHistoryRepository;
 
-    //간호사 정보 수정 시 히스토리 저장
+    // 간호사 정보 수정 시 히스토리 저장
+    @Transactional
     public void saveNurseHistory(NurseMain nurseMain, NurseInformationDTO nurseInfo, String modifier) {
-
-        // 히스토리 생성 및 저장
         NurseHistory history = NurseHistory.snapshotOf(nurseMain, nurseInfo);
         history.setModifier(modifier);
         history.setModifyDate(LocalDateTime.now());
-
         nurseHistoryRepository.save(history);
     }
 
-    //전체 히스토리 조회 (페이징)
-    public Page<NurseHistory> getAllHistory(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return nurseHistoryRepository.findAllByOrderByCreateDateDesc(pageable);
+    // 전체 히스토리 조회
+    @Transactional(readOnly = true)
+    public List<NurseHistory> getAllHistoryList() {
+        return nurseHistoryRepository.findAllOrderByCreateDateDesc();
     }
 
-    //특정 간호사의 히스토리 조회
+    // 특정 간호사 히스토리 조회
+    @Transactional(readOnly = true)
     public List<NurseHistory> getHistoryByNurse(NurseMain nurseMain) {
         return nurseHistoryRepository.findByNurseMainOrderByCreateDateDesc(nurseMain);
     }
 
-    //전체 히스토리 조회 (리스트)
-    public List<NurseHistory> getAllHistoryList() {
-        return nurseHistoryRepository.findAll().stream()
-                .sorted((h1, h2) -> h2.getCreateDate().compareTo(h1.getCreateDate()))
-                .toList();
-    }
-
-    //특정 기간 히스토리 조회
-    public List<NurseHistory> getHistoryByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return nurseHistoryRepository.findByCreateDateBetween(startDate, endDate);
-    }
-
-    //수정자별 히스토리 조회
+    // 수정자별 조회
+    @Transactional(readOnly = true)
     public List<NurseHistory> getHistoryByModifier(String modifier) {
         return nurseHistoryRepository.findByModifierOrderByCreateDateDesc(modifier);
     }
 
-    //간호사 이름으로 히스토리 검색
+    // 이름으로 검색
+    @Transactional(readOnly = true)
     public List<NurseHistory> searchHistoryByNurseName(String name) {
         return nurseHistoryRepository.findByNurseNameContaining(name);
+    }
+
+    // ID로 히스토리 조회 (JOIN FETCH 사용)
+    @Transactional(readOnly = true)
+    public NurseHistory getHistoryById(Integer historyId) {
+        return nurseHistoryRepository.findByIdWithNurseMain(historyId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 히스토리를 찾을 수 없습니다. ID: " + historyId));
     }
 }

@@ -15,4 +15,5 @@ public interface NurseMainRepository extends JpaRepository<NurseMain, Integer> {
     List<NurseMain> findByDeptLike(String dept);
     Page<NurseMain> findAll(Pageable pageable);
     Page<NurseMain> findAll(Specification<NurseMain> spec, Pageable pageable);
+    Page<NurseMain> findByFirstNameContaining(String firstName, Pageable pageable);
 }

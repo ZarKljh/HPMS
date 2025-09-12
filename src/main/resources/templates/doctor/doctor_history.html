@@ -62,8 +62,6 @@
   <table>
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Doctor ID</th>
       <th>
         <a th:href="@{/doctor/history(
               doctorId=${cond.doctorId},
@@ -77,32 +75,57 @@
         <span class="muted" th:text="${sortParam} == 'createDate,DESC' ? '▼' : (sortParam == 'createDate,ASC' ? '▲' : '')"></span>
       </th>
       <th>작성자</th>
+      <th>부서</th>
+      <th>진료과</th>
+      <th>직책</th>
+      <th>성</th>
+      <th>중간이름</th>
       <th>이름</th>
-      <th>부서 / 진료과</th>
+      <th>성별</th>
       <th>전화</th>
       <th>입사일</th>
-      <th>비고</th>
+      <th>상태</th>
+      <th>근무형태</th>
+      <th class="right nowrap">더보기</th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${page.totalElements == 0}">
-      <td colspan="9" class="muted">데이터가 없습니다.</td>
+      <!-- 총 14컬럼이므로 colspan도 14 -->
+      <td colspan="14" class="muted">데이터가 없습니다.</td>
     </tr>
 
     <tr th:each="h : ${page.content}">
-      <td th:text="${h.id}"></td>
-      <td class="nowrap" th:text="${h.doctorMain != null ? h.doctorMain.id : '-'}"></td>
-      <td class="nowrap" th:text="${#temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <!-- 1) 생성일 -->
+      <td class="nowrap" th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}"></td>
+      <!-- 2) 작성자 -->
       <td th:text="${h.writer}"></td>
-      <td th:text="${(h.lastName != null ? h.lastName : '') + ' ' + (h.firstName != null ? h.firstName : '')}"></td>
-      <td>
-        <span th:text="${h.department}"></span>
-        <span class="muted" th:if="${h.medicalDepartment != null}"> / </span>
-        <span class="muted" th:text="${h.medicalDepartment}"></span>
-      </td>
+      <!-- 3) 부서 -->
+      <td th:text="${h.department}"></td>
+      <!-- 4) 진료과 -->
+      <td th:text="${h.medicalDepartment}"></td>
+      <!-- 5) 직급 -->
+      <td th:text="${h.rank}"></td>
+      <!-- 6) 성 -->
+      <td th:text="${h.lastName}"></td>
+      <!-- 7) 중간이름 -->
+      <td th:text="${h.middleName}"></td>
+      <!-- 8) 이름 -->
+      <td th:text="${h.firstName}"></td>
+      <!-- 9) 성별 -->
+      <td th:text="${h.gender}"></td>
+      <!-- 10) 전화 -->
       <td th:text="${h.telephone}"></td>
+      <!-- 11) 입사일 -->
       <td class="nowrap" th:text="${h.hireDate != null ? #temporals.format(h.hireDate, 'yyyy-MM-dd') : ''}"></td>
-      <td th:text="${h.note}"></td>
+      <!-- 12) 상태 -->
+      <td th:text="${h.status}"></td>
+      <!-- 13) 근무형태 -->
+      <td th:text="${h.workType}"></td>
+      <!-- 14) 더보기 -->
+      <td class="right nowrap">
+        <a class="btn" th:href="@{/doctor/history/{hid}(hid=${h.id})}">더보기</a>
+      </td>
     </tr>
     </tbody>
   </table>

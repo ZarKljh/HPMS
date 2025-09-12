@@ -60,7 +60,7 @@ public class DoctorMController {
             return "redirect:/doctor/new";
         }
         Integer id = doctorDTLService.createMainAndDetail(mForm, dForm);
-        return "redirect:/doctor/detail?id=" + id;
+        return "redirect:/doctor/dtl/detail?id=" + id;
     }
 
     /** 수정: 메인+디테일 통합 폼 */
@@ -105,7 +105,7 @@ public class DoctorMController {
             return "redirect:/doctor/edit/" + id;
         }
         doctorDTLService.updateMainAndDetail(id, mForm, dForm);
-        return "redirect:/doctor/detail?id=" + id;
+        return "redirect:/doctor/dtl/detail?id=" + id;
     }
 
     /** 삭제: 상세 하단 버튼에서 사용 */

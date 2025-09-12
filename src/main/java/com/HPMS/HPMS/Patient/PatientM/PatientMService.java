@@ -34,17 +34,27 @@ public class PatientMService {
         return this.patientMRepository.findAll();
     }
 
+    // paging 을 위해 page<PatientM> 형태로 모든 환자의 Main 정보를 가져옵니다
+    // 종결(삭제)처리된 환자의 정보는 제외합니다
     public Page<PatientM> getAllPatientM(Pageable pageable) {
 
+        // 종결(삭제)처리된 환자를 제외하기 위한 쿼리 생성 메소드를 호출합니다
         Specification<PatientM> spec = findAllExceptDel();
+        // 생성된 쿼리를 이용하여 종결(삭제) 외의 모든 환자정보를 가져옵니다
+        // 현재의 쿼리문은 select * from tbl_patient_m where delStatus != 1 입니다
         return this.patientMRepository.findAll(spec,pageable);
     }
 
+    // 쿼리를 생성하는 메소드
     private Specification<PatientM> findAllExceptDel(){
         return new Specification<PatientM>() {
+             // toPredicate 에 들어가는 인자들은 정해져있습니다
              @Override
              public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 
+                 // root : PatientM 클래스와 연결되어있습니다.
+                 // root.get("delStatus") PatientM 엔티티의 delStatus 칼럼을 가져옵니다
+                 // criteriaBuilder.notEqual(root.get("delStatus"), 1) --> delStatus가 1이 아닌 것 이라는 where문을 생성합니다
                  return criteriaBuilder.notEqual(root.get("delStatus"), 1);
             }
         };
@@ -63,11 +73,11 @@ public class PatientMService {
 //        CriteriaQuery<PatientM> query = cb.createQuery(PatientM.class);
 //        Root<PatientM> root = query.from(PatientM.class);
 
-        // Predicate 생성
-//        List<Predicate> predicates = buildPredicates(cb, root, columns, operators, values);
+        // 다중조건에 부합한 환자를 찾기 위한 쿼리 생성 메소드를 호출합니다
         Specification<PatientM> spec = search(columns, operators, values, logicalOperators);
         return this.patientMRepository.findAll(spec, pageable);
     }
+
 
     private Specification<PatientM> search(
             List<String> columns,
@@ -82,8 +92,6 @@ public class PatientMService {
             public Predicate toPredicate(Root<PatientM> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true); // 중복 제거
 
-
-
                 if (columns == null || columns.isEmpty()) {
                     return cb.conjunction(); // 조건이 없으면 전체 검색
                 }
@@ -91,8 +99,11 @@ public class PatientMService {
 
 
                 // LEFT JOIN 추가: PatientDTL과 조인
+                // mobilePhone 은 PatientM이 아닌 PatientDTL에 있으므로 join을 한다
                 Join<PatientM, PatientDTL> dtlJoin = root.join("patientDTL", JoinType.LEFT);
 
+                // where문이 저장되는 변수 combinedPredicate
+                // where문이 bulePredicate로 인하여 하나하나 쌓여간다
                 // 첫 번째 조건을 기본으로 설정
                 Predicate combinedPredicate = buildPredicate(cb, root, dtlJoin, columns.get(0), operators.get(0), values.get(0));
 
@@ -125,7 +136,11 @@ public class PatientMService {
             String operator,
             String value
     ) {
+        // 조건들이 비어있는 값인지 확인합니다
+        // 조건을 만들수 있는가 없는가를 판단합니다
         if (column == null || column.isBlank() || value == null || value.isBlank()) {
+            // 항상 참인 조건을 만듭니다
+            // 검색에 아무런 영향을 미치지 않습니다
             return cb.conjunction(); // 빈 값이면 true
         }
 
@@ -133,6 +148,8 @@ public class PatientMService {
 
         // 기존: path = root.get(column);
         // 수정: 휴대전화만 dtlJoin에서 가져오기
+
+        // 컬럼이 PatientM과 PatientDTL 어디에 있는지 판단합니다
         if ("mobilePhone".equals(column)) {
             path = dtlJoin.get("mobilePhone");
         } else if ("guardianTel".equals(column)){
@@ -140,7 +157,9 @@ public class PatientMService {
         } else {
             path = root.get(column);
         }
-
+        // yield 는 return switch를 사용하기 위한 문법
+        // 기존 switch를 사용할 경우 yield --> return으로 수정
+        // birth 는 PatientM에서 integer 타입으로 저장
         return switch (operator) {
             case "=" -> {
                 if ("birth".equals(column)) {

@@ -1,16 +1,19 @@
-<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<html layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
-    <h2 class="listbox">Patient List</h2>
-
+    <div style="display:flex; align-items:baseline; gap:20px;">
+        <h3 class="listbox" style="margin:0;">Patient List</h3>
+        <h7 style="margin:0;">환자 리스트</h7>
+    </div>
     <!-- 🔍 검색 영역 시작 -->
-    <div class="search-section container my-3">
-        <button type="button" class="btn btn-primary mb-3" onclick="toggleSearchForm()">검색하기</button>
+    <div class="card my-3">
+
+        <button type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></button>
 
         <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
             <div id="searchConditions">
                 <!-- 🔹 검색 조건 한 줄 -->
-                <div class="search-row row mb-2">
-                    <div class="col-md-3">
+                <div class="search-row row mb-2" style="font-size:12px;">
+                    <div class="col-8 col-md-3">
                         <select name="column[]" class="form-select" onchange="updateOperatorOptions(this)">
                             <option value="">컬럼 선택</option>
                             <option value="lastName">성명 성</option>
@@ -53,80 +56,76 @@
             </div>
 
             <div class="text-end">
-                <button type="submit" class="btn btn-primary">검색 실행</button>
+                <button type="submit" class="search_btn"><span>검색실행</span></button>
+            </div>
+        </form>
+
+    </div>
+    <!-- 🔍 검색 영역 끝 -->
+    <div>
+        <form method="get" action="/patient/list">
+            <div class="mb-3" style="font-size: 12px;">
+                <span>등록건수:</span><span th:text="${patients.totalElements}"></span><span>명 /</span>
+                <span>현재페이지:</span><span th:text="${patients.number+1}"></span><span> /</span>
+                <span>페이지당 행 수:</span>
+                <!--<label for="size">Row counter:</label> -->
+                <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
+                    <option th:value="5" th:selected="${size == 5}">5</option>
+                    <option th:value="10" th:selected="${size == 10}">10</option>
+                    <option th:value="20" th:selected="${size == 20}">20</option>
+                </select>
+                <input type="hidden" name="page" value="1" />
             </div>
         </form>
     </div>
-    <!-- 🔍 검색 영역 끝 -->
 
 
-    <form method="get" action="/patient/list">
-        <div class="mb-3">
-            <span>등록건수:</span><span th:text="${patients.totalElements}"></span><span>명 /</span>
-            <span>현재페이지:</span><span th:text="${patients.number+1}"></span><span> /</span>
-            <span>페이지당 행 수:</span>
-            <!--<label for="size">Row counter:</label> -->
-            <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
-                <option th:value="5" th:selected="${size == 5}">5</option>
-                <option th:value="10" th:selected="${size == 10}">10</option>
-                <option th:value="20" th:selected="${size == 20}">20</option>
-            </select>
-            <input type="hidden" name="page" value="1" />
-        </div>
-    </form>
-    <div class="patient-list"> <!-- 환자리스트 시작-->
-        <table class="table table-hover card">
-            <thead class="table-info">
-            <tr class="list text-center">
+    <table class="table table-hover card">
+        <thead class="table-light">
+        <tr class="list text-center">
+            <th class="mobail_hidden">환자ID</th>
+            <th>성명</th>
+            <th>성별</th>
+            <th>생년월일</th>
+            <th  class="mobail_hidden">내/외국인</th>
+            <th>휴대전화</th>
+            <th  class="mobail_hidden">보호자 연락처</th>
+            <th  class="mobail_hidden">최종 방문일</th>
+            <th  class="mobail_hidden">등록일</th>
+        </tr>
+        </thead>
 
-                <th class="mobail_hidden">환자ID</th>
-                <th>성명</th>
-                <th>성별</th>
-                <th>생년월일</th>
-                <th  class="mobail_hidden">내/외국인</th>
-                <th>휴대전화</th>
-                <th  class="mobail_hidden">보호자 연락처</th>
-                <th  class="mobail_hidden">최종 방문일</th>
-                <th  class="mobail_hidden">등록일</th>
-            </tr>
-            </thead>
+        <tbody class="text-center">
+        <tr class="text-center" th:each="patient,  loop : ${patients}">
 
-            <tbody class="text-center">
-            <tr class="text-center" th:each="patient,  loop : ${patients}">
+            <td class="mobail_hidden" th:text="${patient.id}"></td>
+            <td>
+                <a th:href="@{|/patient/detail/${patient.id}|}" th:text="${patient.name}"></a>
+            </td>
+            <td th:text="${patient.gender}"></td>
+            <td th:text="${#temporals.format(patient.birth,'yyyy-MM-dd')}"></td>
+            <td class="mobail_hidden" th:text="${patient.foreigner == '1' ? '외국인' : '내국인'}"></td>
+            <td th:text="${patient.mobilePhone}"></td>
+            <td class="mobail_hidden" th:text="${patient.guardianTel}"></td>
+            <td class="mobail_hidden" th:text="${#temporals.format(patient.lastVisitDate,'yyyy-MM-dd')}"></td>
+            <td class="mobail_hidden" th:text="${#temporals.format(patient.createDate,'yyyy-MM-dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-                <td class="mobail_hidden" th:text="${patient.id}"></td>
-                <td>
-                    <a th:href="@{|/patient/detail/${patient.id}|}" th:text="${patient.name}"></a>
-                </td>
-                <td th:text="${patient.gender}"></td>
-                <td th:text="${#temporals.format(patient.birth,'yyyy-MM-dd')}"></td>
-                <td class="mobail_hidden" th:text="${patient.foreigner == '1' ? '외국인' : '내국인'}"></td>
-                <td th:text="${patient.mobilePhone}"></td>
-                <td class="mobail_hidden" th:text="${patient.guardianTel}"></td>
-                <td class="mobail_hidden" th:text="${#temporals.format(patient.lastVisitDate,'yyyy-MM-dd')}"></td>
-                <td class="mobail_hidden" th:text="${#temporals.format(patient.createDate,'yyyy-MM-dd')}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div> <!-- 환자리스트 끝-->
-    <div class="footer">
+    <div class="page-navi">
         <div class="page-navigation"><!-- 페이지 이동버튼 시작-->
             <form id="registrationForm" method="post" action="/user/personnel_registration">
                 <input name="size" type="hidden" th:value="${size}" >
                 <!--<input name="page" type="text" th:value="${page}" hidden="hidden">-->
                 <input type="hidden" name="page" th:value="${currentPage}" />
-                <a th:href="@{/patient/create}" class="button-link text-full">
-                    등록하기
-                </a>
-                <a href="#" class="button-link delete-button">
-                    삭제하기
-                </a>
+
             </form>
         </div><!-- 페이지 이동버튼 끝-->
 
         <!-- 페이징처리 시작 -->
         <div class="page" th:if="${!patients.isEmpty()}">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination">
                 <li class="page-item" th:classappend="${!patients.hasPrevious} ? 'disabled'">
                     <a class="page-link"
                        th:href="@{|?page=${patients.number-1}&size=${size}|}">
@@ -134,7 +133,7 @@
                     </a>
                 </li>
                 <li th:each="page: ${#numbers.sequence(0, patients.totalPages-1)}"
-                    th:if="${page >= patients.number-5 and page <= patients.number+5}"
+                    th:if="${page >= patients.number-3 and page <= patients.number+3}"
                     th:classappend="${page == patients.number} ? 'active'"
                     class="page-item">
                     <a th:text="${page+1}" class="page-link" th:href="@{|?page=${page}&size=${size}|}"></a>
@@ -145,11 +144,15 @@
                     </a>
                 </li>
             </ul>
+            <div>
+                <a th:href="@{/patient/create}" role="button" class="button-link text-full">등록하기</a>
+            </div>
         </div>
         <!-- 페이징처리 끝 -->
     </div>
 
 </div>
 <!-- ✅ JS 스크립트: 검색 폼 동적 제어 -->
+
 
 </html>

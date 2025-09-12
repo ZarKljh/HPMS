@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/global/road")
+
 public class Address_Code_Controller {
 
     private final Address_Code_Service service;
@@ -21,6 +22,7 @@ public class Address_Code_Controller {
     }
 
     /** AJAX 검색 (JSON 반환) */
+
     @GetMapping("/search")
     @ResponseBody
     public ResponseEntity<Page<Address_Code>> search(
@@ -32,3 +34,4 @@ public class Address_Code_Controller {
         return ResponseEntity.ok(service.search(kw, pageable));
     }
 }
+

@@ -6,17 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/doctor/history")
 public class DoctorHController {
     private final DoctorHService doctorHService;
-
+    private final DoctorHRepository doctorHRepository;
 
     @GetMapping("")
     public String list(@ModelAttribute("cond") DoctorHForm cond,
@@ -34,5 +32,17 @@ public class DoctorHController {
         Pageable pageable = PageRequest.of(page, size, sortObj);
         model.addAttribute("page", doctorHService.search(cond, pageable));
         return "doctor/doctor_history";
+    }
+    @GetMapping("/{hid}")
+    public String detail(@PathVariable Integer hid, Model model, RedirectAttributes redirect) {
+        return doctorHRepository.findById(hid)
+                .map(h -> {
+                    model.addAttribute("h", h);
+                    return "doctor/doctor_history_detail"; // 템플릿 경로
+                })
+                .orElseGet(() -> {
+                    redirect.addFlashAttribute("msg", "해당 히스토리가 없습니다.");
+                    return "redirect:/doctor/history";
+                });
     }
 }

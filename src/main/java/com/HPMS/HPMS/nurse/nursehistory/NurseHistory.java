@@ -209,4 +209,8 @@ public class NurseHistory {
 
                 .build();
     }
+
+    public NurseMain getNurse() {
+        return nurseMain;
+    }
 }
