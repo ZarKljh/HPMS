@@ -2,11 +2,11 @@
 <div layout:fragment="content" class="container">
     <form class="info_form" th:action="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" method="post">
 
-        <h2 class="border-bottom py-2" th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.lastName}|"></h2>
+        <h3 class="border-bottom mt-2" th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.lastName}|"></h3>
 
         <!-- Main 정보 -->
-        <div class="main card my-3">
-
+        <div class="main card my-3 p-3">
+            <h4 class="border-bottom py-2">간호사 상세페이지 입니다.</h4>
             <div class="m-d-btn">
                 <div class="m-d-btn_box">
                     <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
@@ -20,49 +20,132 @@
                 <span th:if="${nurseDTO.nurseInformation.picture == null}">사진 없음</span>
             </div>
 
-            <div class="basic_info">
-                <p class="info"><strong class="txt">성명:</strong><span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
-                <p class="info"><strong class="txt">부서:</strong><span th:text="${nurseDTO.nurseMain.dept}"></span></p>
-                <p class="info"><strong class="txt">직급:</strong><span th:text="${nurseDTO.nurseMain.rank}"></span></p>
+            <!-- 작성자 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">등록일시:</label>
+                <span th:text="${#temporals.format(nurseDTO.nurseMain.createDate,'yyyy-MM-dd HH:mm') ?: '정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">작성자:</label>
+                <span th:text="${nurseDTO.nurseMain.writer ?: '등록자 정보 없음'}" style="width:220px;"></span>
             </div>
 
-            <p class="info_1"><strong class="txt">성명:</strong><span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName} ${nurseDTO.nurseMain.lastName}|"></span></p>
-            <p class="info_1"><strong class="txt">부서:</strong><span th:text="${nurseDTO.nurseMain.dept}"></span></p>
-            <p class="info_1"><strong class="txt">직급:</strong><span th:text="${nurseDTO.nurseMain.rank}"></span></p>
-            <p class="info"><strong class="txt">성별:</strong><span th:text="${nurseDTO.nurseMain.gender}"></span></p>
-            <p class="info"><strong class="txt">생년월일:</strong><span th:text="${nurseDTO.nurseMain.dateOfBirth}"></span></p>
-            <p class="info"><strong class="txt">입사일:</strong><span th:text="${nurseDTO.nurseMain.hireDate}"></span></p>
-            <p class="info"><strong class="txt">상태:</strong><span th:text="${nurseDTO.nurseMain.sts}"></span></p>
-            <p class="info"><strong class="txt">근무형태:</strong><span th:text="${nurseDTO.nurseMain.wt}"></span></p>
-            <p class="info"><strong class="txt">작성자:</strong><span th:text="${nurseDTO.nurseMain.writer}"></span></p>
-            <p class="info"><strong class="txt">작성시간:</strong><span th:text="${nurseDTO.nurseMain.createDate}"></span></p>
-            <p class="info"><strong class="txt">수정자:</strong><span th:text="${nurseDTO.nurseMain.modifier}"></span></p>
-            <p class="info"><strong class="txt">수정시간:</strong><span th:text="${nurseDTO.nurseMain.modifyDate}"></span></p>
-        </div>
+            <!-- 기본 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">부서:</label>
+                <span th:text="${nurseDTO.nurseMain.dept ?: '부서 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">직급:</label>
+                <span th:text="${nurseDTO.nurseMain.rank ?: '직급 정보 없음'}" style="width:220px;"></span>
+            </div>
 
-        <!-- Information 정보 -->
-        <div class="information card my-3" th:if="${nurseDTO.nurseInformation != null}">
-            <p class="info"><strong class="txt">서브 이름:</strong><span th:text="|${nurseDTO.nurseInformation.firstName} ${nurseDTO.nurseInformation.lastName} ${nurseDTO.nurseInformation.middleName}|"></span></p>
-            <p class="info"><strong class="txt">전화번호:</strong><span th:text="${nurseDTO.nurseInformation.tel}"></span></p>
-            <p class="info"><strong class="txt">비상연락처:</strong><span th:text="${nurseDTO.nurseInformation.emgcCntc}"></span></p>
-            <p class="info"><strong class="txt">성함:</strong><span th:text="|${nurseDTO.nurseInformation.emgcFName} ${nurseDTO.nurseInformation.emgcLName} ${nurseDTO.nurseInformation.emgcMName}|"></span></p>
-            <p class="info"><strong class="txt">관계:</strong><span th:text="${nurseDTO.nurseInformation.emgcRel}"></span></p>
-            <p class="info"><strong class="txt">비고:</strong><span th:text="${nurseDTO.nurseInformation.emgcNote}"></span></p>
-            <p class="info"><strong class="txt">이메일:</strong><span th:text="${nurseDTO.nurseInformation.email}"></span></p>
-            <p class="info"><strong class="txt">우편번호:</strong><span th:text="${nurseDTO.nurseInformation.pcd}"></span></p>
-            <p class="info"><strong class="txt">기본주소:</strong><span th:text="${nurseDTO.nurseInformation.defAdd}"></span></p>
-            <p class="info"><strong class="txt">상세주소:</strong><span th:text="${nurseDTO.nurseInformation.detAdd}"></span></p>
-            <p class="info"><strong class="txt">간호사 자격증 번호:</strong><span th:text="${nurseDTO.nurseInformation.rnNo}"></span></p>
-            <p class="info"><strong class="txt">최종학력:</strong><span th:text="${nurseDTO.nurseInformation.edbc}"></span></p>
-            <p class="info"><strong class="txt">졸업날짜:</strong><span th:text="${nurseDTO.nurseInformation.gradDate}"></span></p>
-            <p class="info"><strong class="txt">외국어:</strong><span th:text="${nurseDTO.nurseInformation.fl}"></span></p>
-            <p class="info"><strong class="txt">병역:</strong><span th:text="${nurseDTO.nurseInformation.ms}"></span></p>
-            <p class="info"><strong class="txt">국적:</strong><span th:text="${nurseDTO.nurseInformation.natn}"></span></p>
-            <p class="info"><strong class="txt">장애여부:</strong><span th:text="${nurseDTO.nurseInformation.dss}"></span></p>
-            <p class="info"><strong class="txt">경력:</strong><span th:text="${nurseDTO.nurseInformation.carr}"></span></p>
-            <p class="info"><strong class="txt">비고:</strong><span th:text="${nurseDTO.nurseInformation.note}"></span></p>
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">성명:</label>
+                <span th:text="|${nurseDTO.nurseMain.firstName} ${nurseDTO.nurseMain.middleName ?: ''} ${nurseDTO.nurseMain.lastName}|" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">성별:</label>
+                <span th:text="${nurseDTO.nurseMain.gender ?: '성별 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">생년월일:</label>
+                <span th:text="${nurseDTO.nurseMain.dateOfBirth ?: '생년월일 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">입사일:</label>
+                <span th:text="${nurseDTO.nurseMain.hireDate ?: '입사일 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">상태:</label>
+                <span th:text="${nurseDTO.nurseMain.sts ?: '상태 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">근무형태:</label>
+                <span th:text="${nurseDTO.nurseMain.wt ?: '근무형태 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <!-- 연락처 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">전화번호:</label>
+                <span th:text="${nurseDTO.nurseInformation.tel ?: '전화번호 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">이메일:</label>
+                <span th:text="${nurseDTO.nurseInformation.email ?: '이메일 없음'}" style="width:220px;"></span>
+            </div>
+
+            <!-- 비상연락처 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락처:</label>
+                <span th:text="${nurseDTO.nurseInformation.emgcCntc ?: '비상연락처 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>관계:</label>
+                <span th:text="${nurseDTO.nurseInformation.emgcRel ?: '관계 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>성함:</label>
+                <span th:text="|${nurseDTO.nurseInformation.emgcFName ?: ''} ${nurseDTO.nurseInformation.emgcMName ?: ''} ${nurseDTO.nurseInformation.emgcLName ?: ''}|" style="width:70%;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>비고:</label>
+                <span th:text="${nurseDTO.nurseInformation.emgcNote ?: '비고 없음'}" style="width:70%;"></span>
+            </div>
+
+            <!-- 주소 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">우편번호:</label>
+                <span th:text="${nurseDTO.nurseInformation.pcd ?: '우편번호 없음'}" style="width:70%;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">기본주소:</label>
+                <span th:text="${nurseDTO.nurseInformation.defAdd ?: '기본주소 없음'}" style="width:70%;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">상세주소:</label>
+                <span th:text="${nurseDTO.nurseInformation.detAdd ?: '상세주소 없음'}" style="width:70%;"></span>
+            </div>
+
+            <!-- 전문 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">간호사<br>자격증번호:</label>
+                <span th:text="${nurseDTO.nurseInformation.rnNo ?: '자격증번호 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">최종학력:</label>
+                <span th:text="${nurseDTO.nurseInformation.edbc ?: '최종학력 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">졸업날짜:</label>
+                <span th:text="${nurseDTO.nurseInformation.gradDate ?: '졸업날짜 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">외국어:</label>
+                <span th:text="${nurseDTO.nurseInformation.fl ?: '외국어 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">병역:</label>
+                <span th:text="${nurseDTO.nurseInformation.ms ?: '병역 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">국적:</label>
+                <span th:text="${nurseDTO.nurseInformation.natn ?: '국적 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">장애여부:</label>
+                <span th:text="${nurseDTO.nurseInformation.dss ?: '장애여부 정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">경력:</label>
+                <span th:text="${nurseDTO.nurseInformation.carr ?: '경력 정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <!-- 수정자 정보 -->
+            <div class="d-flex align-items-start gap-2 mb-3">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">수정자:</label>
+                <span th:text="${nurseDTO.nurseMain.modifier ?: '정보 없음'}" style="width:220px;"></span>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">수정시간:</label>
+                <span th:text="${#temporals.format(nurseDTO.nurseMain.modifyDate,'yyyy-MM-dd HH:mm') ?: '정보 없음'}" style="width:220px;"></span>
+            </div>
+
+            <!-- 비고 -->
+            <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비고:</label>
+                <span th:text="${nurseDTO.nurseInformation.note ?: '비고 없음'}" style="width:70%;"></span>
+            </div>
         </div>
     </form>
+
+
+
     <!-- License 정보 -->
     <div class="license card my-3 p-3">
         <h3 class="border-bottom py-2">자격증 정보</h3>

@@ -31,6 +31,7 @@ public class NurseHistoryController {
     }
 
     // 특정 간호사 히스토리
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/{nurseId}")
     public String showNurseHistory(@PathVariable Integer nurseId, Model model) {
         try {
@@ -46,6 +47,7 @@ public class NurseHistoryController {
     }
 
     // 단일 히스토리 상세보기 - 수정된 버전
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/detail/{historyId}")
     public String showNurseHistoryDetail(@PathVariable Integer historyId, Model model) {
         try {
@@ -74,6 +76,7 @@ public class NurseHistoryController {
     }
 
     // 수정자별 히스토리
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/modifier/{modifier}")
     public String showHistoryByModifier(@PathVariable String modifier, Model model) {
         List<NurseHistory> historyList = nurseHistoryService.getHistoryByModifier(modifier);
@@ -83,6 +86,7 @@ public class NurseHistoryController {
     }
 
     // 이름으로 검색
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/search")
     public String searchHistory(@RequestParam(required = false) String name, Model model) {
         List<NurseHistory> historyList;

@@ -19,6 +19,7 @@ public class NurseMainController {
 
     private final NurseMainService nurseMainService;
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="size", defaultValue="10") int size, HttpSession session, @RequestParam(value = "kw", defaultValue = "") String kw) {
         session.removeAttribute("tempNurseMain");
@@ -48,12 +49,14 @@ public class NurseMainController {
         return "nurse/nurse_main";
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/create")
     public String createMainForm(Model model) {
         model.addAttribute("nurseMain", new NurseMain());
         return "nurse/nurse_main_form";
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/create")
     public String createMain(@ModelAttribute NurseMain nurseMain, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
