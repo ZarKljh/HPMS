@@ -21,7 +21,7 @@
         <div class="search_box row my-3">
             <div>
                 <div class="input-group">
-                    <span class="input-text">이름/부서/직급/상태/근무형태/작성자/전화번호/수정자만 작성 가능</span>
+                    <span class="input-text">이름/부서/직급/상태/근무형태/작성자/전화번호/수정자만 검색 가능합니다.</span>
                     <input type="text" id="search_kw" class="form-control" th:value="${kw}"/>
                     <button class="search_btn" type="submit" id="btn_search">검색</button>
                 </div>
@@ -80,15 +80,15 @@
             <a th:each="pageNum : ${pageNumbers}"
                th:if="${pageNum >= currentPage-3 and pageNum <= currentPage+3}"
                th:href="@{|/nurse?page=${pageNum}&size=${size}|}"
-               th:text="${pageNum}"
+               th:text="${pageNum + 1}"
                th:class="${(pageNum == currentPage) ? 'active-page' : ''}"></a>
 
             <a th:if="${currentPage < totalPages}" th:href="@{|/nurse?page=${currentPage + 1}&size=${size}|}">다음</a>
         </div>
-    </div>
-    <div class="box2">
-        <a th:href="@{/nurse/create}" class="button-link">등록</a>
-        <a th:href="@{/nurse/history}" class="button-link">수정내역</a>
+        <div>
+            <a th:href="@{/nurse/create}" class="button-link">등록</a>
+            <a th:href="@{/nurse/history}" class="button-link">수정내역</a>
+        </div>
     </div>
     <!-- 페이징처리 끝 -->
 
