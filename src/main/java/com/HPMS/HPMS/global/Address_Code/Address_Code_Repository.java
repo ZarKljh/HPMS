@@ -23,3 +23,4 @@ public interface Address_Code_Repository extends JpaRepository<Address_Code, Int
       """)
     Page<Address_Code> search(@Param("kw") String kw, Pageable pageable);
 }
+

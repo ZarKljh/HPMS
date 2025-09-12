@@ -59,7 +59,7 @@ public class PatientDTOService {
 //        return dtoList;
 //    }
 
-    //환자리스트화면을 위한 DTO service
+    //patient/list 페이지를 위한 DTO service
     //페이징 기능 추가된 getPatientListDTO
     public Page<PatientListDTO> getPatientListDTO(Pageable pageable){
 
@@ -90,12 +90,13 @@ public class PatientDTOService {
 
             dtoList.add(dto);
         }
+        //List<PatientListDTO> 의 데이터 타입을 Page<PatientListDTO> 형태로 변환합니다
         return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
 
     }
 
 
-
+    // 환자 1명의 정보를 가져오기 위한 메소드입니다
     public PatientDetailDTO getPatientDetailDTO(Integer id){
 
         //환자 1명의 main정보를 가져온다
@@ -123,6 +124,7 @@ public class PatientDTOService {
         detailDTO.setPassLastName(m.getPassLastName());
         detailDTO.setMiddleName(m.getPassMiddleName());
 
+        // 전화번호에 포함되어있는 '-'을 제거합니다
         detailDTO.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
         detailDTO.setHomePhone(dtl.getHomePhone());
         detailDTO.setOfficePhone(formatPhoneNumber(dtl.getOfficePhone()));
@@ -151,6 +153,7 @@ public class PatientDTOService {
         return detailDTO;
     }
 
+    // 다중컨디션을 이용한 환자정보를 가져옵니다
     public Page<PatientListDTO> searchPatients(
             List<String> columns,
             List<String> operators,
@@ -158,6 +161,7 @@ public class PatientDTOService {
             List<String> logicalOperators,
             Pageable pageable
     ) {
+        //page형태로 patientM정보를 가져옵니다
         Page<PatientM> patientMs = this.patientMService.patientMSearch(columns, operators, values, logicalOperators, pageable);
 
         List<PatientListDTO> dtoList = new ArrayList<>();
@@ -181,6 +185,7 @@ public class PatientDTOService {
             dtoList.add(dto);
         }
 
+        //List<PatientListDTO> 의 데이터 타입을 Page<PatientListDTO> 형태로 변환합니다
         return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
     }
 

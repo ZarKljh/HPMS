@@ -1,3 +1,4 @@
+<!-- src/main/resources/templates/doctor/doctor_new.html -->
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -12,6 +13,10 @@
         .row { display:flex; gap:8px; align-items:center; margin-top:12px; }
         .err { color:#c00; font-size:12px; grid-column: 1 / span 2; }
         input, select { padding:6px; }
+          /* ✅ 한 줄 전체 폭을 쓰게 하는 유틸 */
+  .full { grid-column: 1 / -1; }
+  /* ✅ 오른쪽 칸만 쓰는 유틸 (라디오/복합 입력에 사용) */
+  .rcol { grid-column: 2 / 3; }
     </style>
 </head>
 <body>
@@ -29,9 +34,11 @@
             <label>부서</label> <input type="text" th:field="*{department}" maxlength="4" required/>
             <label>진료과</label> <input type="text" th:field="*{medicalDepartment}" maxlength="50"/>
 
-            <label>직급</label> <input type="text" th:field="*{rank}" maxlength="4" required/>
-            <label>직책</label> <input type="text" th:field="*{position}" maxlength="4"/>
-
+            <label>직책</label> <input type="text" id="rank" th:field="*{rank}" maxlength="4"/>
+            <label>직급</label> <input type="text" id="position" th:field="*{position}" maxlength="4"/>
+            <div class="full">
+                <button type="button" class="btn" onclick="openJobPopup()">직급/직책 선택</button>
+            </div>
             <label>이름</label> <input type="text" th:field="*{firstName}" maxlength="50" required/>
             <label>성</label>   <input type="text" th:field="*{lastName}" maxlength="50" required/>
             <label>중간이름</label> <input type="text" th:field="*{middleName}" maxlength="50"/>
@@ -50,7 +57,6 @@
             <label>상태</label> <input type="text" th:field="*{status}" maxlength="3" required/>
             <label>근무형태</label> <input type="text" th:field="*{workType}" maxlength="4" required/>
 
-            <!-- 메인 폼 에러 -->
             <div class="err" th:if="${#fields.hasAnyErrors()}">
                 <div th:each="e: ${#fields.errors('*')}" th:text="${e}">에러</div>
             </div>
@@ -76,8 +82,8 @@
             <label>비상-비고</label> <input type="text" th:field="*{emergencyNote}" maxlength="250"/>
 
             <label>이메일</label>    <input type="email" th:field="*{email}" maxlength="250"/>
-
-            <label>주소</label>
+            <label>우편번호</label>   <input type="text" th:field="*{postcode}" maxlength="6"/>
+            <label>도로명주소</label>
             <div style="display:flex; gap:8px; align-items:center;">
                 <input type="text" th:field="*{defaultAddress}" id="addr1" maxlength="250"/>
                 <button type="button" class="btn" onclick="openRoadPopup()">도로명 검색</button>
@@ -85,6 +91,7 @@
 
             <label>상세주소</label>
             <input type="text" th:field="*{detailedAddress}" id="addr2" maxlength="250"/>
+
             <label>면허번호</label>  <input type="text" th:field="*{registrationNumber}" maxlength="10" required/>
             <label>학력</label>      <input type="text" th:field="*{educationalBackground}" maxlength="100"/>
             <label>외국어</label>    <input type="text" th:field="*{foreignLanguage}" maxlength="250"/>
@@ -97,25 +104,25 @@
             <label>학회인증</label>  <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
 
             <label>병역</label>      <input type="text" th:field="*{militaryService}" maxlength="10"/>
+
+            <!-- 국적: 표시 + 숨김 input -->
             <label>국적</label>
             <div>
                 <span id="nationalityDisplay" th:text="*{nationality} ?: '-'">-</span>
                 <input type="hidden" th:field="*{nationality}" id="nationalityInput"/>
                 <button type="button" class="btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
             </div>
+
             <label>장애 여부</label>
             <div style="display:flex; gap:12px; align-items:center;">
                 <label><input type="radio" th:field="*{disabilityStatus}" value="Y" required> Y</label>
                 <label><input type="radio" th:field="*{disabilityStatus}" value="N"> N</label>
             </div>
-            <div class="err"
-                 th:if="${#fields.hasErrors('disabilityStatus')}"
-                 th:errors="*{disabilityStatus}"></div>
+            <div class="err" th:if="${#fields.hasErrors('disabilityStatus')}" th:errors="*{disabilityStatus}"></div>
 
             <label>비고</label>
             <input type="text" th:field="*{note}" maxlength="255"/>
 
-            <!-- 디테일 폼 에러 -->
             <div class="err" th:if="${#fields.hasAnyErrors()}">
                 <div th:each="e: ${#fields.errors('*')}" th:text="${e}">에러</div>
             </div>
@@ -125,48 +132,66 @@
     <div class="row" style="justify-content:flex-end;">
         <button class="btn" type="submit">등록</button>
     </div>
+    <!-- CSRF 사용 시 프레임워크가 자동 렌더링하거나 수동으로 추가 -->
+    <!-- <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 </form>
 
-<!-- 👇 이 iframe을 바로 밑에 두면 안전 -->
-<iframe name="hiddenFrame" style="display:none;"></iframe>
-    <!-- CSRF 사용 시 추가
-    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    -->
-</form>
 <script>
     function openCountryPopup() {
       const w = 780, h = 620;
       const left = (screen.width - w) / 2;
       const top = (screen.height - h) / 2;
-      // 팝업 URL은 사용 중인 컨트롤러 경로에 맞춰 통일
       window.open('/global/country_form', 'countryPopup',
         `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
     }
 
-    // 팝업에서 호출
-    function setCountry(iso2, countryKr) {
-      const disp = document.getElementById('nationalityDisplay');
-      const input = document.getElementById('nationalityInput');
-      if (disp) disp.textContent = `${countryKr} (${iso2})`;
-      if (input) input.value = countryKr; // 또는 iso2 저장을 원하면 input.value = iso2;
-      }
-
+    // 팝업에서 호출: 값만 채움 (저장은 최종 "등록"에서 함께)
+   function setCountry(iso2, countryKr) {
+  const disp  = document.getElementById('nationalityDisplay'); // ← 올바른 id로 수정
+  const input = document.getElementById('nationalityInput');
+  const combined = `${countryKr} (${iso2})`;
+  if (disp)  disp.textContent = combined;
+  if (input) input.value = combined; // 서버에는 "대한민국 (KR)" 같은 형식으로 저장
+}
     function openRoadPopup() {
-    const w = 900, h = 640;
-    const left = (screen.width - w)/2, top = (screen.height - h)/2;
-    window.open('/global/road/popup', 'roadPopup',
+      const w = 900, h = 640;
+      const left = (screen.width - w)/2, top = (screen.height - h)/2;
+      window.open('/global/road/popup', 'roadPopup',
+        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+    }
+
+    // 도로명 팝업에서 호출: 기본주소만 채움
+    function setRoad(addrStr, roadCode, emdSeqNo) {
+      document.getElementById('addr1').value = addrStr || '';
+      // 필요하면 roadCode/emdSeqNo 숨김 필드 추가 후 주입 가능
+    }
+ /* 팝업 열기 */
+  function openJobPopup() {
+    const w = 700, h = 520;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/jobcode/popup', 'job_code',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+  }
+  function openJobPopup() {
+    const w = 700, h = 520;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open('/global/jobcode/popup', 'job_code',
       `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
   }
 
-  // 팝업에서 호출: 값만 채움 (저장은 최종 "수정 저장"에서 함께)
-  function setRoad(addrStr, roadCode, emdSeqNo) {
-    // 기본주소에 도로명 기반 주소를 채우고, 상세주소는 사용자가 이어서 입력
-    document.getElementById('addr1').value = addrStr || '';
-    // 필요하면 숨김 필드로 roadCode/emdSeqNo 따로 보관 가능
-    // 예: <input type="hidden" name="roadCode" id="roadCodeHidden"> 등을 미리 만들어 두고 값만 주입
-    // document.getElementById('roadCodeHidden').value = roadCode || '';
-    // document.getElementById('emdSeqHidden').value  = emdSeqNo || '';
-  }
+  window.addEventListener('message', (e) => {
+    if (e.data?.source !== 'jobcode-popup') return;
+    const { rankCode, positionCode } = e.data.payload || {};
+
+    const rankInput = document.getElementById('rank');
+    if (rankInput) rankInput.value = rankCode ?? '';
+
+    const positionInput = document.getElementById('position');
+    if (positionInput) positionInput.value = positionCode ?? '';
+  });
 </script>
+
 </body>
 </html>
