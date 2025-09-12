@@ -19,6 +19,7 @@ public class NurseMainController {
 
     private final NurseMainService nurseMainService;
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value="size", defaultValue="10") int size, HttpSession session, @RequestParam(value = "kw", defaultValue = "") String kw) {
         session.removeAttribute("tempNurseMain");
@@ -29,17 +30,13 @@ public class NurseMainController {
         model.addAttribute("kw", kw);
         model.addAttribute("size", size);
 
-        // 페이지네이션 계산
-        long totalElements = paging.getTotalElements();
-        int pageSize = paging.getSize();
-        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
-
-        int currentPage = paging.getNumber();
-
         // 페이지 번호 리스트 생성
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages - 1)
+        int totalPages = paging.getTotalPages();
+        List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
                 .boxed()
                 .collect(Collectors.toList());
+
+        int currentPage = paging.getNumber();
 
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", currentPage);
@@ -48,12 +45,14 @@ public class NurseMainController {
         return "nurse/nurse_main";
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/create")
     public String createMainForm(Model model) {
         model.addAttribute("nurseMain", new NurseMain());
         return "nurse/nurse_main_form";
     }
 
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/create")
     public String createMain(@ModelAttribute NurseMain nurseMain, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
