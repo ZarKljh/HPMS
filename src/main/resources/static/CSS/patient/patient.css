@@ -423,37 +423,78 @@ input {
     color: #6c757d;
     margin-bottom: 1rem;
 }
+/* 버튼링크 */
+/* 버튼 스타일 */
+div.page {
+    display: flex;
+}
+div.page>ul, div.page>div {
+    border:1px solid green;
+}
+
+a.button-link {
+  gap:5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  min-height: 42px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-link:hover {
+  background-color: #cce6ff;
+  border-color: #666;
+  color: #000;
+}
+
+
+
 
 /* footer */
 
 .footer_fixed_bottom {
 
-    width: 100%;           /* 전체 폭 */
+    /*width: 100%;*/           /* 전체 폭 */
     /*max-width: 1920px;     /* 테이블과 동일한 최대폭 (원하시면 조정 가능) */
        /* 가운데 정렬 */
+
     /*
     box-sizing: border-box;
     */
-    border:1px solid red;
+
 }
 
 
 .footer_fixed_bottom>table {
-
-    border: 1px solid red;
-    width: 100%;
+    margin: 0 auto;
+    width: 80%;
     table-layout: fixed;
 
 }
-.footer_fixed_bottom>table td:first-child{
+.footer_fixed_bottom>table tr>td:first-child{
+
+    display:none;
     width: 1px;
     white-space:nowrap
 }
-.footer_fixed_bottom>table td:last-child{
+.footer_fixed_bottom>table tr>td:last-child{
+    display:none;
     width: 1px;
     white-space:nowrap
+
 }
-.footer_fixed_bottom>table td:nth-child(2).
-.footer_fixed_bottom>table td:nth-child(3){
+.footer_fixed_bottom>table tr>td:nth-child(2),
+.footer_fixed_bottom>table tr>td:nth-child(3){
     width: auto;
+
+}
+.footer_fixed_bottom>table tr>td:nth-child(3){
+    text-align: right;
 }
