@@ -70,14 +70,11 @@
             <td class="mobile_hidden" th:text="${#temporals.format(nurseMain.modifyDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
-        <a th:href="@{/nurse/create}" class="create_btn btn btn-primary" role="button">등록</a>
-        <security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')" class="history_btn">
-            <a href="/nurse/history" class="btn btn-primary">수정내역</a>
-        </security:authorize>
     </table>
 
     <!-- 페이징처리 시작 -->
     <div class="page-navigation">
+        <div class="box"></div>
         <div class="pagination">
             <a th:if="${currentPage > 1}"
                th:href="@{/nurse(page=${currentPage - 1}, size=${size})}">이전</a>
@@ -90,6 +87,12 @@
 
             <a th:if="${currentPage < totalPages}"
                th:href="@{/nurse(page=${currentPage + 1}, size=${size})}">다음</a>
+        </div>
+        <div class="box2">
+            <a th:href="@{/nurse/create}" class="create_btn button-link" role="button">등록</a>
+            <security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')" class="history_btn">
+                <a href="@{/nurse/history}" class="button-link">수정내역</a>
+            </security:authorize>
         </div>
     </div>
     <!-- 페이징처리 끝 -->
