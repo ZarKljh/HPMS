@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.Predicate;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -81,5 +82,10 @@ public class DoctorMService {
 
     public DoctorM getDoctorMByNameAndTelephone( String firstName, String lastName, String telephone){
         return repository.findByFirstNameAndLastNameAndTelephone(firstName, lastName, telephone);
+    }
+
+    @Transactional
+    public void deleteAll(List<Integer> ids) {
+        ids.forEach(this::delete);
     }
 }

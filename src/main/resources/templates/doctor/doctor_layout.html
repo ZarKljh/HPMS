@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -17,11 +19,13 @@
 <body style="overflow-x: hidden;">
 <!-- 네비게이션바 -->
 <nav th:replace="~{doctor/navbar :: navbarFragment}"></nav>
+
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/js/doctor/doctor.js}" defer></script>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
+<div th:replace="footer :: footerFragment"></div>
 </body>
 </html>
