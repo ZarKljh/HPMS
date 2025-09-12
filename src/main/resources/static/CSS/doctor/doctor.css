@@ -206,7 +206,9 @@ td {
     border-radius: 5px;
 }
 .m-btn:hover {
-    background-color: #dee2e6;
+  background-color: lightblue; /* ✅ 호버 시 라이트블루 */
+  border-color: #99ccff;       /* 경계선도 살짝 파란 톤 */
+  color: #000;                 /* 글씨는 검정 */
 }
 .d-btn:hover {
     background-color: #f54747;
@@ -554,4 +556,83 @@ text-decoration: underline !important;
   background-color: #cce6ff;
   border-color: #99ccff;
   color: #000;
+}
+
+/* 상세페이지 라벨/값 공통 스타일 */
+.label-reform {
+  font-family: 'Malgun Gothic','맑은 고딕', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;  /* Bold */
+  color: #333;
+}
+
+.value-reform {
+  font-family: 'Malgun Gothic','맑은 고딕', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;  /* Normal */
+  color: #000;
+}
+
+.detail-title {
+  white-space: nowrap;   /* 줄바꿈 방지 */
+  font-family: "Malgun Gothic", sans-serif;
+  font-size: 30px;       /* 원하는 크기 */
+}
+
+    .detail-title{
+      white-space: nowrap;            /* 한 줄 유지 */
+      line-height: 1.2;               /* 살짝 컴팩트 */
+    }
+    .kv-grid{
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 8px 12px;
+    }
+    .kv-label{
+      font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 700; /* Bold */
+      color: #222;
+    }
+    .kv-value{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "맑은 고딕", sans-serif;
+      font-size: 16px;
+      font-weight: 400; /* Normal */
+      color: #333;
+      word-break: break-word;
+    }
+    fieldset{
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+    legend{
+      padding: 0 8px;
+      font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 700; /* Bold */
+      color: #333;
+    }
+    /* 사진 영역 정리 */
+    .detail-photo{
+      width: 200px;
+      flex: 0 0 200px;
+    }
+    .detail-photo img{
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+.section-heading {
+  font-family: "맑은 고딕", Malgun Gothic, sans-serif;
+  font-size: 20px;
+  font-weight: 700; /* Bold */
+  margin-top: 20px;
+  margin-bottom: 12px;
+  color: #333;
 }
