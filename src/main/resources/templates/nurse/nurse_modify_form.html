@@ -8,55 +8,42 @@
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-    <h1 class="border-bottom py-2">간호사 정보 수정</h1>
-
-    <!-- 사진 -->
-    <div>
-      <label>사진 URL</label>
-      <input type="text" th:field="*{nurseInformation.picture}"
-             placeholder="https://example.com/photo.jpg" class="form-control"/>
-      <div class="mt-2">
-        <img th:if="*{nurseInformation.picture != null}"
-             th:src="*{nurseInformation.picture}"
-             alt="nurse Image" style="max-height:150px"/>
-        <span th:if="*{nurseInformation.picture == null}">사진 없음</span>
-      </div>
-    </div>
+    <h3 class="border-bottom mt-2">간호사 정보 수정</h3>
 
     <!-- NurseMain 정보 -->
     <div class="nursemain card my-3 p-3">
-      <h3>기본 정보</h3>
-      <label>이름 : </label>
+      <h4>기본 정보</h4>
+      <label>이름:</label>
       <input type="text" th:field="*{nurseMain.firstName}" class="form-control"/>
 
-      <label>중간 이름 : </label>
+      <label>중간 이름:</label>
       <input type="text" th:field="*{nurseMain.middleName}" class="form-control"/>
 
-      <label>성 : </label>
+      <label>성:</label>
       <input type="text" th:field="*{nurseMain.lastName}" class="form-control"/>
 
-      <label>부서 : </label>
+      <label>부서:</label>
       <input type="text" th:field="*{nurseMain.dept}" class="form-control"/>
 
-      <label>직급 : </label>
+      <label>직급:</label>
       <input type="text" th:field="*{nurseMain.rank}" class="form-control"/>
 
-      <label>성별 : </label>
+      <label>성별:</label>
       <input type="text" th:field="*{nurseMain.gender}" class="form-control"/>
 
-      <label>생년월일 : </label>
+      <label>생년월일:</label>
       <input type="text" th:field="*{nurseMain.dateOfBirth}" class="form-control"/>
 
-      <label>입사일 : </label>
+      <label>입사일:</label>
       <input type="text" th:field="*{nurseMain.hireDate}" class="form-control"/>
 
-      <label>상태 : </label>
+      <label>상태:</label>
       <input type="text" th:field="*{nurseMain.sts}" class="form-control"/>
 
-      <label>근무형태 : </label>
+      <label>근무형태:</label>
       <input type="text" th:field="*{nurseMain.wt}" class="form-control"/>
 
-      <label>수정자 : </label>
+      <label>수정자:</label>
       <input type="text" th:field="*{nurseMain.modifier}" class="form-control"/>
     </div>
 
@@ -64,79 +51,91 @@
     <div class="nurseinformation card my-3 p-3">
       <h3>상세 정보</h3>
 
-      <label>서브 성명 : </label>
+      <label>서브 성명:</label>
       <input type="text" th:field="*{nurseInformation.firstName}" maxlength="50" class="form-control"/>
       <input type="text" th:field="*{nurseInformation.lastName}" maxlength="50" class="form-control"/>
       <input type="text" th:field="*{nurseInformation.middleName}" maxlength="50" class="form-control"/>
 
-      <label>전화번호 : </label>
+      <label>전화번호:</label>
       <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" class="form-control"/>
 
-      <label>비상연락처 : </label>
+      <label>비상연락처:</label>
       <input type="text" th:field="*{nurseInformation.emgcCntc}" maxlength="25" class="form-control"/>
 
-      <label>비상연락처주 성명 : </label>
+      <label>성명:</label>
       <input type="text" th:field="*{nurseInformation.emgcFName}" maxlength="50" class="form-control"/>
       <input type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50" class="form-control"/>
       <input type="text" th:field="*{nurseInformation.emgcLName}" maxlength="50" class="form-control"/>
 
-      <label>관계 : </label>
+      <label>관계:</label>
       <input type="text" th:field="*{nurseInformation.emgcRel}" maxlength="10" class="form-control"/>
 
-      <label>비고 : </label>
+      <label>비고:</label>
       <input type="text" th:field="*{nurseInformation.emgcNote}" maxlength="250" class="form-control"/>
 
-      <label>이메일 : </label>
+      <label>이메일:</label>
       <input type="text" th:field="*{nurseInformation.email}" maxlength="250" class="form-control"/>
 
-      <label>우편번호 : </label>
+      <label>우편번호:</label>
       <input type="text" th:field="*{nurseInformation.pcd}" id="addr" maxlength="10" class="form-control"/>
 
-      <label>주소 : </label>
+      <label>주소:</label>
       <div style="display:flex; gap:8px; align-items:center;">
         <input type="text" th:field="*{nurseInformation.defAdd}" id="addr1" maxlength="250" class="form-control"/>
-        <button type="button" class="btn btn-primary" onclick="openRoadPopup()">도로명 검색</button>
+        <button type="button" class="button-link" onclick="openRoadPopup()">도로명 검색</button>
       </div>
 
-      <label>상세주소 : </label>
+      <label>상세주소:</label>
       <input type="text" th:field="*{nurseInformation.detAdd}" id="addr2" maxlength="250" class="form-control"/>
 
-      <label>자격증 번호 : </label>
+      <label>자격증 번호:</label>
       <input type="text" th:field="*{nurseInformation.rnNo}" maxlength="6" class="form-control"/>
 
-      <label>최종학력 : </label>
+      <label>최종학력:</label>
       <input type="text" th:field="*{nurseInformation.edbc}" maxlength="50" class="form-control"/>
 
-      <label>졸업날짜 : </label>
+      <label>졸업날짜:</label>
       <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" class="form-control"/>
 
-      <label>외국어 : </label>
+      <label>외국어:</label>
       <input type="text" th:field="*{nurseInformation.fl}" maxlength="250" class="form-control"/>
 
-      <label>병역 : </label>
+      <label>병역:</label>
       <input type="text" th:field="*{nurseInformation.ms}" maxlength="2" class="form-control"/>
 
       <label>국적</label>
       <div>
         <span id="nationalityDisplay" th:text="*{nurseInformation.natn} ?: '-'">-</span>
         <input type="hidden" th:field="*{nurseInformation.natn}" id="nationalityInput"/>
-        <button type="button" class="btn btn-primary" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
+        <button type="button" class="button-link" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
       </div>
 
-      <label>장애 여부 : </label>
+      <label>장애 여부:</label>
       <input type="text" th:field="*{nurseInformation.dss}" maxlength="1" class="form-control"/>
 
-      <label>경력 : </label>
+      <label>경력:</label>
       <input type="text" th:field="*{nurseInformation.carr}" class="form-control"/>
 
-      <label>비고 : </label>
+      <label>비고:</label>
       <textarea th:field="*{nurseInformation.note}" maxlength="250" class="form-control"></textarea>
+
+      <!-- 사진 -->
+      <div>
+        <label>사진 URL</label>
+        <input type="text" th:field="*{nurseInformation.picture}"
+               placeholder="https://example.com/photo.jpg" class="form-control"/>
+        <div class="mt-2">
+          <img th:if="*{nurseInformation.picture != null}"
+               th:src="*{nurseInformation.picture}"
+               alt="nurse Image" style="max-height:150px"/>
+          <span th:if="*{nurseInformation.picture == null}">사진 없음</span>
+        </div>
+      </div>
     </div>
 
     <div class="c_c_btn_box">
-      <button type="submit" class="c-btn">저장</button>
-      <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}"
-         class="cancel-btn">취소</a>
+      <button type="submit" class="button-link">저장</button>
+      <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
   <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>

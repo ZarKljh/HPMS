@@ -7,12 +7,6 @@
         <!-- Main 정보 -->
         <div class="main card my-3 p-3">
             <h4 class="border-bottom py-2">간호사 상세페이지 입니다.</h4>
-            <div class="m-d-btn">
-                <div class="m-d-btn_box">
-                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
-                </div>
-            </div>
 
             <!-- 사진 -->
             <div class="image" th:if="${nurseDTO.nurseInformation != null}">
@@ -142,9 +136,13 @@
                 <span th:text="${nurseDTO.nurseInformation.note ?: '비고 없음'}" style="width:70%;"></span>
             </div>
         </div>
+        <div class="m-d-btn">
+            <div class="m-d-btn_box">
+                <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
+                <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
+            </div>
+        </div>
     </form>
-
-
 
     <!-- License 정보 -->
     <div class="license card my-3 p-3">

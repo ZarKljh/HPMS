@@ -1,6 +1,6 @@
 <html layout:decorate="~{nurse/nurse_layout}">
 <div layout:fragment="content" class="container">
-    <h2 class="listbox">Nurse List</h2>
+    <h2 class="listbox">Nurse List <span class="sub_title">간호사 리스트</span> </h2>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center">
     <form  method="get" action="/nurse" class="size_bar d-flex align-items-center mb-2 mb-md-0">
@@ -85,7 +85,7 @@
 
             <a th:if="${currentPage < totalPages}" th:href="@{|/nurse?page=${currentPage + 1}&size=${size}|}">다음</a>
         </div>
-        <div>
+        <div class="create">
             <a th:href="@{/nurse/create}" class="button-link">등록</a>
             <a th:href="@{/nurse/history}" class="button-link">수정내역</a>
         </div>
