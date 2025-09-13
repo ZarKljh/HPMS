@@ -201,6 +201,25 @@ public class PatientDTOService {
     }
 
     /**
+     *
+     * @param phoneNumber : 입력을 받은 전화번호 문자열안에 포함되어있는 - 을 제거하는 메소드
+     * @return 하이푼(-)이 제거된 전화번호 문자열
+     */
+    public static String getOnlyDigitNumber(String phoneNumber){
+
+        StringBuilder numbers = new StringBuilder(); // 숫자들을 담을 StringBuilder
+
+        for (char c : phoneNumber.toCharArray()) {
+            if (Character.isDigit(c)) { // 문자가 숫자인지 확인
+                numbers.append(c); // 숫자라면 StringBuilder에 추가
+            }
+        }
+        String result = numbers.toString();
+        return result; // 출력: 123456
+
+    }
+
+    /**
      * 전화번호를 포맷팅하는 메소드
      * @param phoneNumber DB에서 가져온 원본 전화번호 (숫자 문자열, 0으로 시작)
      * @return 하이픈(-)이 포함된 전화번호 문자열
@@ -260,4 +279,6 @@ public class PatientDTOService {
         }
         return formatted;
     }
+
+
 }

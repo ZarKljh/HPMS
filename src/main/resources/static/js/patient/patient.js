@@ -12,7 +12,7 @@ $('.navbar-toggle').click(function() {
       roadTargetInput = input;
       const w = 900, h = 640;
       const left = (screen.width - w)/2, top = (screen.height - h)/2;
-      window.open('/global/popup', 'roadPopup',
+      window.open('/global/road/popup', 'roadPopup',
         `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
     }
 

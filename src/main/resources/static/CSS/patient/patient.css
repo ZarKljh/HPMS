@@ -541,43 +541,38 @@ input {
 
 
 /* footer */
-
-.footer_fixed_bottom {
-
-    /*width: 100%;*/           /* 전체 폭 */
-    /*max-width: 1920px;     /* 테이블과 동일한 최대폭 (원하시면 조정 가능) */
-       /* 가운데 정렬 */
-
-    /*
-    box-sizing: border-box;
-    */
-
+/*  footer  */
+.chang-footer{
+    display:flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 */
+    width: 100%;
+    margin-top: 20px;
+}
+/*.chang-footer{
+    display:flex;
+    background-color:darkblue;
+    flex-grow:0;
+}*/
+.chang-footer-inforamtion{
+    /*background-color:yellow;*/
+    flex:1;
+    max-width:1190px;
+    margin-left: 20px;
+    /*min-width:1290px;*/
 }
 
-
-.footer_fixed_bottom>table {
-    margin: 50px auto;
-    width: 80%;
-    table-layout: fixed;
-
+.chang-footer-logo{
+    display:flex;
+    width:100px;
 }
-.footer_fixed_bottom>table tr>td:first-child{
 
-    display:none;
-    width: 1px;
-    white-space:nowrap
+.chang-inner-ul-menu li {
+  display: block;         /* 한 줄씩 내려쓰기 */
+  margin-bottom: 1px;     /* 항목 간 간격 (선택사항) */
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 10px;
 }
-.footer_fixed_bottom>table tr>td:last-child{
-    display:none;
-    width: 1px;
-    white-space:nowrap
-
-}
-.footer_fixed_bottom>table tr>td:nth-child(2),
-.footer_fixed_bottom>table tr>td:nth-child(3){
-    width: auto;
-
-}
-.footer_fixed_bottom>table tr>td:nth-child(3){
-    text-align: right;
+.responsive-logo{
+    width:80px; height:auto;
 }
