@@ -138,6 +138,7 @@
         </div>
         <div class="m-d-btn">
             <div class="m-d-btn_box">
+                <button type="button" class="button-link" th:onclick="'location.href=\'' + @{/nurse(page=${param.page}, size=${param.size})} + '\';'">목록</button>
                 <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
                 <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
             </div>
