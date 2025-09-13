@@ -2,24 +2,27 @@ package com.HPMS.HPMS.nurse.nursemain;
 
 import com.HPMS.HPMS.nurse.NurseDataNotFoundException;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
+import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationRepository;
 import jakarta.persistence.criteria.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class NurseMainService {
 
-    @Autowired
-    private NurseMainRepository nurseMainRepository;
+    private final NurseMainRepository nurseMainRepository;
+    private final NurseInformationRepository nurseInformationRepository;
 
     public List<NurseMain> getAll() {
         return nurseMainRepository.findAll();
@@ -82,4 +85,37 @@ public class NurseMainService {
             }
         };
     }
+
+    // 다중 삭제 메서드
+    @Transactional
+    public void deleteMultipleNurses(List<Integer> nurseIds) {
+        System.out.println("Service: deleteMultipleNurses 호출됨");
+        System.out.println("Service: 받은 ID 리스트: " + nurseIds);
+
+        if (nurseIds == null || nurseIds.isEmpty()) {
+            System.out.println("Service: ID 리스트가 비어있음");
+            throw new IllegalArgumentException("삭제할 간호사 ID가 없습니다.");
+        }
+
+        // 1. JPA 관리 엔티티 조회
+        List<NurseMain> nursesToDelete = nurseMainRepository.findAllById(nurseIds);
+        System.out.println("Service: 찾은 간호사 수: " + nursesToDelete.size());
+
+        if (nursesToDelete.isEmpty()) {
+            System.out.println("Service: 삭제할 간호사 정보를 찾을 수 없음");
+            throw new RuntimeException("삭제할 간호사 정보를 찾을 수 없습니다.");
+        }
+
+        for (NurseMain nurse : nursesToDelete) {
+            System.out.println("Service: 삭제될 간호사 - ID: " + nurse.getId() + ", 이름: " + nurse.getFirstName());
+        }
+
+        // 2. Cascade + orphanRemoval로 안전하게 삭제
+        for (NurseMain nurse : nursesToDelete) {
+            nurseMainRepository.delete(nurse);
+        }
+
+        System.out.println("Service: 삭제 완료");
+    }
+
 }

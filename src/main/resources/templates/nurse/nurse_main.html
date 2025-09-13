@@ -6,7 +6,7 @@
     <form  method="get" action="/nurse" class="size_bar d-flex align-items-center mb-2 mb-md-0">
         <div class="d-flex align-items-center">
             <strong class="me-1">등록 건수:</strong> <span th:text="${totalCount}"></span>명 /
-            <strong class="mx-1">현재 페이지:</strong> <span th:text="${totalCount}"></span> /
+            <strong class="mx-1">현재 페이지:</strong> <span th:text="${currentPage + 1}"></span> /
             <strong class="mx-1">페이지당 행 수:</strong>
             <select name="size" id="size" onchange="this.form.submit();">
                 <option th:value="5" th:selected="${size == 5}">5</option>
@@ -22,7 +22,7 @@
             <div>
                 <div class="input-group">
                     <span class="input-text">이름/부서/직급/상태/근무형태/작성자/전화번호/수정자만 검색 가능합니다.</span>
-                    <input type="text" id="search_kw" class="form-control" th:value="${kw}"/>
+                    <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw"/>
                     <button class="search_btn" type="submit" id="btn_search">검색</button>
                 </div>
             </div>
@@ -30,9 +30,19 @@
     </form>
 </div>
 
+    <!-- 삭제를 위한 숨겨진 폼 -->
+    <form id="deleteForm" method="post" action="/nurse/deleteMultiple" style="display: none;">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    </form>
+
+    <!-- CSRF 메타 -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
     <table class="table table-hover card">
         <thead class="table-light">
         <tr class="list text-center">
+            <th class="chang-checkbox-column"><input type="checkbox" id="checkAll" /></th>
             <th>번호</th>
             <th>부서</th>
             <th>직급</th>
@@ -51,6 +61,7 @@
 
         <tbody class="text-center">
         <tr class="text-center" th:each="nurseMain, loop : ${paging}">
+            <td class="chang-checkbox-column"><input type="checkbox" class="nurse-checkbox" name="checkedIds" th:value="${nurseMain.id}" /></td>
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
@@ -88,10 +99,12 @@
         <div class="create">
             <a th:href="@{/nurse/create}" class="button-link">등록</a>
             <a th:href="@{/nurse/history}" class="button-link">수정내역</a>
+            <button type="button" class="button-link" id="deleteSelectedBtn">선택 삭제</button>
         </div>
     </div>
     <!-- 페이징처리 끝 -->
 
+    <!-- 검색폼 숨김 -->
     <form th:action="@{/nurse}" method="get" id="searchForm">
         <input type="hidden" id="kw" name="kw" th:value="${kw}">
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
