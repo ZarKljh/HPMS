@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,15 +126,29 @@ public class PatientController {
         return String.format("redirect:/patient/detail/%s", modifiedId);
     }
     //환자를 종결(삭제)처리합니다
-    @GetMapping("/patient/delete/{id}")
-    public String patientDelete(Model model, BindingResult bindingResult, @PathVariable("id") Integer id){
+    @PostMapping("/patient/delete")
+    public String patientDelete(@RequestParam(value="id") int id){
         PatientM patientM = this.patientMService.getPatientM(id);
-        if (bindingResult.hasErrors()) {
-            return "patient/lsw_patient_modify";
-        }
+
         this.patientMService.deletePatientM(patientM);
-        return "patient/lsw_patient_list";
+        return "redirect:/patient/list";
     }
+
+    @PostMapping("/patient/delete/selectedPatient")
+    public String deleteSelectedPersonnel(RedirectAttributes redirectAttributes,
+                                          @RequestParam(value="checkedIds", required =true) List<Integer> ids,
+                                          @RequestParam(defaultValue = "1") int page,
+                                          @RequestParam(defaultValue = "10") int size
+                                          ) {
+        if(ids == null || ids.isEmpty()){
+            return "redirect/patient/list?page=" +page + "&size=" + size;
+        }
+        patientMService.deleteBySelectedIds(ids);
+        return "redirect:/patient/list?page=" +page + "&size=" + size;
+
+    }
+
+
 
     //다중컨디션으로 환자를 검색합니다
     // columns 칼럼명, operator 비교연산자, value 값, logicalOperator 논리연산자 4개의 변수가 1셋트입니다

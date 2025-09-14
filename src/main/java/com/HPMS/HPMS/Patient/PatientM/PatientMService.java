@@ -210,6 +210,20 @@ public class PatientMService {
         this.patientMRepository.save(patientM);
     }
 
+    public void deleteBySelectedIds(List<Integer> ids){
+
+        if(ids == null || ids.isEmpty()){
+            return;
+        }
+        try {
+            for( Integer id : ids){
+                deletePatientM(getPatientM(id));
+            }
+        } catch (Exception e){
+            System.err.println("삭제 중 오류 발생: " + e.getMessage());
+        }
+    }
+
     public void createPatientM(PatientForm pf){
         PatientM m = new PatientM();
         PatientDTL dtl = new PatientDTL();
@@ -301,7 +315,7 @@ public class PatientMService {
         dtl.setCurHomeDetAdd(pf.getHomeDetAdd());
         dtl.setRegHomePCD(pf.getRegPcd());
         dtl.setRegHomeDefAdd(pf.getRegDefAdd());
-        dtl.setRegHomeDetAdd(pf.getRegDefAdd());
+        dtl.setRegHomeDetAdd(pf.getRegDetAdd());
 
         dtl.setOccupation(pf.getOccupation());
         dtl.setLastVisitDate(LocalDateTime.now());
