@@ -58,26 +58,6 @@
         </table>
         </div><!-- end of personnel-list-->
     <div class="page-navigation">
-        <div>
-    <!--        <form id="registrationForm" method="post" action="/user/personnel_registration">
-                <input name="size" type="hidden" th:value="${size}" >
-                &lt;!&ndash;<input name="page" type="text" th:value="${page}" hidden="hidden">&ndash;&gt;
-                <input type="hidden" name="page" th:value="${currentPage}" />
-                <a href="#" class="button-link text-full" onclick="event.preventDefault();submitForm(event);">
-                    등록하기
-                </a>
-                <a href="#" class="button-link text-short" onclick="event.preventDefault();submitForm(event);">
-                    등록
-                </a>-->
-            <a th:href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="btn-primary button-link text-full" style="margin-right: 5px;">
-                등록하기
-            </a>
-            <a href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="btn-primary button-link text-short" style="margin-right: 5px;">
-                등록
-            </a>
-            <a href="#" class="btn-primary button-link text-full" onclick="submitFormIfValid();">삭제하기</a>
-            <a href="#" class="btn-primary button-link text-short" onclick="submitFormIfValid();">삭제</a>
-        </div>
         <div class="pagination">
             <a th:if="${currentPage > 1}"
                th:href="@{/user/list(page=1, size=${size})}">처음</a>
@@ -103,6 +83,26 @@
 
             <a th:if="${currentPage < totalPages}"
                th:href="@{/user/list(page=${totalPages}, size=${size})}">끝</a>
+        </div>
+        <div>
+            <!--        <form id="registrationForm" method="post" action="/user/personnel_registration">
+                        <input name="size" type="hidden" th:value="${size}" >
+                        &lt;!&ndash;<input name="page" type="text" th:value="${page}" hidden="hidden">&ndash;&gt;
+                        <input type="hidden" name="page" th:value="${currentPage}" />
+                        <a href="#" class="button-link text-full" onclick="event.preventDefault();submitForm(event);">
+                            등록하기
+                        </a>
+                        <a href="#" class="button-link text-short" onclick="event.preventDefault();submitForm(event);">
+                            등록
+                        </a>-->
+            <a th:href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="button-link text-full" style="margin-right: 5px;">
+                등록
+            </a>
+            <!--<a href="@{/user/personnel_registration}+'?page='+${currentPage}+'&size='+${size}" class="button-link text-short" style="margin-right: 5px;">
+                등록
+            </a>-->
+            <a href="#" class="button-link chang-d-btn text-full" onclick="submitFormIfValid();">삭제</a>
+            <!--<a href="#" class="button-link chang-d-btn text-short" onclick="submitFormIfValid();">삭제</a>-->
         </div>
     </div>
 </div>
