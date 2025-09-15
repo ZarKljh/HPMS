@@ -23,7 +23,7 @@ public class NurseDTOController {
     private final NurseInformationService nurseInformationService;
     private final LicenseService licenseService;
 
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/info/{nurseId}")
     public String showNurse(@PathVariable Integer nurseId, Model model) {
         NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
@@ -45,7 +45,7 @@ public class NurseDTOController {
         return "nurse/nurse_information"; // 또는 "nurse/detail" 원하는 뷰로
     }
 
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/modify/{id}")
     public String showModifyForm(@PathVariable Integer id, Model model) {
         NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
@@ -56,7 +56,7 @@ public class NurseDTOController {
         return "nurse/nurse_modify_form";
     }
 
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/modify/{id}")
     public String modifyNurse(@PathVariable Integer id, @ModelAttribute NurseDTO nurseDTO, Model model) {
         String modifier = nurseDTO.getNurseMain().getModifier();
@@ -69,7 +69,7 @@ public class NurseDTOController {
         return "redirect:/nurse/info/" + id;
     }
 
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/delete/{id}")
     public String nurseDelete(@PathVariable("id") Integer id) {
         NurseDTO nurseDTO = this.nurseDTOService.getNurseDTO(id);

@@ -1,31 +1,80 @@
-    // 선택 삭제
-  document.getElementById('deleteSelected').addEventListener('click', function() {
-    const ids = Array.from(document.querySelectorAll('input[name="ids"]:checked')).map(cb => cb.value);
-    if (ids.length === 0) {
-      alert('삭제할 항목을 선택하세요.');
-      return;
-    }
-    if (!confirm(ids.length + '건을 삭제하시겠습니까?')) return;
+   // ✅ 현재 페이지 테이블의 체크박스만 대상으로 제한
+   const $selectAll = document.getElementById('selectAll');
+   const itemSelector = 'tbody input[type="checkbox"][name="ids"]';
+   const getItems = () => document.querySelectorAll(itemSelector);
 
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = '/doctor/deleteSelected'; // ✅ 컨트롤러에서 처리
-    ids.forEach(id => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'ids';
-      input.value = id;
-      form.appendChild(input);
-    });
-    document.body.appendChild(form);
-    form.submit();
-  });
-    document.getElementById('selectAll').addEventListener('change', function(e) {
-      const checked = e.target.checked;
-      document.querySelectorAll('input[name="ids"]').forEach(cb => cb.checked = checked);
-    });
+   function setAll(checked) { getItems().forEach(cb => cb.checked = checked); }
 
-    // doctor_edit.js
+   function syncMaster() {
+     const items = getItems();
+     const total = items.length;
+     const checked = [...items].filter(cb => cb.checked).length;
+     $selectAll.checked = (total > 0 && checked === total);
+     $selectAll.indeterminate = (checked > 0 && checked < total); // 부분 선택 표시
+   }
+
+   // ✅ 전체선택 클릭 시: 부분 선택 상태면 "전부 해제"로 동작하게
+   $selectAll.addEventListener('click', (e) => {
+     const items = getItems();
+     const total = items.length;
+     const checked = [...items].filter(cb => cb.checked).length;
+
+     if ($selectAll.indeterminate || (checked > 0 && checked < total)) {
+       // 부분 선택 상태 → 한 번에 전부 해제
+       e.preventDefault(); // 기본 토글 막고 직접 처리
+       $selectAll.indeterminate = false;
+       $selectAll.checked = false;
+       setAll(false);
+     }
+     // 그 외에는 change 핸들러가 처리 (전부 선택/전부 해제)
+   });
+
+   // ✅ 전체선택 change: 체크 여부로 전부 선택/해제
+   $selectAll.addEventListener('change', () => {
+     setAll($selectAll.checked);
+   });
+
+   // ✅ 개별 체크 변화에 따라 마스터 상태 동기화
+   document.addEventListener('change', (e) => {
+     if (e.target.matches(itemSelector)) syncMaster();
+   });
+
+   // 초기 동기화
+   syncMaster();
+
+   // 👇 기존 다중삭제 버튼 JS는 유지하되, 선택자만 더 안전하게
+   document.getElementById('deleteSelected').addEventListener('click', function() {
+     const ids = [...document.querySelectorAll(itemSelector)]
+       .filter(cb => cb.checked)
+       .map(cb => cb.value);
+
+     if (!ids.length) { alert('삭제할 항목을 선택하세요.'); return; }
+     if (!confirm(ids.length + '건을 삭제하시겠습니까?')) return;
+
+     const form = document.createElement('form');
+     form.method = 'post';
+     form.action = '/doctor/deleteSelected';
+
+     ids.forEach(id => {
+       const input = document.createElement('input');
+       input.type = 'hidden';
+       input.name = 'ids';
+       input.value = id;
+       form.appendChild(input);
+     });
+
+     // 🔐 CSRF hidden 추가(레이아웃 head에 메타가 있다고 가정)
+     const csrfParam = document.querySelector('meta[name="_csrf_parameter"]').content;
+     const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+     const csrfInput = document.createElement('input');
+     csrfInput.type = 'hidden';
+     csrfInput.name = csrfParam;
+     csrfInput.value = csrfToken;
+     form.appendChild(csrfInput);
+
+     document.body.appendChild(form);
+     form.submit();
+   });
 
     // 국적 팝업 열기
     function openCountryPopup() {

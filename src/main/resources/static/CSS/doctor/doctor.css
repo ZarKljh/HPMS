@@ -1267,3 +1267,11 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   .chang-footer{ flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
   .chang-footer-logo{ align-self: flex-end !important; }
 }
+
+/* 삭제 전용 오버라이드: specificity ↑ */
+.page-btn.d-btn:hover,
+.page-btn.d-btn:focus-visible {
+  background-color: #f54747;
+  border-color: #f54747;
+  color: #fff;
+}

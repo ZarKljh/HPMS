@@ -23,6 +23,8 @@
   <link rel="stylesheet" type="text/css" th:href="@{/CSS/doctor/doctor.css}">
   <!-- 구글 심볼 -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
 </head>
 <body style="overflow-x: hidden;">
 <!-- 네비게이션바 -->

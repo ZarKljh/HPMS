@@ -23,7 +23,7 @@ public class LicenseController {
     private final NurseMainService nurseMainService;
     private final LicenseService licenseService;
 
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/info/{nurseId}")
     public String getNurseInfo(@PathVariable Integer nurseId, Model model) {
         NurseMain nurseMain = nurseMainService.getNurseMain(nurseId);
@@ -45,7 +45,7 @@ public class LicenseController {
     }
 
     // 인라인 수정 저장
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/updateAll/{nurseId}")
     public String updateAllLicenses(@PathVariable Integer nurseId,
                                     @ModelAttribute NurseDTO nurseDTO) {
@@ -80,7 +80,7 @@ public class LicenseController {
     }
 
     // 인라인 추가
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/{nurseId}")
     public String addLicense(@PathVariable Integer nurseId, License license) {
         NurseMain nurse = nurseMainService.getNurseMain(nurseId);
@@ -90,7 +90,7 @@ public class LicenseController {
     }
 
     // 삭제
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/delete/{licenseId}/{nurseId}")
     public String deleteLicense(@PathVariable Integer licenseId, @PathVariable Integer nurseId) {
         licenseService.delete(licenseId);

@@ -6,6 +6,7 @@ import com.HPMS.HPMS.Doctor.DoctorDTL.DoctorDTLService;
 import jakarta.persistence.PreRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ public class DoctorMController {
     /** 목록/검색 (메인만) */
 
     @GetMapping("/doctor")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String listPage(@RequestParam(required = false) String q,
                            @RequestParam(defaultValue = "0") Integer page,
                            @RequestParam(defaultValue = "10") Integer size,
@@ -40,6 +42,7 @@ public class DoctorMController {
 
     /** 신규: 메인+디테일 통합 입력 폼 */
     @GetMapping("/doctor/new")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String newAllForm(Model model) {
         if (!model.containsAttribute("mForm")) model.addAttribute("mForm", new DoctorMForm());
         if (!model.containsAttribute("dForm")) model.addAttribute("dForm", new DoctorDTLForm());
@@ -48,6 +51,7 @@ public class DoctorMController {
 
     /** 신규 처리: 메인+디테일 */
     @PostMapping("/doctor/new")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String newAllSubmit(@Valid @ModelAttribute("mForm") DoctorMForm mForm,
                                BindingResult mBinding,
                                @Valid @ModelAttribute("dForm") DoctorDTLForm dForm,
@@ -66,6 +70,7 @@ public class DoctorMController {
 
     /** 수정: 메인+디테일 통합 폼 */
     @GetMapping("/doctor/edit/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String editAllForm(@PathVariable Integer id, Model model, RedirectAttributes redirect) {
         try {
             DoctorM main = service.get(id);
@@ -92,6 +97,7 @@ public class DoctorMController {
 
     /** 수정 처리: 메인+디테일 */
     @PostMapping("/doctor/edit/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String editAllSubmit(@PathVariable Integer id,
                                 @Valid @ModelAttribute("mForm") DoctorMForm mForm,
                                 BindingResult mBinding,
@@ -112,12 +118,14 @@ public class DoctorMController {
     /** 삭제: 상세 하단 버튼에서 사용 */
 
     @GetMapping("/doctor/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String delete(@PathVariable Integer id, RedirectAttributes redirect) {
         service.delete(id);
         redirect.addFlashAttribute("msg", "삭제되었습니다.");
         return "redirect:/doctor";
     }
     @PostMapping("/doctor/deleteSelected")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String deleteSelected(@RequestParam("ids") java.util.List<Integer> ids,
                                  RedirectAttributes redirect) {
         if (ids != null && !ids.isEmpty()) {
