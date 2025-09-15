@@ -306,6 +306,7 @@ td {
 }
 .main {
 	position: relative;
+	overflow: hidden;
 }
 .m-d-btn_box {
     display: flex;

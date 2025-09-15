@@ -72,15 +72,15 @@
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
-                            <thead class="table-light">
+                            <thead class="w-100">
                             <tr class="text-nowrap">
                                 <th class="text-center" style="width: 60px;">No</th>
-                                <th style="width: 140px;">수정일시</th>
-                                <th style="width: 180px;">간호사명</th>
-                                <th style="width: 100px;">부서</th>
-                                <th style="width: 100px;">직급</th>
-                                <th style="width: 120px;">수정자</th>
-                                <th style="width: 140px;">연락처</th>
+                                <th class="text-center" style="width: 140px;">수정일시</th>
+                                <th class="text-center" style="width: 180px;">간호사명</th>
+                                <th class="text-center" style="width: 100px;">부서</th>
+                                <th class="text-center" style="width: 100px;">직급</th>
+                                <th class="text-center" style="width: 120px;">수정자</th>
+                                <th class="text-center" style="width: 140px;">연락처</th>
                                 <th class="text-center" style="width: 100px;">상세보기</th>
                             </tr>
                             </thead>
@@ -97,41 +97,41 @@
                                     <span class="badge bg-secondary" th:text="${stat.count}">1</span>
                                 </td>
                                 <td style="width: 140px;">
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex text-center flex-column">
                                         <span class="fw-bold text-dark" th:text="${#temporals.format(history.createDate, 'yyyy-MM-dd')}">2024-01-01</span>
                                         <small class="text-muted" th:text="${#temporals.format(history.createDate, 'HH:mm')}">10:00</small>
                                     </div>
                                 </td>
                                 <td style="width: 180px;">
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex text-center flex-column">
                                         <span class="fw-bold text-dark" th:text="${history.firstName + ' ' + history.lastName}">홍길동</span>
                                         <small th:if="${history.middleName != null and !#strings.isEmpty(history.middleName)}"
                                                class="text-muted"
                                                th:text="|중간명: ${history.middleName}|"></small>
                                     </div>
                                 </td>
-                                <td style="width: 100px;">
+                                <td class="text-center" style="width: 100px;">
                                     <span th:if="${history.dept != null and !#strings.isEmpty(history.dept)}"
                                           class="badge bg-light text-dark border"
                                           th:text="${history.dept}">부서</span>
                                     <span th:unless="${history.dept != null and !#strings.isEmpty(history.dept)}"
                                           class="text-muted">-</span>
                                 </td>
-                                <td style="width: 100px;">
+                                <td class="text-center" style="width: 100px;">
                                     <span th:if="${history.rank != null and !#strings.isEmpty(history.rank)}"
                                           class="badge bg-secondary"
                                           th:text="${history.rank}">직급</span>
                                     <span th:unless="${history.rank != null and !#strings.isEmpty(history.rank)}"
                                           class="text-muted">-</span>
                                 </td>
-                                <td style="width: 120px;">
+                                <td class="text-center" style="width: 120px;">
                                     <div class="d-flex flex-column">
                                         <span class="small fw-bold" th:text="${history.modifier != null ? history.modifier : history.writer}">작성자</span>
                                         <span th:if="${history.modifier != null}" class="badge bg-warning text-dark small">수정됨</span>
                                         <span th:unless="${history.modifier != null}" class="badge bg-light text-dark small">생성</span>
                                     </div>
                                 </td>
-                                <td style="width: 140px;">
+                                <td class="text-center" style="width: 140px;">
                                     <div class="d-flex flex-column">
                                         <span th:if="${history.tel != null and !#strings.isEmpty(history.tel)}"
                                               class="small text-dark"

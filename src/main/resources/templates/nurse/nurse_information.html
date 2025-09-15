@@ -63,17 +63,17 @@
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
                 <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락처:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcCntc ?: '비상연락처 없음'}" style="width:220px;"></span>
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>관계:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">관계:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcRel ?: '관계 정보 없음'}" style="width:220px;"></span>
             </div>
 
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>성함:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">성함:</label>
                 <span th:text="|${nurseDTO.nurseInformation.emgcFName ?: ''} ${nurseDTO.nurseInformation.emgcMName ?: ''} ${nurseDTO.nurseInformation.emgcLName ?: ''}|" style="width:70%;"></span>
             </div>
 
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>비고:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비고:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcNote ?: '비고 없음'}" style="width:70%;"></span>
             </div>
 
