@@ -4,6 +4,7 @@ import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class NurseInformationController {
     private final NurseMainService nurseMainService;
     private final NurseInformationService nurseInformationService;
 
-//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
     public String createInfoForm(Model model, HttpSession session) {
         NurseMain nurseMain = (NurseMain) session.getAttribute("tempNurseMain");
@@ -31,7 +32,7 @@ public class NurseInformationController {
         return "nurse/nurse_info_form";
     }
 
-//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("")
     public String createInfo(@ModelAttribute NurseInformation info, HttpSession session) {
         NurseMain nurseMain = (NurseMain) session.getAttribute("tempNurseMain");
@@ -50,7 +51,7 @@ public class NurseInformationController {
         return "redirect:/nurse/info/" + nurseMain.getId();
     }
 
-//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/cancel")
     public String cancelCreation(HttpSession session) {
         session.removeAttribute("tempNurseMain");

@@ -7,12 +7,6 @@
         <!-- Main 정보 -->
         <div class="main card my-3 p-3">
             <h4 class="border-bottom py-2">간호사 상세페이지 입니다.</h4>
-            <div class="m-d-btn">
-                <div class="m-d-btn_box">
-                    <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
-                    <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
-                </div>
-            </div>
 
             <!-- 사진 -->
             <div class="image" th:if="${nurseDTO.nurseInformation != null}">
@@ -69,17 +63,17 @@
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
                 <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락처:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcCntc ?: '비상연락처 없음'}" style="width:220px;"></span>
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>관계:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">관계:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcRel ?: '관계 정보 없음'}" style="width:220px;"></span>
             </div>
 
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>성함:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">성함:</label>
                 <span th:text="|${nurseDTO.nurseInformation.emgcFName ?: ''} ${nurseDTO.nurseInformation.emgcMName ?: ''} ${nurseDTO.nurseInformation.emgcLName ?: ''}|" style="width:70%;"></span>
             </div>
 
             <div class="d-flex align-items-start gap-2 mb-3" th:if="${nurseDTO.nurseInformation != null}">
-                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락<br>비고:</label>
+                <label class="label-reform text-end flex-shrink-0" style="width:100px;">비고:</label>
                 <span th:text="${nurseDTO.nurseInformation.emgcNote ?: '비고 없음'}" style="width:70%;"></span>
             </div>
 
@@ -142,9 +136,14 @@
                 <span th:text="${nurseDTO.nurseInformation.note ?: '비고 없음'}" style="width:70%;"></span>
             </div>
         </div>
+        <div class="m-d-btn">
+            <div class="m-d-btn_box">
+                <button type="button" class="button-link" th:onclick="'location.href=\'' + @{/nurse(page=${param.page}, size=${param.size})} + '\';'">목록</button>
+                <a th:href="@{|/nurse/modify/${nurseDTO.nurseMain.id}|}" class="m-btn">수정</a>
+                <a href="javascript:void(0);" th:data-uri="@{|/nurse/delete/${nurseDTO.nurseMain.id}|}" class="d-btn" onclick="window.location.href=this.getAttribute('data-uri')">삭제</a>
+            </div>
+        </div>
     </form>
-
-
 
     <!-- License 정보 -->
     <div class="license card my-3 p-3">

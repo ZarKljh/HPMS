@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -59,6 +60,9 @@ public class NurseMain {
     @Column(nullable = false, name = "MODIFY_DATE")
     private LocalDateTime modifyDate; //수정시간
 
-    @OneToOne(mappedBy = "nurseMain", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "nurseMain", cascade = CascadeType.ALL, orphanRemoval = true)
     private NurseInformation nurseInformation;
+
+    @OneToMany(mappedBy = "nurseMain", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NurseInformation> informations;
 }
