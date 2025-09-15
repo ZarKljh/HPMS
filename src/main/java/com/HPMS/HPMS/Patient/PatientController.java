@@ -52,7 +52,6 @@ public class PatientController {
     */
 
     //@PreAuthorize("isAuthenticated()")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/patient/list")
     public String list(Model model,
                        @RequestParam(value="page", defaultValue="0") int page,
@@ -168,6 +167,12 @@ public class PatientController {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
+
+        //검색 조건을 다시 모델에 넣습니다.
+        model.addAttribute("columns", columns);
+        model.addAttribute("operators", operators);
+        model.addAttribute("values", values);
+        model.addAttribute("logicalOperators", logicalOperators);
 
         // 기존 patient/list 의 화면 폼을 그대로 사용합니다
         return "patient/lsw_patient_list";

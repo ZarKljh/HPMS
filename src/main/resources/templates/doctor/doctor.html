@@ -1,79 +1,124 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>의사 목록</title>
-    <style>
-        body { font-family: system-ui, sans-serif; margin: 24px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border:1px solid #ddd; padding:8px; }
-        th { background:#fafafa; }
-        .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
-        .btn { padding:6px 10px; border:1px solid #aaa; border-radius:6px; text-decoration:none; color:#333; }
-    </style>
-</head>
-<body>
-<h2>의사 목록</h2>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{doctor/doctor_layout}">
 
-<div class="toolbar">
-    <form th:action="@{/doctor}" method="get" style="display:flex; gap:8px;">
-        <input type="text" name="q" th:value="${q}" placeholder="메인 전 컬럼 검색(문자/ID/날짜)"/>
-        <input type="hidden" name="page" value="0"/>
-        <input type="hidden" name="size" value="10"/>
-        <button class="btn" type="submit">검색</button>
-        <a class="btn" th:href="@{/doctor/new}">신규 등록(메인+디테일)</a>
-        <a class="btn" th:href="@{/doctor/history}">히스토리</a>
-    </form>
-</div>
+<th:block layout:fragment="script">
+    <!-- 필요시 페이지 전용 JS -->
+</th:block>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>부서</th>
-        <th>진료과</th>
-        <th>직책</th>
-        <th>직급</th>
-        <th>성명</th>
-        <th>성별</th>
-        <th>생년월일</th>
-        <th>전화</th>
-        <th>입사일</th>
-        <th>상태</th>
-        <th>근무형태</th>
-        <th>더보기</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="row : ${page.content}">
-        <td th:text="${row.id}">1</td>
-        <td th:text="${row.department}">DEPT</td>
-        <td th:text="${row.medicalDepartment}">MED</td>
-        <td th:text="${row.rank}">RNK</td>
-        <td th:text="${row.position}">POS</td>
-        <td th:text="${row.lastName} + ' ' +${row.middleName}+ ' ' + ${row.firstName}">홍 길동</td>
-        <td th:text="${row.gender}">M</td>
-        <td th:text="${row.dateOfBirth}">1990-01-01</td>
-        <td th:text="${row.telephone}">010-0000-0000</td>
-        <td th:text="${row.hireDate}">2020-01-01</td>
-        <td th:text="${row.status}">ACT</td>
-        <td th:text="${row.workType}">FULL</td>
-        <td>
-            <a class="btn" th:href="@{/doctor/dtl/detail(id=${row.id})}">더보기</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<th:block layout:fragment="content">
+    <div class="container">
+        <h2 class="listbox mt-2">의사 목록</h2>
 
-<div class="toolbar" style="margin-top:12px;">
-    <span th:text="'총 ' + ${totalElements} + '건'">총 0건</span>
-    <div style="margin-left:auto; display:flex; gap:8px;">
-        <a class="btn" th:if="${currentPage>0}"
-           th:href="@{/doctor(q=${q}, page=${currentPage-1}, size=${page.size})}">이전</a>
-        <span th:text="${currentPage+1} + ' / ' + ${totalPages}">1 / 1</span>
-        <a class="btn" th:if="${currentPage+1<totalPages}"
-           th:href="@{/doctor(q=${q}, page=${currentPage+1}, size=${page.size})}">다음</a>
-    </div>
-</div>
-</body>
+        <!-- 상단 상태/검색 바 -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <form method="get" action="/doctor" class="size_bar d-flex align-items-center mb-2 mb-md-0">
+                <div class="d-flex align-items-center">
+                    <strong class="me-1">등록 건수:</strong>
+                    <span th:text="${page != null ? page.totalElements : 0}">0</span>명
+                    <strong class="mx-2">현재 페이지:</strong>
+                    <span th:text="${page != null ? page.number + 1 : 1}">1</span>
+                    <span>/</span>
+                    <span th:text="${page != null ? page.totalPages : 1}">1</span>
+                    <strong class="mx-2">페이지당 행 수:</strong>
+                    <select name="size" id="size" onchange="this.form.submit();">
+                        <option th:value="5" th:selected="${(page != null ? page.size : size) == 5}">5</option>
+                        <option th:value="10" th:selected="${(page != null ? page.size : size) == 10}">10</option>
+                        <option th:value="20" th:selected="${(page != null ? page.size : size) == 20}">20</option>
+                    </select>
+                    <input type="hidden" name="page" th:value="${page != null ? page.number : 0}"/>
+                    <input type="hidden" name="q" th:value="${q}"/>
+                </div>
+            </form>
+
+            <form method="get" action="/doctor" class="d-flex align-items-center">
+                <div class="search_box row my-3">
+                    <div>
+                        <div class="input-group">
+                            <input type="text" id="search_kw" name="q" class="form-control"
+                                   th:value="${q}"/>
+                            <button class="search_btn" type="submit" id="btn_search">검색</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="page" th:value="${page != null ? page.number : 0}"/>
+                    <input type="hidden" name="size" th:value="${page != null ? page.size : size}"/>
+                </div>
+            </form>
+        </div>
+
+        <!-- 리스트 테이블 -->
+        <table class="table table-hover card">
+            <thead class="table-light">
+            <tr class="list text-center">
+                <th><input type="checkbox" id="selectAll"/></th>
+                <th>번호</th>
+                <th>부서</th>
+                <th>진료과</th>
+                <th>직급</th>
+                <th>직책</th>
+                <th>성명</th>
+                <th class="mobile_hidden">성별</th>
+                <th class="mobile_hidden">생년월일</th>
+                <th>전화</th>
+                <th class="mobile_hidden">입사일</th>
+                <th class="mobile_hidden">상태</th>
+                <th class="mobile_hidden">근무형태</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="row, loop : ${page.content}">
+                <td><input type="checkbox" name="ids" th:value="${row.id}"/></td>
+                <td th:text="${page.totalElements - (page.number * page.size) - loop.index}">1</td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.department}">부서</a></td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.medicalDepartment}">진료과</a></td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.rank}">직급</a></td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.position}">직책</a></td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.lastName + ' ' + (row.middleName != null ? row.middleName + ' ' : '') + row.firstName}">성명</a></td>
+                <td class="mobile_hidden" th:text="${row.gender == 'M' ? '남' : (row.gender == 'F' ? '여' : row.gender)}">성별</td>
+                <td class="mobile_hidden" th:text="${#temporals.format(row.dateOfBirth, 'yyyy-MM-dd')}">생년월일</td>
+                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
+                       th:text="${row.telephone}">전화</a></td>
+                <td class="mobile_hidden" th:text="${#temporals.format(row.hireDate, 'yyyy-MM-dd')}">입사일</td>
+                <td class="mobile_hidden" th:text="${row.status}">상태</td>
+                <td class="mobile_hidden" th:text="${row.workType}">근무형태</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 하단 영역 -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <!-- 중앙 페이징 -->
+            <div class="flex-grow-1 d-flex justify-content-center">
+                <div class="pagination" th:if="${page != null}">
+                    <a th:if="${page.number > 0}"
+                       th:href="@{/doctor(q=${q}, page=${page.number - 1}, size=${page.size})}">이전</a>
+
+                    <a th:each="p : ${#numbers.sequence(0, page.totalPages - 1)}"
+                       th:href="@{/doctor(q=${q}, page=${p}, size=${page.size})}"
+                       th:text="${p + 1}"
+                       th:classappend="${p == page.number} ? ' active-page' : ''"></a>
+
+                    <a th:if="${page.number + 1 < page.totalPages}"
+                       th:href="@{/doctor(q=${q}, page=${page.number + 1}, size=${page.size})}">다음</a>
+                </div>
+            </div>
+
+            <!-- 우측 버튼 -->
+            <div class="d-flex justify-content-end gap-2">
+                <a th:href="@{/doctor/new}" class="page-btn">등록</a>
+                <a href="javascript:void(0);" class="page-btn" id="deleteSelected">삭제</a>
+                <a th:href="@{/doctor/history}" class="page-btn">수정내역</a>
+            </div>
+
+        </div>
+</th:block>
 </html>

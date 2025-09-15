@@ -23,6 +23,7 @@ public class DoctorMController {
     private final DoctorDTLService doctorDTLService;
 
     /** 목록/검색 (메인만) */
+
     @GetMapping("/doctor")
     public String listPage(@RequestParam(required = false) String q,
                            @RequestParam(defaultValue = "0") Integer page,
@@ -116,5 +117,15 @@ public class DoctorMController {
         redirect.addFlashAttribute("msg", "삭제되었습니다.");
         return "redirect:/doctor";
     }
-
+    @PostMapping("/doctor/deleteSelected")
+    public String deleteSelected(@RequestParam("ids") java.util.List<Integer> ids,
+                                 RedirectAttributes redirect) {
+        if (ids != null && !ids.isEmpty()) {
+            service.deleteAll(ids); // ✅ 서비스에 다중 삭제 메서드 필요
+            redirect.addFlashAttribute("msg", ids.size() + "건 삭제되었습니다.");
+        } else {
+            redirect.addFlashAttribute("error", "선택된 항목이 없습니다.");
+        }
+        return "redirect:/doctor";
+    }
 }

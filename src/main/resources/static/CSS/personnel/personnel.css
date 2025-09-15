@@ -73,6 +73,7 @@
 }
 
 
+
 /* 페이징 버튼 영역 */
 .pagination {
     display: flex;
@@ -108,11 +109,20 @@
 
 
 /* 기본: 데스크탑에서는 전체 텍스트 보이기 */
-.text-full {
+/*.text-full {
     display: inline;
 }
 .text-short {
     display: none;
+}*/
+
+@media (min-width: 769px) {
+    .text-full {
+        display: inline;
+    }
+    .text-short {
+        display: none;
+    }
 }
 
 /* 모바일: 768px 이하에서는 짧은 텍스트만 보이기 */
@@ -129,7 +139,74 @@
         display: none;
    }
 
+     .responsive-logo {
+       display: none;
+     }
+
+
 }
 
 
+/* 상세정보 */
+.detail_content{
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 16px;
+}
+.detail_content label {
+  font-weight: bold;
+}
 
+/*  footer  */
+.chang-footer{
+    display:flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 */
+    width: 100%;
+}
+/*.chang-footer{
+    display:flex;
+    background-color:darkblue;
+    flex-grow:0;
+}*/
+.chang-footer-inforamtion{
+    /*background-color:yellow;*/
+    flex:1;
+    max-width:1190px;
+    margin-left: 20px;
+    /*min-width:1290px;*/
+}
+
+.chang-footer-logo{
+    display:flex;
+    width:100px;
+}
+
+.chang-inner-ul-menu li {
+  display: block;         /* 한 줄씩 내려쓰기 */
+  margin-bottom: 1px;     /* 항목 간 간격 (선택사항) */
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 10px;
+}
+.responsive-logo{
+    width:80px; height:auto;
+}
+
+
+/*
+
+.chang-content-div {
+    height: 100px; */
+/* 예시 높이 *//*
+
+    background-image: url('/img/weed.png'); */
+/* 이미지 경로 *//*
+ *//*
+
+    background-repeat: no-repeat;
+    background-position: right 20px bottom 20px;
+    background-size: 80px auto; */
+/* 이미지 자체 크기 조정 *//*
+
+
+}
+*/
