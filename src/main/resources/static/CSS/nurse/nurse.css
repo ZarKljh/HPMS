@@ -292,7 +292,7 @@ td {
     border-color: #99ccff !important;
     color: #000 !important;
 }
-.m-d-btn_box .d-btn:hover {
+.m-d-btn_box .d-btn:hover, .create .d-btn:hover {
     background-color: #f54747 !important;
     color: #fff !important;
     border-color: #f54747 !important;
@@ -310,6 +310,7 @@ td {
 }
 .m-d-btn_box {
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
 }
 .image {
@@ -351,25 +352,10 @@ td {
 
 //--------------- 수정 페이지 ---------------//
 .c_c_btn_box {
-    display: flex;
-    justify-content: flex-end;
+    gap: 10px;
     margin-top: 10px;
     align-items: center;
     width: 100%;
-}
-.c-btn, .cancel-btn {
-    border-radius: 10px;
-    border: 1px solid #dee2e6;
-    color: #fff;
-}
-.c-btn {
-    background-color: #0d6efd;
-    width: 70px;
-    height: 45px;
-}
-.cancel-btn {
-    background-color: #dee2e6;
-    padding: 10px 16px;
 }
 
 
@@ -399,12 +385,16 @@ input {
 }
 .next_btn_box {
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
 }
 
 
 //--------------- 상세정보 등록 ---------------//
-
+.save_btn {
+    display: flex;
+    justify-content: flex-end;
+}
 
 
 //--------------- 자격증 등록 ---------------//
@@ -430,7 +420,7 @@ input {
     flex-direction: column;
 }
 .li_list_form {
-    display:block;
+    display: block;
     width:100%;
 }
 
