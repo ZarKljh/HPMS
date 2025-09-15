@@ -203,6 +203,15 @@ public class PatientMService {
             //throw new DataNotFoundException("question not found");
         }
     }
+    public PatientM getPatientMByName(String firstName, String lastName){
+        Optional<PatientM> patientM = this.patientMRepository.findByFirstNameAndLastName(firstName, lastName);
+        if (patientM.isPresent()) {
+            return patientM.get();
+        } else {
+            throw new NoSuchElementException("Patient detail not found for patientId: " + patientM.get().getId());
+            //throw new DataNotFoundException("question not found");
+        }
+    }
 
     public void deletePatientM(PatientM patientM){
         //환자종결구분자에 1을 입력한다

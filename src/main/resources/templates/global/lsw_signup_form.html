@@ -13,7 +13,7 @@
     <!-- 바디 -->
     <div class="card-body p-4">
       <form th:action="@{/hpms/signup}" th:object="${siteUserForm}" method="post">
-
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <!-- 사용자 ID -->
         <div class="mb-3">
           <label for="userId" class="form-label">사용자 ID</label>
@@ -69,6 +69,7 @@
             <option value="ROLE_DOCTOR">의사</option>
             <option value="ROLE_SYSTEM">지원팀</option>
             <option value="ROLE_ADMIN">시스템 관리자</option>
+            <option value="USER_ADMIN">게스트</option>
           </select>
         </div>
 
