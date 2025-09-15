@@ -482,7 +482,185 @@ input {
     margin-bottom: 1rem;
 }
 
-//--------------- footer ---------------//
+//--------------- personnel ---------------//
+/* 목록리스트*/
+.chang-table-layout {/* 컬럼 넓이 고정을 강하게 적용하기 위해 */
+    table-layout: fixed;
+}
+.chang-nurse-th { /*nurse.css 내 th overwrite*/
+    width: 100%;
+    text-wrap: nowrap;
+    font-size: 14px;
+    /*border-right: 1px solid #dee2e6;*/
+}
+
+.listTable {
+  width: 100%;
+  table-layout: fixed; /* 셀 너비 고정에 필수 */
+}
+
+.chang-checkbox-column {/* 체크박스 컬럼 넓이 고정*/
+    width: 50px;
+    text-align: center;
+    min-width: 50px;
+    max-width: 50px;
+    /*display: flex; */
+    /*justify-content: center; align-items: center;*/
+    /*height: 100%;*/
+}
+.chang_text_center{
+    text-align: center;
+}
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* 목록리스트*/
+.material-symbols-outlined {/* 붉은 귀 : 필수입력대상*/
+	color: red;
+	font-size: 12px;
+	line-height: 3px;
+}
+
+.input-list {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 14px;
+}
+
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.page-navigation a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 왼쪽 버튼 영역 */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* 버튼 스타일 */
+.button-link {
+  gap:5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  min-height: 42px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-link:hover {
+  background-color: #cce6ff;
+  border-color: #666;
+  color: #000;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+
+/* 페이징 버튼 영역 */
+.pagination {
+    display: flex;
+    gap: 6px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination a:hover {
+    background-color: #cce6ff;
+    border-color: #99ccff;
+    color: #000;
+}
+
+.pagination .active-page {
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+    pointer-events: none;
+}
+
+
+/* 기본: 데스크탑에서는 전체 텍스트 보이기 */
+/*.text-full {
+    display: inline;
+}
+.text-short {
+    display: none;
+}*/
+
+@media (min-width: 769px) {
+    .text-full {
+        display: inline;
+    }
+    .text-short {
+        display: none;
+    }
+}
+
+/* 모바일: 768px 이하에서는 짧은 텍스트만 보이기 */
+@media (max-width: 768px) {
+    .text-full { /*모바일에서 버튼 문자열 변경 */
+        display: none;
+    }
+
+    .text-short {
+        display: inline;
+    }
+
+   .delete-button { /*모바일에서 버튼 완전히 가리기 */
+        display: none;
+   }
+
+     .responsive-logo {
+       display: none;
+     }
+
+
+}
+
+
+/* 상세정보 */
+.detail_content{
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 16px;
+}
+.detail_content label {
+  font-weight: bold;
+}
+
+/*  footer  */
 .chang-footer{
     display:flex;
     justify-content: center; /* 가로 가운데 정렬 */
@@ -516,3 +694,23 @@ input {
 .responsive-logo{
     width:80px; height:auto;
 }
+
+
+/*
+
+.chang-content-div {
+    height: 100px; */
+/* 예시 높이 *//*
+
+    background-image: url('/img/weed.png'); */
+/* 이미지 경로 *//*
+ *//*
+
+    background-repeat: no-repeat;
+    background-position: right 20px bottom 20px;
+    background-size: 80px auto; */
+/* 이미지 자체 크기 조정 *//*
+
+
+}
+*/
