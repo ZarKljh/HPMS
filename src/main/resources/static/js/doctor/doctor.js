@@ -130,9 +130,131 @@
       if (positionInput) positionInput.value = positionCode ?? '';
     });
 
+        function choose(iso2, countryKr) {
+          if (window.opener && !window.opener.closed && typeof window.opener.setCountry === 'function') {
+            window.opener.setCountry(iso2, countryKr);
+          }
+          window.close();
+        }
+
+            function makeOptionText(item) {
+              const code = item.code ?? '';
+              const kor  = item.korName ?? '';
+              const eng  = item.engName ?? '';
+              return `[${code}] ${kor} / ${eng}`;
+            }
+            async function fetchJson(url) {
+              const res = await fetch(url);
+              if (!res.ok) throw new Error(`${url} ${res.status}`);
+              return res.json();
+            }
+
+            // 직책(선택)
+            fetchJson('/global/jobcode/positions')
+              .then(list => {
+                const sel = document.getElementById('positionSelect');
+                sel.innerHTML = '';
+                (list || []).forEach(item => {
+                  const opt = document.createElement('option');
+                  // 부모로는 한국어명 전달 (VARCHAR(4) 대응)
+                  opt.value = item.korName;
+                  opt.dataset.kor = item.korName;
+                  opt.textContent = makeOptionText(item);
+                  sel.appendChild(opt);
+                });
+              })
+              .catch(err => console.warn('직책 로드 실패:', err));
+
+            // 직급(선택)
+            fetchJson('/global/jobcode/ranks')
+              .then(list => {
+                const sel = document.getElementById('rankSelect');
+                sel.innerHTML = '';
+                (list || []).forEach(item => {
+                  const opt = document.createElement('option');
+                  opt.value = item.korName;
+                  opt.dataset.kor = item.korName;
+                  opt.textContent = makeOptionText(item);
+                  sel.appendChild(opt);
+                });
+              })
+              .catch(err => console.warn('직급 로드 실패:', err));
+
+            function applySelection() {
+              const rankOpt = document.getElementById('rankSelect').selectedOptions[0];
+              const posOpt  = document.getElementById('positionSelect').selectedOptions[0];
+
+              // 선택 안 했으면 빈 문자열로 전달
+              const rankKor     = rankOpt ? (rankOpt.dataset.kor || rankOpt.value) : '';
+              const positionKor = posOpt  ? (posOpt.dataset.kor  || posOpt.value)  : '';
+
+              window.opener?.postMessage({
+                source: 'jobcode-popup',
+                payload: { rankCode: rankKor, positionCode: positionKor }
+              }, '*');
+
+              window.close();
+            }
+
+                let currentPage = 0, totalPages = 0, prevPage = 0, nextPage = 0, pageSize = 10;
+
+
+                function load(page) {
+                  const kw = document.getElementById('kw').value || '';
+                  fetch(`/global/road/search?kw=${encodeURIComponent(kw)}&page=${page}&size=${pageSize}`)
+                    .then(r => r.json())
+                    .then(data => {
+                      currentPage = data.number;
+                      totalPages  = data.totalPages;
+                      prevPage = Math.max(0, currentPage - 1);
+                      nextPage = Math.min(totalPages - 1, currentPage + 1);
+
+                      document.getElementById('prev').disabled = currentPage === 0;
+                      document.getElementById('next').disabled = currentPage >= totalPages - 1 || totalPages === 0;
+                      document.getElementById('pageInfo').textContent = `${totalPages ? (currentPage+1) : 0}/${totalPages}`;
+
+                      const tbody = document.getElementById('rows');
+                      tbody.innerHTML = '';
+                      if (data.content.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">결과가 없습니다.</td></tr>`;
+                        return;
+                      }
+                      data.content.forEach(a => {
+                        const addrStr = [a.sido_kor, a.sgg_kor, a.emd_kor, a.road_name_kor]
+                                         .filter(Boolean).join(' ');
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                          <td>${a.sido_kor ?? ''}</td>
+                          <td>${a.sgg_kor ?? ''}</td>
+                          <td>${a.emd_kor ?? ''}</td>
+                          <td>${a.road_name_kor ?? ''}</td>
+                          <td>${a.road_code ?? ''}</td>
+                          <td><button type="button">선택</button></td>`;
+                        tr.ondblclick = () => choose(addrStr, a);
+                        tr.querySelector('button').onclick = () => choose(addrStr, a);
+                        tbody.appendChild(tr);
+                      });
+                    })
+                    .catch(e => {
+                      alert('검색 중 오류가 발생했습니다.');
+                      console.error(e);
+                    });
+                }
+
+                function go(p) { load(p); }
+
+                function choose(addrStr, a) {
+                  if (window.opener && !window.opener.closed) {
+                    // 부모에 값만 전달 (부모가 저장 여부 결정)
+                    window.opener.setRoad(addrStr, a.road_code || '', a.emd_seq_no || '');
+                  }
+                  window.close();
+                }
+
     // 전역 사용을 위해 노출
     window.openCountryPopup = openCountryPopup;
     window.setCountry = setCountry;
     window.openRoadPopup = openRoadPopup;
     window.setRoad = setRoad;
     window.openJobPopup = openJobPopup;
+

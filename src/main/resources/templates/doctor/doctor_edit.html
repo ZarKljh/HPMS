@@ -112,12 +112,13 @@
           </div>
         </fieldset>
 
-        <!-- 하단 우측 버튼 -->
-        <div class="detail-actions-outer">
-          <a class="page-btn" th:href="@{/doctor/dtl/detail(id=${doctorId})}">상세 정보</a>
-          <button class="m-btn" type="submit">수정</button>
-        </div>
+
       </form>
+      <!-- 하단 우측 버튼 -->
+      <div class="detail-actions-outer">
+        <a class="m-btn" th:href="@{/doctor/dtl/detail(id=${doctorId})}">상세 정보</a>
+        <button class="m-btn" type="submit">수정</button>
+      </div>
     </div>
   </div>
 </th:block>
