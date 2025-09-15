@@ -1,0 +1,58 @@
+<html lang="kr" layout:decorate="~{patient/patient_layout}">
+<div layout:fragment="content" class="container">
+    <h3 class="mt-2">환자 상세정보</h3>
+
+    <div class="patient-info card my-3 p-3">
+        <div class="title-patient-name"><h4 class="title-h4-header" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h4><span>님의 등록된 환자정보입니다.</span></div>
+        <!-- 기본 식별 정보 -->
+        <h5 class="mt-5">기본정보</h5>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">최초등록일</label> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
+        <!--
+        <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">수정일</label><span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
+        -->
+
+        <!-- 인적사항 -->
+        <h5 class="mt-5">인적사항</h5>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">생년월일</label> <span th:text="${#temporals.format(detailDTO.birth,'yyyy-MM-dd')}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성별</label> <span th:text="${detailDTO.gender}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">내/외국인</label> <span th:text="${detailDTO.foreigner}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">성명</label><span th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">중간이름</label> <span th:text="${detailDTO.middleName}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권성명</label><span th:text="${detailDTO.passLastName} + ' ' + ${detailDTO.passFirstName}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">여권중간이름</label> <span th:text="${detailDTO.passMiddleName}"></span></div>
+
+
+        <!-- 연락처 -->
+        <h5 class="mt-5">연락처</h5>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">MOBILE</label> <span th:text="${detailDTO.mobilePhone}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">EMAIL</label> <span th:text="${detailDTO.email}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">FAX</label> <span th:text="${detailDTO.fax}"></span></div>
+
+
+        <!-- 보호자 정보 -->
+        <h5 class="mt-5">보호자정보</h5>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 성명</label> <span th:text="${detailDTO.guardianLastName} + ' ' + ${detailDTO.guardianFirstName}"></span></div>
+            <!--
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 연락처</label> <span th:text="${detailDTO.guardianTel}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">보호자 관계</label> <span th:text="${detailDTO.guardianRelation}"></span></div>
+            -->
+
+        <!-- 주소 -->
+        <!--
+        <h5 class="mt-5">주소</h5>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">우편번호</label> <span th:text="${detailDTO.homePcd}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">기본주소</label> <span th:text="${detailDTO.homeDefAdd}"></span></div>
+            <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">상세주소</label> <span th:text="${detailDTO.homeDetAdd}"></span></div>
+        -->
+
+        <!-- 기타 -->
+        <h5 class="mt-5">기타</h5>
+        <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">직업</label> <span th:text="${detailDTO.occupation}"></span></div>
+        <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">국적</label> <span th:text="${detailDTO.natn}"></span></div>
+
+    </div>
+</div>
+<style>
+
+</style>
+</html>

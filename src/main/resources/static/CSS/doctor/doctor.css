@@ -1,12 +1,12 @@
 // 노멀라이징
 body, ul, li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+   margin: 0;
+   padding: 0;
+   list-style: none;
 }
 a {
-	text-decoration: none;
-	color: inherit;
+   text-decoration: none;
+   color: inherit;
 }
 #search_kw {
     font-size: 10px;
@@ -21,8 +21,8 @@ a {
     z-index: 1030;
 }
 .navbar-toggle {
-	border: 1px solid gray;
-	border-radius: 5px;
+   border: 1px solid gray;
+   border-radius: 5px;
 }
 .nav-link:hover {
     color: #0d6efd;
@@ -34,41 +34,41 @@ a {
     }
 }
 @media screen and (min-width: 992px) {
-	.navbar-toggle {
-		display: none;
-	}
-	.menubox_2 {
-	    display: none;
-	}
+   .navbar-toggle {
+      display: none;
+   }
+   .menubox_2 {
+       display: none;
+   }
 }
 .menubox_2 {
-	position: absolute;
-	right: -200px;
-	top: 101%;
-	width: 200px;
-	height: 100vh;
-	z-index: 999;
-	border-left: 1px solid #dee2e6;
-	background-color: #f8f9fa;
-	transition: right 0.3s;
+   position: absolute;
+   right: -200px;
+   top: 101%;
+   width: 200px;
+   height: 100vh;
+   z-index: 999;
+   border-left: 1px solid #dee2e6;
+   background-color: #f8f9fa;
+   transition: right 0.3s;
 }
 .menubox_2.active {
-	right: 0;
+   right: 0;
 }
 .nav-link {
-	padding: 10px 20px;
+   padding: 10px 20px;
 }
 
 // 리스트 페이지
 .container {
-	width: 1920px;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	box-sizing: border-box;
+   width: 1920px;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   box-sizing: border-box;
 }
 .listbox {
-	padding-top: 10px;
+   padding-top: 10px;
 }
 .search_box {
     display:flex;
@@ -84,45 +84,45 @@ a {
     background-color: #dee2e6;
 }
 table {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
 }
 .name_hover:hover {
     color: #0d6efd;
     text-decoration: underline;
 }
 tr {
-	display: flex;
-	flex-grow: 1;
-	justify-content: space-around;
+   display: flex;
+   flex-grow: 1;
+   justify-content: space-around;
 }
 .list {
-	justify-content: space-around;
-	text-align: center;
-	line-height: 40px;
-	overflow: hidden;
-	text-overflow: ellipsis;
+   justify-content: space-around;
+   text-align: center;
+   line-height: 40px;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 th {
-	width: 100%;
-	text-wrap: nowrap;
-	font-size: 16px;
-	border-right: 1px solid #dee2e6;
+   width: 100%;
+   text-wrap: nowrap;
+   font-size: 16px;
+   border-right: 1px solid #dee2e6;
 }
 td {
-	width: 80px;
-	text-wrap: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	flex-grow: 1;
-	font-size: 12px;
+   width: 80px;
+   text-wrap: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   flex-grow: 1;
+   font-size: 12px;
 }
 .create_btn {
-	position: absolute;
-	top: 85%;
-	right: 15%;
-	text-wrap: nowrap;
+   position: absolute;
+   top: 85%;
+   right: 15%;
+   text-wrap: nowrap;
 }
 .history_btn {
     position: absolute;
@@ -131,10 +131,10 @@ td {
     text-wrap: nowrap;
 }
 @media screen and (max-width: 993px) {
-	.mobile_hidden {
-		display: none;
-		width: 300px;
-	}
+   .mobile_hidden {
+      display: none;
+      width: 300px;
+   }
 }
 @media screen and (max-width: 412px) {
     .create_btn {
@@ -182,11 +182,11 @@ td {
 
 //상세 페이지
 .main, .information {
-	background-color: #f8f9fa;
-	transition: .5s;
+   background-color: #f8f9fa;
+   transition: .5s;
 }
 .main {
-	position: relative;
+   position: relative;
 }
 .m-d-btn_box {
     display: flex;
@@ -214,48 +214,48 @@ td {
     background-color: #f54747;
 }
 .image {
-	width: 300px;
-	height: 400px;
-	overflow: hidden;
-	border: 1px solid gray;
-	background-color: white;
-	margin-left: 40px;
-	margin-bottom: 20px;
+   width: 300px;
+   height: 400px;
+   overflow: hidden;
+   border: 1px solid gray;
+   background-color: white;
+   margin-left: 40px;
+   margin-bottom: 20px;
 }
 .basic_info {
-	position: absolute;
-	top: 220px;
-	left: 350px;
-	width: 945px;
-	height: 200px;
+   position: absolute;
+   top: 220px;
+   left: 350px;
+   width: 945px;
+   height: 200px;
 }
 .info, .info_1 {
-	padding: 10px;
-	margin: 20px;
-	border: 1px solid #dee2e6;
-	background-color: white;
+   padding: 10px;
+   margin: 20px;
+   border: 1px solid #dee2e6;
+   background-color: white;
 }
 .info_1 {
-	display: none;
+   display: none;
 }
 .txt {
     display: inline-block;
     width: 100px;
 }
 @media screen and (max-width: 1400px) {
-	.basic_info {
-		width: 760px;
-	}
+   .basic_info {
+      width: 760px;
+   }
 }
 
 @media screen and (max-width: 1200px) {
-	.basic_info {
-		width: 580px;
-	}
+   .basic_info {
+      width: 580px;
+   }
 }
 
 @media screen and (max-width: 993px) {
-	.nursemain {
+   .nursemain {
         display: flex;
         justify-content: center;
     }
@@ -306,24 +306,24 @@ td {
 
 // 기본정보 등록
 .main-table {
-	position: relative;
-	border: 1px solid #dee2e6;
-	background-color: #f8f9fa;
-	font-size: 14px;
+   position: relative;
+   border: 1px solid #dee2e6;
+   background-color: #f8f9fa;
+   font-size: 14px;
 }
 label {
-	width: 100px;
+   width: 100px;
 }
 input {
     border: 1px solid #dee2e6;
 }
 .input-list {
     display: flex;
-	padding: 10px;
-	margin: 20px;
-	border: 1px solid #dee2e6;
-	background-color: white;
-	font-size: 14px;
+   padding: 10px;
+   margin: 20px;
+   border: 1px solid #dee2e6;
+   background-color: white;
+   font-size: 14px;
 }
 .name {
     margin-bottom: 5px;
@@ -358,10 +358,10 @@ input {
 }
 .next_btn {
     padding: 8px 10px;
-	border: 1px solid #dee2e6;
-	border-radius: 10px;
-	background-color: #0d6efd;
-	color: #fff;
+   border: 1px solid #dee2e6;
+   border-radius: 10px;
+   background-color: #0d6efd;
+   color: #fff;
 }
 
 // 자격증 등록
@@ -628,11 +628,587 @@ text-decoration: underline !important;
       background: #fff;
     }
 
+/* 기존 .section-heading 정의에 이어서(또는 교체) */
 .section-heading {
-  font-family: "맑은 고딕", Malgun Gothic, sans-serif;
+  font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
   font-size: 20px;
-  font-weight: 700; /* Bold */
-  margin-top: 20px;
-  margin-bottom: 12px;
+  font-weight: 800; /* h2의 fw-bolder와 유사 굵기 */
+}
+/* ===== Doctor list / history table FIX ===== */
+
+/* 전역 table{display:flex}를 무력화 */
+table.doctor-table {
+  display: table;                 /* ✅ table 형식 복구 */
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;             /* 내용에 맞춰 열 너비 */
+}
+
+/* 전역 tr{display:flex}를 무력화 */
+table.doctor-table tr {
+  display: table-row;             /* ✅ 행 복구 */
+}
+
+/* 전역 th/td에 display 영향 방지 + 세로줄 제거 + 가운데 정렬 */
+table.doctor-table th,
+table.doctor-table td {
+  display: table-cell;            /* ✅ 셀 복구 */
+  padding: 10px 8px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  border-left: none !important;   /* 세로줄 제거 */
+  border-right: none !important;  /* 세로줄 제거 */
+  border-top: 1px solid #ddd;     /* 가로줄 유지 */
+  border-bottom: 1px solid #eee;  /* 가로줄 유지 */
+  white-space: nowrap;
+}
+
+/* 헤더 배경/굵기 */
+table.doctor-table th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+/* 행 hover */
+table.doctor-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* 히스토리 페이지 유틸 (누락 분) */
+form.search {
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(160px, 1fr));
+  gap: 8px;
+  align-items: end;
+}
+form.search .full { grid-column: 1 / -1; }
+.right { text-align: right; }
+.pager { margin-top: 12px; display: flex; gap: 8px; align-items: center; }
+.muted { color: #666; }
+.nowrap { white-space: nowrap; }
+
+/* 세로줄을 다시 만드는 전역 th 보더 무력화(안 지울 경우 대비) */
+table.doctor-table th { border-right: none !important; }
+
+/* Doctor 테이블 최종 패치 (세로줄 차단 & table 레이아웃 강제) */
+.table.doctor-table,
+table.doctor-table { border-collapse: collapse; border-left:0!important; border-right:0!important; }
+
+.table.doctor-table thead th,
+.table.doctor-table tbody th,
+.table.doctor-table tbody td,
+table.doctor-table thead th,
+table.doctor-table tbody th,
+table.doctor-table tbody td {
+  border-left:0!important; border-right:0!important;
+}
+
+.table.doctor-table > :not(caption) > * > * {
+  border-left:0!important; border-right:0!important;
+  border-top:1px solid #ddd; border-bottom:1px solid #eee;
+}
+
+/* 전역 table/tr flex 규칙 무력화 (혹시 남아있다면) */
+table.doctor-table { display: table; width:100%; table-layout:auto; }
+table.doctor-table tr { display: table-row; }
+table.doctor-table th, table.doctor-table td { display: table-cell; text-align:center; vertical-align:middle; white-space:nowrap; }\
+
+/* ===== Doctor 테이블 전역 충돌 무력화(최종) ===== */
+/* 목적: 전역 table/tr flex, th/td width, th border-right를 완전히 무력화 */
+
+/* 1) 테이블 자체를 진짜 'table'로 강제 */
+.table.doctor-table,
+table.doctor-table {
+  display: table !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: auto !important; /* 내용에 맞춰 */
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* 2) tr을 진짜 'table-row'로 강제 */
+table.doctor-table tr {
+  display: table-row !important;
+}
+
+/* 3) 셀을 진짜 'table-cell'로 강제 + 가운데 정렬 + 세로줄 제거 */
+table.doctor-table th,
+table.doctor-table td {
+  display: table-cell !important;
+  text-align: center !important;       /* 가로 가운데 */
+  vertical-align: middle !important;   /* 세로 가운데 */
+  white-space: nowrap !important;
+
+  /* 전역 width/flex 속성 무력화 */
+  width: auto !important;
+  max-width: none !important;
+  flex: none !important;
+  flex-grow: 0 !important;
+
+  /* 세로줄 제거 */
+  border-left: 0 !important;
+  border-right: 0 !important;
+
+  /* 가로줄만 유지 */
+  border-top: 1px solid #ddd !important;
+  border-bottom: 1px solid #eee !important;
+
+  padding: 10px 8px !important;
+  font-size: 14px !important;
+}
+
+/* 4) 헤더 스타일 + 전역 th 보더 차단 */
+table.doctor-table thead th {
+  background: #fafafa !important;
+  font-weight: 600 !important;
+  border-right: 0 !important;
+}
+
+/* 5) Bootstrap/기타 중첩 선택자에서 그리는 보더도 차단 */
+.table.doctor-table > :not(caption) > * > * {
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 1px solid #ddd !important;
+  border-bottom: 1px solid #eee !important;
+}
+
+/* 6) 히스토리 유틸 (누락 방지) */
+form.search {
+  margin-bottom: 16px !important;
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(160px, 1fr)) !important;
+  gap: 8px !important;
+  align-items: end !important;
+}
+form.search .full { grid-column: 1 / -1 !important; }
+.right { text-align: right !important; }
+.pager { margin-top: 12px !important; display: flex !important; gap: 8px !important; align-items: center !important; }
+.muted { color: #666 !important; }
+.nowrap { white-space: nowrap !important; }
+
+/* 디테일 페이지 컨테이너 */
+.detail-container { position: relative; }
+
+/* 카드 박스 */
+.detail-card {
+  position: relative;
+  padding: 16px 16px 72px; /* 하단 버튼 공간 확보 */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+/* 섹션 제목 아래 구분선 */
+.section-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 8px 0 16px;
+}
+
+/* 카드 하단 우측 고정 버튼 영역 */
+.detail-actions {
+  position: sticky;        /* 카드 안에서 스크롤해도 우측 하단에 고정처럼 보이게 */
+  bottom: 12px;            /* 뷰포트 하단에서 약간 위 */
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+
+  /* 배경 그라스로 내용과 분리감 */
+  background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+
+/* 버튼 스타일(기존 클래스 재사용) */
+.m-btn, .d-btn {
+  padding: 8px 14px;
+  height: 40px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+/* 더 확실한 위치 고정이 필요하면 absolute로 전환 (주석 해제해서 사용) */
+/*
+.detail-actions {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  background: none;
+}
+*/
+
+/* 상단 안내문 */
+.detail-subtitle{
+  margin: 4px 0 12px;
+  color: #6b7280; /* muted */
+  font-size: 14px;
+}
+
+/* 카드 컨테이너: 우측 사진 공간 확보 */
+.detail-card{
+  position: relative;
+  padding: 16px 16px 72px;      /* 하단 버튼 공간 */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  /* 우측 상단 사진 공간만큼 오른쪽 패딩 추가 */
+  padding-right: 240px;         /* 사진 width + 여백 */
+}
+
+/* 구분선 */
+.section-divider{
+  height: 1px;
+  background: #e5e7eb;
+  margin: 8px 0 16px;
+}
+
+/* 우측 상단 프로필(절대 위치) */
+.detail-photo.floating{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 200px;
+  text-align: center;
+}
+.detail-photo.floating img{
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+.detail-photo.floating .no-photo{
+  padding: 8px 0;
+  color: #6b7280;
+  font-size: 14px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+/* 하단 우측 버튼 (sticky 유지) */
+.detail-actions{
+  position: sticky;
+  bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+  background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+
+/* 카드 기본 패딩: 오른쪽 여백 더 이상 필요 없음 */
+.detail-card { padding: 16px 16px 72px; }
+
+/* 메인 정보: 내용(좌) + 사진(우) 그리드 */
+.main-info-grid{
+  display: grid;
+  grid-template-columns: 1fr 220px; /* 왼쪽 내용, 오른쪽 사진 */
+  gap: 8px 24px;
+  align-items: start;
+}
+
+/* 사진을 그리드의 오른쪽-하단에 정렬 */
+.detail-photo.aside{
+  width: 200px;
+  justify-self: end;  /* 오른쪽 */
+  align-self: end;    /* 하단 */
+  text-align: center;
+}
+.detail-photo.aside img{
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+.detail-photo.aside .no-photo{
+  padding: 8px 0;
+  color: #6b7280;
+  font-size: 14px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+/* 반응형: 좁을 때 한 컬럼으로 내리고 사진은 아래쪽에 오른쪽 정렬 유지 */
+@media (max-width: 992px){
+  .main-info-grid{ grid-template-columns: 1fr; }
+  .detail-photo.aside{ width: 160px; justify-self: end; margin-top: 8px; }
+}
+/* 카드 바깥 버튼 영역 */
+.detail-actions-outer{
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 모바일에서 여백 조금 더 */
+@media (max-width: 576px){
+  .detail-actions-outer{ margin-top: 16px; }
+}
+
+/* 메인과 동일 톤의 좌우 폭 제한 래퍼 */
+.page-narrow{
+  width: 100%;
+  max-width: 1200px;      /* 메인과 동일 목표 폭 */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;     /* 좌우 여백 */
+  padding-right: 16px;
+}
+
+/* 큰 화면에서 살짝 더 컴팩트하게 보이고 싶으면(선택) */
+/*
+@media (min-width: 1600px){
+  .page-narrow{ max-width: 1140px; }
+}
+*/
+
+@media (max-width: 992px){
+  .page-narrow{ max-width: 100%; padding-left: 12px; padding-right: 12px; }
+}
+
+/* ===== Edit/Detail 공통: 폼 그리드 여백 + 2열 라벨/입력 페어 ===== */
+.detail-card fieldset .grid{
+  display: grid;
+  /* 라벨-입력 한 쌍을 2세트(=4칸)로: |label|input|label|input| */
+  grid-template-columns: 160px 1fr 160px 1fr;
+  column-gap: 16px;   /* 좌우 간격 */
+  row-gap: 14px;      /* 위아래 간격 */
+  align-items: center;
+  position: relative; /* (선택) 세로 구분선용 */
+}
+
+/* 라벨은 우측 정렬로 줄맞춤 */
+.detail-card fieldset .grid > label{
+  justify-self: end;
+  padding-right: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 전체 너비를 차지해야 하는 줄(버튼행 등)은 .full 로 처리 */
+.detail-card fieldset .grid .full{
+  grid-column: 1 / -1;
+}
+
+/* (선택) 두 쌍 사이에 아주 옅은 세로 구분선 */
+.detail-card fieldset .grid::after{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: #eee;
+}
+
+/* 반응형: 태블릿/모바일에서는 한 쌍만(=2칸) 보이게 */
+@media (max-width: 992px){
+  .detail-card fieldset .grid{
+    grid-template-columns: 140px 1fr;
+  }
+  .detail-card fieldset .grid::after{ display: none; }
+}
+
+/* =========================
+   타이포 통일: 16px, 라벨(컬럼명)=Bold, 데이터=Normal
+   ========================= */
+:root{
+  --hpms-font-label: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
+  --hpms-font-data: system-ui, -apple-system, "Segoe UI", Roboto,
+                    "Malgun Gothic","맑은 고딕", sans-serif;
+  --hpms-font-size: 16px;
+  --hpms-line: 1.45;
+}
+
+/* 목록/히스토리 테이블 */
+.table.doctor-table th, table.doctor-table th{
+  font-family: var(--hpms-font-label) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 700 !important;    /* Bold */
+  line-height: var(--hpms-line);
+}
+.table.doctor-table td, table.doctor-table td{
+  font-family: var(--hpms-font-data) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;    /* Normal */
+  line-height: var(--hpms-line);
+}
+
+/* 디테일/수정: 라벨(컬럼명) */
+.kv-label,
+.label-reform,
+.detail-card fieldset .grid > label{
+  font-family: var(--hpms-font-label) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 700 !important;    /* Bold */
+  line-height: var(--hpms-line);
+}
+
+/* 디테일/수정: 데이터(값/입력) */
+.kv-value,
+.value-reform,
+.detail-card fieldset .grid > div:not(.kv-label),
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea{
+  font-family: var(--hpms-font-data) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;    /* Normal */
+  line-height: var(--hpms-line);
+}
+
+/* (선택) 상단 상태/검색 바 입력 크기도 16px 맞춤 */
+.size_bar,
+.search_box input,
+.search_btn{
+  font-size: var(--hpms-font-size) !important;
+  line-height: var(--hpms-line);
+}
+/* ===== 폼을 한 줄(라벨 1 + 값 1)씩 배치 ===== */
+.detail-card fieldset .grid{
+  display: grid;
+  grid-template-columns: 160px 1fr; /* ✅ 한 줄: 라벨 1칸 + 값 1칸 */
+  column-gap: 16px;
+  row-gap: 14px;
+  align-items: center;
+}
+
+/* 두 세트 구분선(있었다면) 숨김 */
+.detail-card fieldset .grid::after{
+  display: none !important;
+}
+
+/* 라벨 정렬과 타이포 */
+.detail-card fieldset .grid > label{
+  justify-self: end;
+  padding-right: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
+  font-size: 16px;
+}
+
+/* 입력/값 영역은 꽉 차게 */
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea,
+.detail-card fieldset .grid > div:not(.kv-label){
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* 한 줄 전체를 써야 하는 요소(버튼 행 등)는 .full */
+.detail-card fieldset .grid .full{
+  grid-column: 1 / -1;
+}
+
+/* 반응형에서도 동일(원래도 1세트라 별도 처리 불필요하지만 명시적으로 유지) */
+@media (max-width: 992px){
+  .detail-card fieldset .grid{
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+/* === 데이터 타이포: 맑은 고딕 + Normal, 16px === */
+:root{ --hpms-font-size: 16px; }
+
+/* 표(td)와 링크 */
+.table.doctor-table td,
+table.doctor-table td,
+.table.doctor-table td a,
+table.doctor-table td a {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important; /* Normal */
+}
+
+/* 디테일/수정 값 영역 + 폼 입력들 */
+.kv-value,
+.value-reform,
+.detail-card fieldset .grid > div:not(.kv-label),
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important; /* Normal */
+}
+
+/* (선택) 검색/버튼 텍스트도 데이터 톤에 맞추고 싶다면 */
+.search_box input,
+.page-btn,
+.pagination a,
+.size_bar {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;
+}
+.detail-card fieldset .grid .full{ display:flex; justify-content:flex-end; }
+
+/* edit / join 폼 전용: 라벨-값 1줄 정렬 고정 */
+.detail-card fieldset > .grid{
+  display: grid !important;
+  grid-template-columns: 160px 1fr !important; /* ← 라벨, 값 */
+  gap: 10px 12px;
+  align-items: center;
+  direction: ltr; /* 혹시 rtl 영향 차단 */
+}
+.detail-card fieldset > .grid > label{
+  text-align: left;
+  justify-self: start;
+  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;  /* 컬럼명 Bold */
   color: #333;
 }
+.detail-card fieldset > .grid > input,
+.detail-card fieldset > .grid > select,
+.detail-card fieldset > .grid > textarea{
+  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif; /* 데이터 글꼴 */
+  font-size: 16px;
+  font-weight: 400;  /* 데이터 Normal */
+}
+.detail-card fieldset > .grid .job-actions{
+  grid-column: 2 / 3 !important;  /* 값 칸(오른쪽) 위치 */
+  justify-self: end;               /* 우측 정렬 */
+}
+
+/* 한 카드 레이아웃 + 제목/구분선 */
+.detail-container.page-narrow{max-width:1200px;margin:0 auto;}
+.detail-card{padding:16px 20px;border-radius:12px;}
+.section-heading{font-size:20px;font-weight:700;margin:8px 0 6px;color:#333;}
+.section-divider{height:1px;background:#e5e7eb;margin:8px 0 16px;border:0;}
+
+/* 1줄 라벨-값 정렬 */
+.detail-card fieldset>.grid{
+  display:grid!important;grid-template-columns:160px 1fr!important;
+  gap:10px 12px;align-items:center;
+}
+.detail-card fieldset>.grid>label{
+  text-align:left;justify-self:start;
+  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-size:16px;font-weight:700;color:#333;
+}
+.detail-card fieldset>.grid>input,
+.detail-card fieldset>.grid>select,
+.detail-card fieldset>.grid>textarea{
+  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-size:16px;font-weight:400;
+}
+
+/* 직급/직책 버튼을 우측으로 */
+.detail-card .job-actions{grid-column:2/3!important;justify-self:end;}
+
+/* 카드 하단 우측 버튼 정렬 */
+.detail-actions-outer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
+

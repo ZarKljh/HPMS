@@ -3,80 +3,9 @@
     <!--<div><a th:href="@{/user/personnel_registration}">Regisrate Reference Personnel</a></div>-->
     <div th:if="${warningMessage}" class="alert alert-warning" th:text="${warningMessage}"></div>
     <h2>Reference Personnel Registration</h2>
-<!--<form th:action="@{|/create/reference_personal|}" method="post">-->
-<!--<table class="tbl_set">
-    <thead></thead>
-    <tbody>
-        <tr>
-            <td class="td_title">Nationality</td>
-            <td><input name="nationality" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">First Name</td>
-            <td><input name="firstName" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Last Name</td>
-            <td><input name="lastName" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Middle Name</td>
-            <td><input name="middleName" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Email Address</td>
-            <td><input name="email" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Cell Phone number</td>
-            <td><input name="cellPhone" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Company</td>
-            <td><input name="companyName" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Department/Division</td>
-            <td><input name="deptName" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Position/Rank</td>
-            <td><input name="position" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Office Address</td>
-            <td><input name="officeAddress" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Detail Address</td>
-            <td><input name="officeDetailAddress" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Office Telephone Number</td>
-            <td><input name="officeTel" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Office Facsimile Number</td>
-            <td><input name="officeFax" type="text"></td>
-        </tr>
-        <tr>
-            <td class="td_title">Company Homepage</td>
-            <td><input name="companyWebsiteUrl" type="TEXT"></td>
-            &lt;!&ndash;<td><input name="companyWebsiteUrl" type="url"></td> please enter a url&ndash;&gt;
-        </tr>
-        <tr>
-            <td class="td_title">Note</td>
-            <td><textarea name="note" id="note" rows="15"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td class="td_title" colspan="2"><input type="submit" value="Registration"></td>
-        </tr>
-    </tbody>
-</table>-->
     <form class="card my-3 p-3" name="registration" th:action="@{|/create/reference_personal|}" method="post" style="autocomplete=off;">
-        <input type="hidden" name="page" value="0" />
-        <input type="hidden" name="size" value="10" />
+        <input type="hidden" name="page" th:value="${page}" />
+        <input type="hidden" name="size" th:value="${size}" />
         <h4 class="border-bottom py-2">비상주 지원인력 등록을 위한 공간입니다.</h4>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0" style="width: 100px;">국적:</label>
@@ -139,11 +68,11 @@
 </form>
     <div class="page-navigation">
         <div>
-        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-full">목록보기</a>
-        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-short">목록</a>
-        <a href="#" class="button-link text-full" onclick="document.forms['registration'].submit(); return false;">등록하기</a>
-        <a href="#" class="button-link text-short" onclick="document.forms['registration'].submit(); return false;">등록</a>
-        <a href="#" class="button-link text-full" onclick="document.forms['registration'].reset(); return false;">초기화하기</a>
+        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-full">목록</a>
+        <!--<a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-short">목록</a>-->
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].submit(); return false;">등록</a>
+        <!--<a href="#" class="button-link text-short" onclick="document.forms['registration'].submit(); return false;">등록</a>-->
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].reset(); return false;">초기화</a>
         </div>
     </div>
 </div>

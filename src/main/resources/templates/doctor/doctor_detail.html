@@ -4,68 +4,62 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{doctor/doctor_layout}">
 
-<div layout:fragment="content" class="container">
+<th:block layout:fragment="content">
+  <div class="container detail-container">
 
-
-  <!-- 상단: 제목(의사 성명) + 액션 버튼 -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mt-2 fw-bolder detail-title"
-        th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">
-      의사 성명
-    </h2>
-
-    <div class="m-d-btn_box">
-      <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
-      <a href="javascript:void(0);"
-         th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
-         class="d-btn"
-         onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
+    <!-- 상단 타이틀 + 안내문 -->
+    <div class="mb-2">
+      <h2 class="listbox mt-2">의사 상세 내역</h2>
+      <p class="detail-subtitle">현재 등록된 의사의 상세 정보입니다.</p>
     </div>
-  </div>
-  <h3 class="section-heading">메인 정보</h3>
-  <!-- 메인 정보 -->
-  <fieldset>
-    <div class="kv-grid">
-      <div class="kv-label">부서</div>       <div class="kv-value" th:text="${main.department}">DEPT</div>
-      <div class="kv-label">진료과</div>     <div class="kv-value" th:text="${main.medicalDepartment}">MED</div>
-      <div class="kv-label">직급</div>       <div class="kv-value" th:text="${main.rank}">RNK</div>
-      <div class="kv-label">직책</div>       <div class="kv-value" th:text="${main.position}">POS</div>
-      <div class="kv-label">성명</div>       <div class="kv-value"
-                                                th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">홍 길동</div>
-      <div class="kv-label">성별</div>       <div class="kv-value" th:text="${main.gender}">M</div>
-      <div class="kv-label">생년월일</div>   <div class="kv-value"
-                                              th:text="${main.dateOfBirth != null ? #temporals.format(main.dateOfBirth,'yyyy-MM-dd') : ''}">1990-01-01</div>
-      <div class="kv-label">전화</div>       <div class="kv-value" th:text="${main.telephone}">010-0000-0000</div>
-      <div class="kv-label">입사일</div>     <div class="kv-value"
-                                               th:text="${main.hireDate != null ? #temporals.format(main.hireDate,'yyyy-MM-dd') : ''}">2020-01-01</div>
-      <div class="kv-label">상태</div>       <div class="kv-value" th:text="${main.status}">ACT</div>
-      <div class="kv-label">근무형태</div>   <div class="kv-value" th:text="${main.workType}">FULL</div>
-    </div>
-  </fieldset>
-  <h3 class="section-heading">상세 정보</h3>
-  <!-- 디테일 정보 -->
-  <fieldset>
 
-    <div class="d-flex align-items-start gap-3">
-      <!-- 프로필 사진 -->
-      <div class="detail-photo">
-        <img th:if="${detail != null and detail.image != null}"
-             th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${detail.image})}"
-             alt="프로필 사진">
-        <div th:if="${detail == null or detail.image == null}" class="kv-value" style="padding:8px 0;">
-          등록된 프로필 사진이 없습니다.
+    <!-- 하나의 카드 컨테이너 -->
+    <div class="detail-card card shadow-sm">
+      <!-- 메인 정보 -->
+      <h3 class="section-heading">메인 정보</h3>
+      <div class="section-divider"></div>
+
+      <!-- 메인 정보 섹션을 1fr(내용) + 220px(사진) 그리드로 -->
+      <div class="main-info-grid">
+        <!-- 왼쪽: 메인 정보 필드들 -->
+        <div class="kv-grid">
+          <div class="kv-label">부서</div>       <div class="kv-value" th:text="${main.department}">DEPT</div>
+          <div class="kv-label">진료과</div>     <div class="kv-value" th:text="${main.medicalDepartment}">MED</div>
+          <div class="kv-label">직급</div>       <div class="kv-value" th:text="${main.rank}">RNK</div>
+          <div class="kv-label">직책</div>       <div class="kv-value" th:text="${main.position}">POS</div>
+          <div class="kv-label">성명</div>       <div class="kv-value"
+                                                    th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">홍 길동</div>
+          <div class="kv-label">성별</div>       <div class="kv-value" th:text="${main.gender}">M</div>
+          <div class="kv-label">생년월일</div>   <div class="kv-value"
+                                                  th:text="${main.dateOfBirth != null ? #temporals.format(main.dateOfBirth,'yyyy-MM-dd') : ''}">1990-01-01</div>
+          <div class="kv-label">전화</div>       <div class="kv-value" th:text="${main.telephone}">010-0000-0000</div>
+          <div class="kv-label">입사일</div>     <div class="kv-value"
+                                                   th:text="${main.hireDate != null ? #temporals.format(main.hireDate,'yyyy-MM-dd') : ''}">2020-01-01</div>
+          <div class="kv-label">상태</div>       <div class="kv-value" th:text="${main.status}">ACT</div>
+          <div class="kv-label">근무형태</div>   <div class="kv-value" th:text="${main.workType}">FULL</div>
+        </div>
+
+        <!-- 오른쪽: 사진 (섹션의 오른쪽-하단 정렬) -->
+        <div class="detail-photo aside">
+          <img th:if="${detail != null and detail.image != null}"
+               th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${detail.image})}"
+               alt="프로필 사진">
+          <div th:if="${detail == null or detail.image == null}" class="kv-value no-photo">
+            등록된 프로필 사진이 없습니다.
+          </div>
         </div>
       </div>
 
-      <!-- 디테일 필드 -->
-      <div class="kv-grid flex-grow-1">
+      <!-- 상세 정보 -->
+      <h3 class="section-heading mt-4">상세 정보</h3>
+      <div class="section-divider"></div>
+
+      <div class="kv-grid">
         <div class="kv-label">사무실 전화</div>   <div class="kv-value" th:text="${detail.officeTelephone}"></div>
         <div class="kv-label">비상연락처</div>     <div class="kv-value" th:text="${detail.emergencyContact}"></div>
-
         <div class="kv-label">비상연락처 성명</div>
         <div class="kv-value"
              th:text="|${detail.emergencyLastName} ${detail.emergencyMiddleName != null ? detail.emergencyMiddleName + ' ' : ''}${detail.emergencyFirstName}|"></div>
-
         <div class="kv-label">비상연락처 관계</div> <div class="kv-value" th:text="${detail.emergencyRelation}"></div>
         <div class="kv-label">비상연락처 비고</div> <div class="kv-value" th:text="${detail.emergencyNote}"></div>
         <div class="kv-label">이메일</div>         <div class="kv-value" th:text="${detail.email}"></div>
@@ -90,11 +84,19 @@
         <div class="kv-label">최종 수정자</div>    <div class="kv-value" th:text="${detail.modifier}"></div>
         <div class="kv-label">비고</div>           <div class="kv-value" th:text="${detail.note}"></div>
       </div>
+
+      <div th:if="${detail == null}" class="kv-value" style="padding-top:12px;">디테일 정보가 없습니다.</div>
+
+
+    </div><!-- /detail-card -->
+    <!-- ✅ 카드 바깥, 우측 정렬 버튼 -->
+    <div class="detail-actions-outer">
+      <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
+      <a href="javascript:void(0);"
+         th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
+         class="d-btn"
+         onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
     </div>
-
-    <!-- 디테일 없음 안내 -->
-    <div th:if="${detail == null}" class="kv-value" style="padding-top:12px;">디테일 정보가 없습니다.</div>
-  </fieldset>
-
-</div>
+  </div>
+</th:block>
 </html>

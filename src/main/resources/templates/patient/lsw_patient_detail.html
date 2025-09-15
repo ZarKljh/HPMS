@@ -6,7 +6,9 @@
     <div class="title-patient-name"><h4 class="title-h4-header" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h4><span>님의 환자정보입니다.</span></div>
     <!-- 기본 식별 정보 -->
     <h5 class="mt-5">기본정보</h5>
+      <!--
       <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">ID</label><span th:text="${detailDTO.id}"></span></div>
+      -->
       <div th:if="${detailDTO.delStatus} == 1" class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">종결여부</label><span th:text="${detailDTO.delStatus}"></span></div>
       <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">최초등록일</label> <span th:text="${#temporals.format(detailDTO.createDate,'yyyy-MM-dd')}"></span></div>
       <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">수정일</label><span th:text="${#temporals.format(detailDTO.updateDate,'yyyy-MM-dd')}"></span></div>
@@ -69,8 +71,15 @@
 
   <div class="page-navigation">
     <div class="pagination">
-      <a class="button-link text-full" th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+      <a class="button-modify button-link text-full " th:href="@{|/patient/modify/${detailDTO.id}|}">수정</a>
+
+      <form th:action="@{/patient/delete}" method="post">
+        <input type="hidden" name="id" th:value="${detailDTO.id}">
+        <button type="submit" class="button-link text-full">삭제</button>
+      </form>
+      <!--
       <a th:href="@{|/patient/delete/${detailDTO.id}|}" class="button-link text-short">환자종결</a>
+      -->
     </div>
   </div>
 

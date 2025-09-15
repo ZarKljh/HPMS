@@ -1,88 +1,98 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head>
-    <meta charset="UTF-8"/>
-    <title>의사 히스토리 상세</title>
-    <style>
-        body { font-family: system-ui, sans-serif; padding:16px; }
-        .card { border:1px solid #ddd; border-radius:10px; padding:14px; margin-bottom:16px; }
-        .grid { display:grid; grid-template-columns: 160px 1fr; gap:8px 16px; }
-        .label { color:#666; }
-        .toolbar { display:flex; gap:8px; }
-        .btn { padding:6px 10px; border:1px solid #aaa; border-radius:6px; text-decoration:none; color:#333; }
-    </style>
-</head>
-<body>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{doctor/doctor_layout}">
 
-<h2>의사 히스토리 상세</h2>
+<th:block layout:fragment="script">
+    <!-- 필요시 페이지 전용 JS -->
+</th:block>
 
-<!-- 메인(요구하신 범위) -->
-<div class="card">
-    <h3>메인 정보</h3>
-    <div class="grid">
-        <div class="label">히스토리 ID</div><div th:text="${h.id}">1</div>
-        <div class="label">부서</div><div th:text="${h.department}">DEPT</div>
-        <div class="label">진료과</div><div th:text="${h.medicalDepartment}">MED</div>
-        <div class="label">직책</div><div th:text="${h.rank}">RANK</div>
+<th:block layout:fragment="content">
+    <div class="container detail-container page-narrow">
 
-        <div class="label">이름</div>
-        <div th:text="|${h.lastName} ${#strings.defaultString(h.middleName,'')} ${h.firstName}|">홍 길동</div>
+        <!-- 상단 타이틀 + 안내문 (doctor_detail과 동일) -->
+        <div class="mb-2">
+            <h2 class="listbox mt-2">의사 상세 내역</h2>
+            <p class="detail-subtitle">현재 등록된 의사의 히스토리 상세 정보입니다.</p>
+        </div>
 
-        <div class="label">성별</div><div th:text="${h.gender}">M</div>
-        <div class="label">생년월일</div>
-        <div th:text="${h.dateOfBirth != null ? #temporals.format(h.dateOfBirth, 'yyyy-MM-dd') : ''}">1990-01-01</div>
+        <!-- 하나의 카드 컨테이너 -->
+        <div class="detail-card card shadow-sm">
 
-        <div class="label">전화</div><div th:text="${h.telephone}">010-0000-0000</div>
-        <div class="label">입사일</div>
-        <div th:text="${h.hireDate != null ? #temporals.format(h.hireDate, 'yyyy-MM-dd') : ''}">2020-01-01</div>
+            <!-- 메인 정보 -->
+            <h3 class="section-heading">메인 정보</h3>
+            <div class="section-divider"></div>
 
-        <div class="label">상태</div><div th:text="${h.status}">ACT</div>
-        <div class="label">근무형태</div><div th:text="${h.workType}">FULL</div>
+            <!-- 좌: 정보 / 우: 사진(오른쪽-하단 정렬) -->
+            <div class="main-info-grid">
+                <div class="kv-grid">
+                    <div class="kv-label">히스토리 ID</div>   <div class="kv-value" th:text="${h.id}">1</div>
+                    <div class="kv-label">부서</div>           <div class="kv-value" th:text="${h.department}">DEPT</div>
+                    <div class="kv-label">진료과</div>         <div class="kv-value" th:text="${h.medicalDepartment}">MED</div>
+                    <div class="kv-label">직급</div>           <div class="kv-value" th:text="${h.rank}">RANK</div>
+
+                    <div class="kv-label">성명</div>
+                    <div class="kv-value"
+                         th:text="|${h.lastName} ${h.middleName != null ? h.middleName + ' ' : ''}${h.firstName}|">홍 길동</div>
+
+                    <div class="kv-label">성별</div>           <div class="kv-value" th:text="${h.gender}">M</div>
+                    <div class="kv-label">생년월일</div>       <div class="kv-value"
+                                                                th:text="${h.dateOfBirth != null ? #temporals.format(h.dateOfBirth,'yyyy-MM-dd') : ''}">1990-01-01</div>
+                    <div class="kv-label">전화</div>           <div class="kv-value" th:text="${h.telephone}">010-0000-0000</div>
+                    <div class="kv-label">입사일</div>         <div class="kv-value"
+                                                                 th:text="${h.hireDate != null ? #temporals.format(h.hireDate,'yyyy-MM-dd') : ''}">2020-01-01</div>
+                    <div class="kv-label">상태</div>           <div class="kv-value" th:text="${h.status}">ACT</div>
+                    <div class="kv-label">근무형태</div>       <div class="kv-value" th:text="${h.workType}">FULL</div>
+                </div>
+
+                <!-- 사진: 메인 정보 섹션 우측-하단 -->
+                <div class="detail-photo aside">
+                    <img th:if="${h.image != null}"
+                         th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${h.image})}"
+                         alt="프로필 사진">
+                    <div th:if="${h.image == null}" class="kv-value no-photo">등록된 프로필 사진이 없습니다.</div>
+                </div>
+            </div>
+
+            <!-- 상세 정보 -->
+            <h3 class="section-heading mt-4">상세 정보</h3>
+            <div class="section-divider"></div>
+
+            <div class="kv-grid">
+                <div class="kv-label">유저ID</div>             <div class="kv-value" th:text="${h.userId}"></div>
+                <div class="kv-label">비상연락처</div>         <div class="kv-value" th:text="${h.emergencyContact}"></div>
+                <div class="kv-label">비상연락처 성명</div>
+                <div class="kv-value"
+                     th:text="|${h.emergencyLastName} ${h.emergencyMiddleName != null ? h.emergencyMiddleName + ' ' : ''}${h.emergencyFirstName}|"></div>
+                <div class="kv-label">관계</div>               <div class="kv-value" th:text="${h.emergencyRelation}"></div>
+                <div class="kv-label">비상 비고</div>          <div class="kv-value" th:text="${h.emergencyNote}"></div>
+
+                <div class="kv-label">면허번호</div>           <div class="kv-value" th:text="${h.registrationNumber}"></div>
+                <div class="kv-label">학력</div>               <div class="kv-value" th:text="${h.educationalBackground}"></div>
+                <div class="kv-label">외국어</div>             <div class="kv-value" th:text="${h.foreignLanguage}"></div>
+                <div class="kv-label">기타 자격증</div>         <div class="kv-value" th:text="${h.license}"></div>
+                <div class="kv-label">전공과</div>             <div class="kv-value" th:text="${h.major}"></div>
+                <div class="kv-label">근무경력</div>           <div class="kv-value" th:text="${h.workDependsOnExperience}"></div>
+                <div class="kv-label">수상경력</div>           <div class="kv-value" th:text="${h.awards}"></div>
+                <div class="kv-label">학회활동</div>           <div class="kv-value" th:text="${h.societyActivity}"></div>
+                <div class="kv-label">학회인증</div>           <div class="kv-value" th:text="${h.certificateOfSociety}"></div>
+                <div class="kv-label">병역</div>               <div class="kv-value" th:text="${h.militaryService}"></div>
+                <div class="kv-label">국적</div>               <div class="kv-value" th:text="${h.nationality}"></div>
+                <div class="kv-label">장애여부</div>           <div class="kv-value" th:text="${h.disabilityStatus}"></div>
+
+                <div class="kv-label">히스토리 생성일</div>    <div class="kv-value"
+                                                             th:text="${h.createDate != null ? #temporals.format(h.createDate,'yyyy-MM-dd HH:mm:ss') : ''}"></div>
+                <div class="kv-label">작성자</div>             <div class="kv-value" th:text="${h.writer}"></div>
+                <div class="kv-label">수정일시</div>           <div class="kv-value"
+                                                                th:text="${h.modifyDate != null ? #temporals.format(h.modifyDate,'yyyy-MM-dd HH:mm:ss') : ''}"></div>
+                <div class="kv-label">수정자</div>             <div class="kv-value" th:text="${h.modifier}"></div>
+                <div class="kv-label">비고</div>               <div class="kv-value" th:text="${h.note}"></div>
+            </div>
+
+        </div><!-- /detail-card -->
+
+        <!-- 하단 버튼 전부 제거 (요청사항) -->
+
     </div>
-</div>
-
-<!-- 디테일(요구하신 범위) -->
-<div class="card">
-    <h3>디테일 정보</h3>
-    <div class="grid">
-        <div class="label">사진</div><div th:text="${h.image}">/img/path.jpg</div>
-        <div class="label">유저ID</div><div th:text="${h.userId}">user01</div>
-        <div class="label">비상연락처</div><div th:text="${h.emergencyContact}"></div>
-        <div class="label">비상연락처 이름</div>
-        <div th:text="|${#strings.defaultString(h.emergencyLastName,'')} ${#strings.defaultString(h.emergencyMiddleName,'')} ${#strings.defaultString(h.emergencyFirstName,'')}|"></div>
-        <div class="label">관계</div><div th:text="${h.emergencyRelation}"></div>
-        <div class="label">비상 비고</div><div th:text="${h.emergencyNote}"></div>
-
-        <div class="label">면허번호</div><div th:text="${h.registrationNumber}"></div>
-        <div class="label">학력</div><div th:text="${h.educationalBackground}"></div>
-        <div class="label">외국어</div><div th:text="${h.foreignLanguage}"></div>
-        <div class="label">기타 자격증</div><div th:text="${h.license}"></div>
-        <div class="label">전공과</div><div th:text="${h.major}"></div>
-        <div class="label">경력</div><div th:text="${h.workDependsOnExperience}"></div>
-        <div class="label">수상</div><div th:text="${h.awards}"></div>
-        <div class="label">학회활동</div><div th:text="${h.societyActivity}"></div>
-        <div class="label">학회인증</div><div th:text="${h.certificateOfSociety}"></div>
-        <div class="label">병역</div><div th:text="${h.militaryService}"></div>
-        <div class="label">국적</div><div th:text="${h.nationality}"></div>
-        <div class="label">장애여부</div><div th:text="${h.disabilityStatus}"></div>
-
-        <div class="label">생성일시</div>
-        <div th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}"></div>
-        <div class="label">작성자</div><div th:text="${h.writer}"></div>
-        <div class="label">수정자</div><div th:text="${h.modifier}"></div>
-        <div class="label">수정일시</div>
-        <div th:text="${h.modifyDate != null ? #temporals.format(h.modifyDate, 'yyyy-MM-dd HH:mm:ss') : ''}"></div>
-        <div class="label">비고</div><div th:text="${h.note}"></div>
-    </div>
-</div>
-
-<div class="toolbar">
-    <a class="btn" th:href="@{/doctor/history}">목록으로</a>
-    <a class="btn" th:if="${h != null && h.doctorMain != null}"
-       th:href="@{/doctor/dtl/detail(id=${h.doctorMain.id})}">의사 상세</a>
-    <a class="btn" th:if="${h != null && h.doctorMain != null}"
-       th:href="@{/doctor/edit/{id}(id=${h.doctorMain.id})}">의사 수정</a>
-</div>
-
-</body>
+</th:block>
 </html>

@@ -6,10 +6,13 @@ import com.HPMS.HPMS.Patient.PatientDTO.PatientDetailDTO.PatientDetailDTO;
 import com.HPMS.HPMS.Patient.PatientDTO.PatientListDTO.PatientListDTO;
 import com.HPMS.HPMS.Patient.PatientM.PatientM;
 import com.HPMS.HPMS.Patient.PatientM.PatientMService;
+import com.HPMS.HPMS.siteuser.SiteUser;
+import com.HPMS.HPMS.siteuser.SiteUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,6 +28,7 @@ public class PatientDTOService {
 
     private final PatientMService patientMService;
     private final PatientDTLService patientDTLService;
+    private final SiteUserRepository siteUserRepository;
 
     //환자리스트화면을 위한 DTO service
     //페이징 기능 추가하기 전의 getPatientListDTO
@@ -153,6 +157,71 @@ public class PatientDTOService {
         return detailDTO;
     }
 
+    // 게스트로그인한 환자 1명의 로그인아이디를 이용하여 정보를 가져오기 위한 메소드입니다
+    public PatientDetailDTO getPatientDetailDTOByUserName(String userId){
+
+        //환자 1명의 main정보를 가져온다
+        Optional<SiteUser> opSiteUser = this.siteUserRepository.findByUserId(userId);
+
+        if (opSiteUser.isEmpty()) {
+            throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
+        }
+        SiteUser siteUser = opSiteUser.get();
+
+        PatientM m = this.patientMService.getPatientMByName(siteUser.getFirstName(), siteUser.getLastName());
+        //환자 1명의 상세정보를 화면에 띄우기 위해 비어있는 DTO객체를 준비한다
+        PatientDetailDTO detailDTO = new PatientDetailDTO();
+
+        //환자 1명의 main정보를 바탕으로 환자상세정보를 가져온다.
+        PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+
+        detailDTO.setId(m.getId());
+        if(m.getDelStatus() == 1){
+            detailDTO.setDelStatus("종결");
+        } else detailDTO.setDelStatus("");
+        detailDTO.setCreateDate(m.getCreateDate());
+        detailDTO.setUpdateDate(m.getUpdateDate());
+
+        detailDTO.setBirth(stringToLocalDate(m.getDayOfBirth()));
+        detailDTO.setGender(m.getGender());
+        detailDTO.setForeigner(m.getForeigner());
+        detailDTO.setFirstName(m.getFirstName());
+        detailDTO.setLastName(m.getLastName());
+        detailDTO.setMiddleName(m.getMiddleName());
+        detailDTO.setPassFirstName(m.getPassFirstName());
+        detailDTO.setPassLastName(m.getPassLastName());
+        detailDTO.setMiddleName(m.getPassMiddleName());
+
+        // 전화번호에 포함되어있는 '-'을 제거합니다
+        detailDTO.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+        detailDTO.setHomePhone(dtl.getHomePhone());
+        detailDTO.setOfficePhone(formatPhoneNumber(dtl.getOfficePhone()));
+        detailDTO.setEmail(dtl.getEmail());
+        detailDTO.setFax(formatPhoneNumber(dtl.getFax()));
+
+        detailDTO.setGuardianFirstName(dtl.getGuardianFirstName());
+        detailDTO.setGuardianLastName(dtl.getGuardianLastName());
+        detailDTO.setGuardianMiddleName(dtl.getGuardianMiddleName());
+        detailDTO.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
+        detailDTO.setGuardianRelation(dtl.getGuardianRelation());
+
+        detailDTO.setHomePcd(dtl.getCurHomePCD());
+        detailDTO.setHomeDefAdd(dtl.getCurHomeDefAdd());
+        detailDTO.setHomeDetAdd(dtl.getCurHomeDetAdd());
+
+        detailDTO.setRegPcd(dtl.getRegHomePCD());
+        detailDTO.setRegDefAdd(dtl.getRegHomeDefAdd());
+        detailDTO.setRegDetAdd(dtl.getRegHomeDetAdd());
+
+        detailDTO.setOccupation(dtl.getOccupation());
+        detailDTO.setNatn(dtl.getNatn());
+        detailDTO.setLastVisitDate(dtl.getLastVisitDate());
+        detailDTO.setNote(dtl.getNote());
+
+        return detailDTO;
+    }
+
+
     // 다중컨디션을 이용한 환자정보를 가져옵니다
     public Page<PatientListDTO> searchPatients(
             List<String> columns,
@@ -198,6 +267,25 @@ public class PatientDTOService {
         String birthDateString = String.valueOf(dayOfbirth);
 
         return LocalDate.parse(birthDateString, birthFormatter);
+    }
+
+    /**
+     *
+     * @param phoneNumber : 입력을 받은 전화번호 문자열안에 포함되어있는 - 을 제거하는 메소드
+     * @return 하이푼(-)이 제거된 전화번호 문자열
+     */
+    public static String getOnlyDigitNumber(String phoneNumber){
+
+        StringBuilder numbers = new StringBuilder(); // 숫자들을 담을 StringBuilder
+
+        for (char c : phoneNumber.toCharArray()) {
+            if (Character.isDigit(c)) { // 문자가 숫자인지 확인
+                numbers.append(c); // 숫자라면 StringBuilder에 추가
+            }
+        }
+        String result = numbers.toString();
+        return result; // 출력: 123456
+
     }
 
     /**
@@ -260,4 +348,6 @@ public class PatientDTOService {
         }
         return formatted;
     }
+
+
 }

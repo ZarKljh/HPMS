@@ -1,0 +1,47 @@
+//유의점 : road_name(daejeon).txt 파일 경로는 한국어 없는 경로에 저장할것, 또한 하단부에 alter는 처음부터 pk나 uk를 주면 로드시 충돌날 가능성이 있다하여 나중에 추가하는 형식으로 진행.
+
+
+USE HPMS;
+DROP TABLE ROAD_NAME;
+CREATE TABLE IF NOT EXISTS ROAD_NAME (
+   road_code       VARCHAR(12)    NOT NULL,
+   road_name_kor   VARCHAR(80) NOT NULL,
+   road_name_eng   VARCHAR(80),
+   emd_seq_no      VARCHAR(2)     NOT NULL,
+   sido_kor        VARCHAR(20),
+   sido_eng        VARCHAR(40),
+   sgg_kor         VARCHAR(20),
+   sgg_eng         VARCHAR(40),
+   emd_kor         VARCHAR(20),
+   emd_eng         VARCHAR(40),
+   emd_gubun       VARCHAR(1),
+   emd_code        VARCHAR(3),
+   use_yn          VARCHAR(1),
+   change_reason   VARCHAR(1),
+   change_info     VARCHAR(14),
+   notice_date     VARCHAR(8),
+   abolish_date    VARCHAR(8)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+SET GLOBAL local_infile = 1;
+LOAD DATA LOCAL INFILE 'C:/aaa/road_name/road_name(daejeon).txt'
+INTO TABLE ROAD_NAME
+CHARACTER SET utf8mb4          -- 한글 깨지면 cp949 로 바꿔서 다시 실행
+FIELDS TERMINATED BY '|'
+LINES TERMINATED BY '\r\n'     -- 메모장 저장 파일은 보통 CRLF
+IGNORE 0 LINES
+(road_code, road_name_kor, road_name_eng, emd_seq_no,
+sido_kor, sido_eng, sgg_kor, sgg_eng, emd_kor, emd_eng,
+emd_gubun, emd_code, use_yn, change_reason, change_info,
+notice_date, abolish_date);
+COMMIT;
+
+
+
+
+ALTER TABLE ROAD_NAME
+ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY FIRST,
+ADD UNIQUE KEY uq_road (road_code, emd_seq_no);
+SELECT * FROM ROAD_NAME;
+
+
+

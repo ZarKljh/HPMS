@@ -23,7 +23,6 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" sec:authorize="isAuthenticated()" href="/hpms/logout">로그아웃</a>
-          <a class="nav-link" href="/hpms/signup">회원가입</a>
         </li>
       </ul>
     </div>
@@ -43,9 +42,8 @@
         <li class="nav-item">
           <a class="nav-link" href="/user/list">Reference Personnel</a>
         </li>
-        <li class="nav-item d-flex flex-column">
+        <li class="nav-item">
           <a class="nav-link" sec:authorize="isAuthenticated()" href="/hpms/logout">로그아웃</a>
-          <a class="nav-link" href="/hpms/signup">회원가입</a>
         </li>
       </ul>
     </div>

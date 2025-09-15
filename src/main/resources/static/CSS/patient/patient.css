@@ -121,6 +121,7 @@ body {
 }
 
 table {
+
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -222,7 +223,7 @@ tbody.text-center>tr.text-center>td:nth-child(2):hover>a {
 /* 버튼링크 */
 /* 버튼 스타일 */
 
-a.button-link {
+a.button-link, button.button-link {
   gap:5px;
   display: inline-flex;
   align-items: center;
@@ -238,13 +239,19 @@ a.button-link {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+a.button-delete:hover {
+  background-color: #f54747 !important;
+  border-color: #f54747 !important;
+  color: #fff !important;
+}
+
+/*
 .button-link:hover {
   background-color: #cce6ff;
   border-color: #666;
   color: #000;
 }
-
-
+*/
 
 //상세 페이지
 .main, .information {
@@ -358,11 +365,18 @@ div.title-patient-name span {
     font-size: 23px;
 }
 
+
 h5.mt-5 {
     margin-left: 30px;
-    margin-right: 30px;
+
     border-bottom: 1px solid #2642ad;
     font-weight: bold;
+}
+
+a.button-link:hover{
+  background-color: #cce6ff;
+  border-color: #666;
+  color: #000;
 }
 
 // 수정 페이지
@@ -541,43 +555,103 @@ input {
 
 
 /* footer */
-
-.footer_fixed_bottom {
-
-    /*width: 100%;*/           /* 전체 폭 */
-    /*max-width: 1920px;     /* 테이블과 동일한 최대폭 (원하시면 조정 가능) */
-       /* 가운데 정렬 */
-
-    /*
-    box-sizing: border-box;
-    */
-
+/*  footer  */
+.chang-footer{
+    display:flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 */
+    width: 100%;
+    margin-top: 20px;
+}
+/*.chang-footer{
+    display:flex;
+    background-color:darkblue;
+    flex-grow:0;
+}*/
+.chang-footer-inforamtion{
+    /*background-color:yellow;*/
+    flex:1;
+    max-width:1190px;
+    margin-left: 20px;
+    /*min-width:1290px;*/
 }
 
-
-.footer_fixed_bottom>table {
-    margin: 50px auto;
-    width: 80%;
-    table-layout: fixed;
-
+.chang-footer-logo{
+    display:flex;
+    width:100px;
 }
-.footer_fixed_bottom>table tr>td:first-child{
 
-    display:none;
-    width: 1px;
-    white-space:nowrap
+.chang-inner-ul-menu li {
+  display: block;         /* 한 줄씩 내려쓰기 */
+  margin-bottom: 1px;     /* 항목 간 간격 (선택사항) */
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 10px;
 }
-.footer_fixed_bottom>table tr>td:last-child{
-    display:none;
-    width: 1px;
-    white-space:nowrap
-
+.responsive-logo{
+    width:80px; height:auto;
 }
-.footer_fixed_bottom>table tr>td:nth-child(2),
-.footer_fixed_bottom>table tr>td:nth-child(3){
-    width: auto;
-
+//--------------- 반응형 ---------------//
+@media screen and (max-width: 1400px) {
+	.basic_info {
+		width: 760px;
+	}
 }
-.footer_fixed_bottom>table tr>td:nth-child(3){
-    text-align: right;
+@media screen and (max-width: 1200px) {
+	.basic_info {
+		width: 580px;
+	}
+}
+@media screen and (max-width: 993px) {
+    .mobile_hidden {
+		display: none;
+		width: 300px;
+	}
+	.nursemain {
+        display: flex;
+        justify-content: center;
+    }
+    .basic_info {
+        display: none;
+    }
+    .info_1 {
+        display: block;
+    }
+    .image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name_list input {
+        width: 100px;
+    }
+    .navbar-box {
+        display: none !important;
+    }
+    .pagination {
+        text-wrap: nowrap;
+        height: 43px;
+    }
+    .create {
+        margin-top: 120px;
+    }
+    .size_bar {
+        display: none !important;
+    }
+}
+@media screen and (min-width: 992px) {
+	.navbar-toggle {
+		display: none;
+	}
+	.menubox_2 {
+	    display: none;
+	}
+}
+@media screen and (max-width: 767px) {
+    .middle_name {
+            display: none;
+        }
+}
+@media (min-width: 768px) {
+    .middle_name {
+        display: block;
+    }
 }

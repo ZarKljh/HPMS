@@ -11,7 +11,7 @@
 <th:block layout:fragment="content">
     <div class="container">
         <h2 class="listbox mt-2">의사 목록</h2>
-
+        <p class="detail-subtitle">현재 등록된 의사 정보입니다.</p>
         <!-- 상단 상태/검색 바 -->
         <div class="d-flex flex-wrap justify-content-between align-items-center">
             <form method="get" action="/doctor" class="size_bar d-flex align-items-center mb-2 mb-md-0">
@@ -49,7 +49,9 @@
         </div>
 
         <!-- 리스트 테이블 -->
-        <table class="table table-hover card">
+        <table class="table table-hover card doctor-table">
+
+
             <thead class="table-light">
             <tr class="list text-center">
                 <th><input type="checkbox" id="selectAll"/></th>
