@@ -628,13 +628,11 @@ text-decoration: underline !important;
       background: #fff;
     }
 
+/* 기존 .section-heading 정의에 이어서(또는 교체) */
 .section-heading {
-  font-family: "맑은 고딕", Malgun Gothic, sans-serif;
+  font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
   font-size: 20px;
-  font-weight: 700; /* Bold */
-  margin-top: 20px;
-  margin-bottom: 12px;
-  color: #333;
+  font-weight: 800; /* h2의 fw-bolder와 유사 굵기 */
 }
 /* ===== Doctor list / history table FIX ===== */
 
@@ -977,3 +975,239 @@ form.search .full { grid-column: 1 / -1 !important; }
 @media (max-width: 992px){
   .page-narrow{ max-width: 100%; padding-left: 12px; padding-right: 12px; }
 }
+
+/* ===== Edit/Detail 공통: 폼 그리드 여백 + 2열 라벨/입력 페어 ===== */
+.detail-card fieldset .grid{
+  display: grid;
+  /* 라벨-입력 한 쌍을 2세트(=4칸)로: |label|input|label|input| */
+  grid-template-columns: 160px 1fr 160px 1fr;
+  column-gap: 16px;   /* 좌우 간격 */
+  row-gap: 14px;      /* 위아래 간격 */
+  align-items: center;
+  position: relative; /* (선택) 세로 구분선용 */
+}
+
+/* 라벨은 우측 정렬로 줄맞춤 */
+.detail-card fieldset .grid > label{
+  justify-self: end;
+  padding-right: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 전체 너비를 차지해야 하는 줄(버튼행 등)은 .full 로 처리 */
+.detail-card fieldset .grid .full{
+  grid-column: 1 / -1;
+}
+
+/* (선택) 두 쌍 사이에 아주 옅은 세로 구분선 */
+.detail-card fieldset .grid::after{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: #eee;
+}
+
+/* 반응형: 태블릿/모바일에서는 한 쌍만(=2칸) 보이게 */
+@media (max-width: 992px){
+  .detail-card fieldset .grid{
+    grid-template-columns: 140px 1fr;
+  }
+  .detail-card fieldset .grid::after{ display: none; }
+}
+
+/* =========================
+   타이포 통일: 16px, 라벨(컬럼명)=Bold, 데이터=Normal
+   ========================= */
+:root{
+  --hpms-font-label: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
+  --hpms-font-data: system-ui, -apple-system, "Segoe UI", Roboto,
+                    "Malgun Gothic","맑은 고딕", sans-serif;
+  --hpms-font-size: 16px;
+  --hpms-line: 1.45;
+}
+
+/* 목록/히스토리 테이블 */
+.table.doctor-table th, table.doctor-table th{
+  font-family: var(--hpms-font-label) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 700 !important;    /* Bold */
+  line-height: var(--hpms-line);
+}
+.table.doctor-table td, table.doctor-table td{
+  font-family: var(--hpms-font-data) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;    /* Normal */
+  line-height: var(--hpms-line);
+}
+
+/* 디테일/수정: 라벨(컬럼명) */
+.kv-label,
+.label-reform,
+.detail-card fieldset .grid > label{
+  font-family: var(--hpms-font-label) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 700 !important;    /* Bold */
+  line-height: var(--hpms-line);
+}
+
+/* 디테일/수정: 데이터(값/입력) */
+.kv-value,
+.value-reform,
+.detail-card fieldset .grid > div:not(.kv-label),
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea{
+  font-family: var(--hpms-font-data) !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;    /* Normal */
+  line-height: var(--hpms-line);
+}
+
+/* (선택) 상단 상태/검색 바 입력 크기도 16px 맞춤 */
+.size_bar,
+.search_box input,
+.search_btn{
+  font-size: var(--hpms-font-size) !important;
+  line-height: var(--hpms-line);
+}
+/* ===== 폼을 한 줄(라벨 1 + 값 1)씩 배치 ===== */
+.detail-card fieldset .grid{
+  display: grid;
+  grid-template-columns: 160px 1fr; /* ✅ 한 줄: 라벨 1칸 + 값 1칸 */
+  column-gap: 16px;
+  row-gap: 14px;
+  align-items: center;
+}
+
+/* 두 세트 구분선(있었다면) 숨김 */
+.detail-card fieldset .grid::after{
+  display: none !important;
+}
+
+/* 라벨 정렬과 타이포 */
+.detail-card fieldset .grid > label{
+  justify-self: end;
+  padding-right: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
+  font-size: 16px;
+}
+
+/* 입력/값 영역은 꽉 차게 */
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea,
+.detail-card fieldset .grid > div:not(.kv-label){
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* 한 줄 전체를 써야 하는 요소(버튼 행 등)는 .full */
+.detail-card fieldset .grid .full{
+  grid-column: 1 / -1;
+}
+
+/* 반응형에서도 동일(원래도 1세트라 별도 처리 불필요하지만 명시적으로 유지) */
+@media (max-width: 992px){
+  .detail-card fieldset .grid{
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+/* === 데이터 타이포: 맑은 고딕 + Normal, 16px === */
+:root{ --hpms-font-size: 16px; }
+
+/* 표(td)와 링크 */
+.table.doctor-table td,
+table.doctor-table td,
+.table.doctor-table td a,
+table.doctor-table td a {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important; /* Normal */
+}
+
+/* 디테일/수정 값 영역 + 폼 입력들 */
+.kv-value,
+.value-reform,
+.detail-card fieldset .grid > div:not(.kv-label),
+.detail-card fieldset .grid > input,
+.detail-card fieldset .grid > select,
+.detail-card fieldset .grid > textarea {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important; /* Normal */
+}
+
+/* (선택) 검색/버튼 텍스트도 데이터 톤에 맞추고 싶다면 */
+.search_box input,
+.page-btn,
+.pagination a,
+.size_bar {
+  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
+  font-size: var(--hpms-font-size) !important;
+  font-weight: 400 !important;
+}
+.detail-card fieldset .grid .full{ display:flex; justify-content:flex-end; }
+
+/* edit / join 폼 전용: 라벨-값 1줄 정렬 고정 */
+.detail-card fieldset > .grid{
+  display: grid !important;
+  grid-template-columns: 160px 1fr !important; /* ← 라벨, 값 */
+  gap: 10px 12px;
+  align-items: center;
+  direction: ltr; /* 혹시 rtl 영향 차단 */
+}
+.detail-card fieldset > .grid > label{
+  text-align: left;
+  justify-self: start;
+  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;  /* 컬럼명 Bold */
+  color: #333;
+}
+.detail-card fieldset > .grid > input,
+.detail-card fieldset > .grid > select,
+.detail-card fieldset > .grid > textarea{
+  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif; /* 데이터 글꼴 */
+  font-size: 16px;
+  font-weight: 400;  /* 데이터 Normal */
+}
+.detail-card fieldset > .grid .job-actions{
+  grid-column: 2 / 3 !important;  /* 값 칸(오른쪽) 위치 */
+  justify-self: end;               /* 우측 정렬 */
+}
+
+/* 한 카드 레이아웃 + 제목/구분선 */
+.detail-container.page-narrow{max-width:1200px;margin:0 auto;}
+.detail-card{padding:16px 20px;border-radius:12px;}
+.section-heading{font-size:20px;font-weight:700;margin:8px 0 6px;color:#333;}
+.section-divider{height:1px;background:#e5e7eb;margin:8px 0 16px;border:0;}
+
+/* 1줄 라벨-값 정렬 */
+.detail-card fieldset>.grid{
+  display:grid!important;grid-template-columns:160px 1fr!important;
+  gap:10px 12px;align-items:center;
+}
+.detail-card fieldset>.grid>label{
+  text-align:left;justify-self:start;
+  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-size:16px;font-weight:700;color:#333;
+}
+.detail-card fieldset>.grid>input,
+.detail-card fieldset>.grid>select,
+.detail-card fieldset>.grid>textarea{
+  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-size:16px;font-weight:400;
+}
+
+/* 직급/직책 버튼을 우측으로 */
+.detail-card .job-actions{grid-column:2/3!important;justify-self:end;}
+
+/* 카드 하단 우측 버튼 정렬 */
+.detail-actions-outer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
