@@ -7,7 +7,9 @@ import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelM;
 import com.HPMS.HPMS.reference_personnel.reference_personnel_m.ReferencePersonnelMService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.HPMS.HPMS.Patient.PatientDTO.PatientDTOService.formatPhoneNumber;
+import static com.HPMS.HPMS.Patient.PatientDTO.PatientDTOService.getOnlyDigitNumber;
 
 @RequiredArgsConstructor
 @Service
@@ -39,7 +42,7 @@ public class SiteUserService {
         newsu.setMiddleName(suf.getMiddleName());
 
         //전화번호 내에 있는 '-' 을 제거
-        String formatedPhoneNumber = formatPhoneNumber(suf.getMobilePhone());
+        String formatedPhoneNumber = getOnlyDigitNumber(suf.getMobilePhone());
 
         newsu.setMobilePhone(formatedPhoneNumber);
         newsu.setEmail(suf.getEmail());
@@ -47,8 +50,8 @@ public class SiteUserService {
         //성명과 전화번호를 이용해서, role 과 roleid를 가져오는 로직
         RoleAndId roleAndId = getRoleAndID(suf, formatedPhoneNumber);
 
-        newsu.setRole(suf.getRole());
-        newsu.setRoleId(suf.getRoleId());
+        newsu.setRole(roleAndId.getRole());
+        newsu.setRoleId(roleAndId.getRoleId());
         newsu.setStatus("active");
         newsu.setCreateDate(LocalDateTime.now());
 
@@ -84,7 +87,9 @@ public class SiteUserService {
     }
 
     //Role과 RoleId를 가져오기 위한 클래스
-    public class RoleAndId {
+    @Getter
+    @Setter
+    public static class RoleAndId {
         String role;
         Integer roleId;
 

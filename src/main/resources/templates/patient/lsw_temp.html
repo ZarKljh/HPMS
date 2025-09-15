@@ -1,0 +1,262 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+  <meta name="_csrf" content="mb4xGdCFJNiwrr5wWqvVzqq55CVi26aTjG0EyQkVsBKKpj9roIlSLOC8QuCdm91AaobhqMmAyRxU7pC-uAsw-mgmhCq4klpZ" />
+  <meta name="_csrf_header" content="X-CSRF-TOKEN" />
+
+  <!-- 자바스크립트 Start -->
+
+  <!-- 자바스크립트 End -->
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/CSS/patient/patient.css">
+</head>
+<body>
+<!-- 네비게이션바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img src="/img/_HPMS_.png" alt="HPMS logo Image" style="width:40px; height:40px;"/>HPMS</a>
+    <button class="navbar-toggle card" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-box collapse navbar-collapse d-flex" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/doctor">Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nurse">Nurse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/patient/list">Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/list">Reference Personnel</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+
+          <a class="nav-link" href="/hpms/logout">로그아웃</a>
+        </li>
+        <li class="nav-item">
+
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="menubox_2">
+    <div class="menu_2 navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/doctor">Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nurse">Nurse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/patient/list">Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/list">Reference Personnel</a>
+        </li>
+        <li class="nav-item">
+
+          <a class="nav-link" href="/hpms/logout">로그아웃</a>
+        </li>
+        <li class="nav-item">
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/patient/patient.js" defer></script>
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<div class="container">
+  <div style="display:flex; align-items:baseline; gap:20px;">
+    <h3 class="listbox" style="margin:0;">Patient List</h3>
+    <h7 style="margin:0;">환자 리스트</h7>
+  </div>
+  <!-- 🔍 검색 영역 시작 -->
+  <div class="card my-3">
+
+    <button type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></button>
+
+    <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
+      <div id="searchConditions">
+        <!-- 🔹 검색 조건 한 줄 -->
+        <div class="search-row row mb-2" style="font-size:12px;">
+          <div class="col-8 col-md-3">
+            <select name="column[]" class="form-select" onchange="updateOperatorOptions(this)">
+              <option value="">컬럼 선택</option>
+              <option value="lastName">성명 성</option>
+              <option value="firstName">성명 이름</option>
+              <option value="gender">성별</option>
+              <option value="birth">생년월일</option>
+              <option value="foreigner">내/외국인</option>
+              <option value="mobilePhone">휴대전화(뒷4자리)</option>
+              <option value="guardianTel">보호자전화(뒷4자리)</option>
+              <option value="createDate">최초등록일</option>
+              <option value="lastVisitDate">최종방문일</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <select name="operator[]" class="form-select">
+              <option value="=">=</option>
+              <option value="like">포함</option>
+              <option value=">">></option>
+              <option value="<"><</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <input type="text" name="value[]" class="form-control" placeholder="값 입력">
+          </div>
+
+          <div class="col-md-2">
+            <select name="logicalOperator[]" class="form-select">
+              <option value="AND">AND</option>
+              <option value="OR">OR</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <button type="button" class="btn btn-success" onclick="addConditionRow()">+</button>
+            <button type="button" class="btn btn-danger" onclick="removeConditionRow(this)">-</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="search_btn"><span>검색실행</span></button>
+      </div>
+    </form>
+
+  </div>
+  <!-- 🔍 검색 영역 끝 -->
+  <div>
+    <form method="get" action="/patient/list">
+      <div class="mb-3" style="font-size: 12px;">
+        <span>등록건수:</span><span>21</span><span>명 /</span>
+        <span>현재페이지:</span><span>3</span><span> /</span>
+        <span>페이지당 행 수:</span>
+        <!--<label for="size">Row counter:</label> -->
+        <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
+          <option value="5">5</option>
+          <option value="10" selected="selected">10</option>
+          <option value="20">20</option>
+        </select>
+        <input type="hidden" name="page" value="1" />
+      </div>
+    </form>
+  </div>
+
+
+  <table class="table table-hover card">
+    <thead class="table-light">
+    <tr class="list text-center">
+      <th class="mobail_hidden">환자ID</th>
+      <th>성명</th>
+      <th>성별</th>
+      <th>생년월일</th>
+      <th  class="mobail_hidden">내/외국인</th>
+      <th>휴대전화</th>
+      <th  class="mobail_hidden">보호자 연락처</th>
+      <th  class="mobail_hidden">최종 방문일</th>
+      <th  class="mobail_hidden">등록일</th>
+    </tr>
+    </thead>
+
+    <tbody class="text-center">
+    <tr class="text-center">
+
+      <td class="mobail_hidden">1</td>
+      <td>
+        <a href="/patient/detail/1">김 우진</a>
+      </td>
+      <td>M</td>
+      <td>1985-06-15</td>
+      <td class="mobail_hidden">내국인</td>
+      <td>010-1234-5678</td>
+      <td class="mobail_hidden">010-5555-1111</td>
+      <td class="mobail_hidden">2025-08-27</td>
+      <td class="mobail_hidden">2025-08-27</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="page-navi">
+    <div class="page-navigation"><!-- 페이지 이동버튼 시작-->
+      <form id="registrationForm" method="post" action="/user/personnel_registration">
+        <input name="size" type="hidden" value="10" >
+        <!--<input name="page" type="text" th:value="${page}" hidden="hidden">-->
+        <input type="hidden" name="page" value="2" />
+
+      </form>
+    </div><!-- 페이지 이동버튼 끝-->
+
+    <!-- 페이징처리 시작 -->
+    <div class="page">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link"
+             href="?page=1&amp;size=10">
+            <span>이전</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page=0&amp;size=10">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page=1&amp;size=10">2</a>
+        </li>
+        <li class="page-item active">
+          <a class="page-link" href="?page=2&amp;size=10">3</a>
+        </li>
+        <li class="page-item disabled">
+          <a class="page-link" href="?page=3&amp;size=10">
+            <span>다음</span>
+          </a>
+        </li>
+      </ul>
+      <div>
+        <a href="/patient/create" role="button" class="button-link text-full">등록하기</a>
+      </div>
+    </div>
+    <!-- 페이징처리 끝 -->
+  </div>
+
+</div>
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<!-- 자바스크립트 Start -->
+
+<!-- 자바스크립트 End -->
+<div class="chang-footer">
+  <!--<div class="chang-footer">-->
+  <section class="chang-footer-inforamtion">
+    <ul class="chang-inner-ul-menu">
+      <li>웹이용약관 | 개인정보처리방침 | 고객의 소리 | 데이터 심의위원회</li>
+      <li>대표전화 : 1599-0000 말로거는전화 : 1606 + "HPMS"이라고 말하세요!</li>
+      <li>(35015)대전광역시 중구 문화로 282 충남땡땡병원 사업자번호 : 305-82-08811</li>
+      <li>&#169; HPMS CO., LTD ALL RIGHTS RESERVED</li>
+    </ul>
+  </section>
+  <section class="chang-footer-logo delete-button">
+    <img src="/img/_HPMS_.png" alt="HPMS logo Image" class="responsive-logo"/>
+  </section>
+  <!--</div>-->
+</div>
+</body>
+
+</html>

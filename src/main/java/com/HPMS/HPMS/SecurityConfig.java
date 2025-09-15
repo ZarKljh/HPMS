@@ -22,6 +22,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
+
+    public SecurityConfig(CustomLoginSuccessHandler customLoginSuccessHandler) {
+        this.customLoginSuccessHandler = customLoginSuccessHandler;
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -51,7 +57,8 @@ public class SecurityConfig {
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/hpms/login")         // 로그인 폼 경로
                         //.loginProcessingUrl("/hpms/login") // 로그인 처리 경로 (POST)
-                        .defaultSuccessUrl("/", true)          // 로그인 성공 후 이동 경로
+                        .successHandler(customLoginSuccessHandler)
+                        //.defaultSuccessUrl("/", true)          // 로그인 성공 후 이동 경로
                         .permitAll())
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/hpms/logout"))
@@ -78,6 +85,6 @@ public class SecurityConfig {
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-}*/
+}
 
 /**/

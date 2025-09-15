@@ -203,11 +203,34 @@ public class PatientMService {
             //throw new DataNotFoundException("question not found");
         }
     }
+    public PatientM getPatientMByName(String firstName, String lastName){
+        Optional<PatientM> patientM = this.patientMRepository.findByFirstNameAndLastName(firstName, lastName);
+        if (patientM.isPresent()) {
+            return patientM.get();
+        } else {
+            throw new NoSuchElementException("Patient detail not found for patientId: " + patientM.get().getId());
+            //throw new DataNotFoundException("question not found");
+        }
+    }
 
     public void deletePatientM(PatientM patientM){
         //환자종결구분자에 1을 입력한다
         patientM.setDelStatus(1);
         this.patientMRepository.save(patientM);
+    }
+
+    public void deleteBySelectedIds(List<Integer> ids){
+
+        if(ids == null || ids.isEmpty()){
+            return;
+        }
+        try {
+            for( Integer id : ids){
+                deletePatientM(getPatientM(id));
+            }
+        } catch (Exception e){
+            System.err.println("삭제 중 오류 발생: " + e.getMessage());
+        }
     }
 
     public void createPatientM(PatientForm pf){
@@ -218,7 +241,7 @@ public class PatientMService {
         m.setLastName(pf.getLastName());
         m.setMiddleName(pf.getMiddleName());
         m.setPassFirstName(pf.getPassFirstName());
-        m.setPassLastName(pf.getLastName());
+        m.setPassLastName(pf.getPassLastName());
         m.setPassMiddleName(pf.getPassMiddleName());
         m.setGender(pf.getGender());
         m.setDayOfBirth(localDateToInteger(pf.getBirth()));
@@ -301,7 +324,7 @@ public class PatientMService {
         dtl.setCurHomeDetAdd(pf.getHomeDetAdd());
         dtl.setRegHomePCD(pf.getRegPcd());
         dtl.setRegHomeDefAdd(pf.getRegDefAdd());
-        dtl.setRegHomeDetAdd(pf.getRegDefAdd());
+        dtl.setRegHomeDetAdd(pf.getRegDetAdd());
 
         dtl.setOccupation(pf.getOccupation());
         dtl.setLastVisitDate(LocalDateTime.now());

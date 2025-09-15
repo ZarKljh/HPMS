@@ -7,12 +7,34 @@ $('.navbar-toggle').click(function() {
 		$('.menubox_2').addClass('active');
 	}
 });
+    /*체크박스 체크된 환자정보 삭제기능*/
+    /* 제한된 체크박스 확인 후, 폼 COMMIT하기 */
+    function submitFormIfValid() {
+      const form = document.forms["selectedPatient"];
+      const checkboxes = form.querySelectorAll('input[name="checkedIds"]');
+      var anyChecked = Array.prototype.some.call(checkboxes, function(cb) {
+          return cb.checked;
+      });
+
+      if (!anyChecked) {
+        alert("하나 이상의 항목을 선택해주세요.");
+        return;
+      }
+
+      form.submit();
+    }
+
+    function submitForm(event) {
+        event.preventDefault(); // 링크 기본 동작 막기
+        document.getElementById('registrationForm').submit(); // 폼 전송
+    }
+
 
     function openRoadPopup(input) {
       roadTargetInput = input;
       const w = 900, h = 640;
       const left = (screen.width - w)/2, top = (screen.height - h)/2;
-      window.open('/global/popup', 'roadPopup',
+      window.open('/global/road/popup', 'roadPopup',
         `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
     }
 
