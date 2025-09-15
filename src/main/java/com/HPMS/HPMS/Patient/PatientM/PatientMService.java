@@ -241,7 +241,7 @@ public class PatientMService {
         m.setLastName(pf.getLastName());
         m.setMiddleName(pf.getMiddleName());
         m.setPassFirstName(pf.getPassFirstName());
-        m.setPassLastName(pf.getLastName());
+        m.setPassLastName(pf.getPassLastName());
         m.setPassMiddleName(pf.getPassMiddleName());
         m.setGender(pf.getGender());
         m.setDayOfBirth(localDateToInteger(pf.getBirth()));
