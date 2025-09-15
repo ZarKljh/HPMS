@@ -1211,3 +1211,59 @@ table.doctor-table td a {
 
 /* 카드 하단 우측 버튼 정렬 */
 .detail-actions-outer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
+
+/* 기존 중앙정렬 규칙 무력화 + 좌우 배치로 재정의 */
+.chang-footer{
+  display: flex !important;
+  align-items: center !important;           /* 세로 가운데 */
+  justify-content: space-between !important;/* ⬅️ 왼쪽/오른쪽으로 벌려 배치 */
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border-top: 1px solid #dee2e6 !important;
+  background: #fff;
+  margin-top: 10px; /* 아래로 10px 여백을 추가 */
+}
+
+/* 왼쪽 텍스트 박스: 남는 공간 차지 */
+.chang-footer-inforamtion{
+  flex: 1 1 auto !important;
+  margin-left: 0 !important;            /* 기존 margin-left:20px 제거(선택) */
+  max-width: none !important;           /* 기존 max-width:1190px 영향 차단 */
+}
+
+/* 오른쪽 로고 박스 */
+.chang-footer-logo{
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;         /* 혹시 잘리는 문제 방지 */
+}
+
+/* 로고 자체: 크롭 금지 */
+.responsive-logo{
+  display: block;
+  width: 90px !important;               /* 필요시 80~120 조절 */
+  height: auto !important;
+  object-fit: contain !important;       /* ⬅️ 크롭 방지 */
+}
+
+/* 페이지 전체를 flex 세로 레이아웃으로: HTML 변경 없이 동작 */
+html, body { height: 100%; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* 본문이 남은 공간을 먹게 해서 푸터를 밀어내기 */
+.container { flex: 1 0 auto; }      /* doctor.html의 .container가 본문 래퍼 역할 */
+.chang-footer { flex-shrink: 0; }   /* 푸터는 줄어들지 않게 */
+
+.chang-inner-ul-menu li{
+  margin: 0 0 2px 0 !important;
+  font-family: 'Malgun Gothic', sans-serif !important;
+  font-size: 12px !important; /* 10px → 12px 권장 */
+  line-height: 1.35 !important;
+}
+
+@media (max-width: 576px){
+  .chang-footer{ flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+  .chang-footer-logo{ align-self: flex-end !important; }
+}

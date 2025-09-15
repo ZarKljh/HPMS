@@ -138,7 +138,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_detail/"+id+"?page="+page+"&size="+size;
     }*/
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/detail/{id}")
     public String referencePersonnelDtl(Model model,
                                         @PathVariable("id") Integer id,
@@ -160,7 +160,7 @@ public class ReferencePersonnelController {
     // 상세 화면에서 1건 삭제
     private final ReferencePersonnelMService referencePersonnelMService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/user/delete")
     public String deleteReferencePersonnel(RedirectAttributes redirectAttributes,
                                            @RequestParam("id") Integer id,
@@ -177,7 +177,7 @@ public class ReferencePersonnelController {
     }
 
     // Start of personnel 목록에서 체크박스 다중 선택 후 삭제하는 기능
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/delete/selectedPersonnel")
     public String deleteSelectedPersonnel(RedirectAttributes redirectAttributes,
                                           @RequestParam(value = "checkedIds", required = true) List<Long> ids,
@@ -206,7 +206,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_update";
     }
     */
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_update")  //update 화면 채우기
     // public String patientCreate(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
     // BindingResult bindingResult){
@@ -223,7 +223,7 @@ public class ReferencePersonnelController {
         return "personnel/personnel_update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/update/personnel")    // update 화면에서 값을 받아 저장한 후 상세보기 화면으로 이동하기
     public String updatePersonnel(@Valid ReferencePersonnelDTOForm referencePersonnelDTOForm,
                                   BindingResult bindingResult,
@@ -245,7 +245,7 @@ public class ReferencePersonnelController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/user/personnel_registration")
     public String personnelRegisration() {
         return "personnel/personnel_registration";
@@ -253,7 +253,7 @@ public class ReferencePersonnelController {
 
 
     //  신규 관련자 등록 시작
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/create/reference_personal")
     public String createReferencePersonnel(@ModelAttribute ReferencePersonnelDTO dto, RedirectAttributes redirectAttributes,
                                            @RequestParam(defaultValue = "1") int page,
