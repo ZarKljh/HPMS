@@ -10,11 +10,13 @@
 
 <th:block layout:fragment="content">
     <div class="container">
-        <h2 class="listbox mt-2">의사 목록</h2>
-        <p class="detail-subtitle">현재 등록된 의사 정보입니다.</p>
+        <h4 class="listbox mt-2">의사 목록</h4>
+        <h4 class="detail-subtitle">현재 등록된 의사 정보입니다.</h4>
         <!-- 상단 상태/검색 바 -->
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-wrap justify-content-between align-items-center font-size=12px">
             <form method="get" action="/doctor" class="size_bar d-flex align-items-center mb-2 mb-md-0">
+                <meta name="_csrf" th:content="${_csrf.token}">
+                <meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
                 <div class="d-flex align-items-center">
                     <strong class="me-1">등록 건수:</strong>
                     <span th:text="${page != null ? page.totalElements : 0}">0</span>명
@@ -33,7 +35,8 @@
                 </div>
             </form>
 
-            <form method="get" action="/doctor" class="d-flex align-items-center">
+            <form method="get" action="/doctor" class="d-flex align-items-center font-size= 12px">
+
                 <div class="search_box row my-3">
                     <div>
                         <div class="input-group">
@@ -115,10 +118,10 @@
             </div>
 
             <!-- 우측 버튼 -->
-            <div class="d-flex justify-content-end gap-2">
-                <a th:href="@{/doctor/new}" class="page-btn">등록</a>
-                <a href="javascript:void(0);" class="page-btn" id="deleteSelected">삭제</a>
-                <a th:href="@{/doctor/history}" class="page-btn">수정내역</a>
+            <div class="d-flex justify-content-end gap-2 mb-4">
+                <a th:href="@{/doctor/new}" class="m-btn">등록</a>
+                <a href="javascript:void(0);" class="page-btn d-btn" id="deleteSelected">삭제</a>
+                <a th:href="@{/doctor/history}" class="m-btn">수정내역</a>
             </div>
 
         </div>

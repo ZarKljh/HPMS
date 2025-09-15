@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class DoctorHController {
     private final DoctorHRepository doctorHRepository;
 
     @GetMapping("")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String list(@ModelAttribute("cond") DoctorHForm cond,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "20") int size,
@@ -34,6 +36,7 @@ public class DoctorHController {
         return "doctor/doctor_history";
     }
     @GetMapping("/{hid}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String detail(@PathVariable Integer hid, Model model, RedirectAttributes redirect) {
         return doctorHRepository.findById(hid)
                 .map(h -> {

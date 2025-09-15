@@ -631,8 +631,7 @@ text-decoration: underline !important;
 /* 기존 .section-heading 정의에 이어서(또는 교체) */
 .section-heading {
   font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 800; /* h2의 fw-bolder와 유사 굵기 */
+  font-weight: 400 !important; /* h2의 fw-bolder와 유사 굵기 */
 }
 /* ===== Doctor list / history table FIX ===== */
 
@@ -1186,7 +1185,7 @@ table.doctor-table td a {
 /* 한 카드 레이아웃 + 제목/구분선 */
 .detail-container.page-narrow{max-width:1200px;margin:0 auto;}
 .detail-card{padding:16px 20px;border-radius:12px;}
-.section-heading{font-size:20px;font-weight:700;margin:8px 0 6px;color:#333;}
+.section-heading{font-weight:700;margin:8px 0 6px;color:#333;}
 .section-divider{height:1px;background:#e5e7eb;margin:8px 0 16px;border:0;}
 
 /* 1줄 라벨-값 정렬 */
@@ -1212,3 +1211,123 @@ table.doctor-table td a {
 /* 카드 하단 우측 버튼 정렬 */
 .detail-actions-outer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
 
+/* 기존 중앙정렬 규칙 무력화 + 좌우 배치로 재정의 */
+.chang-footer{
+  display: flex !important;
+  align-items: center !important;           /* 세로 가운데 */
+  justify-content: space-between !important;/* ⬅️ 왼쪽/오른쪽으로 벌려 배치 */
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border-top: 1px solid #dee2e6 !important;
+  background: #fff;
+  margin-top: 10px; /* 아래로 10px 여백을 추가 */
+}
+
+/* 왼쪽 텍스트 박스: 남는 공간 차지 */
+.chang-footer-inforamtion{
+  flex: 1 1 auto !important;
+  margin-left: 0 !important;            /* 기존 margin-left:20px 제거(선택) */
+  max-width: none !important;           /* 기존 max-width:1190px 영향 차단 */
+}
+
+/* 오른쪽 로고 박스 */
+.chang-footer-logo{
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;         /* 혹시 잘리는 문제 방지 */
+}
+
+/* 로고 자체: 크롭 금지 */
+.responsive-logo{
+  display: block;
+  width: 90px !important;               /* 필요시 80~120 조절 */
+  height: auto !important;
+  object-fit: contain !important;       /* ⬅️ 크롭 방지 */
+}
+
+/* 페이지 전체를 flex 세로 레이아웃으로: HTML 변경 없이 동작 */
+html, body { height: 100%; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* 본문이 남은 공간을 먹게 해서 푸터를 밀어내기 */
+.container { flex: 1 0 auto; }      /* doctor.html의 .container가 본문 래퍼 역할 */
+.chang-footer { flex-shrink: 0; }   /* 푸터는 줄어들지 않게 */
+
+.chang-inner-ul-menu li{
+  margin: 0 0 2px 0 !important;
+  font-family: 'Malgun Gothic', sans-serif !important;
+  font-size: 12px !important; /* 10px → 12px 권장 */
+  line-height: 1.35 !important;
+}
+
+@media (max-width: 576px){
+  .chang-footer{ flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+  .chang-footer-logo{ align-self: flex-end !important; }
+}
+
+/* 삭제 전용 오버라이드: specificity ↑ */
+.page-btn.d-btn:hover,
+.page-btn.d-btn:focus-visible {
+  background-color: #f54747;
+  border-color: #f54747;
+  color: #fff;
+}
+
+/* 1) 테이블 데이터(본문) 12px */
+table.doctor-table tbody td,
+table.doctor-table tbody td a {
+  font-size: 12px !important;
+}
+
+/* 2) 페이징/검색 영역 12px */
+.pagination,
+.pagination a,
+.size_bar,
+.size_bar * {
+  font-size: 12px !important;
+}
+#search_kw,
+.search_btn,
+.input-group .form-control,
+.input-group .btn,
+#size {
+  font-size: 12px !important;
+}
+
+/* 3) 컬럼명(헤더) 16px */
+table.doctor-table thead th {
+  font-size: 16px !important;
+}
+
+/* 4) 버튼 폰트 16px (등록/삭제/수정내역 등) */
+.page-btn,
+.m-btn,
+.d-btn {
+  font-size: 16px !important;
+}
+/* ===== Doctor Detail 전용 오버라이드 ===== */
+
+/* 1) 컬럼명/데이터 모두 12px */
+.detail-container .kv-label,
+.detail-container .kv-value {
+  font-size: 12px !important;   /* 전역 16px 규칙 덮어쓰기 */
+}
+
+/* 2) 버튼 폰트 16px (수정/삭제 등) */
+.detail-container .m-btn,
+.detail-container .d-btn,
+.detail-container .page-btn {
+  font-size: 16px !important;
+}
+
+/* 라디오/체크박스 라벨 텍스트도 12px */
+.detail-container fieldset .grid label input[type="radio"],
+.detail-container fieldset .grid label input[type="checkbox"] {
+  /* 인풋 자체는 기본 크기 유지, 텍스트는 부모 라벨 12px로 이미 반영됨 */
+}
+/* (선택) 섹션 제목(h4.section-heading)은 굵기 과하면 보통 두께로 */
+.detail-container h4.section-heading {
+  /* 필요시 주석 해제: font-weight: 400 !important; */
+}
