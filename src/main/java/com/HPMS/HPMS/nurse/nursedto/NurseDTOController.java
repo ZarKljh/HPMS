@@ -6,14 +6,11 @@ import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationService;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/nurse")
@@ -74,11 +71,8 @@ public class NurseDTOController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/delete/{id}")
-    public String nurseDelete(Principal principal, @PathVariable("id") Integer id) {
+    public String nurseDelete(@PathVariable("id") Integer id) {
         NurseDTO nurseDTO = this.nurseDTOService.getNurseDTO(id);
-        if (!nurseDTO.getNurseMain().getFirstName().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
-        }
         this.nurseDTOService.delete(nurseDTO);
         return "redirect:/nurse";
     }
