@@ -53,6 +53,7 @@ public class PatientController {
     */
 
     //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ROLE_NURSE', 'ROLE_DOCTOR', 'ROLE_SYSTEM', 'ROLE_ADMIN')")
     @GetMapping("/patient/list")
     public String list(Model model,
                        @RequestParam(value="page", defaultValue="0") int page,
