@@ -18,53 +18,44 @@
             </span>
             </div>
         </form>
-        <form name="selectedPersonnel" th:action="@{/delete/selectedPersonnel}" method="post">
-            <input type="hidden" name="page" th:value="${page}" />
-            <input type="hidden" name="size" th:value="${size}" />
-<!--        <table class="table table-hover card" style="border:1px;">
-            <thead class="table-info" style="padding:0px;margin:0px;border:1px;">
-            <tr class=" text-center" style="border:1px;">-->
-            <table class="table table-hover card chang-table-layout"><!-- 0909-->
-                <thead class="table-light chang-nurse-th">
-                <tr class="list text-center chang-nurse-th">
+        <table class="table table-hover card listTable">
+            <form name="selectedPersonnel" th:action="@{/delete/selectedPersonnel}" method="post">
+                <input type="hidden" name="page" th:value="${page}" />
+                <input type="hidden" name="size" th:value="${size}" />
+            <thead class="table-light">
+                <!--<tr class="list text-center">-->
+                <tr>
                     <th class="chang-checkbox-column"><input type="checkbox" name="checkedAllIds" value="t" /></th>
-                    <th>ID</th>
-                    <th class="mobile_hidden">국적</th>
-                    <th>성명</th>
-                    <th class="mobile_hidden">중간이름</th>
-                    <th>이메일</th>
-                    <th>휴대전화</th>
-                    <th class="mobile_hidden">등록자</th>
-                    <th class="mobile_hidden">등록일시</th>
+                    <th class="chang-checkbox-column">순번</th>
+                    <th class="chang_text_center">국적</th>
+                    <th class="chang_text_center">성명</th>
+                    <th class="chang_text_center">이메일</th>
+                    <th class="chang_text_center">휴대전화</th>
+                    <th class="chang_text_center">등록자</th>
+                    <th class="chang_text_center">등록일시</th>
                 </tr>
             </thead>
-            <tbody class="text-center">
-            <tr th:each="personnel : ${referencePersonnels}">
-                <td class="chang-checkbox-column"><input type="checkbox" th:name="checkedIds" th:value="${personnel.id}" /></td>
-                <td><div th:text="${personnel.currentNum}">
-                    <a th:if="${personnel.id != null}"
-                       th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 0}&page=${page != null ? page : 0}|"
-                       th:text="${personnel.id}">
-                    </a>
-                </div>
-                </td>
-                <td th:text="${personnel.nationality}"></td>
-                <td>
-                    <a th:if="${personnel.id != null}"
-                       th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 10}&page=${currentPage != null ? currentPage : 1}|"
-                       th:text="${personnel.middleName != null && personnel.middleName != ''
-                 ? personnel.lastName + ' ' + personnel.middleName + ' ' + personnel.firstName
-                 : personnel.lastName + ' ' + personnel.firstName}"></a>
-                </td>
-                <td th:text="${personnel.middleName}"></td>
-                <td th:text="${personnel.email}"></td>
-                <td th:text="${personnel.cellPhone}"></td>
-                <td th:text="${personnel.creator ?: '미지정'}"></td>
-                <td th:text="${#temporals.format(personnel.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-            </tr>
+            <tbody><!-- class="text-center"-->
+                <tr th:each="personnel : ${referencePersonnels}">
+                    <td class="chang-checkbox-column"><input type="checkbox" th:name="checkedIds" th:value="${personnel.id}"/></td>
+                    <!--<td class="chang-checkbox-number" th:text="${personnel.currentNum}"></td>-->
+                    <td class="chang-checkbox-column" th:text="${personnel.currentNum}"></td>
+                    <td class="chang_text_center" th:text="${personnel.nationality}"></td>
+                    <td class="chang_text_center">
+                        <a th:if="${personnel.id != null}"
+                           th:href="|/user/detail/${personnel.id}?size=${size != null ? size : 10}&page=${currentPage != null ? currentPage : 1}|"
+                           th:text="${personnel.middleName != null && personnel.middleName != ''
+                     ? personnel.lastName + ' ' + personnel.middleName + ' ' + personnel.firstName
+                     : personnel.lastName + ' ' + personnel.firstName}"></a>
+                    </td>
+                    <td  class="chang_text_center" th:text="${personnel.email}"></td>
+                    <td class="chang_text_center" th:text="${personnel.cellPhone}"></td>
+                    <td class="chang_text_center" th:text="${personnel.creator ?: '미지정'}"></td>
+                    <td class="chang_text_center" th:text="${#temporals.format(personnel.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
             </tbody>
+            </form>
         </table>
-        </form>
         </div><!-- end of personnel-list-->
     <div class="page-navigation">
         <div>
@@ -86,7 +77,6 @@
             </a>
             <a href="#" class="btn-primary button-link text-full" onclick="submitFormIfValid();">삭제하기</a>
             <a href="#" class="btn-primary button-link text-short" onclick="submitFormIfValid();">삭제</a>
-    <!--        </form>-->
         </div>
         <div class="pagination">
             <a th:if="${currentPage > 1}"
@@ -95,10 +85,17 @@
             <a th:if="${currentPage > 1}"
                th:href="@{/user/list(page=${currentPage - 1}, size=${size})}">이전</a>
 
-            <span th:each="pageNum : ${pageNumbers}">
+<!--            <span th:each="pageNum : ${pageNumbers}">
                 <a th:href="@{/user/list(page=${pageNum}, size=${size})}"
                     th:text="${pageNum}"
                     th:class="${pageNum == currentPage} ? 'active-page' : ''"></a>
+            </span>-->
+            <!-- 현재 페이지 기준 앞/뒤 페이지 한개만 추가하여 보기-->
+            <span th:each="pageNum : ${pageNumbers}">
+              <a th:if="${pageNum >= currentPage - 1} and ${pageNum <= currentPage + 1}"
+                 th:href="@{/user/list(page=${pageNum}, size=${size})}"
+                 th:text="${pageNum}"
+                 th:class="${pageNum == currentPage} ? 'active-page' : ''"></a>
             </span>
 
             <a th:if="${currentPage < totalPages}"

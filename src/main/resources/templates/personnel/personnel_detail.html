@@ -73,13 +73,15 @@
         </form>
         <div class="pagination">
             <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-full">목록보기</a>
-            <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-short">목록</a>
+<!--            <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-short">목록</a>-->
             <a th:href="@{/user/personnel_update(id=${personnel.id}, page=${page}, size=${size})}" class="button-link text-full">수정하기</a>
-            <a th:href="@{/user/personnel_update}" class="button-link text-short">수정</a>
+<!--            <a th:href="@{/user/personnel_update(id=${personnel.id}, page=${page}, size=${size})}" class="button-link text-short" >수정</a>-->
             <a href="#"
                onclick="document.forms['deleteForm'].submit(); return false;"
-               class="button-link text-short">삭제하기</a>
-            <a th:href="@{/user/personnel_registration}" class="button-link text-short">삭제</a>
+               class="button-link text-full">삭제하기</a>
+<!--            <a href="#"
+               onclick="document.forms['deleteForm'].submit(); return false;"
+               class="button-link text-short">삭제</a>-->
         </div>
     </div>
 </div>
