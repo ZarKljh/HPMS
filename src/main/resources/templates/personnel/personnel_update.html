@@ -129,10 +129,10 @@
 <!--start of list navigation -->
     <div class="page-navigation">
         <div>
-            <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-full">목록보기</a>
-            <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-short">목록</a>
-            <a href="#" class="button-link text-full" onclick="document.forms['updatePersonnel'].submit(); return false;">저장하기</a>
-            <a href="#" class="button-link text-short" onclick="document.forms['updatePersonnel'].submit(); return false;">저장</a>
+            <a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-full">목록</a>
+            <!--<a th:href="@{/user/list(page=${page}, size=${size})}" class="button-link text-short">목록</a>-->
+            <a href="#" class="button-link text-full" onclick="document.forms['updatePersonnel'].submit(); return false;">저장</a>
+            <!--<a href="#" class="button-link text-short" onclick="document.forms['updatePersonnel'].submit(); return false;">저장</a>-->
         </div>
     </div>
 </div>
