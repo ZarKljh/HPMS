@@ -70,9 +70,11 @@
 
     <!-- 정렬 값 계산 -->
     <th:block th:with="
-      sortParam=${param.sort != null ? param.sort[0] : 'createDate,DESC'},
-      nextDateSort=${sortParam.startsWith('createDate') and sortParam.endsWith('ASC') ? 'createDate,DESC' : 'createDate,ASC'}
-  ">
+  sortParam=${param.sort != null ? param.sort[0] : 'createDate,DESC'},
+  sortLower=${#strings.toLowerCase(sortParam)},
+  isAsc=${#strings.endsWith(sortLower,'asc')},
+  nextDateSort=${isAsc} ? 'createDate,DESC' : 'createDate,ASC'
+">
 
       <!-- 결과 테이블 -->
       <table class="table table-hover card doctor-table">
@@ -82,17 +84,17 @@
         <tr>
           <th>
             <a th:href="@{/doctor/history(
-              doctorId=${cond != null ? cond.doctorId : null},
-              fromDate=${cond != null ? cond.fromDate : null},
-              toDate=${cond != null ? cond.toDate : null},
-              keyword=${cond != null ? cond.keyword : null},
-              page=${page != null ? page.number : 0},
-              size=${page != null ? page.size : 10},
-              sort=${nextDateSort}
-          )}">생성일</a>
-            <span class="muted"
-                  th:text="${sortParam} == 'createDate,DESC' ? '▼' : (sortParam == 'createDate,ASC' ? '▲' : '')"></span>
+      doctorId=${cond != null ? cond.doctorId : null},
+      fromDate=${cond != null ? cond.fromDate : null},
+      toDate=${cond != null ? cond.toDate : null},
+      keyword=${cond != null ? cond.keyword : null},
+      page=${page != null ? page.number : 0},
+      size=${page != null ? page.size : 10},
+      sort=${nextDateSort}
+  )}">생성일</a>
+            <span class="muted" th:text="${isAsc} ? '▲' : '▼'"></span>
           </th>
+
           <th>작성자</th>
           <th>부서</th>
           <th>진료과</th>
@@ -188,7 +190,10 @@
              sort=${sortParam}
          )}">끝 페이지 »</a>
       </div>
+    </th:block>
+    <div class="detail-actions-outer mb-3">
+      <a th:href="@{/doctor}" class="m-btn">메인으로</a>
+    </div>
   </div>
-</th:block>
 </th:block>
 </html>

@@ -87,16 +87,16 @@
 
       <div th:if="${detail == null}" class="kv-value" style="padding-top:12px;">디테일 정보가 없습니다.</div>
 
-
+      <div class="detail-actions-outer">
+        <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
+        <a href="javascript:void(0);"
+           th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
+           class="d-btn"
+           onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
+      </div>
     </div><!-- /detail-card -->
     <!-- ✅ 카드 바깥, 우측 정렬 버튼 -->
-    <div class="detail-actions-outer">
-      <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
-      <a href="javascript:void(0);"
-         th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
-         class="d-btn"
-         onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
-    </div>
+
   </div>
 </th:block>
 
