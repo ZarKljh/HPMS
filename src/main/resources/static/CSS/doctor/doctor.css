@@ -1275,11 +1275,6 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   color: #fff;
 }
 
-/* 1) 테이블 데이터(본문) 12px */
-table.doctor-table tbody td,
-table.doctor-table tbody td a {
-  font-size: 12px !important;
-}
 
 /* 2) 페이징/검색 영역 12px */
 .pagination,
@@ -1312,7 +1307,7 @@ table.doctor-table thead th {
 /* 1) 컬럼명/데이터 모두 12px */
 .detail-container .kv-label,
 .detail-container .kv-value {
-  font-size: 12px !important;   /* 전역 16px 규칙 덮어쓰기 */
+  font-size: 16px ;   /* 전역 16px 규칙 덮어쓰기 */
 }
 
 /* 2) 버튼 폰트 16px (수정/삭제 등) */
@@ -1330,4 +1325,132 @@ table.doctor-table thead th {
 /* (선택) 섹션 제목(h4.section-heading)은 굵기 과하면 보통 두께로 */
 .detail-container h4.section-heading {
   /* 필요시 주석 해제: font-weight: 400 !important; */
+}
+/* ===== Doctor edit/join 공통 타이포 규격 ===== */
+
+/* (A) 컬럼명/데이터 = 12px */
+.detail-container fieldset .grid > label,
+.detail-container fieldset .grid > input,
+.detail-container fieldset .grid > select,
+.detail-container fieldset .grid > textarea,
+.detail-container fieldset .grid > div,
+.detail-container .kv-label,
+.detail-container .kv-value {
+  font-size: 16px !important;
+}
+
+/* 라디오/체크 박스 텍스트도 12px (라벨에 의해 상속) */
+
+/* (B) 모든 버튼 = 16px */
+.detail-container .page-btn,
+.detail-container .m-btn,
+.detail-container .d-btn,
+.detail-container button {
+  font-size: 16px !important;
+}
+
+/* (C) 섹션 제목(h4.section-heading) 굵게 보이면 해제 */
+.detail-container h4.section-heading {
+  font-weight: 400 !important;   /* 필요 시 주석 해제 */
+}
+
+/* (D) edit 하단 버튼 크기 통일(상세정보/수정, join의 등록 포함) */
+.detail-actions-outer .page-btn,
+.detail-actions-outer .m-btn {
+  height: 40px !important;
+  line-height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 8px !important;
+}
+
+/* 카드 아래에 붙는 버튼 영역 */
+.detail-actions-outer{
+  display:flex;
+  justify-content:flex-end;   /* 우측 정렬 */
+  gap:10px;
+  margin-top:12px;            /* 카드와 간격 */
+}
+
+/* 버튼 크기 통일 (폰트 16px 유지) */
+.detail-actions-outer .page-btn,
+.detail-actions-outer .m-btn{
+  height:40px;
+  line-height:40px;           /* 수직 중앙 */
+  padding:0 14px;             /* 좌우만 */
+  border-radius:8px;
+  font-size:16px;             /* 요구사항 */
+}
+
+/* page-btn 기본 세로 패딩 제거(있다면) */
+.detail-actions-outer .page-btn{
+  padding-top:0; padding-bottom:0;
+}
+    /* ✅ 리스트 데이터 전체 12px (이 테이블 안에서만) */
+    .table.doctor-table { --hpms-font-size: 12px; }
+
+    /* ✅ 헤더는 16px 유지 */
+    .table.doctor-table thead th { font-size: 16px !important; }
+
+    /* 🔒 혹시 모를 잔존 규칙 대비(안 먹는 항목 있을 때만 유지) */
+    .table.doctor-table tbody td,
+    .table.doctor-table tbody td a { font-size: 12px !important; }
+/* ===== Detail page only: 컬럼/데이터 16px ===== */
+.detail-container .detail-card .kv-grid .kv-label,
+.detail-container .detail-card .kv-grid .kv-value {
+  font-size: 16px !important;
+}
+/* 페이지 공통 최대폭(메인 카드와 동일 값으로) */
+:root{
+  --page-max: 1200px;   /* 필요시 1140/1280 등으로 조절 */
+  --page-pad: 16px;
+}
+
+/* 푸터: 콘텐츠 폭에 맞춰 가운데 정렬 */
+.chang-footer{
+  /* 줄은 그대로 전폭으로 보이길 원하면 border-top 유지 */
+  border-top: 1px solid #dee2e6 !important;
+  background: #fff;
+
+  /* 가운데 정렬&폭 제한 */
+  max-width: var(--page-max) !important;
+  width: 100% !important;
+  margin: 12px auto 0 !important;   /* 상단 여백 + 가운데 */
+  padding: 12px var(--page-pad) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-shrink: 0 !important;        /* 아래로 밀릴 때 줄어들지 않게 */
+}
+
+/* 왼쪽/오른쪽 박스 기본 정렬 */
+.chang-footer-inforamtion{
+  flex: 1 1 auto !important;
+  margin-left: 0 !important;
+  max-width: none !important;
+}
+.chang-footer-logo{
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+/* 본문이 짧아도 푸터가 아래로 가도록(이미 있으면 유지) */
+html, body { height: 100%; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+.container { flex: 1 0 auto; }
+.chang-footer { flex-shrink: 0; }
+
+/* 모바일에선 전체폭 */
+@media (max-width: 576px){
+  .chang-footer{
+    max-width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .chang-footer-logo{ align-self: flex-end !important; }
 }
