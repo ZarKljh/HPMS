@@ -112,16 +112,18 @@
 
             <label>비고</label> <input type="text" th:field="*{note}" maxlength="255"/>
           </div>
+
+          <div class="detail-actions-outer">
+            <a class="m-btn" th:href="@{/doctor/dtl/detail(id=${doctorId})}">상세 정보</a>
+            <button class="m-btn" type="submit">수정</button>
+          </div>
         </fieldset>
       </div><!-- /detail-card -->
 
 
     </form>
     <!-- ✅ 카드 아래, 우측 정렬 버튼 (폼 안) -->
-    <div class="detail-actions-outer">
-      <a class="m-btn" th:href="@{/doctor/dtl/detail(id=${doctorId})}">상세 정보</a>
-      <button class="m-btn" type="submit">수정</button>
-    </div>
+
   </div>
 </th:block>
 </html>

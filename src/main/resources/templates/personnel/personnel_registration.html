@@ -68,11 +68,11 @@
 </form>
     <div class="page-navigation">
         <div>
-        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-full">목록보기</a>
-        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-short">목록</a>
-        <a href="#" class="button-link text-full" onclick="document.forms['registration'].submit(); return false;">등록하기</a>
-        <a href="#" class="button-link text-short" onclick="document.forms['registration'].submit(); return false;">등록</a>
-        <a href="#" class="button-link text-full" onclick="document.forms['registration'].reset(); return false;">초기화하기</a>
+        <a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-full">목록</a>
+        <!--<a th:href="@{/user/list(page=${param.page}, size=${param.size})}" class="button-link text-short">목록</a>-->
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].submit(); return false;">등록</a>
+        <!--<a href="#" class="button-link text-short" onclick="document.forms['registration'].submit(); return false;">등록</a>-->
+        <a href="#" class="button-link text-full" onclick="document.forms['registration'].reset(); return false;">초기화</a>
         </div>
     </div>
 </div>

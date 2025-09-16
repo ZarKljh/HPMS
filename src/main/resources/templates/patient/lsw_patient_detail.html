@@ -71,11 +71,11 @@
 
   <div class="page-navigation">
     <div class="pagination">
-      <a class="button-link text-full" th:href="@{|/patient/modify/${detailDTO.id}|}">수정하기</a>
+      <a class="button-modify button-link text-full " th:href="@{|/patient/modify/${detailDTO.id}|}">수정</a>
 
       <form th:action="@{/patient/delete}" method="post">
         <input type="hidden" name="id" th:value="${detailDTO.id}">
-        <button type="submit" class="button-link text-full">환자종결</button>
+        <button type="submit" class="button-link text-full">삭제</button>
       </form>
       <!--
       <a th:href="@{|/patient/delete/${detailDTO.id}|}" class="button-link text-short">환자종결</a>

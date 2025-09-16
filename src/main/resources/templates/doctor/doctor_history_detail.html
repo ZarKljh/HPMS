@@ -88,12 +88,12 @@
                 <div class="kv-label">수정자</div>             <div class="kv-value" th:text="${h.modifier}"></div>
                 <div class="kv-label">비고</div>               <div class="kv-value" th:text="${h.note}"></div>
             </div>
-
+            <div class="detail-actions-outer mb-3">
+                <a th:href="@{/doctor/history}" class="m-btn">목록으로</a>
+            </div>
         </div><!-- /detail-card -->
 
-        <div class="detail-actions-outer mb-3">
-            <a th:href="@{/doctor/history}" class="m-btn">목록으로</a>
-        </div>
+
     </div>
 </th:block>
 </html>
