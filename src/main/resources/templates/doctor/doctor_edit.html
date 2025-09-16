@@ -4,9 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{doctor/doctor_layout}">
 
-<th:block layout:fragment="script">
-  <script defer th:src="@{/js/doctor_edit.js}"></script>
-</th:block>
 
 <th:block layout:fragment="content">
   <div class="container detail-container page-narrow">
@@ -61,7 +58,7 @@
           <div class="grid">
             <label>이미지 URL</label> <input type="text" th:field="*{image}" maxlength="250" required/>
             <label>User ID</label>   <input type="text" th:field="*{userId}" maxlength="20" required/>
-            <label>Password (변경 시에만)</label>
+            <label>Password</label>
             <input type="password" th:field="*{userPassword}" maxlength="100" placeholder="새 비밀번호 입력"/>
 
             <label>사무실 전화</label> <input type="text" th:field="*{officeTelephone}" maxlength="20" required/>
