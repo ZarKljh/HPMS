@@ -78,10 +78,12 @@ public class PatientController {
             pageNumbers.add(i);
         }
 
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("patients", patients);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
+
 
         return "patient/lsw_patient_list";
     }
