@@ -73,21 +73,28 @@
       })
       .catch(err => console.warn('직급 로드 실패:', err));
 
-    function applySelection() {
-      const rankOpt = document.getElementById('rankSelect').selectedOptions[0];
-      const posOpt  = document.getElementById('positionSelect').selectedOptions[0];
+ function normalizeKor(value){
+    return (value && value.trim() === '의과대학생') ? '대학생' : value;
+  }
 
-      // 선택 안 했으면 빈 문자열로 전달
-      const rankKor     = rankOpt ? (rankOpt.dataset.kor || rankOpt.value) : '';
-      const positionKor = posOpt  ? (posOpt.dataset.kor  || posOpt.value)  : '';
+  function applySelection() {
+    const rankOpt = document.getElementById('rankSelect').selectedOptions[0];
+    const posOpt  = document.getElementById('positionSelect').selectedOptions[0];
 
-      window.opener?.postMessage({
-        source: 'jobcode-popup',
-        payload: { rankCode: rankKor, positionCode: positionKor }
-      }, '*');
+    let rankKor     = rankOpt ? (rankOpt.dataset.kor || rankOpt.value) : '';
+    let positionKor = posOpt  ? (posOpt.dataset.kor  || posOpt.value)  : '';
 
-      window.close();
-    }
+    // ✅ 오직 "의과대학생"만 대학생으로 치환
+    rankKor     = normalizeKor(rankKor);
+    positionKor = normalizeKor(positionKor);
+
+    window.opener?.postMessage({
+      source: 'jobcode-popup',
+      payload: { rankCode: rankKor, positionCode: positionKor }
+    }, '*');
+
+    window.close();
+  }
 </script>
 </body>
 </html>

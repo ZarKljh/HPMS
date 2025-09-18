@@ -98,28 +98,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!hasEditFields) return;
 
-    // 팝업 → 본창 메시지 처리
-    window.addEventListener('message', (e) => {
-      if (!e?.data) return;
-      if (e.data.source !== 'jobcode-popup') return;
+// 팝업 → 본창 메시지 처리
+window.addEventListener('message', (e) => {
+  if (!e?.data) return;
+  if (e.data.source !== 'jobcode-popup') return;
 
-      const { rankCode, positionCode } = e.data.payload || {};
-      const rankEl = document.getElementById('rank') || document.querySelector('[name="rank"]');
-      const posEl  = document.getElementById('position') || document.querySelector('[name="position"]');
+  const { rankCode, positionCode } = e.data.payload || {};
+  const rankEl = document.getElementById('rank') || document.querySelector('[name="rank"]');
+  const posEl  = document.getElementById('position') || document.querySelector('[name="position"]');
 
-      if (rankEl) {
-        rankEl.value = rankCode ?? '';
-        rankEl.dispatchEvent(new Event('input', { bubbles:true }));
-        rankEl.dispatchEvent(new Event('change', { bubbles:true }));
-      }
-      if (posEl) {
-        posEl.value = positionCode ?? '';
-        posEl.dispatchEvent(new Event('input', { bubbles:true }));
-        posEl.dispatchEvent(new Event('change', { bubbles:true }));
-      }
-      console.log('[parent] message received:', e.data);
-    });
+  // ✅ 여기서 오직 "의과대학생"만 치환
+  const normalizeKor = (val) =>
+    (val && val.trim() === '의과대학생') ? '대학생' : val;
 
+  if (rankEl) {
+    rankEl.value = normalizeKor(rankCode ?? '');
+    rankEl.dispatchEvent(new Event('input', { bubbles:true }));
+    rankEl.dispatchEvent(new Event('change', { bubbles:true }));
+  }
+  if (posEl) {
+    posEl.value = normalizeKor(positionCode ?? '');
+    posEl.dispatchEvent(new Event('input', { bubbles:true }));
+    posEl.dispatchEvent(new Event('change', { bubbles:true }));
+  }
+
+  console.log('[parent] message received:', e.data);
+});
     // 팝업 열기 API (인라인 onclick 사용하므로 전역 노출)
     function openJobPopup() {
       const w = 700, h = 520;
