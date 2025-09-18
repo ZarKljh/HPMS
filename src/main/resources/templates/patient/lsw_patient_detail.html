@@ -75,7 +75,7 @@
 
       <form th:action="@{/patient/delete}" method="post">
         <input type="hidden" name="id" th:value="${detailDTO.id}">
-        <button type="submit" class="button-link text-full">삭제</button>
+        <button type="submit" class="button-delete button-link text-full">삭제</button>
       </form>
       <!--
       <a th:href="@{|/patient/delete/${detailDTO.id}|}" class="button-link text-short">환자종결</a>

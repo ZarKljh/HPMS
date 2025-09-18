@@ -218,7 +218,7 @@ a:hover {
     flex-grow:0;
 }*/
 .chang-footer-inforamtion{
-    background-color:yellow;
+    /*background-color:yellow;*/
     flex:1;
     max-width:1190px;
     /*margin-left: 10px;*/
