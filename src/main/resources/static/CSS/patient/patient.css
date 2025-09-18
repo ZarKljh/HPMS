@@ -239,19 +239,20 @@ a.button-link, button.button-link {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-a.button-delete:hover {
+a.button-delete:hover, button.button-delete:hover {
   background-color: #f54747 !important;
   border-color: #f54747 !important;
   color: #fff !important;
 }
 
-/*
+
 .button-link:hover {
   background-color: #cce6ff;
   border-color: #666;
   color: #000;
 }
-*/
+
+
 
 //상세 페이지
 .main, .information {

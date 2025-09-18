@@ -177,7 +177,7 @@ $('.navbar-toggle').click(function() {
         const valueInput = select.closest('.search-row').querySelector('input[name="value[]"]');
         const oldSelect = valueContainer.querySelector('select[name="value[]"]');
 
-        if (['birth','createDate','lastVisitDate'].includes(select.value)) {
+        if (['dayOfBirth','createDate','lastVisitDate'].includes(select.value)) {
             valueInput.type = 'date';
         }
         else if (oldSelect && ['lastName','firstName', 'mobilePhone', 'guardianTel'].includes(select.value)) {
