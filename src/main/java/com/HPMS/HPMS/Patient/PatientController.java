@@ -70,7 +70,7 @@ public class PatientController {
         int currentPage = page;
 
         int startPage = Math.max(currentPage - 2, 0);
-        int endPage = Math.min(currentPage + 2, totalPages - 1);
+        int endPage = Math.min(currentPage + 2, totalPages-1);
 
         List<Integer> pageNumbers = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class PatientController {
 
         model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("patients", patients);
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
 

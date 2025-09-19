@@ -17,13 +17,14 @@
                 <strong class="mx-1">현재페이지:</strong><span th:text="${patients.number+1}"></span><span> /</span>
                 <strong class="mx-1">페이지당 행 수:</strong>
                 <!--<label for="size">Row counter:</label> -->
+                <input type="hidden" name="page" value="0" />
                 <select name="size" id="size" onchange="this.form.page.value='0'; this.form.submit();">
                     <option th:value="5" th:selected="${size == 5}">5</option>
                     <option th:value="10" th:selected="${size == 10}">10</option>
                     <option th:value="20" th:selected="${size == 20}">20</option>
                 </select>
                 <!--
-                <input type="hidden" name="page" value="1" />
+
                 -->
             </div>
         </form>
@@ -32,7 +33,7 @@
             <button type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></button>
 
             <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
-                <input type="hidden" id="page" name="page" th:value="${paging.number}">
+                <input type="hidden" id="page" name="page" th:value="${currentPage}">
                 <div id="searchConditions">
                     <!-- 🔹 검색 조건 한 줄 -->
                     <div class="search-row row mb-2" style="font-size:12px;">
@@ -135,14 +136,14 @@
                     <!--<input name="page" type="text" th:value="${page}" hidden="hidden">-->
                     <input type="hidden" name="page" th:value="${currentPage}" />
                 </form>
-                <a th:if="${currentPage > 1}" th:href="@{|?page=${currentPage-1}&size=${size}|}">이전</a>
+                <a th:if="${currentPage > 0}" th:href="@{|?page=${currentPage-1}&size=${size}|}">이전</a>
                 <a th:each="pageNum : ${pageNumbers}"
                    th:if="${pageNum >= currentPage-3 and pageNum <= currentPage+3}"
                    th:href="@{|?page=${pageNum}&size=${size}|}"
-                   th:text="${pageNum}"
+                   th:text="${pageNum+1}"
                    th:class="${(pageNum == currentPage) ? 'active-page' : ''}"></a>
 
-                <a th:if="${currentPage < totalPages}" th:href="@{|?page=${currentPage+1}&size=${size}|}">다음</a>
+                <a th:if="${currentPage < totalPages-1}" th:href="@{|?page=${currentPage+1}&size=${size}|}">다음</a>
             </div>
 
             <!--검색폼 숨김-->
