@@ -7,6 +7,56 @@ $('.navbar-toggle').click(function() {
 		$('.menubox_2').addClass('active');
 	}
 });
+
+    /* create form validate 시작 */
+
+    function validateCreateForm(form){
+
+        const birth = form.querySelector("input[name='birth']");
+        const startDate = new Date('1900-01-01');
+        const nowDate = new Date();
+        const formatBirth = new Date(birth.value);
+        if(!birth.value) {
+            alert("날짜를 입력해주세요.");
+            return false;
+        } else if(formatBirth < startDate) {
+            alert("생년월일은 1900년1월1일 이전은 입력할 수 없습니다");
+            return false;
+        } else if(formatBirth > nowDate) {
+            alert("생년월일은 오늘날짜 이후의 날짜는 입력할 수 없습니다");
+            return false;
+        }
+
+        const gender = form.querySelector("input[name='gender']");
+        if(!gender) {
+            alert("성별을 선택해주세요.");
+            return false;
+        } else if(gender.value != 'M' && gender.value != 'F' && gender.value !='X'){
+            alert("올바른 값을 선택해주세요.");
+            return false;
+        }
+
+        const foreigner = form.querySelector("input[name='foreigner']");
+        if(foreigner.value != 0 && foreigner.value != 1) {
+            alert("내외국인 여부를 선택해주세요");
+        }
+
+        /*이름 앞뒤 빈칸제거*/
+        const firstName = form.querySelector("input[name=firstName]").trim();
+        const lastName = form.querySelector("input[name=lastName]").trim();
+        const middleName = form.querySelector("input[name=middleName]").trim();
+
+        for()
+
+
+
+
+        return true;
+    }
+        function nameSpaceDelete(name) {
+            const nameLength = name.length;
+        }
+
     /*체크박스 체크된 환자정보 삭제기능*/
     /* 제한된 체크박스 확인 후, 폼 COMMIT하기 */
     function submitFormIfValid() {

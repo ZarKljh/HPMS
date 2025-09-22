@@ -90,7 +90,7 @@
     <form name="selectedPatient" th:action="@{/patient/delete/selectedPatient}" method="post">
         <input type="hidden" name="page" th:value="${page}" />
         <input type="hidden" name="size" th:value="${size}" />
-        <table class="table table-hover card">
+        <table class="table table-hover card listTable">
             <thead class="table-light">
             <tr class="list text-center">
                 <th class="chang-checkbox-column"><input type="checkbox" name="checkedAllIds" value="t" /></th>
@@ -175,7 +175,7 @@
                 이전버전 페이징처리 끝 -->
                 <div class="create">
                     <a th:href="@{/patient/create}" class="button-link">등록</a>
-                    <button type="button" class="d-btn" id="deleteSelectedBtn" onclick="submitFormIfValid()"></button>
+                    <button type="button" class="d-btn" id="deleteSelectedBtn" onclick="submitFormIfValid()">선택삭제</button>
                     <!-- 이전버전 선택삭제 버튼
                     <a href="#" class="button-delete button-link text-full" onclick="submitFormIfValid();">선택삭제</a>
                     이전버전 선택삭제 버튼-->

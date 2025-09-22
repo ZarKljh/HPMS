@@ -1,7 +1,7 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
   <h3 class="mt-2">신규 환자 등록</h3>
-  <form th:object="${patientForm}" method="post">
+  <form th:object="${patientForm}" method="post" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
