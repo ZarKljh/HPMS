@@ -41,13 +41,17 @@
         <!--관계자 로그인-->
         <div class="tab-pane fade" id="official" role="tabpanel" aria-labelledby="official-tab">
           <form id="official-nav-home" th:action="@{/hpms/login}" method="post">
-            <select name="option" required>
-              <option value="">관계자 선택</option>
-              <option value="doctor">의사</option>
-              <option value="nurse">간호사</option>
-              <option value="user">외부직원</option>
-            </select>
-            <div class="mb-3 mt-2">
+            <div class="select-wrapper" data-role="selectbox">
+              <button type="button" class="toggle_btn">관계자 선택</button>
+              <ul class="hide selectbox_option">
+                <li><button type="button" class="option-btn" data-value="doctor">의사</button></li>
+                <li><button type="button" class="option-btn" data-value="nurse">간호사</button></li>
+                <li><button type="button" class="option-btn" data-value="user">방문인력</button></li>
+              </ul>
+              <!-- 실제 form 전송용 -->
+              <input type="hidden" name="option" required>
+            </div>
+            <div class="mb-3 mt-3">
               <label for="official-username" class="form-label">사용자 ID</label>
               <input type="text" name="username" id="official-username" required>
             </div>
@@ -66,6 +70,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   </div>
 </div>
+
 <style>
   /*--------------- 노멀라이징 ---------------*/
 body, ul, li {
@@ -77,18 +82,18 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-  /* 기본 글자색 */
-  .nav-tabs .nav-link {
-    color: black;
-  }
+/* 기본 글자색 */
+.nav-tabs .nav-link {
+  color: black;
+}
 
-  /* 활성 탭 글자색 (클릭/호버/포커스 포함) */
-  .nav-tabs .nav-link.active,
-  .nav-tabs .nav-link.active:hover,
-  .nav-tabs .nav-link.active:focus {
-    color: blue !important;
-  }
-  /*--------------- 버튼 스타일 ---------------*/
+/* 활성 탭 글자색 (클릭/호버/포커스 포함) */
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link.active:hover,
+.nav-tabs .nav-link.active:focus {
+  color: blue !important;
+}
+/*--------------- 버튼 스타일 ---------------*/
 .button-link {
     gap: 5px;
     display: inline-flex;
@@ -105,20 +110,113 @@ a {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 .button-link:hover {
-    background-color: #cce6ff;
+    background-color: #cce6ff !important;
     border-color: #99ccff !important;
     color: #000 !important;
 }
 
-  /*---------------- 라벨 --------------------- */
-  .form-label {
-    width: 100px;
-  }
-  /*---------------- 로그인 버튼 --------------------- */
-  .rogIn_btn {
-    display: flex;
-    justify-content: flex-end;
-  }
+/*---------------- 라벨 ---------------------*/
+.form-label {
+  width: 100px;
+}
+/*---------------- 로그인 버튼 ---------------------*/
+.rogIn_btn {
+  display: flex;
+  justify-content: flex-end;
+}
+/*---------------- 셀렉트 박스 ---------------------*/
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+}
+
+/* 선택 버튼 */
+.toggle_btn {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* 옵션 리스트 */
+.selectbox_option {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  z-index: 1000;
+}
+
+.hide {
+  display: none;
+}
+
+/* 옵션 버튼 */
+.option-btn {
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.option-btn:hover {
+  background: #cce6ff;
+  border-radius: 6px;
+}
+
+/* 선택된 옵션 */
+.option-btn.active {
+  background: #cce6ff;
+  border-radius: 6px;
+}
 </style>
+<script>
+  /*---------------- 셀렉트 박스 ---------------------*/
+  document.querySelectorAll(".select-wrapper").forEach(wrapper => {
+    const toggleBtn = wrapper.querySelector(".toggle_btn");
+    const optionList = wrapper.querySelector(".selectbox_option");
+    const hiddenInput = wrapper.querySelector("input[type=hidden]");
+
+    // 드롭다운 열기/닫기
+    toggleBtn.addEventListener("click", () => {
+      optionList.classList.toggle("hide");
+    });
+
+    // 옵션 선택 시
+    optionList.querySelectorAll(".option-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        toggleBtn.textContent = btn.textContent;   // 선택된 값 보이기
+        hiddenInput.value = btn.dataset.value;     // 폼에 값 저장
+        optionList.classList.add("hide");          // 드롭다운 닫기
+
+        // active 스타일 적용
+        optionList.querySelectorAll(".option-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // 바깥 클릭 시 닫기
+    document.addEventListener("click", e => {
+      if (!wrapper.contains(e.target)) {
+        optionList.classList.add("hide");
+      }
+    });
+  });
+</script>
 </body>
 </html>
