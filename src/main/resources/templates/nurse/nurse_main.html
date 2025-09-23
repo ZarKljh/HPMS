@@ -43,7 +43,7 @@
         <thead class="table-light">
         <tr class="list text-center">
             <th class="chang-checkbox-column"><input type="checkbox" id="checkAll" /></th>
-            <th style="min-width: 80px;max-width: 80px;">번호</th>
+            <th style="min-width: 50px;max-width: 50px;">번호</th>
             <th>부서</th>
             <th>직급</th>
             <th>성명</th>
@@ -62,7 +62,7 @@
         <tbody class="text-center">
         <tr class="text-center" th:each="nurseMain, loop : ${paging}">
             <td class="chang-checkbox-column"><input type="checkbox" class="nurse-checkbox" name="checkedIds" th:value="${nurseMain.id}" /></td>
-            <td style="max-width: 80px;" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td style="max-width: 50px;" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>

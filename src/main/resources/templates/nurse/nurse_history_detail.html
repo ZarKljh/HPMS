@@ -1,293 +1,217 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{nurse/nurse_layout}">
+<head>
+  <title>간호사 히스토리 상세</title>
+</head>
 <body>
 <div layout:fragment="content" class="container">
-  <form class="info_form">
-    <h3 class="border-bottom mt-2" th:if="${nurseHistory}"
-        th:text="|${nurseHistory.firstName} ${#strings.defaultString(nurseHistory.middleName,'')} ${#strings.defaultString(nurseHistory.lastName,'')} - 수정 히스토리|">
-      간호사 수정 히스토리
-    </h3>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="border-bottom mt-2">간호사 수정 히스토리</h3>
 
-    <!-- Main 정보 -->
-    <div class="main card my-3 p-3" th:if="${nurseHistory}">
-      <h4 class="border-bottom py-2">간호사 히스토리 상세페이지 입니다.</h4>
-
-      <!-- 사진 -->
-      <div class="image">
-        <img th:if="${nurseHistory.picture != null and !#strings.isEmpty(nurseHistory.picture)}"
-             th:src="${nurseHistory.picture}" alt="nurse Image" />
-        <span th:unless="${nurseHistory.picture != null and !#strings.isEmpty(nurseHistory.picture)}">사진 없음</span>
+      <!-- 디버그 정보 -->
+      <div class="alert alert-warning" th:unless="${nurseHistory}">
+        히스토리 정보가 없습니다.
       </div>
 
-      <!-- 작성자 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">기록일시:</label>
-        <span th:text="${nurseHistory.createDate != null} ? ${#temporals.format(nurseHistory.createDate,'yyyy-MM-dd HH:mm')} : '정보 없음'" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">작성자:</label>
-        <span th:text="${nurseHistory.writer ?: '등록자 정보 없음'}" style="width:220px;"></span>
-      </div>
+      <!-- Main 정보 -->
+      <div class="card my-3 p-3" th:if="${nurseHistory}">
+        <h4 class="border-bottom py-2">간호사 히스토리 상세페이지</h4>
 
-      <!-- 기본 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">부서:</label>
-        <span th:text="${nurseHistory.dept ?: '부서 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">직급:</label>
-        <span th:text="${nurseHistory.rank ?: '직급 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <!-- 사진 영역 -->
+        <div class="row mb-4" th:if="${nurseHistory.picture}">
+          <div class="col-12">
+            <div class="text-center">
+              <img th:src="${nurseHistory.picture}"
+                   alt="간호사 사진"
+                   class="img-thumbnail"
+                   style="max-width: 300px; max-height: 400px; object-fit: cover;">
+            </div>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">성명:</label>
-        <span th:text="|${nurseHistory.firstName} ${#strings.defaultString(nurseHistory.middleName,'')} ${#strings.defaultString(nurseHistory.lastName,'')}|" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">성별:</label>
-        <span th:text="${nurseHistory.gender ?: '성별 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <!-- 기본 정보만 먼저 표시 -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>히스토리 ID:</strong>
+            <span th:text="${nurseHistory.id}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>작성일시:</strong>
+            <span th:text="${nurseHistory.createDate}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">생년월일:</label>
-        <span th:text="${nurseHistory.dateOfBirth ?: '생년월일 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">입사일:</label>
-        <span th:text="${nurseHistory.hireDate ?: '입사일 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>부서:</strong>
+            <span th:text="${nurseHistory.dept}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>직급:</strong>
+            <span th:text="${nurseHistory.rank}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">상태:</label>
-        <span th:text="${nurseHistory.sts ?: '상태 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">근무형태:</label>
-        <span th:text="${nurseHistory.wt ?: '근무형태 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <strong>전체 성명:</strong>
+            <span th:text="${nurseHistory.firstName != null ? nurseHistory.firstName : ''} + ' ' + ${nurseHistory.middleName != null ? nurseHistory.middleName + ' ' : ''} + ${nurseHistory.lastName != null ? nurseHistory.lastName : ''}"></span>
+          </div>
+        </div>
 
-      <!-- 연락처 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">전화번호:</label>
-        <span th:text="${nurseHistory.tel ?: '전화번호 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">이메일:</label>
-        <span th:text="${nurseHistory.email ?: '이메일 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>성:</strong>
+            <span th:text="${nurseHistory.firstName}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>이름:</strong>
+            <span th:text="${nurseHistory.lastName}">-</span>
+          </div>
+        </div>
 
-      <!-- 비상연락처 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락처:</label>
-        <span th:text="${nurseHistory.emergencyContact ?: '비상연락처 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">관계:</label>
-        <span th:text="${nurseHistory.emergencyRelation ?: '관계 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3" th:if="${nurseHistory.middleName}">
+          <div class="col-md-6">
+            <strong>미들네임:</strong>
+            <span th:text="${nurseHistory.middleName}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">성함:</label>
-        <span th:text="|${#strings.defaultString(nurseHistory.emergencyFirstName,'')} ${#strings.defaultString(nurseHistory.emergencyMiddleName,'')} ${#strings.defaultString(nurseHistory.emergencyLastName,'')}|" style="width:70%;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>성별:</strong>
+            <span th:text="${nurseHistory.gender}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>생년월일:</strong>
+            <span th:text="${nurseHistory.dateOfBirth}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">비상연락 비고:</label>
-        <span th:text="${nurseHistory.emergencyNote ?: '비고 없음'}" style="width:70%;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>입사일:</strong>
+            <span th:text="${nurseHistory.hireDate}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>상태:</strong>
+            <span th:text="${nurseHistory.status}">-</span>
+          </div>
+        </div>
 
-      <!-- 주소 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">우편번호:</label>
-        <span th:text="${nurseHistory.postalCode ?: '우편번호 없음'}" style="width:70%;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>근무형태:</strong>
+            <span th:text="${nurseHistory.workType}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>작성자:</strong>
+            <span th:text="${nurseHistory.writer}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">기본주소:</label>
-        <span th:text="${nurseHistory.defaultAddress ?: '기본주소 없음'}" style="width:70%;"></span>
-      </div>
+        <!-- 연락처 정보 -->
+        <h5 class="mt-4 mb-3 border-bottom">연락처 정보</h5>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>전화번호:</strong>
+            <span th:text="${nurseHistory.tel}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>이메일:</strong>
+            <span th:text="${nurseHistory.email}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">상세주소:</label>
-        <span th:text="${nurseHistory.detailAddress ?: '상세주소 없음'}" style="width:70%;"></span>
-      </div>
+        <!-- 비상연락처 정보 -->
+        <h5 class="mt-4 mb-3 border-bottom">비상연락처</h5>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>비상연락처:</strong>
+            <span th:text="${nurseHistory.emergencyContact}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>관계:</strong>
+            <span th:text="${nurseHistory.emergencyRelation}">-</span>
+          </div>
+        </div>
 
-      <!-- 전문 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">간호사<br>자격증번호:</label>
-        <span th:text="${nurseHistory.nurseLicenseNo ?: '자격증번호 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">최종학력:</label>
-        <span th:text="${nurseHistory.educationalBackground ?: '최종학력 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <!-- 전문 정보 -->
+        <h5 class="mt-4 mb-3 border-bottom">전문 정보</h5>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>간호사 자격증번호:</strong>
+            <span th:text="${nurseHistory.nurseLicenseNo}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>최종학력:</strong>
+            <span th:text="${nurseHistory.educationalBackground}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">졸업날짜:</label>
-        <span th:text="${nurseHistory.gradDate ?: '졸업날짜 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">외국어:</label>
-        <span th:text="${nurseHistory.foreignLanguage ?: '외국어 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>졸업날짜:</strong>
+            <span th:text="${nurseHistory.gradDate}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>외국어:</strong>
+            <span th:text="${nurseHistory.foreignLanguage}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">병역:</label>
-        <span th:text="${nurseHistory.militaryService ?: '병역 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">국적:</label>
-        <span th:text="${nurseHistory.nationality ?: '국적 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>병역:</strong>
+            <span th:text="${nurseHistory.militaryService}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>국적:</strong>
+            <span th:text="${nurseHistory.nationality}">-</span>
+          </div>
+        </div>
 
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">장애여부:</label>
-        <span th:text="${nurseHistory.disabilityStatus ?: '장애여부 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">경력:</label>
-        <span th:text="${nurseHistory.career ?: '경력 정보 없음'}" style="width:220px;"></span>
-      </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>장애여부:</strong>
+            <span th:text="${nurseHistory.disabilityStatus}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>경력:</strong>
+            <span th:text="${nurseHistory.career}">-</span>
+          </div>
+        </div>
 
-      <!-- 수정자 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">수정자:</label>
-        <span th:text="${nurseHistory.modifier ?: '수정 정보 없음'}" style="width:220px;"></span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">히스토리 ID:</label>
-        <span th:text="${nurseHistory.id ?: '정보 없음'}" style="width:220px;"></span>
-      </div>
+        <!-- 비고 -->
+        <div class="row mb-3" th:if="${nurseHistory.note}">
+          <div class="col-12">
+            <strong>비고:</strong>
+            <p th:text="${nurseHistory.note}" class="mt-2 p-2 bg-light border rounded">-</p>
+          </div>
+        </div>
 
-      <!-- 비고 -->
-      <div class="d-flex align-items-start gap-2 mb-3">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">비고:</label>
-        <span th:text="${nurseHistory.note ?: '비고 없음'}" style="width:70%;"></span>
-      </div>
-
-      <!-- 추가 히스토리 정보 -->
-      <div class="d-flex align-items-start gap-2 mb-3" style="border-top: 1px solid #dee2e6; padding-top: 15px; margin-top: 20px;">
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">변경 유형:</label>
-        <span style="width:220px;">
-                    <span th:if="${nurseHistory.modifier != null}" class="badge bg-warning text-dark">수정됨</span>
-                    <span th:unless="${nurseHistory.modifier != null}" class="badge bg-success text-white">신규생성</span>
-                </span>
-        <label class="label-reform text-end flex-shrink-0" style="width:100px;">원본 간호사:</label>
-        <span th:if="${nurseMain}" th:text="|ID: ${nurseMain.id}|" style="width:220px;">정보 없음</span>
-        <span th:unless="${nurseMain}" style="width:220px;">정보 없음</span>
-      </div>
-    </div>
-
-    <!-- 히스토리가 없는 경우 -->
-    <div th:unless="${nurseHistory}" class="main card my-3 p-3">
-      <div class="text-center py-5">
-        <div class="text-muted mb-3" style="font-size: 3rem;">📋</div>
-        <h5 class="text-muted mb-2">히스토리 정보를 찾을 수 없습니다</h5>
-        <p class="text-muted mb-3">요청하신 히스토리 데이터가 존재하지 않습니다.</p>
-      </div>
-    </div>
-
-    <!-- 버튼 영역 -->
-    <div class="m-d-btn">
-      <div class="m-d-btn_box">
-        <a th:href="@{/nurse/history}" class="button-link">히스토리 목록</a>
-        <a th:if="${nurseMain}" th:href="@{|/nurse/info/${nurseMain.id}|}" class="button-link">간호사 정보</a>
-        <a th:unless="${nurseMain}" th:href="@{/nurse}" class="button-link">간호사 목록</a>
-        <a th:if="${nurseHistory and nurseMain}" th:href="@{|/nurse/history/nurse/${nurseMain.id}|}" class="button-link">이 간호사의 모든 히스토리</a>
-      </div>
-    </div>
-  </form>
-
-  <!-- 추가 정보 섹션 -->
-  <div class="license card my-3 p-3" th:if="${nurseHistory}">
-    <h3 class="border-bottom py-2">히스토리 메타데이터</h3>
-
-    <div class="row mt-3">
-      <div class="col-md-6">
-        <div class="border rounded p-3 bg-light">
-          <h6 class="mb-3 text-secondary">변경 정보</h6>
-          <p><strong class="txt">히스토리 ID:</strong> <span th:text="${nurseHistory.id}">-</span></p>
-          <p><strong class="txt">생성일시:</strong> <span th:text="${#temporals.format(nurseHistory.createDate, 'yyyy-MM-dd HH:mm:ss')}">-</span></p>
-          <p><strong class="txt">변경 유형:</strong>
-            <span th:if="${nurseHistory.modifier != null}" class="badge bg-warning text-dark">정보 수정</span>
-            <span th:unless="${nurseHistory.modifier != null}" class="badge bg-success text-white">신규 등록</span>
-          </p>
-          <p><strong class="txt">작업자:</strong>
-            <span th:text="${nurseHistory.modifier != null ? nurseHistory.modifier : nurseHistory.writer}">-</span>
-          </p>
+        <!-- 수정자 정보 -->
+        <div class="row mb-3 mt-4 pt-4 border-top">
+          <div class="col-md-6">
+            <strong>수정자:</strong>
+            <span th:text="${nurseHistory.modifier}">-</span>
+          </div>
+          <div class="col-md-6">
+            <strong>수정일시:</strong>
+            <span th:text="${nurseHistory.modifyDate}">-</span>
+          </div>
         </div>
       </div>
 
-      <div class="col-md-6" th:if="${nurseMain}">
-        <div class="border rounded p-3 bg-light">
-          <h6 class="mb-3 text-secondary">관련 정보</h6>
-          <p><strong class="txt">원본 간호사 ID:</strong> <span th:text="${nurseMain.id}">-</span></p>
-          <p><strong class="txt">현재 상태:</strong> <span th:text="${nurseMain.sts}">-</span></p>
-          <p><strong class="txt">현재 부서:</strong> <span th:text="${nurseMain.dept}">-</span></p>
-          <p><strong class="txt">현재 직급:</strong> <span th:text="${nurseMain.rank}">-</span></p>
-        </div>
+      <!-- 버튼 영역 -->
+      <div class="d-flex justify-content-end gap-2 my-3">
+        <a th:href="@{/nurse/history}" class="btn btn-secondary">히스토리 목록</a>
+        <a th:if="${nurseMain}" th:href="@{|/nurse/info/${nurseMain.id}|}" class="btn btn-primary">간호사 정보</a>
+        <a th:unless="${nurseMain}" th:href="@{/nurse}" class="btn btn-primary">간호사 목록</a>
       </div>
     </div>
   </div>
 </div>
-</div>
 </body>
-<style>
-  /* 히스토리 디테일 페이지 전용 스타일 */
-  .label-reform {
-      font-weight: bold;
-      color: #495057;
-  }
-
-  .badge {
-      font-size: 0.75rem;
-      padding: 0.35rem 0.6rem;
-  }
-
-  .txt {
-      display: inline-block;
-      width: 100px;
-      font-weight: 600;
-      color: #495057;
-  }
-
-  /* 이미지 스타일은 기존 CSS 파일의 .image 클래스 사용 */
-  .image {
-      margin-bottom: 20px;
-  }
-
-  /* 버튼 그룹 간격 조정 */
-  .m-d-btn_box {
-      gap: 10px;
-      flex-wrap: wrap;
-  }
-
-  .m-d-btn_box .button-link {
-      margin-bottom: 5px;
-  }
-
-  /* 반응형 디자인 */
-  @media (max-width: 768px) {
-      .d-flex.align-items-start.gap-2 {
-          flex-direction: column;
-          gap: 0.5rem !important;
-      }
-
-      .label-reform {
-          width: auto !important;
-          margin-bottom: 0.25rem;
-      }
-
-      .d-flex.align-items-start.gap-2 span {
-          width: auto !important;
-          padding-left: 1rem;
-      }
-
-      .m-d-btn_box {
-          flex-direction: column;
-      }
-
-      .m-d-btn_box .button-link {
-          width: 100%;
-          text-align: center;
-      }
-  }
-
-  /* 섹션 구분선 스타일 */
-  .border-top {
-      border-color: #dee2e6 !important;
-  }
-
-  /* 메타데이터 섹션 스타일 */
-  .license .border.rounded {
-      background-color: #f8f9fa !important;
-      border-color: #e9ecef !important;
-  }
-
-  .license .txt {
-      color: #6c757d;
-      font-size: 0.9rem;
-  }
-
-  .license p {
-      margin-bottom: 0.75rem;
-      font-size: 0.95rem;
-  }
-</style>
 </html>

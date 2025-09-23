@@ -134,15 +134,20 @@ h3, h4 {
 	padding-top: 10px;
 }
 .chang-checkbox-column {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 30px !important;
     min-width: 30px !important;
     max-width: 30px !important;
     padding: 8px !important;
 }
 .chang-checkbox-column input[type="checkbox"] {
+    width: 12px !important;
+    height: 12px !important;
     margin: 0 !important;
-    flex-shrink: 0 !important;
     cursor: pointer;
+    display: inline-block !important;
 }
 .sub_title {
     font-size: 14px;
@@ -170,11 +175,6 @@ h3, h4 {
     color: #0d6efd;
     text-decoration: underline;
 }
-tr {
-	display: flex;
-	flex-grow: 1;
-	justify-content: space-around;
-}
 .list {
 	justify-content: space-around;
 	text-align: center;
@@ -182,16 +182,20 @@ tr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-th {
-    display: table-cell;
+tr {
+	display: flex;
+	justify-content: space-around;
+}
+th, td {
+	display: table-cell;
 	width: 100%;
 	text-wrap: nowrap;
+	overflow: visible !important;
+}
+th {
 	font-size: 16px;
 }
 td {
-    display: table-cell;
-    width: 100%;
-	text-wrap: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 12px;
