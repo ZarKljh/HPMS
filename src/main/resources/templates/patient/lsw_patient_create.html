@@ -11,79 +11,82 @@
 
 
 
-    <div class="patient-info card my-3 p-3">
-        <div class="title-patient-name"><h4 class="title-h4-header border-bottom py-2">신규환자 등록을 위한 공간입니다</h4></div>
+    <div class="patient-info main-table card my-3 p-3">
+        <h4 class="border-bottom py-2">신규환자 등록을 위한 공간입니다</h4>
 
         <!-- 인적사항 -->
-        <h5 class="mt-5">인적사항</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">생년월일</label>
-            <input type="date" class="form-control" th:field="*{birth}" required>
+        <h4 class="border-bottom py-2">인적사항</h4>
+        <div class="input-list">
+            <label>생년월일:</label>
+            <input type="date" th:field="*{birth}" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">성별</label>
-            <select class="form-select" th:field="*{gender}" required>
+        <div class="input-list">
+            <label>성별:</label>
+            <select th:field="*{gender}" required>
                 <option value="">선택하세요</option>
                 <option value="M">남</option>
                 <option value="F">여</option>
                 <option value="X">그외</option>
             </select>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">내/외국인</label>
-            <select class="form-select" th:field="*{foreigner}">
+        <div class="input-list">
+            <label>내/외국인:</label>
+            <select th:field="*{foreigner}">
                 <option value="0">내국인</option>
                 <option value="1">외국인</option>
             </select>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >성명 성</label>
-            <input type="text" class="form-control" th:field="*{lastName}" placeholder="성" required>
-            <label class="label-reform text-end flex-shrink-0" >성명 이름</label>
-            <input type="text" class="form-control" th:field="*{firstName}" placeholder="이름" required>
+        <div class="input-list name_list">
+            <label class="name" >성명:</label>
+            <input type="text" th:field="*{lastName}" placeholder="성" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{firstName}" placeholder="이름" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{middleName}" placeholder="중간이름">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >중간이름</label>
-            <input type="text" class="form-control" th:field="*{middleName}" placeholder="중간이름">
+        <div class="input-list">
+            <label>여권번호:</label>
+            <input type="text" th:field="*{passport}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">여권번호</label>
-            <input type="text" class="form-control" th:field="*{passport}">
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">여권성명 성</label>
-            <input type="text" class="form-control" th:field="*{passLastName}" placeholder="성">
-            <label class="label-reform text-end flex-shrink-0">여권성명 이름</label>
-            <input type="text" class="form-control" th:field="*{passFirstName}" placeholder="이름">
-
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >중간이름</label>
-            <input type="text" class="form-control" th:field="*{passMiddleName}" placeholder="중간이름">
+        <div class="input-list name_list">
+            <label class="name">여권성명:</label>
+            <input type="text" th:field="*{passLastName}" placeholder="성">
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{passFirstName}" placeholder="이름">
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{passMiddleName}" placeholder="중간이름">
         </div>
         <!-- 연락처 -->
-        <h5 class="mt-5">연락처</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">MOBILE</label>
-            <input type="text" class="form-control" th:field="*{mobilePhone}" required>
-            <label class="label-reform text-end flex-shrink-0">HOME</label>
-            <input type="text" class="form-control" th:field="*{homePhone}">
+        <h4 class="border-bottom py-2">연락처</h4>
+        <div class="input-list name_list">
+            <label>MOBILE:</label>
+            <input type="text" th:field="*{mobilePhone}" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        </div>
+        <div class="input-list name_list">
+            <label>HOME:</label>
+            <input type="text" th:field="*{homePhone}">
         </div>
 
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">OFFICE</label>
-            <input type="text" class="form-control" th:field="*{officePhone}">
-            <label class="label-reform text-end flex-shrink-0">FAX</label>
-            <input type="text" class="form-control" th:field="*{fax}">
+        <div class="input-list name_list">
+            <label>OFFICE:</label>
+            <input type="text" th:field="*{officePhone}">
+
+        </div>
+        <div class="input-list name_list">
+            <label>FAX</label>
+            <input type="text" th:field="*{fax}">
         </div>
 
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">EMAIL</label>
-            <input type="email" class="form-control" th:field="*{email}">
+        <div class="input-list name_list">
+            <label>EMAIL</label>
+            <input type="email" th:field="*{email}">
         </div>
 
         <!-- 보호자 -->
-        <h5 class="mt-5">보호자 정보</h5>
+        <h4 class="border-bottom py-2">보호자 정보</h4>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0">성명</label>
             <input type="text" class="form-control" th:field="*{guardianLastName}" placeholder="성">
