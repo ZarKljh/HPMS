@@ -39,11 +39,11 @@
     <meta name="_csrf" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-    <table class="table table-hover card">
+    <table class="table table-hover card nurse_table">
         <thead class="table-light">
         <tr class="list text-center">
             <th class="chang-checkbox-column"><input type="checkbox" id="checkAll" /></th>
-            <th>번호</th>
+            <th style="width:80px;">번호</th>
             <th>부서</th>
             <th>직급</th>
             <th>성명</th>
@@ -60,9 +60,9 @@
         </thead>
 
         <tbody class="text-center">
-        <tr class="text-center" th:each="nurseMain, loop : ${paging}">
-            <td class="chang-checkbox-column"><input type="checkbox" class="nurse-checkbox" name="checkedIds" th:value="${nurseMain.id}" /></td>
-            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+        <tr th:each="nurseMain, loop : ${paging}">
+            <td class="chang-checkbox-column" style="width:30px;"><input type="checkbox" class="nurse-checkbox" name="checkedIds" th:value="${nurseMain.id}" /></td>
+            <td style="width:80px;" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>
