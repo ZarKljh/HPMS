@@ -90,7 +90,7 @@ public class NurseMainController {
 
             // 실제 삭제 전에 데이터 존재 확인
             for (Integer id : checkedIds) {
-                NurseMain nurse = nurseMainService.getById(id);
+                NurseMain nurse = nurseMainService.findById(id);
                 System.out.println("ID " + id + "의 간호사: " + (nurse != null ? nurse.getFirstName() : "없음"));
             }
 

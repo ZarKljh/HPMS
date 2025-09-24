@@ -262,3 +262,36 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+// =======================
+// 이메일 유효성 검사
+// =======================
+function isHyphenPhoneNumber(tel) {
+    const regex = /^0\d{1,2}-\d{3,4}-\d{4}$/;
+    return regex.test(tel);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', function(e) {
+        // 검사할 전화번호 input을 배열로
+        const phoneFields = [
+            form.querySelector('[name="tel"]'),
+            form.querySelector('[name="emgcCntc"]')
+        ];
+
+        for (const input of phoneFields) {
+            const value = input.value.trim();
+            if (!isHyphenPhoneNumber(value)) {
+                e.preventDefault(); // 제출 막기
+                alert(`${input.previousElementSibling.textContent} 형식이 올바르지 않습니다.\n예: 010-1234-5678`);
+                input.focus();
+                return; // 첫 번째 오류만 처리
+            }
+        }
+    });
+});
+    console.log(isHyphenPhoneNumber("010-1234-5678")); // true
+    console.log(isHyphenPhoneNumber("02-123-4567"));   // true
+    console.log(isHyphenPhoneNumber("031-123-4567"));  // true
+    console.log(isHyphenPhoneNumber("01012345678"));   // false (하이픈 없음)

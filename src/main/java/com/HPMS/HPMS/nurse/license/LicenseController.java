@@ -96,7 +96,7 @@ public class LicenseController {
         licenseService.delete(licenseId);
 
         // 삭제 후 남은 자격증 리스트 가져오기
-        NurseMain nurseMain = nurseMainService.getById(nurseId);
+        NurseMain nurseMain = nurseMainService.findById(nurseId);
         List<License> remainingLicenses = licenseService.getByNurse(nurseMain);
 
         // 다음 자격증 ID 찾기

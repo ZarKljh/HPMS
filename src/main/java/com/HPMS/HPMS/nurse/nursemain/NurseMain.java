@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -62,7 +61,4 @@ public class NurseMain {
 
     @OneToOne(mappedBy = "nurseMain", cascade = CascadeType.ALL, orphanRemoval = true)
     private NurseInformation nurseInformation;
-
-    @OneToMany(mappedBy = "nurseMain", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NurseInformation> informations;
 }

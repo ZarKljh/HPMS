@@ -40,6 +40,14 @@ public class NurseInformationController {
             return "redirect:/nurse";
         }
 
+        // id가 null이면 신규 저장
+        if (nurseMain.getId() == null) {
+            nurseMainService.save(nurseMain); // insert
+        } else {
+            // 기존 NurseMain이면 DB에서 조회
+            nurseMain = nurseMainService.findById(nurseMain.getId());
+        }
+
         // 양방향 연결
         info.setNurseMain(nurseMain);
         nurseMain.setNurseInformation(info);

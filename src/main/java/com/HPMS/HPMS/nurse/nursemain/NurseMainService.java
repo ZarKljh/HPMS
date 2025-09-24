@@ -2,7 +2,6 @@ package com.HPMS.HPMS.nurse.nursemain;
 
 import com.HPMS.HPMS.nurse.NurseDataNotFoundException;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
-import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationRepository;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class NurseMainService {
 
     private final NurseMainRepository nurseMainRepository;
-    private final NurseInformationRepository nurseInformationRepository;
 
     public List<NurseMain> getAll() {
         return nurseMainRepository.findAll();
@@ -37,7 +35,7 @@ public class NurseMainService {
         }
     }
 
-    public NurseMain getById(Integer id) {
+    public NurseMain findById(Integer id) {
         return nurseMainRepository.findById(id).orElse(null);
     }
 
