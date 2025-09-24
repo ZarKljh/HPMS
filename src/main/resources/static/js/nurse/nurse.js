@@ -206,24 +206,25 @@ function setCountry(iso2, countryKr) {
 // 이메일 유효성 검사
 // =======================
 function emailCheck(email_address) {
-    // 앞뒤 공백 제거
-    email_address = email_address.trim();
+    email_address = email_address.trim().replace(/\s+/g, '');
 
-    // 공백 없는 이메일 패턴 검사
     const email_regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/i;
     return email_regex.test(email_address);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form'); // 첫 번째 폼을 가져옴
+    const form = document.querySelector('form');
     form.addEventListener('submit', function(e) {
-        const emailInput = form.querySelector('[name="email"]'); // th:field="*{email}" 매핑
+        const emailInput = form.querySelector('[name="email"]'); // th:field로 바인딩된 input
         const email = emailInput.value;
 
         if (!emailCheck(email)) {
-            e.preventDefault(); // 폼 제출 막기
+            e.preventDefault();
             alert('유효하지 않은 이메일 주소입니다.');
             emailInput.focus();
+
+            // 입력 값에서 공백 제거 후 다시 넣기
+            emailInput.value = email.trim().replace(/\s+/g, '');
         }
     });
 });
