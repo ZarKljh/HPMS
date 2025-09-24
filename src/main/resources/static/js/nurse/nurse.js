@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 // =======================
-// 이메일 유효성 검사
+// 전화번호 유효성 검사
 // =======================
 function isHyphenPhoneNumber(tel) {
     const regex = /^0\d{1,2}-\d{3,4}-\d{4}$/;
