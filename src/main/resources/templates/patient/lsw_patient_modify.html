@@ -28,7 +28,7 @@
       -->
 
       <!-- 인적사항 -->
-      <h5 class="mt-5">인적사항</h5>
+      <h4 class="border-bottom mt-2">인적사항</h4>
         <!--
         <div th:block class="d-flex align-items-start gap-2 mb-3">
           <label class="label-reform text-end flex-shrink-0" style="width: 200px;">생년월일</label>
@@ -36,28 +36,28 @@
         </div>
         -->
         <input type="hidden" class="form-control" th:field="*{birth}"/>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">성별</label>
-          <select class="form-select" th:field="*{gender}">
+        <div class="input-list">
+          <label>성별</label>
+          <select th:field="*{gender}">
             <option value="">선택하세요</option>
             <option value="M">남</option>
             <option value="F">여</option>
             <option value="X">그외</option>
           </select>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">내/외국인</label>
-          <select class="form-select" th:field="*{foreigner}">
+        <div class="input-list">
+          <label>내/외국인</label>
+          <select th:field="*{foreigner}">
               <option value="">선택하세요</option>
               <option value="0">내국인</option>
               <option value="1">외국인</option>
           </select>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">성명 성</label>
-          <input type="text" class="form-control" th:field="*{lastName}"/>
-          <label class="label-reform text-end flex-shrink-0">성명 이름</label>
-          <input type="text" class="form-control" th:field="*{firstName}"/>
+        <div class="input-list">
+          <label class="name">성명:</label>
+          <input type="text" th:field="*{lastName}"/>
+          <input type="text" th:field="*{firstName}"/>
+          <input type="text" th:field="*{middleName}"/>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
           <label class="label-reform text-end flex-shrink-0">중간이름</label>

@@ -278,6 +278,7 @@ td {
     background-color: #cce6ff;
     border-color: #99ccff !important;
     color: #000 !important;
+    text-decoration:none;
 }
 .m-btn, .d-btn {
     gap: 5px;
@@ -304,6 +305,8 @@ td {
     color: #fff !important;
     border-color: #f54747 !important;
 }
+
+
 
 
 //--------------- 상세 페이지 ---------------//
@@ -372,7 +375,7 @@ td {
 	background-color: #f8f9fa;
 }
 label {
-	width: 100px;
+	width: 150px;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -387,6 +390,9 @@ input {
 	background-color: #fff;
 	font-size: 16px;
 }
+.input-list>input {
+    width: 300px;
+}
 .name {
     margin-bottom: 5px;
 }
@@ -395,12 +401,21 @@ input {
     justify-content: flex-end;
     gap: 10px;
 }
-
+div.form-actions{
+    display:flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
 
 //--------------- 상세정보 등록 ---------------//
 .save_btn {
     display: flex;
     justify-content: flex-end;
+}
+.title-patient-name {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
 }
 
 

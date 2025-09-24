@@ -1,7 +1,7 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
 <h3 class="mt-2">신규 환자 등록</h3>
-<form th:action="@{/patient/create}" th:object="${patientForm}" method="post" onsubmit="return validateCreateForm(this);">
+<form th:action="@{/patient/create}" th:object="${patientForm}" method="post" name="patientCreateForm">
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
         <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
@@ -18,7 +18,7 @@
         <h4 class="border-bottom py-2">인적사항</h4>
         <div class="input-list">
             <label>생년월일:</label>
-            <input type="date" th:field="*{birth}" required>
+            <input type="date" th:field="*{birth}">
             <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
         <div class="input-list">
@@ -102,7 +102,7 @@
         </div>
 
         <!-- 주소 -->
-        <h4 class="border-bottom py-2">주소 정보</h4>
+        <h4 class="border-bottom py-2">실거주기준 주소정보</h4>
         <div class="input-list name_list">
             <label>우편번호:</label>
             <input type="text" th:field="*{homePcd}" placeholder="우편번호">
@@ -112,50 +112,60 @@
             <label>기본주소:</label>
             <div style="gap:8px; align-items:center; flex-direction:row;">
                 <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소">
-                <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
                 <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+                <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
             </div>
         </div>
         <div class="input-list name_list">
             <label>상세주소:</label>
             <input type="text" th:field="*{homeDetAdd}" placeholder="상세주소">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(우편번호)</label>
-            <input type="text" class="form-control mb-2" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
+        <h4 class="border-bottom py-2">등록기준 주소정보</h4>
+        <div class="input-list name_list">
+            <label>우편번호:</label>
+            <div style="gap:8px; align-items:center; flex-direction:row;">
+                <input type="text" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(기본주소)</label>
-            <input type="text" class="form-control mb-2" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+        <div class="input-list name_list">
+            <label>기본주소:</label>
+            <div style="gap:8px; align-items:center; flex-direction:row;">
+                <input type="text" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
+                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(상세주소)</label>
-            <input type="text" class="form-control" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
+        <div class="input-list name_list">
+            <label>상세주소:</label>
+            <input type="text" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
         </div>
 
 
         <!-- 기타 -->
-        <h5 class="mt-5">기타 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">직업</label>
-            <input type="text" class="form-control" th:field="*{occupation}">
+        <h4 class="border-bottom py-2">기타 정보</h4>
+        <div class="input-list name_list">
+            <label>직업:</label>
+            <input type="text" th:field="*{occupation}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">국적</label>
-            <input type="text" class="form-control" th:field="*{natn}" id="nationality">
-            <button type="button" class="btn btn-primary flex-shrink-0"  onclick="openCountryPopup()">국적검색</button>
+        <div class="input-list name_list">
+            <label>국적</label>
+            <div style="gap:8px; align-items:center; flex-direction:row;">
+                <input type="text" th:field="*{natn}" id="nationality">
+                <button type="button" class="button-link"  onclick="openCountryPopup()"> 국적검색 </button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">특이사항</label>
-            <input type="text" class="form-control" th:field="*{note}"/>
+        <div class="input-list name_list">
+            <label>특이사항</label>
+            <input type="text" th:field="*{note}"/>
         </div>
 
     </div>
 
     <!-- 버튼 -->
     <div class="form-actions">
-        <button type="submit" class="button-link text-full">등록</button>
+        <a href="#" class="button-link text-full" onclick="return validateCreateForm(event)">등록</a>
+        <!--
+        <button type="submit" class="button-link text-full" onsubmit="return validateCreateForm(this);">등록</button>
+        -->
         <a th:href="@{/patient/list}" class="button-link text-full">취소</a>
     </div>
 

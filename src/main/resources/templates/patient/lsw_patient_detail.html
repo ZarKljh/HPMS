@@ -2,10 +2,10 @@
 <div layout:fragment="content" class="container">
   <h3 class="mt-2">환자 상세정보</h3>
 
-  <div class="patient-info card my-3 p-3">
+  <div class="patient-info main-table card my-3 p-3">
     <div class="title-patient-name"><h4 class="title-h4-header" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h4><span>님의 환자정보입니다.</span></div>
     <!-- 기본 식별 정보 -->
-    <h5 class="mt-5">기본정보</h5>
+    <h4 class="mt-5">기본정보</h4>
       <!--
       <div class="d-flex align-items-start gap-2 mb-3"><label class="label-reform text-end flex-shrink-0" style="width: 200px;">ID</label><span th:text="${detailDTO.id}"></span></div>
       -->

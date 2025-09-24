@@ -8,9 +8,15 @@ $('.navbar-toggle').click(function() {
 	}
 });
 
+
+
     /* create form validate 시작 */
 
-    function validateCreateForm(form){
+    function validateCreateForm(event){
+
+        event.preventDefault(); // 폼 제출 막기
+
+        const form = document.forms['patientCreateForm'];
 
         const birth = form.querySelector("input[name='birth']");
         const startDate = new Date('1900-01-01');
@@ -41,7 +47,6 @@ $('.navbar-toggle').click(function() {
             alert("내외국인 여부를 선택해주세요");
             return false;
         }
-
 
         const nameRegexHan = /^[가-힣]+$/;
         const nameRegexEng = /^[a-zA-Z]+$/;
@@ -160,7 +165,7 @@ $('.navbar-toggle').click(function() {
             return false;
         }
 
-        return true;
+        form.submit();
         }
 
 
