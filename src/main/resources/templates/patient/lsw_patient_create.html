@@ -76,45 +76,49 @@
 
         </div>
         <div class="input-list name_list">
-            <label>FAX</label>
+            <label>FAX:</label>
             <input type="text" th:field="*{fax}">
         </div>
 
         <div class="input-list name_list">
-            <label>EMAIL</label>
+            <label>EMAIL:</label>
             <input type="email" th:field="*{email}">
         </div>
 
         <!-- 보호자 -->
         <h4 class="border-bottom py-2">보호자 정보</h4>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">성명</label>
-            <input type="text" class="form-control" th:field="*{guardianLastName}" placeholder="성">
-            <input type="text" class="form-control" th:field="*{guardianFirstName}" placeholder="이름">
+        <div class="input-list name_list">
+            <label>성명:</label>
+            <input type="text" th:field="*{guardianLastName}" placeholder="성">
+            <input type="text" th:field="*{guardianFirstName}" placeholder="이름">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">연락처</label>
-            <input type="text" class="form-control" th:field="*{guardianTel}">
+        <div class="input-list name_list">
+            <label>연락처:</label>
+            <input type="text" th:field="*{guardianTel}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">관계</label>
-            <input type="text" class="form-control" th:field="*{guardianRelation}">
+        <div class="input-list name_list">
+            <label>관계:</label>
+            <input type="text" th:field="*{guardianRelation}">
         </div>
 
         <!-- 주소 -->
-        <h5 class="mt-5">주소 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">우편번호</label>
-            <input type="text" class="form-control mb-2" th:field="*{homePcd}" placeholder="우편번호">
+        <h4 class="border-bottom py-2">주소 정보</h4>
+        <div class="input-list name_list">
+            <label>우편번호:</label>
+            <input type="text" th:field="*{homePcd}" placeholder="우편번호">
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">기본주소</label>
-            <input type="text" class="form-control mb-2" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소">
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+        <div class="input-list name_list">
+            <label>기본주소:</label>
+            <div style="gap:8px; align-items:center; flex-direction:row;">
+                <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소">
+                <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">상세주소</label>
-            <input type="text" class="form-control" th:field="*{homeDetAdd}" placeholder="상세주소">
+        <div class="input-list name_list">
+            <label>상세주소:</label>
+            <input type="text" th:field="*{homeDetAdd}" placeholder="상세주소">
         </div>
         <div class="d-flex align-items-start gap-2 mb-3">
             <label class="label-reform text-end flex-shrink-0">등록주소(우편번호)</label>
