@@ -14,6 +14,10 @@ a {
 h3, h4 {
     font-weight:bolder;
 }
+input::placeholder {
+    color: #c9d1d6;
+    font-size: 14px;
+}
 
 
 //--------------- 반응형 ---------------//
@@ -268,7 +272,7 @@ td {
 /*--------------- 기본정보 등록 ---------------*/
 .main-table {
 	position: relative;
-	background-color: #f8f9fa;
+	background-color: #fff;
 }
 label {
 	width: 150px;
@@ -280,6 +284,7 @@ input {
     border: 1px solid #dee2e6;
     text-overflow: ellipsis;
     margin-left: 5px;
+    background-color: #fff;
 }
 .input-list {
     display: flex;
@@ -503,4 +508,67 @@ input {
     background-color: #f54747 !important;
     color: #fff !important;
     border-color: #f54747 !important;
+}
+
+
+/*---------------- 셀렉트 박스 ---------------------*/
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+}
+
+/* 선택 버튼 */
+.toggle_btn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 옵션 리스트 */
+.selectbox_option {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 2px;
+  border: 1px solid #dee2e6;
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  z-index: 1000;
+  font-size: 14px;
+}
+
+.hide {
+  display: none;
+}
+
+/* 옵션 버튼 */
+.option-btn {
+  width: 100%;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option-btn:hover {
+  background: #cce6ff;
+  border-radius: 4px;
+}
+
+/* 선택된 옵션 */
+.option-btn.active {
+  background: #cce6ff;
+  border-radius: 4px;
 }

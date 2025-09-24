@@ -201,3 +201,63 @@ function setCountry(iso2, countryKr) {
     if (disp)  disp.textContent = combined;
     if (input) input.value = combined;
 }
+
+// =======================
+// 이메일 유효성 검사
+// =======================
+function emailCheck(email_address) {
+    // 앞뒤 공백 제거
+    email_address = email_address.trim();
+
+    // 공백 없는 이메일 패턴 검사
+    const email_regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/i;
+    return email_regex.test(email_address);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form'); // 첫 번째 폼을 가져옴
+    form.addEventListener('submit', function(e) {
+        const emailInput = form.querySelector('[name="email"]'); // th:field="*{email}" 매핑
+        const email = emailInput.value;
+
+        if (!emailCheck(email)) {
+            e.preventDefault(); // 폼 제출 막기
+            alert('유효하지 않은 이메일 주소입니다.');
+            emailInput.focus();
+        }
+    });
+});
+
+// =======================
+// 셀렉트 박스
+// =======================
+  document.querySelectorAll(".select-wrapper").forEach(wrapper => {
+    const toggleBtn = wrapper.querySelector(".toggle_btn");
+    const optionList = wrapper.querySelector(".selectbox_option");
+    const hiddenInput = wrapper.querySelector("input[type=hidden]");
+
+    // 드롭다운 열기/닫기
+    toggleBtn.addEventListener("click", () => {
+      optionList.classList.toggle("hide");
+    });
+
+    // 옵션 선택 시
+    optionList.querySelectorAll(".option-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        toggleBtn.textContent = btn.textContent;   // 선택된 값 보이기
+        hiddenInput.value = btn.dataset.value;     // 폼에 값 저장
+        optionList.classList.add("hide");          // 드롭다운 닫기
+
+        // active 스타일 적용
+        optionList.querySelectorAll(".option-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // 바깥 클릭 시 닫기
+    document.addEventListener("click", e => {
+      if (!wrapper.contains(e.target)) {
+        optionList.classList.add("hide");
+      }
+    });
+  });

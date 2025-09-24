@@ -8,43 +8,67 @@
       <h4 class="border-bottom py-2">신규 간호사의 기본적인 정보를 적는 페이지 입니다.</h4>
       <div class="input-list">
         <label>부서:</label>
-        <select th:field="*{dept}" required>
-          <option value="">선택</option>
-          <option value="AN">마취통증의학과</option>
-          <option value="DEN">치과</option>
-          <option value="DER">피부과</option>
-          <option value="EM">응급의학과</option>
-          <option value="ENT">이비인후과</option>
-          <option value="OPH">안과</option>
-          <option value="FM">가정의학과</option>
-          <option value="GS">외과</option>
-          <option value="IM">내과</option>
-          <option value="LM">진단검사의학과</option>
-          <option value="NM">핵의학과</option>
-          <option value="NR">신경과</option>
-          <option value="NS">신경외과</option>
-          <option value="OBGY">산부인과</option>
-          <option value="OEM">직업환경의학과</option>
-          <option value="OS">정형외과</option>
-          <option value="PA">병리과</option>
-          <option value="PED">소아청소년과</option>
-          <option value="PM">예방의학과</option>
-          <option value="PS">성형외과</option>
-          <option value="PSI">정신건강의학과</option>
-          <option value="RD">방사선과</option>
-          <option value="RAD">영상의학과</option>
-          <option value="RM">재활의학과</option>
-          <option value="RO">방사선종양학과</option>
-          <option value="TB">결핵과</option>
-          <option value="TS">흉부외과</option>
-          <option value="UR">비뇨기과</option>
-          <option value="UR">비뇨의학과</option>
-        </select>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            부서 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="AN">마취통증의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="DEN">치과</button></li>
+            <li><button type="button" class="option-btn" data-value="DER">피부과</button></li>
+            <li><button type="button" class="option-btn" data-value="EM">응급의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="ENT">이비인후과</button></li>
+            <li><button type="button" class="option-btn" data-value="OPH">안과</button></li>
+            <li><button type="button" class="option-btn" data-value="FM">가정의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="GS">외과</button></li>
+            <li><button type="button" class="option-btn" data-value="IM">내과</button></li>
+            <li><button type="button" class="option-btn" data-value="LM">진단검사의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="NM">핵의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="NR">신경과</button></li>
+            <li><button type="button" class="option-btn" data-value="NS">신경외과</button></li>
+            <li><button type="button" class="option-btn" data-value="OBGY">산부인과</button></li>
+            <li><button type="button" class="option-btn" data-value="OEM">직업환경의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="OS">정형외과</button></li>
+            <li><button type="button" class="option-btn" data-value="PA">병리과</button></li><li><button type="button" class="option-btn" data-value="nurse">간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="PED">소아청소년과</button></li>
+            <li><button type="button" class="option-btn" data-value="PM">예방의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="PS">성형외과</button></li>
+            <li><button type="button" class="option-btn" data-value="PSI">정신건강의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="RD">방사선과</button></li><li><button type="button" class="option-btn" data-value="nurse">간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="RAD">영상의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="RM">재활의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="RO">방사선종양학과</button></li>
+            <li><button type="button" class="option-btn" data-value="TB">결핵과</button></li>
+            <li><button type="button" class="option-btn" data-value="TS">흉부외과</button></li>
+            <li><button type="button" class="option-btn" data-value="UR">비뇨기과</button></li>
+            <li><button type="button" class="option-btn" data-value="UR">비뇨의학과</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" name="dept" required>
+        </div>
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>직급:</label>
-        <input type="text" th:field="*{rank}" maxlength="4" required />
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            직급 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="간호부장">간호부장</button></li>
+            <li><button type="button" class="option-btn" data-value="수간호사">수간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="수간호장">수간호장</button></li>
+            <li><button type="button" class="option-btn" data-value="책임">책임간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="주임">주임간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="일반">일반간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="신규">신규간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="실습생">간호학생(실습생)</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" name="rank" required>
+        </div>
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list name_list">

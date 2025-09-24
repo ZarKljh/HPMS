@@ -44,13 +44,14 @@
         <h4 class="border-bottom py-2">주소 / 이메일</h4>
         <div class="input-list">
           <label>이메일:</label>
-          <input type="email" th:field="*{email}" maxlength="250" required />
+          <input type="text" th:field="*{email}" maxlength="250" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
         <div class="input-list">
           <label>우편번호:</label>
           <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" oninput="numberMaxLength(this);" required/>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
         <div class="input-list">
           <label>주소:</label>
@@ -88,12 +89,19 @@
         </div>
         <div class="input-list">
           <label>병역:</label>
-          <select th:field="*{ms}" required>
-            <option value="">선택</option>
-            <option value="군필">군필</option>
-            <option value="미필">미필</option>
-            <option value="면제">면제</option>
-          </select>
+          <div class="select-wrapper" data-role="selectbox">
+            <button type="button" class="toggle_btn">
+              병역 선택
+              <span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <ul class="hide selectbox_option">
+              <li><button type="button" class="option-btn" data-value="군필">군필</button></li>
+              <li><button type="button" class="option-btn" data-value="미필">미필</button></li>
+              <li><button type="button" class="option-btn" data-value="면제">면제</button></li>
+            </ul>
+            <!-- 실제 form 전송용 -->
+            <input type="hidden" name="ms" required>
+          </div>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -108,15 +116,24 @@
 
         <div class="input-list">
           <label>장애여부:</label>
-          <select th:field="*{dss}" required>
-            <option value="">선택</option>
-            <option value="Y">유</option>
-            <option value="N">무</option>
-          </select>
+          <div class="select-wrapper" data-role="selectbox">
+            <button type="button" class="toggle_btn">
+              장애여부 선택
+              <span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <ul class="hide selectbox_option">
+              <li><button type="button" class="option-btn" data-value="Y">유</button></li>
+              <li><button type="button" class="option-btn" data-value="N">무</button></li>
+            </ul>
+            <!-- 실제 form 전송용 -->
+            <input type="hidden" name="dss" required>
+          </div>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
         <div class="input-list">
           <label>경력(개월):</label>
           <input type="text" th:field="*{carr}" maxlength="5" required/>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
         <h4 class="border-bottom py-2">사진 / 비고</h4>
