@@ -146,7 +146,7 @@
         <h4 class="border-bottom py-2">사진 / 비고</h4>
         <div class="input-list">
           <label>사진 URL:</label>
-          <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg" maxlength="250" required />
+          <input type="file" name="picture" th:field="*{picture}" accept="image/*" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 

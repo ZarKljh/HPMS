@@ -1,17 +1,17 @@
 package com.HPMS.HPMS.nurse.nurseinformation;
 
+import com.HPMS.HPMS.nurse.file.FileService;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequestMapping("/nurse/create/info")
 @RequiredArgsConstructor
@@ -19,13 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NurseInformationController {
 
     private final NurseMainService nurseMainService;
-
-    // application.properties에서 업로드 경로 설정
-    @Value("${file.upload.directory:uploads/nurse/pictures}")
-    private String uploadDirectory;
-
-    @Value("${file.upload.base-url:http://localhost:8080}")
-    private String baseUrl;
+    private final FileService fileService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")
@@ -41,10 +35,22 @@ public class NurseInformationController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("")
-    public String createInfo(@ModelAttribute NurseInformation info, HttpSession session) {
+    public String createInfo(@ModelAttribute NurseInformation info, HttpSession session, @RequestParam("pictureFile") MultipartFile pictureFile) {
         NurseMain nurseMain = (NurseMain) session.getAttribute("tempNurseMain");
         if (nurseMain == null) {
             return "redirect:/nurse";
+        }
+
+        //파일 저장 처리
+        if (pictureFile != null && !pictureFile.isEmpty()) {
+            try {
+                String fileUrl = fileService.saveUploadedFile(pictureFile);
+                info.setPicture(fileUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 예외 처리: 메시지 반환 또는 기본 이미지 처리
+                info.setPicture("/images/default.png");
+            }
         }
 
         // id가 null이면 신규 저장

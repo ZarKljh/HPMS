@@ -255,12 +255,22 @@
         <input type="text" th:field="*{nurseInformation.carr}" maxlength="5" required class="numeric-only"/>
       </div>
 
-      <div>
-        <label>사진 URL</label>
-        <input type="text" th:field="*{nurseInformation.picture}"
-               placeholder="https://example.com/photo.jpg" maxlength="250" required/>
-        <div class="mt-2">
-          <span th:if="${nurseInformation.picture == null}">사진 없음</span>
+      <div class="input-list">
+        <label>사진:</label>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- 파일 업로드 -->
+          <input type="file" id="pictureFile" name="picture" accept="image/*" onchange="previewImage(event)"/>
+
+          <!-- 미리보기 -->
+          <div class="mt-2">
+            <img id="picturePreview"
+                 th:src="${nurseDTO.nurseInformation.picture}"
+                 alt="사진 미리보기"
+                 style="max-width:150px; max-height:150px; display:block;"/>
+          </div>
+
+          <!-- 실제 DB 저장용 hidden 필드 -->
+          <input type="hidden" th:field="*{nurseInformation.picture}" id="pictureUrl"/>
         </div>
       </div>
 
@@ -275,6 +285,6 @@
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
-  <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
+<!--  <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>-->
 </div>
 </html>

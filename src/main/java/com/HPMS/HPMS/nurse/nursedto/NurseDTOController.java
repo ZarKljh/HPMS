@@ -49,9 +49,21 @@ public class NurseDTOController {
     @GetMapping("/modify/{id}")
     public String showModifyForm(@PathVariable Integer id, Model model) {
         NurseDTO nurseDTO = nurseDTOService.getNurseDTO(id);
+
+        // 간호사 정보 없으면 새로 생성
         if (nurseDTO.getNurseInformation() == null) {
             nurseDTO.setNurseInformation(new NurseInformationDTO());
         }
+
+        // 라이선스 리스트도 같이 가져오기
+        List<License> licenses = licenseService.getByNurse(
+                nurseMainService.getNurseMain(id)
+        );
+        List<NurseLicenseDTO> licenseDTOs = licenses.stream()
+                .map(NurseLicenseDTO::new)
+                .toList();
+        nurseDTO.setLicenseList(licenseDTOs);
+
         model.addAttribute("nurseDTO", nurseDTO);
         return "nurse/nurse_modify_form";
     }
