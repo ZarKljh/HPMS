@@ -91,7 +91,7 @@ public class PatientController {
 
     //환자 1명의 상세정보 id값으로 찾아서 가져옵니다
     @GetMapping("/patient/detail/{id}")
-    public String patientDetial(Model model, @PathVariable("id") Integer id){
+    public String patientDetail(Model model, @PathVariable("id") Integer id){
         PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         model.addAttribute("detailDTO", detailDTO);
         return "patient/lsw_patient_detail";
@@ -120,8 +120,8 @@ public class PatientController {
     }
     //수정된 환자정보를 저장합니다
     @PostMapping("/patient/modify")
-    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult, @RequestParam("id") Integer id){
-        PatientM patientM = this.patientMService.getPatientM(id);
+    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult){
+        PatientM patientM = this.patientMService.getPatientM(patientForm.getId());
         if (bindingResult.hasErrors()) {
             return "patient/lsw_patient_modify";
         }

@@ -287,7 +287,6 @@ public class PatientMService {
         //정보수정을 위핸 PatientM 과 PatientDTL이 준비되었다
 
         //PatientForm에 들어있는 정보들을 PatientM 과 PatientDTL에 셋팅한다
-
         m.setFirstName(pf.getFirstName());
         m.setLastName(pf.getLastName());
         m.setMiddleName(pf.getMiddleName());

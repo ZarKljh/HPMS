@@ -10,9 +10,10 @@
     <!-- 🔍 검색 영역 시작 -->
 
     <!-- 🔍 검색 영역 끝 -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center">
-        <form method="get" action="/patient/list" class="size_bar d-flex align-items-center mb-2 mb-md-0">
-            <div class="d-flex align-items-center">
+    <div class="patient-list-header d-flex flex-wrap justify-content-between align-items-center mt-4">
+        <form class="patient-totalnum" method="get" action="/patient/list">
+            <!-- <form method="get" action="/patient/list" class="size_bar d-flex align-items-center mb-2 mb-md-0"> -->
+            <!-- <div class="d-flex align-items-center"> -->
                 <strong class="me-1">등록건수:</strong><span th:text="${patients.totalElements}"></span><span>명 /</span>
                 <strong class="mx-1">현재페이지:</strong><span th:text="${patients.number+1}"></span><span> /</span>
                 <strong class="mx-1">페이지당 행 수:</strong>
@@ -23,14 +24,15 @@
                     <option th:value="10" th:selected="${size == 10}">10</option>
                     <option th:value="20" th:selected="${size == 20}">20</option>
                 </select>
-                <!--
-
-                -->
-            </div>
+            <!--  </div> -->
         </form>
-        <div class="card my-3">
-
+        <a type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></a>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div class="card my-3" style="width:100%; border: 0 solid white;">
+            <!--
             <button type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></button>
+            -->
 
             <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
                 <input type="hidden" id="page" name="page" th:value="${currentPage}">
@@ -93,8 +95,8 @@
         <table class="table table-hover card listTable">
             <thead class="table-light">
             <tr class="list text-center">
-                <th class="chang-checkbox-column"><input type="checkbox" name="checkedAllIds" value="t" /></th>
-                <th class="mobail_hidden">번호</th>
+                <th class="chang-checkbox-column" style="width:30px;"><input type="checkbox" name="checkedAllIds" value="t"/></th>
+                <th class="mobail_hidden chang-checkbox-column" style="width:200px;">번호</th>
                 <th>성명</th>
                 <th>성별</th>
                 <th>생년월일</th>
@@ -108,8 +110,8 @@
 
             <tbody class="text-center">
             <tr class="text-center" th:each="patient,  loop : ${patients}">
-                <td class="chang-checkbox-column"><input type="checkbox" class="nurse-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
-                <td th:text="${patients.totalElements - (patients.number * patients.size) - loop.index}"></td>
+                <td class="chang-checkbox-column" style="width:30px;"><input type="checkbox" class="nurse-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
+                <td class="chang-checkbox-column" th:text="${patients.totalElements - (patients.number * patients.size) - loop.index}" ></td>
                 <!--
                 <td class="mobail_hidden" th:text="${patient.id}"></td>
                 -->

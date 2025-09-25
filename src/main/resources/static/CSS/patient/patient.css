@@ -133,8 +133,12 @@ h3, h4 {
 .listbox {
 	padding-top: 10px;
 }
+
+.patient-totalnum > strong, .patient-totalnum > span{
+    font-size: 12px;
+}
 .chang-checkbox-column {
-    width: 30px !important;
+    width: 80px !important;
     min-width: 30px !important;
     max-width: 30px !important;
     flex-shrink: 0 !important;
@@ -358,6 +362,10 @@ td {
     display: inline-block;
     width: 100px;
 }
+div.d-flex > span {
+    width: 300px;
+}
+
 
 
 //--------------- 수정 페이지 ---------------//
