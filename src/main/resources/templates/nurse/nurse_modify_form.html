@@ -10,8 +10,8 @@
 
     <h3 class="border-bottom mt-2">간호사 정보 수정</h3>
 
-    <!-- NurseMain 정보 -->
     <div class="nursemain card my-3 p-3">
+      <!-- NurseMain 정보 -->
       <h4 class="border-bottom mt-2">기본 정보</h4>
 
       <div class="input-list">
@@ -26,7 +26,7 @@
 
       <div class="input-list">
         <label>중간 이름:</label>
-        <input type="text" th:field="*{nurseMain.middle_name}" maxlength="50"/>
+        <input type="text" th:field="*{nurseMain.middleName}" maxlength="50"/>
       </div>
 
       <div class="input-list">
@@ -106,12 +106,12 @@
 
       <div class="input-list">
         <label>생년월일:</label>
-        <input type="number" th:field="*{nurseMain.dateOfBirth}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseMain.dateOfBirth}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
         <label>입사일:</label>
-        <input type="number" th:field="*{nurseMain.hireDate}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseMain.hireDate}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
@@ -132,7 +132,7 @@
     <!-- NurseInformation 정보 -->
       <h3 class="border-bottom mt-2">상세 정보</h3>
       <div class="input-list">
-      <label>예명:</label>
+        <label>예명:</label>
         <input type="text" th:field="*{nurseInformation.firstName}" maxlength="50"/>
         <input type="text" th:field="*{nurseInformation.lastName}" maxlength="50"/>
         <input class="middle_name" type="text" th:field="*{nurseInformation.middleName}" maxlength="50"/>
@@ -140,12 +140,12 @@
 
       <div class="input-list">
         <label>전화번호:</label>
-        <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" required/>
+        <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" placeholder="010-1234-5678" required/>
       </div>
 
       <div class="input-list">
         <label>비상연락처:</label>
-        <input type="text" th:field="*{nurseInformation.emgcCntc}" maxlength="25" required/>
+        <input type="text" th:field="*{nurseInformation.emgcCntc}" placeholder="010-1234-5678" maxlength="25" required/>
       </div>
 
       <div class="input-list">
@@ -200,7 +200,7 @@
 
       <div class="input-list">
         <label>졸업날짜:</label>
-        <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
@@ -252,7 +252,7 @@
 
       <div class="input-list">
         <label>경력:</label>
-        <input type="text" th:field="*{nurseInformation.carr}" maxlength="5" required/>
+        <input type="text" th:field="*{nurseInformation.carr}" maxlength="5" required class="numeric-only"/>
       </div>
 
       <div>
@@ -260,7 +260,7 @@
         <input type="text" th:field="*{nurseInformation.picture}"
                placeholder="https://example.com/photo.jpg" maxlength="250" required/>
         <div class="mt-2">
-          <span th:if="*{nurseInformation.picture == null}">사진 없음</span>
+          <span th:if="${nurseInformation.picture == null}">사진 없음</span>
         </div>
       </div>
 

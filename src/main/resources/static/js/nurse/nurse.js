@@ -199,14 +199,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (!value) { showError(field,'성을 입력해주세요.'); isValid=false; }
                 else if (value.length>50) { showError(field,'성은 50자 이하로 입력해주세요.'); isValid=false; }
                 break;
-            case 'tel':
-                if (!value) { showError(field,'전화번호를 입력해주세요.'); isValid=false; }
-                else if (!isHyphenPhoneNumber(value)) { showError(field,'전화번호 형식이 올바르지 않습니다.'); isValid=false; }
-                break;
-            case 'email':
-                if (!value) { showError(field,'이메일을 입력해주세요.'); isValid=false; }
-                else if (!emailCheck(value)) { showError(field,'유효하지 않은 이메일입니다.'); isValid=false; }
-                break;
         }
         return isValid;
     }

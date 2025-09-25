@@ -72,7 +72,7 @@
         <h4 class="border-bottom py-2">자격 / 학력</h4>
         <div class="input-list">
           <label>간호사 자격증 번호:</label>
-          <input type="text" th:field="*{rnNo}" maxlength="6" oninput="numberMaxLength(this);" required />
+          <input type="text" th:field="*{rnNo}" maxlength="6"  required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -84,7 +84,7 @@
 
         <div class="input-list">
           <label>졸업날짜:</label>
-          <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+          <input type="text" th:field="*{gradDate}" maxlength="8"  required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
