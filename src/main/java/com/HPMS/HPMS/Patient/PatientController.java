@@ -119,8 +119,8 @@ public class PatientController {
         return "patient/lsw_patient_modify";
     }
     //수정된 환자정보를 저장합니다
-    @PostMapping("/patient/modify/{id}")
-    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult, @PathVariable("id") Integer id){
+    @PostMapping("/patient/modify")
+    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult, @RequestParam("id") Integer id){
         PatientM patientM = this.patientMService.getPatientM(id);
         if (bindingResult.hasErrors()) {
             return "patient/lsw_patient_modify";

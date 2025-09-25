@@ -1,13 +1,14 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
   <h3 class="mt-2">신규 환자 등록</h3>
-  <form th:object="${patientForm}" method="post" >
+  <form th:object="${patientForm}" th:action="@{/patient/modify}" method="post" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
     <input type="hidden" name="page" value="0" />
     <input type="hidden" name="size" value="10" />
+    <input type="hidden" name="id" th:value="*{id}" />
 
     <div class="patient-modify patient-info card my-3 p-3">
       <div class="title-patient-name"><h4 class="title-h4-header" th:text="*{lastName} + ' ' + *{firstName}"></h4><span>님의 환자정보 수정을 위한 공간입니다</span></div>
@@ -55,114 +56,112 @@
         </div>
         <div class="input-list">
           <label class="name">성명:</label>
-          <input type="text" th:field="*{lastName}"/>
-          <input type="text" th:field="*{firstName}"/>
-          <input type="text" th:field="*{middleName}"/>
+          <input type="text" th:field="*{lastName}" placeholder="성명 성" th:value="${#strings.isEmpty(patientForm.lastName)? null : patientForm.lastName}"/>
+          <input type="text" th:field="*{firstName}" placeholder="성명 이름" th:value="${#strings.isEmpty(patientForm.firstName)? null : patientForm.firstName}"/>
+          <input type="text" th:field="*{middleName}" placeholder="성명 중간이름" th:value="${#strings.isEmpty(patientForm.middleName)? null : patientForm.middleName}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">중간이름</label>
-          <input type="text" class="form-control" th:field="*{middleName}"/>
+        <div class="input-list">
+          <label>여권번호</label>
+          <input type="text" th:field="*{passport}" placeholder="여권번호" th:value="${#strings.isEmpty(patientForm.passport)? null : patientForm.passport}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">여권번호</label>
-          <input type="text" class="form-control" th:field="*{passport}"/>
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">여권성명 성</label>
-          <input type="text" class="form-control" th:field="*{passLastName}"/>
-          <label class="label-reform text-end flex-shrink-0">여권성명 이름</label>
-          <input type="text" class="form-control" th:field="*{passFirstName}"/>
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">여권중간이름</label>
-          <input type="text" class="form-control" th:field="*{passMiddleName}"/>
+        <div class="input-list">
+          <label>여권성명</label>
+          <input type="text" th:field="*{passLastName}" placeholder="여권성명 성" th:value="${#strings.isEmpty(patientForm.passLastName)? null : patientForm.passLastName}"/>
+          <input type="text" th:field="*{passFirstName}" placeholder="여권성명 이름" th:value="${#strings.isEmpty(patientForm.passFirstName)? null : patientForm.passFirstName}"/>
+          <input type="text" th:field="*{passMiddleName}" placeholder="여권성명 중간이름" th:value="${#strings.isEmpty(patientForm.passMiddleName)? null : patientForm.passMiddleName}"/>
         </div>
 
 
         <!-- 연락처 -->
-      <h5 class="mt-5">연락처</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">MOBILE</label>
-          <input type="text" class="form-control" th:field="*{mobilePhone}">
+      <h4 class="border-bottom mt-2">연락처</h4>
+        <div class="input-list">
+          <label>MOBILE</label>
+          <input type="text" th:field="*{mobilePhone}" placeholder="휴대전화번호" th:value="${#strings.isEmpty(patientForm.mobilePhone)? null : patientForm.mobilePhone}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">HOME</label>
-          <input type="text" class="form-control" th:field="*{homePhone}">
+        <div class="input-list">
+          <label>HOME</label>
+          <input type="text" th:field="*{homePhone}" placeholder="집전화번호" th:value="${#strings.isEmpty(patientForm.homePhone)? null : patientForm.homePhone}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">OFFICE</label>
-          <input type="text" class="form-control" th:field="*{officePhone}">
+        <div class="input-list">
+          <label>OFFICE</label>
+          <input type="text" th:field="*{officePhone}" placeholder="사무실전화번호" th:value="${#strings.isEmpty(patientForm.officePhone)? null : patientForm.officePhone}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">EMAIL</label>
-          <input type="text" class="form-control" th:field="*{email}">
+        <div class="input-list">
+          <label>EMAIL</label>
+          <input type="text" th:field="*{email}" placeholder="이메일주소" th:value="${#strings.isEmpty(patientForm.email)? null : patientForm.email}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">FAX</label>
-          <input type="text" class="form-control" th:field="*{fax}">
+        <div class="input-list">
+          <label>FAX</label>
+          <input type="text" th:field="*{fax}" placeholder="팩스번호" th:value="${#strings.isEmpty(patientForm.fax)? null : patientForm.fax}">
         </div>
 
 
         <!-- 보호자 정보 -->
-      <h5 class="mt-5">보호자 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">보호자 성명 성</label>
-          <input type="text" class="form-control" th:field="*{guardianLastName}"/>
+      <h4 class="border-bottom mt-2">보호자 정보</h4>
+        <div class="input-list">
+          <label>보호자 성명 성</label>
+          <input type="text" th:field="*{guardianLastName}" placeholder="보호자 성명 성" th:value="${#strings.isEmpty(patientForm.guardianLastName)? null : patientForm.guardianLastName}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">보호자 성명 이름</label>
-          <input type="text" class="form-control" th:field="*{guardianFirstName}"/>
+        <div class="input-list">
+          <label>보호자 성명 이름</label>
+          <input type="text" th:field="*{guardianFirstName}" placeholder="보호자 성명 이름" th:value="${#strings.isEmpty(patientForm.guardianFirstName)? null : patientForm.guardianFirstName}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">보호자 연락처</label>
-          <input type="text" class="form-control" th:field="*{guardianTel}"/>
+        <div class="input-list">
+          <label>보호자 연락처</label>
+          <input type="text" th:field="*{guardianTel}" placeholder="보호자 연락처" th:value="${#strings.isEmpty(patientForm.guardianTel)? null : patientForm.guardianTel}"/>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <label class="label-reform text-end flex-shrink-0">보호자 관계</label>
-          <input type="text" class="form-control" th:field="*{guardianRelation}"/>
+        <div class="input-list">
+          <label>보호자 관계</label>
+          <input type="text" th:field="*{guardianRelation}" placeholder="보호자 관계" th:value="${#strings.isEmpty(patientForm.guardianRelation)? null : patientForm.guardianRelation}"/>
         </div>
 
 
         <!-- 주소 -->
-        <h5 class="mt-5">주소 정보</h5>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">우편번호</label>
-            <input type="text" class="form-control" th:field="*{homePcd}"/>
+        <h4 class="border-bottom mt-2">실거주기준 주소정보</h4>
+          <div class="input-list">
+            <label>우편번호</label>
+            <input type="text" th:field="*{homePcd}" placeholder="우편번호" th:value="${#strings.isEmpty(patientForm.homePcd)? null : patientForm.homePcd}"/>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">기본주소</label>
-            <input type="text" class="form-control" id="currentAdd" th:field="*{homeDefAdd}"/>
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+          <div class="input-list">
+            <label>기본주소</label>
+              <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소" th:value="${#strings.isEmpty(patientForm.homeDefAdd)? null : patientForm.homeDefAdd}"/>
+                  <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+              </div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">상세주소</label>
-            <input type="text" class="form-control" th:field="*{homeDetAdd}"/>
+          <div class="input-list">
+            <label>상세주소</label>
+            <input type="text" th:field="*{homeDetAdd}" placeholder="상세주소" th:value="${#strings.isEmpty(patientForm.homeDetAdd)? null : patientForm.homeDetAdd}"/>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(우편번호)</label>
-            <input type="text" class="form-control" th:field="*{regPcd}"/>
+
+        <h4 class="border-bottom mt-2">등록기준 주소정보</h4>
+          <div class="input-list">
+            <label>우편번호</label>
+            <input type="text" th:field="*{regPcd}" placeholder="등록주소(우편번호)" th:value="${#strings.isEmpty(patientForm.regPcd)? null : patientForm.regPcd}"/>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(기본주소)</label>
-            <input type="text" class="form-control" id="regAdd" th:field="*{regDefAdd}"/>
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+          <div class="input-list">
+            <label>기본주소</label>
+              <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="text" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)" th:value="${#strings.isEmpty(patientForm.regDefAdd)? null : patientForm.regDefAdd}"/>
+                  <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+              </div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(상세주소)</label>
-            <input type="text" class="form-control" th:field="*{regDetAdd}"/>
+          <div class="input-list">
+            <label>상세주소</label>
+            <input type="text" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)" th:value="${#strings.isEmpty(patientForm.regDetAdd)? null : patientForm.regDetAdd}"/>
           </div>
 
 
         <!-- 기타 -->
-        <h5 class="mt-5">기타 정보</h5>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">직업</label>
-            <input type="text" class="form-control" th:field="*{occupation}"/>
+        <h4 class="border-bottom mt-2">기타 정보</h4>
+          <div class="input-list">
+            <label>직업</label>
+            <input type="text" th:field="*{occupation}" placeholder="직업" th:value="${#strings.isEmpty(patientForm.occupation)? null : patientForm.occupation}"/>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">국적</label>
-            <input type="text" class="form-control" th:field="*{natn}"/>
-            <button type="button" class="btn btn-primary flex-shrink-0"  onclick="openCountryPopup()">국적검색</button>
+          <div class="input-list">
+            <label>국적</label>
+            <input type="text" th:field="*{natn}" placeholder="국적" th:value="${#strings.isEmpty(patientForm.natn)? null : patientForm.natn}"/>
+            <button type="button" class="button-link"  onclick="openCountryPopup()">국적검색</button>
           </div>
           <!--
           <div class="d-flex align-items-start gap-2 mb-3">
@@ -170,9 +169,9 @@
             <input type="date" class="form-control" th:field="*{lastVisitDate}"/>
           </div>
           -->
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">특이사항</label>
-            <input type="text" class="form-control" th:field="*{note}"/>
+          <div class="input-list">
+            <label>특이사항</label>
+            <input type="text" th:field="*{note}" placeholder="특이사항" th:value="${#strings.isEmpty(patientForm.note)? null : patientForm.note}"/>
           </div>
 
     </div>
