@@ -4,6 +4,7 @@ import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NurseInformationController {
 
     private final NurseMainService nurseMainService;
-    private final NurseInformationService nurseInformationService;
+
+    // application.properties에서 업로드 경로 설정
+    @Value("${file.upload.directory:uploads/nurse/pictures}")
+    private String uploadDirectory;
+
+    @Value("${file.upload.base-url:http://localhost:8080}")
+    private String baseUrl;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("")

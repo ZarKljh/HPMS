@@ -53,6 +53,7 @@
           <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" oninput="numberMaxLength(this);" required/>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>주소:</label>
           <div style="gap:8px; align-items:center; flex-direction:row;">
@@ -61,6 +62,7 @@
             <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
           </div>
         </div>
+
         <div class="input-list">
           <label>상세주소:</label>
           <input type="text" th:field="*{detAdd}" id="addr2" maxlength="250"/>
@@ -73,20 +75,24 @@
           <input type="text" th:field="*{rnNo}" maxlength="6" oninput="numberMaxLength(this);" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>최종학력:</label>
           <input type="text" th:field="*{edbc}" maxlength="50" required/>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>졸업날짜:</label>
           <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>외국어:</label>
           <input type="text" th:field="*{fl}" maxlength="250"/>
         </div>
+
         <div class="input-list">
           <label>병역:</label>
           <div class="select-wrapper" data-role="selectbox">
@@ -100,7 +106,7 @@
               <li><button type="button" class="option-btn" data-value="면제">면제</button></li>
             </ul>
             <!-- 실제 form 전송용 -->
-            <input type="hidden" name="ms" required>
+            <input type="hidden" name="ms" required/>
           </div>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
@@ -126,10 +132,11 @@
               <li><button type="button" class="option-btn" data-value="N">무</button></li>
             </ul>
             <!-- 실제 form 전송용 -->
-            <input type="hidden" name="dss" required>
+            <input type="hidden" name="dss" required/>
           </div>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>경력(개월):</label>
           <input type="text" th:field="*{carr}" maxlength="5" required/>
@@ -142,11 +149,13 @@
           <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg" maxlength="250" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>비고:</label>
           <textarea name="note" class="form-control" type="text" maxlength="250" th:field="*{note}"></textarea>
         </div>
       </div>
+
       <div class="pt-2 d-flex justify-content-end">
         <button class="save_btn button-link" type="button">등록</button>
       </div>

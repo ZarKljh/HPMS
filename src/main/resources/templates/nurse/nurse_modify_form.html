@@ -26,7 +26,7 @@
 
       <div class="input-list">
         <label>중간 이름:</label>
-        <input type="text" th:field="*{nurseMain.middleName}" maxlength="50"/>
+        <input type="text" th:field="*{nurseMain.middle_name}" maxlength="50"/>
       </div>
 
       <div class="input-list">
@@ -68,7 +68,7 @@
             <li><button type="button" class="option-btn" data-value="비뇨의학과">비뇨의학과</button></li>
           </ul>
           <!-- 실제 form 전송용 -->
-          <input type="hidden" name="nurseMain.dept" required>
+          <input type="hidden" th:field="*{nurseMain.dept}" required/>
         </div>
       </div>
 
@@ -90,17 +90,17 @@
             <li><button type="button" class="option-btn" data-value="실습생">간호학생(실습생)</button></li>
           </ul>
           <!-- 실제 form 전송용 -->
-          <input type="hidden" name="nurseMain.rank" required>
+          <input type="hidden" th:field="*{nurseMain.rank}" required/>
         </div>
       </div>
 
       <div class="input-list">
         <label>성별:</label>
         <div class="form-check">
-          <input type="radio" th:field="*{nurseMain.gender}" value="M" /> 남
+          <input type="radio" th:field="*{nurseMain.gender}" value="M" style="width: auto;"/> 남
         </div>
         <div class="form-check">
-          <input type="radio" th:field="*{nurseMain.gender}" value="F" /> 여
+          <input type="radio" th:field="*{nurseMain.gender}" value="F" style="width: auto;"/> 여
         </div>
       </div>
 
@@ -135,7 +135,7 @@
       <label>예명:</label>
         <input type="text" th:field="*{nurseInformation.firstName}" maxlength="50"/>
         <input type="text" th:field="*{nurseInformation.lastName}" maxlength="50"/>
-        <input type="text" th:field="*{nurseInformation.middleName}" maxlength="50"/>
+        <input class="middle_name" type="text" th:field="*{nurseInformation.middleName}" maxlength="50"/>
       </div>
 
       <div class="input-list">
@@ -152,7 +152,7 @@
         <label>성명:</label>
         <input type="text" th:field="*{nurseInformation.emgcFName}" maxlength="50" required/>
         <input type="text" th:field="*{nurseInformation.emgcLName}" maxlength="50" required/>
-        <input type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50"/>
+        <input class="middle_name" type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50"/>
       </div>
 
       <div class="input-list">
@@ -221,7 +221,7 @@
             <li><button type="button" class="option-btn" data-value="면제">면제</button></li>
           </ul>
           <!-- 실제 form 전송용 -->
-          <input type="hidden" name="nurseInformation.ms" required>
+          <input type="hidden" th:field="*{nurseInformation.ms}" required/>
         </div>
       </div>
 
@@ -246,7 +246,7 @@
             <li><button type="button" class="option-btn" data-value="N">무</button></li>
           </ul>
           <!-- 실제 form 전송용 -->
-          <input type="hidden" name="nurseInformation.dss" required>
+          <input type="hidden" th:field="*{nurseInformation.dss}" required/>
         </div>
       </div>
 
@@ -277,3 +277,4 @@
   </form>
   <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
 </div>
+</html>
