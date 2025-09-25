@@ -1,9 +1,11 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
-  <h3 class="mt-2">환자 상세정보</h3>
+    <div class="title-patient-name mt-2 border-bottom"><h3 class="title-h3-header" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h3></div>
+
+  <!-- <h3 class="mt-2">환자 상세정보</h3> -->
 
   <div class="patient-info main card my-3 p-3">
-    <div class="title-patient-name"><h4 class="title-h4-header" th:text="${detailDTO.lastName} + ' ' + ${detailDTO.firstName}"></h4><span>님의 환자정보입니다.</span></div>
+    <h4 class="border-bottom py-2">환자 상세페이지 입니다.</h4>
     <!-- 기본 식별 정보 -->
     <h4 class="border-bottom py-2">기본정보</h4>
       <!--

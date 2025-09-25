@@ -12,7 +12,7 @@
 
 
     <div class="patient-info main-table card my-3 p-3">
-        <h4 class="border-bottom py-2">신규환자 등록을 위한 공간입니다</h4>
+        <h4 class="border-bottom py-2">신규환자의 등록을 위하여 정보를 적는 페이지 입니다</h4>
 
         <!-- 인적사항 -->
         <h4 class="border-bottom py-2">인적사항</h4>
@@ -53,9 +53,7 @@
         <div class="input-list name_list">
             <label class="name">여권성명:</label>
             <input type="text" th:field="*{passLastName}" placeholder="성">
-            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
             <input type="text" th:field="*{passFirstName}" placeholder="이름">
-            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
             <input type="text" th:field="*{passMiddleName}" placeholder="중간이름">
         </div>
         <!-- 연락처 -->
@@ -110,10 +108,10 @@
         </div>
         <div class="input-list name_list">
             <label>기본주소:</label>
-            <div style="gap:8px; align-items:center; flex-direction:row;">
-                <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소">
-                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+            <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소" style="height:25px;">
+            <div style="display:flex; gap:8px;">
                 <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
             </div>
         </div>
         <div class="input-list name_list">
@@ -123,14 +121,12 @@
         <h4 class="border-bottom py-2">등록기준 주소정보</h4>
         <div class="input-list name_list">
             <label>우편번호:</label>
-            <div style="gap:8px; align-items:center; flex-direction:row;">
-                <input type="text" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
-            </div>
+            <input type="text" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
         </div>
         <div class="input-list name_list">
             <label>기본주소:</label>
-            <div style="gap:8px; align-items:center; flex-direction:row;">
-                <input type="text" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
+            <input type="text" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)" style="height:25px;"/>
+            <div style="margin-left:16px; align-items:center; flex-direction:row;">
                 <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
             </div>
         </div>
@@ -148,8 +144,8 @@
         </div>
         <div class="input-list name_list">
             <label>국적</label>
-            <div style="gap:8px; align-items:center; flex-direction:row;">
-                <input type="text" th:field="*{natn}" id="nationality">
+            <input type="text" th:field="*{natn}" id="nationality" style="height:25px;">
+            <div style="margin-left:16px; align-items:center; flex-direction:row;">
                 <button type="button" class="button-link"  onclick="openCountryPopup()"> 국적검색 </button>
             </div>
         </div>

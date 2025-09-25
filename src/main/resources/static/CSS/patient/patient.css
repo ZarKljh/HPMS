@@ -134,7 +134,7 @@ h3, h4 {
 	padding-top: 10px;
 }
 
-.patient-totalnum > strong, .patient-totalnum > span{
+.patient-totalnum > strong, .patient-totalnum > span, .patient-totalnum > select{
     font-size: 12px;
 }
 .chang-checkbox-column {
