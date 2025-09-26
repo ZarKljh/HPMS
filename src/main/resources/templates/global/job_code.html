@@ -3,98 +3,155 @@
 <head>
     <meta charset="UTF-8"/>
     <title>직급/직책 선택</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous">
+
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/doctor/doctor.css}">
+
     <style>
-        body { font-family: system-ui, sans-serif; margin: 20px; }
-        .grid { display: flex; gap: 20px; }
-        select { min-width: 240px; padding: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-        button { margin-top: 20px; padding: 6px 12px; }
+        .popup-container.container { width:auto !important; max-width:860px; padding:12px 16px; }
+        .sub_title { font-size:14px; color:#6c757d; }
+        .selector-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .list-card { padding:12px; }
+        .list-title { font-weight:700; margin-bottom:8px; }
+        .list-box { max-height:360px; overflow:auto; border:1px solid #dee2e6; border-radius:6px; }
+
+        /* 항목은 a태그(기본 hover 밑줄), 선택되면 검정 밑줄만 유지 */
+        .list-link {
+          display:block;
+          padding:10px 12px;
+          color: inherit;
+          text-decoration: none;
+          border-bottom: 1px solid #f1f1f1;
+        }
+        .list-link:hover { text-decoration: underline; }
+        .list-link.selected {
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+          /* 파란 배경/색상 등 없음 */
+          background: transparent !important;
+          color: inherit !important;
+        }
+
+        /* 포커스 파란 아웃라인 제거 */
+        .form-control:focus, .button-link:focus, a:focus { outline:none !important; box-shadow:none !important; }
+
+        /* 하단 버튼 호버 시 밑줄 */
+        .button-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-<h3>직급 / 직책 선택</h3>
+<div class="container popup-container">
+    <h2 class="listbox">직급 / 직책 선택 <span class="sub_title">Job Code Selector</span></h2>
+    <p class="detail-subtitle">리스트에서 선택만 하고, 아래 <b>선택</b>을 눌러 적용하세요.</p>
 
-<div class="grid">
-    <!-- 왼쪽: 직책 (선택) -->
-    <div>
-        <label for="positionSelect">직급</label><br>
-        <select id="positionSelect" size="10"></select>
+    <div class="selector-grid">
+        <!-- 직급 (positions) -->
+        <div class="card list-card">
+            <div class="list-title">직급</div>
+            <div id="positionsList" class="list-box">
+                <!-- 서버가 주는 데이터가 있으면 SSR로 먼저 렌더 -->
+                <a href="#"
+                   th:each="p : ${positions}"
+                   class="list-link"
+                   th:attr="data-value=${p.korName}"
+                   th:text="${'[' + (p.code?:'') + '] ' + (p.korName?:'') + ' / ' + (p.engName?:'')}">[P01] 과장 / Manager</a>
+            </div>
+        </div>
+
+        <!-- 직책 (ranks) -->
+        <div class="card list-card">
+            <div class="list-title">직책</div>
+            <div id="ranksList" class="list-box">
+                <a href="#"
+                   th:each="r : ${ranks}"
+                   class="list-link"
+                   th:attr="data-value=${r.korName}"
+                   th:text="${'[' + (r.code?:'') + '] ' + (r.korName?:'') + ' / ' + (r.engName?:'')}">[R01] 팀장 / Lead</a>
+            </div>
+        </div>
     </div>
 
-    <!-- 오른쪽: 직급 (선택) -->
-    <div>
-        <label for="rankSelect">직책</label><br>
-        <select id="rankSelect" size="10"></select>
+    <div class="d-flex justify-content-end" style="gap:10px; margin-top:12px;">
+        <a href="#" class="button-link" onclick="finalizeSelection(); return false;">선택</a>
+        <a href="javascript:void(0)" class="button-link" onclick="window.close()">닫기</a>
     </div>
 </div>
 
-<button type="button" onclick="applySelection()">선택</button>
-
 <script>
-    function makeOptionText(item) {
-      const code = item.code ?? '';
-      const kor  = item.korName ?? '';
-      const eng  = item.engName ?? '';
-      return `[${code}] ${kor} / ${eng}`;
-    }
-    async function fetchJson(url) {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`${url} ${res.status}`);
-      return res.json();
-    }
+    (function () {
+      function makeText(item){ return `[${item.code ?? ''}] ${item.korName ?? ''} / ${item.engName ?? ''}`; }
+      async function fetchJson(url){ const r = await fetch(url); if(!r.ok) throw new Error(url); return r.json(); }
 
-    // 직책(선택)
-    fetchJson('/global/jobcode/positions')
-      .then(list => {
-        const sel = document.getElementById('positionSelect');
-        sel.innerHTML = '';
-        (list || []).forEach(item => {
-          const opt = document.createElement('option');
-          // 부모로는 한국어명 전달 (VARCHAR(4) 대응)
-          opt.value = item.korName;
-          opt.dataset.kor = item.korName;
-          opt.textContent = makeOptionText(item);
-          sel.appendChild(opt);
+      const $pos = document.getElementById('positionsList');
+      const $rnk = document.getElementById('ranksList');
+
+      // 폴백: 서버가 리스트를 안 넣어줬으면 REST로 채우기
+      if ($pos && !$pos.querySelector('.list-link')) {
+        fetchJson('/global/jobcode/positions').then(list => {
+          $pos.innerHTML = '';
+          (list || []).forEach(item => {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.className = 'list-link';
+            a.dataset.value = item.korName || '';
+            a.textContent = makeText(item);
+            $pos.appendChild(a);
+          });
+        }).catch(() => { $pos.innerHTML = '<div class="p-3 text-muted">직급 데이터를 불러올 수 없습니다.</div>'; });
+      }
+      if ($rnk && !$rnk.querySelector('.list-link')) {
+        fetchJson('/global/jobcode/ranks').then(list => {
+          $rnk.innerHTML = '';
+          (list || []).forEach(item => {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.className = 'list-link';
+            a.dataset.value = item.korName || '';
+            a.textContent = makeText(item);
+            $rnk.appendChild(a);
+          });
+        }).catch(() => { $rnk.innerHTML = '<div class="p-3 text-muted">직책 데이터를 불러올 수 없습니다.</div>'; });
+      }
+
+      // 단일 선택 (검정 밑줄만 유지)
+      function wireSingleSelect(container){
+        container.addEventListener('click', (e) => {
+          const a = e.target.closest('.list-link');
+          if (!a) return;
+          [...container.querySelectorAll('.list-link')].forEach(x => x.classList.remove('selected'));
+          a.classList.add('selected');
+          e.preventDefault();
         });
-      })
-      .catch(err => console.warn('직책 로드 실패:', err));
+      }
+      if ($pos) wireSingleSelect($pos);
+      if ($rnk) wireSingleSelect($rnk);
 
-    // 직급(선택)
-    fetchJson('/global/jobcode/ranks')
-      .then(list => {
-        const sel = document.getElementById('rankSelect');
-        sel.innerHTML = '';
-        (list || []).forEach(item => {
-          const opt = document.createElement('option');
-          opt.value = item.korName;
-          opt.dataset.kor = item.korName;
-          opt.textContent = makeOptionText(item);
-          sel.appendChild(opt);
-        });
-      })
-      .catch(err => console.warn('직급 로드 실패:', err));
+      // 하단 "선택" 클릭 시 부모에 전달 후 닫기 (부모/컨트롤러 수정 없음)
+      window.finalizeSelection = function(){
+        const posVal = $pos?.querySelector('.list-link.selected')?.dataset.value || '';
+        const rnkVal = $rnk?.querySelector('.list-link.selected')?.dataset.value || '';
+        if (!posVal && !rnkVal) { alert('직급 또는 직책을 선택하세요.'); return; }
 
- function normalizeKor(value){
-    return (value && value.trim() === '의과대학생') ? '대학생' : value;
-  }
+        try {
+          if (window.opener && !window.opener.closed) {
+            if (posVal && typeof window.opener.setPosition === 'function') window.opener.setPosition(posVal);
+            if (rnkVal && typeof window.opener.setRank === 'function') window.opener.setRank(rnkVal);
 
-  function applySelection() {
-    const rankOpt = document.getElementById('rankSelect').selectedOptions[0];
-    const posOpt  = document.getElementById('positionSelect').selectedOptions[0];
-
-    let rankKor     = rankOpt ? (rankOpt.dataset.kor || rankOpt.value) : '';
-    let positionKor = posOpt  ? (posOpt.dataset.kor  || posOpt.value)  : '';
-
-    // ✅ 오직 "의과대학생"만 대학생으로 치환
-    rankKor     = normalizeKor(rankKor);
-    positionKor = normalizeKor(positionKor);
-
-    window.opener?.postMessage({
-      source: 'jobcode-popup',
-      payload: { rankCode: rankKor, positionCode: positionKor }
-    }, '*');
-
-    window.close();
-  }
+            // 백업: postMessage도 함께 보냄
+            if (window.opener.postMessage) {
+              window.opener.postMessage({ source:'jobcode-popup', payload:{ positionCode: posVal, rankCode: rnkVal } }, '*');
+            }
+          }
+        } finally { window.close(); }
+      };
+    })();
 </script>
 </body>
 </html>
