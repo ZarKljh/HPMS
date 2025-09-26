@@ -10,7 +10,7 @@
     <!-- 🔍 검색 영역 시작 -->
 
     <!-- 🔍 검색 영역 끝 -->
-    <div class="patient-list-header d-flex flex-wrap justify-content-between align-items-center mt-4">
+    <div class="patient-list-header d-flex flex-wrap justify-content-between align-items-center mt-3">
         <form class="patient-totalnum" method="get" action="/patient/list">
             <!-- <form method="get" action="/patient/list" class="size_bar d-flex align-items-center mb-2 mb-md-0"> -->
             <!-- <div class="d-flex align-items-center"> -->
@@ -26,7 +26,18 @@
                 </select>
             <!--  </div> -->
         </form>
-        <a type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></a>
+        <form method="get" action="/patient/list" class="d-flex align-items-center">
+            <div class="search_box row">
+                <div>
+                    <div class="input-group">
+                        <span class="input-text">성별/성명/국적/작성자/전화번호/주소 검색가능</span>
+                        <input type="text" id="simplesearch_kw" class="form-control" th:value="${kw}" name="kw"/>
+                        <button class="search_btn" type="submit" id="btn_search">검색</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <a type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></a> -->
     </div>
     <div class="d-flex flex-wrap justify-content-between align-items-center">
         <div class="card my-3" style="width:100%; border: 0 solid white;">
@@ -95,8 +106,8 @@
         <table class="table table-hover card listTable">
             <thead class="table-light">
             <tr class="list text-center">
-                <th class="chang-checkbox-column" style="width:30px;"><input type="checkbox" name="checkedAllIds" value="t"/></th>
-                <th class="mobail_hidden chang-checkbox-column" style="width:200px;">번호</th>
+                <th class="chang-checkbox-column" style="width:50px;"><input type="checkbox" name="checkedAllIds" value="t"/></th>
+                <th class="lee-checkbox-column">번호</th>
                 <th>성명</th>
                 <th>성별</th>
                 <th>생년월일</th>
@@ -110,8 +121,8 @@
 
             <tbody class="text-center">
             <tr class="text-center" th:each="patient,  loop : ${patients}">
-                <td class="chang-checkbox-column" style="width:30px;"><input type="checkbox" class="nurse-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
-                <td class="chang-checkbox-column" th:text="${patients.totalElements - (patients.number * patients.size) - loop.index}" ></td>
+                <td class="chang-checkbox-column" style="width:50px;"><input type="checkbox" class="nurse-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
+                <td class="lee-checkbox-column" th:text="${patients.totalElements - (patients.number * patients.size) - loop.index}" style="width:100px;" ></td>
                 <!--
                 <td class="mobail_hidden" th:text="${patient.id}"></td>
                 -->

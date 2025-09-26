@@ -45,6 +45,7 @@ public class PatientMService {
         return this.patientMRepository.findAll(spec,pageable);
     }
 
+
     // 쿼리를 생성하는 메소드
     private Specification<PatientM> findAllExceptDel(){
         return new Specification<PatientM>() {
@@ -59,6 +60,7 @@ public class PatientMService {
             }
         };
     }
+
 
     //다중조건에 따른 환자의 Main정보를 가져온다
     public Page<PatientM>  patientMSearch( List<String> columns,

@@ -57,7 +57,8 @@ public class PatientController {
     @GetMapping("/patient/list")
     public String list(Model model,
                        @RequestParam(value="page", defaultValue="0") int page,
-                       @RequestParam(value="size", defaultValue="10") int size) {
+                       @RequestParam(value="size", defaultValue="10") int size
+                       ) {
         //id 칼럼을 기준으로 내림차순(descending())
         //오름차순으로 하고 싶을 때에는 (ascending()) 변경
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"). descending());

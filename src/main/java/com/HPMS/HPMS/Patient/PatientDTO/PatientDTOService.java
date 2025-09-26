@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -67,9 +68,10 @@ public class PatientDTOService {
     //페이징 기능 추가된 getPatientListDTO
     public Page<PatientListDTO> getPatientListDTO(Pageable pageable){
 
-
         //환자메인정보 모든 리스트를 service를 통해 가져온다
+
         Page<PatientM> patientMs = this.patientMService.getAllPatientM(pageable);
+
         //환자리스트html전용 DTO를 담아놓을 신규 List를 생성한다
         List<PatientListDTO> dtoList = new ArrayList<>();
         //날짜출력용 포멧을 정해놓았다

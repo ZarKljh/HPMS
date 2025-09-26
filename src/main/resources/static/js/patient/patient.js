@@ -385,6 +385,13 @@ $('.navbar-toggle').click(function() {
           const hidden = document.getElementById('nationality');
           if (hidden) hidden.value = `${countryKr} (${iso2})`;
     }
+    document.addEventListener("keydown", function(event) {
+        // F10 키는 key 속성 값이 "F10"
+        if (event.key === "F10") {
+            event.preventDefault(); // 브라우저 기본 동작 막기 (필요 시)
+            toggleSearchForm(); // 버튼 클릭 대신 함수 직접 실행
+        }
+    });
 
   //  검색폼 토글
     function toggleSearchForm() {

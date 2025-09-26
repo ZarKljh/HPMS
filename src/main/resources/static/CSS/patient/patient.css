@@ -8,7 +8,7 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-#search_kw {
+#simplesearch_kw {
     font-size: 10px;
 }
 h3, h4 {
@@ -527,6 +527,12 @@ div.form-actions{
     /*display: flex; */
     /*justify-content: center; align-items: center;*/
     /*height: 100%;*/
+}
+.lee-checkbox-column {
+    text-align: center;
+    mix-width: 50px;
+    max-width: 50px;
+    width: 50px;
 }
 .chang_text_center{
     text-align: center;
