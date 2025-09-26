@@ -258,6 +258,7 @@ public class PatientMService {
         dtl.setPatientM(m);
         dtl.setMobilePhone(removeHyphen(pf.getMobilePhone()));
         dtl.setHomePhone(removeHyphen(pf.getHomePhone()));
+        dtl.setOfficePhone(removeHyphen(pf.getOfficePhone()));
         dtl.setFax(removeHyphen(pf.getFax()));
         dtl.setEmail(pf.getEmail());
 

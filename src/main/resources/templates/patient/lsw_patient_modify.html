@@ -1,7 +1,7 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
   <h3 class="border-bottom mt-2">환자 정보 수정</h3>
-  <form th:object="${patientForm}" th:action="@{/patient/modify}" method="post" >
+  <form th:object="${patientForm}" th:action="@{/patient/modify}" method="post" name="patientModifyForm">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
@@ -38,6 +38,7 @@
         </div>
         -->
         <input type="hidden" class="form-control" th:field="*{birth}"/>
+        <!--
         <div class="input-list">
           <label>성별</label>
           <select th:field="*{gender}">
@@ -48,6 +49,24 @@
           </select>
             <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+        -->
+        <div class="input-list">
+          <label>성별:</label>
+          <div class="select-wrapper" data-role="selectbox">
+            <button type="button" class="toggle_btn">
+              성별 선택
+              <span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <ul class="hide selectbox_option">
+              <li><button type="button" class="option-btn" data-value="M">남</button></li>
+              <li><button type="button" class="option-btn" data-value="F">여</button></li>
+              <li><button type="button" class="option-btn" data-value="X">그외</button></li>
+            </ul>
+            <input type="hidden" name="gender" required/>
+          </div>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        </div>
+        <!--
         <div class="input-list">
           <label>내/외국인</label>
           <select th:field="*{foreigner}">
@@ -57,6 +76,23 @@
           </select>
             <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+        -->
+      <div class="input-list">
+        <label>내/외국인:</label>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            내/외국인 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="0">내국인</button></li>
+            <li><button type="button" class="option-btn" data-value="1">외국인</button></li>
+          </ul>
+          <input type="hidden" name="foreigner" required/>
+        </div>
+        <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+      </div>
+
         <div class="input-list">
           <label class="name">성명:</label>
           <input type="text" th:field="*{lastName}" placeholder="성명 성" />

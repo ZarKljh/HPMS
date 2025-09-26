@@ -8,7 +8,21 @@ $('.navbar-toggle').click(function() {
 	}
 });
 
-
+    // ----------- selectbox 처리 -----------
+        document.querySelectorAll(".select-wrapper").forEach(wrapper=>{
+            const toggleBtn = wrapper.querySelector(".toggle_btn");
+            const options = wrapper.querySelector(".selectbox_option");
+            const hiddenInput = wrapper.querySelector("input[type='hidden']");
+            toggleBtn.addEventListener("click",()=> options.classList.toggle("hide"));
+            options.querySelectorAll(".option-btn").forEach(opt=>{
+                opt.addEventListener("click",()=>{
+                    hiddenInput.value=opt.getAttribute("data-value");
+                    toggleBtn.textContent=opt.textContent;
+                    options.classList.add("hide");
+                });
+            });
+            document.addEventListener("click",e=>{ if(!wrapper.contains(e.target)) options.classList.add("hide"); });
+        });
 
     /* create form validate 시작 */
 
@@ -33,7 +47,7 @@ $('.navbar-toggle').click(function() {
             return false;
         }
 
-        const gender = form.querySelector("select[name='gender']");
+        const gender = form.querySelector("input[name='gender']");
         if(!gender.value) {
             alert("성별을 선택해주세요.");
             return false;
@@ -42,7 +56,7 @@ $('.navbar-toggle').click(function() {
             return false;
         }
 
-        const foreigner = form.querySelector("select[name='foreigner']");
+        const foreigner = form.querySelector("input[name='foreigner']");
         if(foreigner.value != 0 && foreigner.value != 1) {
             alert("내외국인 여부를 선택해주세요");
             return false;
@@ -118,12 +132,12 @@ $('.navbar-toggle').click(function() {
         /*숫자와 자릿수 설정*/
         const numberOnlyRegex = /^[0-9]{9,12}$/;
         /*휴대전화번호 검증*/
-        const mobilePhone = form.querySelector("input[name='mobilePhone']").value.trim();
+        const mobilePhone = form.querySelector("input[name='mobilePhone']").value.trim().replace(/-/g,"");
         if(mobilePhone.length === 0) {
             alert("휴대전화번호는 필수항목입니다");
             return false;
         } else if(!numberOnlyRegex.test(mobilePhone)) {
-            alert("연락처에는 숫자만 넣어주세요");
+            alert("휴대전화에는 숫자만 넣어주세요");
             return false;
         }
 
@@ -147,12 +161,12 @@ $('.navbar-toggle').click(function() {
 
 
         /*휴대전화번호 검증*/
-        const guardianTel = form.querySelector("input[name='guardianTel']").value.trim();
+        const guardianTel = form.querySelector("input[name='guardianTel']").value.trim().replace(/-/g,"");
         if(guardianTel.length === 0) {
             alert("보호자 연락처는 필수항목입니다");
             return false;
         } else if(!numberOnlyRegex.test(guardianTel)) {
-            alert("연락처에는 숫자만 넣어주세요");
+            alert("보호자 연락처에는 숫자만 넣어주세요");
             return false;
         }
         const numberOnlyRegexForPcd = /^[0-9]{5,6}$/;
@@ -169,7 +183,7 @@ $('.navbar-toggle').click(function() {
     }
 
 
-    /* create form validate 시작 */
+    /* modify form validate 시작 */
 
     function validateModifyForm(event){
 
@@ -192,7 +206,7 @@ $('.navbar-toggle').click(function() {
             return false;
         }
         */
-        const gender = form.querySelector("select[name='gender']");
+        const gender = form.querySelector("input[name='gender']");
         if(!gender.value) {
             alert("성별을 선택해주세요.");
             return false;
@@ -201,7 +215,7 @@ $('.navbar-toggle').click(function() {
             return false;
         }
 
-        const foreigner = form.querySelector("select[name='foreigner']");
+        const foreigner = form.querySelector("input[name='foreigner']");
         if(foreigner.value != 0 && foreigner.value != 1) {
             alert("내외국인 여부를 선택해주세요");
             return false;
@@ -277,12 +291,12 @@ $('.navbar-toggle').click(function() {
         /*숫자와 자릿수 설정*/
         const numberOnlyRegex = /^[0-9]{9,12}$/;
         /*휴대전화번호 검증*/
-        const mobilePhone = form.querySelector("input[name='mobilePhone']").value.trim();
+        const mobilePhone = form.querySelector("input[name='mobilePhone']").value.trim().replace(/-/g,"");
         if(mobilePhone.length === 0) {
             alert("휴대전화번호는 필수항목입니다");
             return false;
         } else if(!numberOnlyRegex.test(mobilePhone)) {
-            alert("연락처에는 숫자만 넣어주세요");
+            alert("휴대전화번호에는 숫자만 넣어주세요");
             return false;
         }
 
@@ -306,12 +320,12 @@ $('.navbar-toggle').click(function() {
 
 
         /*휴대전화번호 검증*/
-        const guardianTel = form.querySelector("input[name='guardianTel']").value.trim();
+        const guardianTel = form.querySelector("input[name='guardianTel']").value.trim().replace(/-/g,"");
         if(guardianTel.length === 0) {
             alert("보호자 연락처는 필수항목입니다");
             return false;
         } else if(!numberOnlyRegex.test(guardianTel)) {
-            alert("연락처에는 숫자만 넣어주세요");
+            alert("보호자 연락처에는 숫자만 넣어주세요");
             return false;
         }
         const numberOnlyRegexForPcd = /^[0-9]{5,6}$/;
@@ -326,6 +340,28 @@ $('.navbar-toggle').click(function() {
 
         form.submit();
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.forms["selectedPatient"];
+      if(!form) return;
+      const masterCheckbox = form.querySelector('input[name="checkedAllIds"]');
+      const checkboxes = form.querySelectorAll('input[name="checkedIds"]');
+
+      if (masterCheckbox) {
+        // 전체 선택 기능
+        masterCheckbox.addEventListener("change", function () {
+          checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+        });
+
+        // 개별 체크박스 상태 변화 감지 → 전체 선택 상태 업데이트
+        checkboxes.forEach(cb => {
+          cb.addEventListener("change", function () {
+            const allChecked = [...checkboxes].every(c => c.checked);
+            masterCheckbox.checked = allChecked;
+          });
+        });
+      }
+    });
 
     /*체크박스 체크된 환자정보 삭제기능*/
     /* 제한된 체크박스 확인 후, 폼 COMMIT하기 */

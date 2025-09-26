@@ -101,7 +101,7 @@
     </div>
 
     <form name="selectedPatient" th:action="@{/patient/delete/selectedPatient}" method="post">
-        <input type="hidden" name="page" th:value="${page}" />
+        <input type="hidden" name="page" th:value="${currentPage}" />
         <input type="hidden" name="size" th:value="${size}" />
         <table class="table table-hover card listTable">
             <thead class="table-light">
@@ -121,7 +121,7 @@
 
             <tbody class="text-center">
             <tr class="text-center" th:each="patient,  loop : ${patients}">
-                <td class="chang-checkbox-column" style="width:50px;"><input type="checkbox" class="nurse-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
+                <td class="chang-checkbox-column" style="width:50px;"><input type="checkbox" class="patient-checkbox" th:name="checkedIds" th:value="${patient.id}" /></td>
                 <td class="lee-checkbox-column" th:text="${patients.totalElements - (patients.number * patients.size) - loop.index}" style="width:100px;" ></td>
                 <!--
                 <td class="mobail_hidden" th:text="${patient.id}"></td>
