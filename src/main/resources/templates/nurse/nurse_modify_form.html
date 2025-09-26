@@ -4,7 +4,7 @@
     <p th:text="${errorMessage}"></p>
   </div>
   <form th:action="@{/nurse/modify/{id}(id=${nurseDTO.nurseMain.id})}"
-        th:object="${nurseDTO}" method="post">
+        th:object="${nurseDTO}" method="post" enctype="multipart/form-data">
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
@@ -257,22 +257,17 @@
 
       <div class="input-list">
         <label>사진:</label>
-        <div class="input-list">
-          <label>사진:</label>
-          <!-- 파일 업로드 -->
-          <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
-          <!-- 미리보기 -->
-          <div class="mt-2">
-            <img id="picturePreview"
-                 th:src="${nurseDTO?.nurseInformation?.picture ?: '/images/default.png'}"
-                 alt="사진 미리보기"
-                 style="max-width:150px; max-height:150px; display:block;" />
-          </div>
+        <!-- 파일 업로드 -->
+        <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
+        <!-- 미리보기 -->
+        <div class="mt-2">
+          <img id="picturePreview"
+               th:src="${nurseDTO?.nurseInformation?.picture ?: '/images/default.png'}"
+               alt="사진 미리보기"
+               style="width: 150px; height: 150px; object-fit: cover; display:block;" />
         </div>
-
           <!-- 실제 DB 저장용 hidden 필드 -->
-          <input type="hidden" th:field="*{nurseInformation.picture}" id="pictureUrl"/>
-        </div>
+        <input type="hidden" th:field="*{nurseInformation.picture}" id="pictureUrl"/>
       </div>
 
       <div class="input-list">
@@ -286,6 +281,5 @@
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
-<!--  <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>-->
 </div>
 </html>

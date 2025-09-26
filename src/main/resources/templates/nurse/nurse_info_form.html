@@ -50,7 +50,7 @@
 
         <div class="input-list">
           <label>우편번호:</label>
-          <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" oninput="numberMaxLength(this);" required/>
+          <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" required/>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -84,7 +84,7 @@
 
         <div class="input-list">
           <label>졸업날짜:</label>
-          <input type="text" th:field="*{gradDate}" maxlength="8"  required />
+          <input type="text" th:field="*{gradDate}" maxlength="8" class="numeric-only" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -139,7 +139,7 @@
 
         <div class="input-list">
           <label>경력(개월):</label>
-          <input type="text" th:field="*{carr}" maxlength="5" required/>
+          <input type="text" th:field="*{carr}" maxlength="5" class="numeric-only" required/>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 

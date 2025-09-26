@@ -1,5 +1,6 @@
 package com.HPMS.HPMS.nurse.nursedto;
 
+import com.HPMS.HPMS.nurse.file.FileService;
 import com.HPMS.HPMS.nurse.license.License;
 import com.HPMS.HPMS.nurse.license.LicenseService;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationService;
@@ -10,7 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/nurse")
@@ -22,6 +25,7 @@ public class NurseDTOController {
     private final NurseMainService nurseMainService;
     private final NurseInformationService nurseInformationService;
     private final LicenseService licenseService;
+    private final FileService fileService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @GetMapping("/info/{nurseId}")
@@ -70,7 +74,14 @@ public class NurseDTOController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     @PostMapping("/modify/{id}")
-    public String modifyNurse(@PathVariable Integer id, @ModelAttribute NurseDTO nurseDTO, Model model) {
+    public String modifyNurse(@PathVariable Integer id, @ModelAttribute NurseDTO nurseDTO, @RequestParam(value = "pictureFile", required = false) MultipartFile pictureFile, Model model) throws IOException {
+        // 업로드 파일 처리
+        if (pictureFile != null && !pictureFile.isEmpty()) {
+            String pictureUrl = fileService.saveUploadedFile(pictureFile);
+            nurseDTO.getNurseInformation().setPicture(pictureUrl);
+        }
+
+        // 수정자 체크
         String modifier = nurseDTO.getNurseMain().getModifier();
         if (modifier == null || modifier.trim().isEmpty()) {
             model.addAttribute("errorMessage", "수정자 이름을 입력해야 합니다.");

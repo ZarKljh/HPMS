@@ -15,6 +15,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showError(field, message) {
+        if (!field || !field.parentNode) {
+            console.warn('Invalid field passed to showError:', field);
+            return;
+        }
         clearError(field);
         const error = document.createElement('div');
         error.className = 'error-message';
@@ -25,14 +29,45 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function clearError(field) {
-        if (!field) return;
+        if (!field || !field.parentNode) return;
         const error = field.parentNode.querySelector('.error-message');
         if (error) error.remove();
         field.style.borderColor = '';
     }
+    // -----------------------------
+        // 유효성 검사 (required 전부 확인)
+        // -----------------------------
+    function validateForm(form) {
+        let isValid = true;
+        const requiredFields = form.querySelectorAll("[required]");
+
+        requiredFields.forEach(field => {
+            if (!field.value || field.value.trim() === "") {
+                alert(`필수 항목을 입력해주세요: ${field.getAttribute("name") || field.id}`);
+                field.focus();
+                isValid = false;
+                return false;
+            }
+        });
+
+        // 성별 라디오 버튼 체크
+        const genderRadios = form.querySelectorAll('input[name*="gender"]');
+        if (genderRadios.length > 0) {
+            const checked = form.querySelector('input[name*="gender"]:checked');
+            if (!checked) {
+                alert("성별을 선택해주세요.");
+                genderRadios[0].focus();
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
 
     // ----------- 필드 유효성 -----------
     function validateField(field) {
+        if (!field) return true;
+
         const value = field.value.trim();
         let isValid = true;
         clearError(field);
@@ -80,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const fileInput = document.getElementById('pictureFile');
                 const existingPicture = document.querySelector('input[name="existingPicture"]');
                 const hasNewFile = fileInput && fileInput.files.length>0;
-                const hasExistingPicture = existingPicture && existingPicture.value;
+                const hasExistingPicture = existingPicture && existingPicture.value?.trim() !== '';
                 if(!hasNewFile && !hasExistingPicture){ showError(fileInput||field,'사진을 선택해주세요.'); isValid=false; }
                 else if(hasNewFile){
                     const file = fileInput.files[0];
@@ -92,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 break;
             case 'ms':
                 const hiddenInput = document.querySelector('input[name="ms"]');
-                if (!hiddenInput || !hiddenInput.value) {
+                if (!hiddenInput || hiddenInput.value?.trim() === '') {
                     showError(hiddenInput, '병역을 선택해주세요.');
                     isValid = false;
                 }
@@ -108,35 +143,98 @@ document.addEventListener("DOMContentLoaded", function() {
     function validateForm(form){
         let isValid=true;
         const fields = form.querySelectorAll('input, select, textarea');
-        fields.forEach(f=>{ if(!validateField(f)) isValid=false; });
-        const gender = form.querySelector('input[name*="gender"]:checked');
-        if(!gender){
-            const genderInput = form.querySelector('input[name*="gender"]');
-            if(genderInput){ showError(genderInput,'성별을 선택해주세요.'); isValid=false; }
+        fields.forEach(field => {
+            if (field && field.name && !validateField(field)) {
+                isValid = false;
+            }
+        });
+        // 성별 라디오 버튼 검증
+        const genderRadios = form.querySelectorAll('input[name*="gender"]');
+        if (genderRadios.length > 0) {
+            const genderChecked = form.querySelector('input[name*="gender"]:checked');
+            if (!genderChecked) {
+                const firstGenderRadio = genderRadios[0];
+                if (!genderRadiosChecked) {
+                    showError(firstGenderRadio, '성별을 선택해주세요.');
+                    isValid = false;
+                }
+            }
         }
         return isValid;
     }
+    // -----------------------------
+    // 숫자 전용 입력 제한
+    // -----------------------------
+    document.querySelectorAll(".numeric-only").forEach(input => {
+        input.addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, "");
+        });
+    });
 
     // ----------- 제출 버튼 이벤트 -----------
-    document.querySelectorAll('form').forEach(form=>{
-        const submitBtn = Array.from(form.querySelectorAll('button, input[type="submit"]'))
-            .find(btn => /등록|다음|저장/.test(btn.textContent));
-        if(submitBtn){
-            submitBtn.type='button';
-            submitBtn.addEventListener('click', function(){
-                if(validateForm(form)) form.submit();
-                else{
-                    const firstError=form.querySelector('.error-message');
-                    if(firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
-                    alert('입력 정보를 다시 확인해주세요.');
-                }
-            });
-        }
+    document.querySelectorAll('form').forEach(form => {
+        // 모든 버튼에 이벤트 부착
+        const submitBtns = form.querySelectorAll('button, input[type="submit"]');
+
+        submitBtns.forEach(btn => {
+            // 저장/등록/다음 버튼 또는 submit 버튼만 처리
+            if (btn.classList.contains('button-link') || btn.type === 'submit') {
+
+                // submit이면 button으로 변경
+                if (btn.type === 'submit') btn.type = 'button';
+
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault(); // 기본 제출 방지
+
+                    // 폼 유효성 검사
+                    if (validateForm(form)) {
+                        form.submit();
+                    } else {
+                        // 첫 번째 에러로 스크롤 이동
+                        const firstError = form.querySelector('.error-message');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            firstError.focus?.(); // input이 포커스 되도록
+                        }
+                        alert('입력 정보를 다시 확인해주세요.');
+                    }
+                });
+            }
+        });
     });
+
+    // showError 수정 (parentNode → closest)
+    function showError(field, message) {
+        if (!field) return;
+        const container = field.closest('.input-list');
+        if (!container) return;
+
+        clearError(field);
+
+        const error = document.createElement('div');
+        error.className = 'error-message';
+        error.style.cssText = 'color:red;font-size:12px;margin-top:5px;';
+        error.textContent = message;
+
+        container.appendChild(error);
+        field.style.borderColor = 'red';
+    }
+
+    function clearError(field) {
+        if (!field) return;
+        const container = field.closest('.input-list');
+        if (!container) return;
+
+        const error = container.querySelector('.error-message');
+        if (error) error.remove();
+        field.style.borderColor = '';
+    }
+
 
     // ----------- 사진 미리보기 -----------
     const fileInput = document.getElementById("pictureFile");
     const previewImg = document.getElementById("picturePreview");
+
     const existingPicture = document.querySelector("input[name='existingPicture']");
     if (fileInput){
         fileInput.addEventListener("change", function(event){
@@ -152,6 +250,18 @@ document.addEventListener("DOMContentLoaded", function() {
             if(existingPicture) existingPicture.value="";
         });
     }
+    if (pictureFile && picturePreview) {
+            pictureFile.addEventListener("change", function () {
+                const file = this.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = e => {
+                    picturePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     // ----------- function previewImage(event){...} 정의 -----------
     function previewImage(event) {
         const file = event.target.files[0];
@@ -167,19 +277,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     // ----------- selectbox 처리 -----------
-    document.querySelectorAll(".select-wrapper").forEach(wrapper=>{
+    document.querySelectorAll(".select-wrapper").forEach(wrapper => {
         const toggleBtn = wrapper.querySelector(".toggle_btn");
         const options = wrapper.querySelector(".selectbox_option");
         const hiddenInput = wrapper.querySelector("input[type='hidden']");
-        toggleBtn.addEventListener("click",()=> options.classList.toggle("hide"));
-        options.querySelectorAll(".option-btn").forEach(opt=>{
-            opt.addEventListener("click",()=>{
-                hiddenInput.value=opt.getAttribute("data-value");
-                toggleBtn.textContent=opt.textContent;
+
+        if (!toggleBtn || !options || !hiddenInput) return;
+
+        // 초기값 세팅
+        if (hiddenInput.value) {
+            const match = Array.from(options.querySelectorAll(".option-btn"))
+                .find(o => o.getAttribute("data-value") === hiddenInput.value);
+            const displayText = match ? match.textContent : hiddenInput.value;
+            toggleBtn.innerHTML = `${displayText} <span class="material-symbols-rounded">arrow_drop_down</span>`;
+        }
+
+        toggleBtn.addEventListener("click", () => {
+            options.classList.toggle("hide");
+        });
+
+        options.querySelectorAll(".option-btn").forEach(opt => {
+            opt.addEventListener("click", () => {
+                hiddenInput.value = opt.getAttribute("data-value");
+                toggleBtn.innerHTML = opt.textContent + '<span class="material-symbols-rounded">arrow_drop_down</span>';
                 options.classList.add("hide");
             });
         });
-        document.addEventListener("click",e=>{ if(!wrapper.contains(e.target)) options.classList.add("hide"); });
+
+        document.addEventListener("click", e => {
+            if (!wrapper.contains(e.target)) {
+                options.classList.add("hide");
+            }
+        });
     });
 
     // ----------- 팝업 기능 -----------

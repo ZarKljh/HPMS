@@ -93,12 +93,12 @@
       </div>
       <div class="input-list">
         <label>생년월일:</label>
-        <input type="number" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+        <input type="text" th:field="*{dateOfBirth}" placeholder="YYYYMMDD" maxlength="8" class="numeric-only" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
         <label>입사일:</label>
-        <input type="number" th:field="*{hireDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+        <input type="text" th:field="*{hireDate}" placeholder="YYYYMMDD" maxlength="8" class="numeric-only" required />
         <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
       </div>
       <div class="input-list">
