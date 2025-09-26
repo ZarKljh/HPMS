@@ -15,12 +15,12 @@
         <h4 class="border-bottom py-2">연락처</h4>
         <div class="input-list">
           <label>전화번호:</label>
-          <input type="text" th:field="*{tel}" maxlength="25" required />
+          <input type="text" th:field="*{tel}" maxlength="25" placeholder="010-1234-5678" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
         <div class="input-list">
           <label>비상연락처:</label>
-          <input type="text" th:field="*{emgcCntc}" maxlength="25" required />
+          <input type="text" th:field="*{emgcCntc}" maxlength="25" placeholder="010-1234-5678" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
         <div class="input-list name_list">
@@ -44,14 +44,16 @@
         <h4 class="border-bottom py-2">주소 / 이메일</h4>
         <div class="input-list">
           <label>이메일:</label>
-          <input type="email" th:field="*{email}" maxlength="250" required />
+          <input type="text" th:field="*{email}" maxlength="250" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
         <div class="input-list">
           <label>우편번호:</label>
-          <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" oninput="numberMaxLength(this);" required/>
+          <input type="text" th:field="*{pcd}" id="postcode" maxlength="10" required/>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>주소:</label>
           <div style="gap:8px; align-items:center; flex-direction:row;">
@@ -60,6 +62,7 @@
             <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
           </div>
         </div>
+
         <div class="input-list">
           <label>상세주소:</label>
           <input type="text" th:field="*{detAdd}" id="addr2" maxlength="250"/>
@@ -69,31 +72,42 @@
         <h4 class="border-bottom py-2">자격 / 학력</h4>
         <div class="input-list">
           <label>간호사 자격증 번호:</label>
-          <input type="text" th:field="*{rnNo}" maxlength="6" oninput="numberMaxLength(this);" required />
+          <input type="text" th:field="*{rnNo}" maxlength="20"  required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>최종학력:</label>
           <input type="text" th:field="*{edbc}" maxlength="50" required/>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>졸업날짜:</label>
-          <input type="number" th:field="*{gradDate}" placeholder="YYYYMMDD" maxlength="8" oninput="numberMaxLength(this);" required />
+          <input type="text" th:field="*{gradDate}" maxlength="8" class="numeric-only" required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>외국어:</label>
           <input type="text" th:field="*{fl}" maxlength="250"/>
         </div>
+
         <div class="input-list">
           <label>병역:</label>
-          <select th:field="*{ms}" required>
-            <option value="">선택</option>
-            <option value="군필">군필</option>
-            <option value="미필">미필</option>
-            <option value="면제">면제</option>
-          </select>
+          <div class="select-wrapper" data-role="selectbox">
+            <button type="button" class="toggle_btn">
+              병역 선택
+              <span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <ul class="hide selectbox_option">
+              <li><button type="button" class="option-btn" data-value="군필">군필</button></li>
+              <li><button type="button" class="option-btn" data-value="미필">미필</button></li>
+              <li><button type="button" class="option-btn" data-value="면제">면제</button></li>
+            </ul>
+            <!-- 실제 form 전송용 -->
+            <input type="hidden" name="ms" required/>
+          </div>
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -108,30 +122,48 @@
 
         <div class="input-list">
           <label>장애여부:</label>
-          <select th:field="*{dss}" required>
-            <option value="">선택</option>
-            <option value="Y">유</option>
-            <option value="N">무</option>
-          </select>
+          <div class="select-wrapper" data-role="selectbox">
+            <button type="button" class="toggle_btn">
+              장애여부 선택
+              <span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <ul class="hide selectbox_option">
+              <li><button type="button" class="option-btn" data-value="Y">유</button></li>
+              <li><button type="button" class="option-btn" data-value="N">무</button></li>
+            </ul>
+            <!-- 실제 form 전송용 -->
+            <input type="hidden" name="dss" required/>
+          </div>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
+
         <div class="input-list">
           <label>경력(개월):</label>
-          <input type="text" th:field="*{carr}" maxlength="5" required/>
+          <input type="text" th:field="*{carr}" maxlength="5" class="numeric-only" required/>
+          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
         <h4 class="border-bottom py-2">사진 / 비고</h4>
         <div class="input-list">
-          <label>사진 URL:</label>
-          <input type="text" th:field="*{picture}" placeholder="https://example.com/photo.jpg" maxlength="250" required />
-          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+          <label>사진:</label>
+          <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
+
+          <div class="mt-2">
+            <img id="picturePreview"
+                 src="/images/default.png"
+                 alt="사진 미리보기"
+                 style="max-width:150px; max-height:150px; display:block;" />
+          </div>
         </div>
+
         <div class="input-list">
           <label>비고:</label>
           <textarea name="note" class="form-control" type="text" maxlength="250" th:field="*{note}"></textarea>
         </div>
       </div>
+
       <div class="pt-2 d-flex justify-content-end">
-        <button class="save_btn button-link" type="submit">등록</button>
+        <button class="save_btn button-link" type="button">등록</button>
       </div>
     </form>
   </div>

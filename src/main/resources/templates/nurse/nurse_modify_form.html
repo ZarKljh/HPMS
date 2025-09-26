@@ -4,14 +4,14 @@
     <p th:text="${errorMessage}"></p>
   </div>
   <form th:action="@{/nurse/modify/{id}(id=${nurseDTO.nurseMain.id})}"
-        th:object="${nurseDTO}" method="post">
+        th:object="${nurseDTO}" method="post" enctype="multipart/form-data">
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
     <h3 class="border-bottom mt-2">간호사 정보 수정</h3>
 
-    <!-- NurseMain 정보 -->
     <div class="nursemain card my-3 p-3">
+      <!-- NurseMain 정보 -->
       <h4 class="border-bottom mt-2">기본 정보</h4>
 
       <div class="input-list">
@@ -31,62 +31,87 @@
 
       <div class="input-list">
         <label>부서:</label>
-        <select th:field="*{nurseMain.dept}" required>
-          <option value="">선택</option>
-          <option value="AN">마취통증의학과</option>
-          <option value="DEN">치과</option>
-          <option value="DER">피부과</option>
-          <option value="EM">응급의학과</option>
-          <option value="ENT">이비인후과</option>
-          <option value="OPH">안과</option>
-          <option value="FM">가정의학과</option>
-          <option value="GS">외과</option>
-          <option value="IM">내과</option>
-          <option value="LM">진단검사의학과</option>
-          <option value="NM">핵의학과</option>
-          <option value="NR">신경과</option>
-          <option value="NS">신경외과</option>
-          <option value="OBGY">산부인과</option>
-          <option value="OEM">직업환경의학과</option>
-          <option value="OS">정형외과</option>
-          <option value="PA">병리과</option>
-          <option value="PED">소아청소년과</option>
-          <option value="PM">예방의학과</option>
-          <option value="PS">성형외과</option>
-          <option value="PSI">정신건강의학과</option>
-          <option value="RD">방사선과</option>
-          <option value="RAD">영상의학과</option>
-          <option value="RM">재활의학과</option>
-          <option value="RO">방사선종양학과</option>
-          <option value="TB">결핵과</option>
-          <option value="TS">흉부외과</option>
-          <option value="UR">비뇨기과</option>
-        </select>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            부서 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="마취통증의학과">마취통증의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="치과">치과</button></li>
+            <li><button type="button" class="option-btn" data-value="피부과">피부과</button></li>
+            <li><button type="button" class="option-btn" data-value="응급의학과">응급의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="이비인후과">이비인후과</button></li>
+            <li><button type="button" class="option-btn" data-value="안과">안과</button></li>
+            <li><button type="button" class="option-btn" data-value="가정의학과">가정의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="외과">외과</button></li>
+            <li><button type="button" class="option-btn" data-value="내과">내과</button></li>
+            <li><button type="button" class="option-btn" data-value="진단검사의학과">진단검사의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="핵의학과">핵의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="신경과">신경과</button></li>
+            <li><button type="button" class="option-btn" data-value="신경외과">신경외과</button></li>
+            <li><button type="button" class="option-btn" data-value="산부인과">산부인과</button></li>
+            <li><button type="button" class="option-btn" data-value="직업환경의학과">직업환경의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="정형외과">정형외과</button></li>
+            <li><button type="button" class="option-btn" data-value="병리과">병리과</button></li><li><button type="button" class="option-btn" data-value="nurse">간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="소아청소년과">소아청소년과</button></li>
+            <li><button type="button" class="option-btn" data-value="예방의학과">예방의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="성형외과">성형외과</button></li>
+            <li><button type="button" class="option-btn" data-value="정신건강의학과">정신건강의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="방사선과">방사선과</button></li><li><button type="button" class="option-btn" data-value="nurse">간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="영상의학과">영상의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="재활의학과">재활의학과</button></li>
+            <li><button type="button" class="option-btn" data-value="방사선종양학과">방사선종양학과</button></li>
+            <li><button type="button" class="option-btn" data-value="결핵과">결핵과</button></li>
+            <li><button type="button" class="option-btn" data-value="흉부외과">흉부외과</button></li>
+            <li><button type="button" class="option-btn" data-value="비뇨기과">비뇨기과</button></li>
+            <li><button type="button" class="option-btn" data-value="비뇨의학과">비뇨의학과</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" th:field="*{nurseMain.dept}" required/>
+        </div>
       </div>
 
       <div class="input-list">
         <label>직급:</label>
-        <input type="text" th:field="*{nurseMain.rank}" maxlength="4" required/>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            직급 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="간호부장">간호부장</button></li>
+            <li><button type="button" class="option-btn" data-value="수간호사">수간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="수간호장">수간호장</button></li>
+            <li><button type="button" class="option-btn" data-value="책임">책임간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="주임">주임간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="일반">일반간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="신규">신규간호사</button></li>
+            <li><button type="button" class="option-btn" data-value="실습생">간호학생(실습생)</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" th:field="*{nurseMain.rank}" required/>
+        </div>
       </div>
 
       <div class="input-list">
         <label>성별:</label>
         <div class="form-check">
-          <input type="radio" th:field="*{nurseMain.gender}" value="M" /> 남
+          <input type="radio" th:field="*{nurseMain.gender}" value="M" style="width: auto;"/> 남
         </div>
         <div class="form-check">
-          <input type="radio" th:field="*{nurseMain.gender}" value="F" /> 여
+          <input type="radio" th:field="*{nurseMain.gender}" value="F" style="width: auto;"/> 여
         </div>
       </div>
 
       <div class="input-list">
         <label>생년월일:</label>
-        <input type="number" th:field="*{nurseMain.dateOfBirth}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseMain.dateOfBirth}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
         <label>입사일:</label>
-        <input type="number" th:field="*{nurseMain.hireDate}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseMain.hireDate}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
@@ -107,27 +132,27 @@
     <!-- NurseInformation 정보 -->
       <h3 class="border-bottom mt-2">상세 정보</h3>
       <div class="input-list">
-      <label>예명:</label>
+        <label>예명:</label>
         <input type="text" th:field="*{nurseInformation.firstName}" maxlength="50"/>
         <input type="text" th:field="*{nurseInformation.lastName}" maxlength="50"/>
-        <input type="text" th:field="*{nurseInformation.middleName}" maxlength="50"/>
+        <input class="middle_name" type="text" th:field="*{nurseInformation.middleName}" maxlength="50"/>
       </div>
 
       <div class="input-list">
         <label>전화번호:</label>
-        <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" required/>
+        <input type="text" th:field="*{nurseInformation.tel}" maxlength="25" placeholder="010-1234-5678" required/>
       </div>
 
       <div class="input-list">
         <label>비상연락처:</label>
-        <input type="text" th:field="*{nurseInformation.emgcCntc}" maxlength="25" required/>
+        <input type="text" th:field="*{nurseInformation.emgcCntc}" placeholder="010-1234-5678" maxlength="25" required/>
       </div>
 
       <div class="input-list">
         <label>성명:</label>
         <input type="text" th:field="*{nurseInformation.emgcFName}" maxlength="50" required/>
         <input type="text" th:field="*{nurseInformation.emgcLName}" maxlength="50" required/>
-        <input type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50"/>
+        <input class="middle_name" type="text" th:field="*{nurseInformation.emgcMName}" maxlength="50"/>
       </div>
 
       <div class="input-list">
@@ -175,7 +200,7 @@
 
       <div class="input-list">
         <label>졸업날짜:</label>
-        <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" required/>
+        <input type="text" th:field="*{nurseInformation.gradDate}" maxlength="8" required class="numeric-only"/>
       </div>
 
       <div class="input-list">
@@ -185,12 +210,19 @@
 
       <div class="input-list">
         <label>병역:</label>
-        <select th:field="*{nurseInformation.ms}" required>
-          <option value="">선택</option>
-          <option value="군필">군필</option>
-          <option value="미필">미필</option>
-          <option value="면제">면제</option>
-        </select>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            병역 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="군필">군필</button></li>
+            <li><button type="button" class="option-btn" data-value="미필">미필</button></li>
+            <li><button type="button" class="option-btn" data-value="면제">면제</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" th:field="*{nurseInformation.ms}" required/>
+        </div>
       </div>
 
       <div class="input-list">
@@ -204,25 +236,38 @@
 
       <div class="input-list">
         <label>장애 여부:</label>
-        <select th:field="*{nurseInformation.dss}" required>
-          <option value="">선택</option>
-          <option value="Y">유</option>
-          <option value="N">무</option>
-        </select>
+        <div class="select-wrapper" data-role="selectbox">
+          <button type="button" class="toggle_btn">
+            장애여부 선택
+            <span class="material-symbols-rounded">arrow_drop_down</span>
+          </button>
+          <ul class="hide selectbox_option">
+            <li><button type="button" class="option-btn" data-value="Y">유</button></li>
+            <li><button type="button" class="option-btn" data-value="N">무</button></li>
+          </ul>
+          <!-- 실제 form 전송용 -->
+          <input type="hidden" th:field="*{nurseInformation.dss}" required/>
+        </div>
       </div>
 
       <div class="input-list">
         <label>경력:</label>
-        <input type="text" th:field="*{nurseInformation.carr}" maxlength="5" required/>
+        <input type="text" th:field="*{nurseInformation.carr}" maxlength="5" required class="numeric-only"/>
       </div>
 
-      <div>
-        <label>사진 URL</label>
-        <input type="text" th:field="*{nurseInformation.picture}"
-               placeholder="https://example.com/photo.jpg" maxlength="250" required/>
+      <div class="input-list">
+        <label>사진:</label>
+        <!-- 파일 업로드 -->
+        <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
+        <!-- 미리보기 -->
         <div class="mt-2">
-          <span th:if="*{nurseInformation.picture == null}">사진 없음</span>
+          <img id="picturePreview"
+               th:src="${nurseDTO?.nurseInformation?.picture ?: '/images/default.png'}"
+               alt="사진 미리보기"
+               style="width: 150px; height: 150px; object-fit: cover; display:block;" />
         </div>
+          <!-- 실제 DB 저장용 hidden 필드 -->
+        <input type="hidden" th:field="*{nurseInformation.picture}" id="pictureUrl"/>
       </div>
 
       <div class="input-list">
@@ -232,9 +277,9 @@
     </div>
 
     <div class="c_c_btn_box d-flex justify-content-end">
-      <button type="submit" class="button-link me-2">저장</button>
+      <button type="button" class="button-link me-2">저장</button>
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
-  <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
 </div>
+</html>

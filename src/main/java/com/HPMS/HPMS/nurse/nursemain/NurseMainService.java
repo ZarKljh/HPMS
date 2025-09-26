@@ -2,7 +2,6 @@ package com.HPMS.HPMS.nurse.nursemain;
 
 import com.HPMS.HPMS.nurse.NurseDataNotFoundException;
 import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
-import com.HPMS.HPMS.nurse.nurseinformation.NurseInformationRepository;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class NurseMainService {
 
     private final NurseMainRepository nurseMainRepository;
-    private final NurseInformationRepository nurseInformationRepository;
 
     public List<NurseMain> getAll() {
         return nurseMainRepository.findAll();
@@ -37,7 +35,7 @@ public class NurseMainService {
         }
     }
 
-    public NurseMain getById(Integer id) {
+    public NurseMain findById(Integer id) {
         return nurseMainRepository.findById(id).orElse(null);
     }
 
@@ -67,22 +65,34 @@ public class NurseMainService {
     }
 
     private Specification<NurseMain> search(String kw) {
-        return new Specification<>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<NurseMain> m, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);  // 중복을 제거
-                Join<NurseMain, NurseInformation> i = m.join("nurseInformation", JoinType.LEFT);
-                return cb.or(cb.like(m.get("firstName"), "%" + kw + "%"), // 이름
-                        cb.like(m.get("lastName"), "%" + kw + "%"),      // 성
-                        cb.like(m.get("dept"), "%" + kw + "%"),    // 부서
-                        cb.like(m.get("rank"), "%" + kw + "%"),      // 직급
-                        cb.like(m.get("sts"), "%" + kw + "%"),      // 상태
-                        cb.like(m.get("wt"), "%" + kw + "%"),      // 근무형태
-                        cb.like(m.get("writer"), "%" + kw + "%"),      // 작성자
-                        cb.like(i.get("tel"), "%" + kw + "%"),      // 전화번호
-                        cb.like(m.get("modifier"), "%" + kw + "%"));   // 수정자
+        return (Root<NurseMain> m, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+            query.distinct(true); // 중복 제거
+            Join<NurseMain, NurseInformation> i = m.join("nurseInformation", JoinType.LEFT);
+
+            // 공백 기준으로 키워드 분리
+            String[] keywords = kw.trim().split("\\s+");
+            List<Predicate> andPredicates = new ArrayList<>();
+
+            for (String keyword : keywords) {
+                String pattern = "%" + keyword + "%";
+
+                // 각 키워드가 걸릴 수 있는 컬럼들 (OR 조건)
+                Predicate orPredicate = cb.or(
+                        cb.like(m.get("firstName"), pattern),   // 이름
+                        cb.like(m.get("lastName"), pattern),    // 성
+                        cb.like(m.get("dept"), pattern),        // 부서
+                        cb.like(m.get("rank"), pattern),        // 직급
+                        cb.like(m.get("sts"), pattern),         // 상태
+                        cb.like(m.get("wt"), pattern),          // 근무형태
+                        cb.like(m.get("writer"), pattern),      // 작성자
+                        cb.like(i.get("tel"), pattern),         // 전화번호
+                        cb.like(m.get("modifier"), pattern)     // 수정자
+                );
+
+                // 여러 키워드는 AND로 묶음
+                andPredicates.add(orPredicate);
             }
+            return cb.and(andPredicates.toArray(new Predicate[0]));
         };
     }
 

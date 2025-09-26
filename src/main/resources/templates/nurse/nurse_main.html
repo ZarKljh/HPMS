@@ -2,33 +2,33 @@
 <div layout:fragment="content" class="container">
     <h2 class="listbox">Nurse List <span class="sub_title">간호사 리스트</span> </h2>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center">
-    <form  method="get" action="/nurse" class="size_bar d-flex align-items-center mb-2 mb-md-0">
-        <div class="d-flex align-items-center">
-            <strong class="me-1">등록 건수:</strong> <span th:text="${totalCount}"></span>명 /
-            <strong class="mx-1">현재 페이지:</strong> <span th:text="${currentPage + 1}"></span> /
-            <strong class="mx-1">페이지당 행 수:</strong>
-            <select name="size" id="size" onchange="this.form.submit();">
-                <option th:value="5" th:selected="${size == 5}">5</option>
-                <option th:value="10" th:selected="${size == 10}">10</option>
-                <option th:value="20" th:selected="${size == 20}">20</option>
-            </select>
-            <input type="hidden" name="page" value="1" />
-        </div>
-    </form>
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <form  method="get" action="/nurse" class="size_bar d-flex align-items-center mb-2 mb-md-0">
+            <div class="d-flex align-items-center">
+                <strong class="me-1">등록 건수:</strong> <span th:text="${totalCount}"></span>명 /
+                <strong class="mx-1">현재 페이지:</strong> <span th:text="${currentPage + 1}"></span> /
+                <strong class="mx-1">페이지당 행 수:</strong>
+                <select name="size" id="size" onchange="this.form.submit();">
+                    <option th:value="5" th:selected="${size == 5}">5</option>
+                    <option th:value="10" th:selected="${size == 10}">10</option>
+                    <option th:value="20" th:selected="${size == 20}">20</option>
+                </select>
+                <input type="hidden" name="page" value="0" />
+            </div>
+        </form>
 
-    <form method="get" action="/nurse" class="d-flex align-items-center">
-        <div class="search_box row my-3">
-            <div>
-                <div class="input-group">
-                    <span class="input-text">이름/부서/직급/상태/근무형태/작성자/전화번호/수정자만 검색 가능합니다.</span>
-                    <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw"/>
-                    <button class="search_btn" type="submit" id="btn_search">검색</button>
+        <form method="get" action="/nurse" class="d-flex align-items-center">
+            <div class="search_box row my-3">
+                <div>
+                    <div class="input-group">
+                        <span class="input-text">이름/부서/직급/상태/근무형태/작성자/전화번호/수정자 검색가능</span>
+                        <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw" placeholder="홍길동 신규간호사 재직중"/>
+                        <button class="search_btn" type="submit" id="btn_search">검색</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
     <!-- 삭제를 위한 숨겨진 폼 -->
     <form id="deleteForm" method="post" action="/nurse/deleteMultiple" style="display: none;">
@@ -39,11 +39,11 @@
     <meta name="_csrf" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-    <table class="table table-hover card">
+    <table class="table table-hover card nurse_table">
         <thead class="table-light">
         <tr class="list text-center">
             <th class="chang-checkbox-column"><input type="checkbox" id="checkAll" /></th>
-            <th>번호</th>
+            <th style="min-width: 50px;max-width: 50px;">번호</th>
             <th>부서</th>
             <th>직급</th>
             <th>성명</th>
@@ -62,7 +62,7 @@
         <tbody class="text-center">
         <tr class="text-center" th:each="nurseMain, loop : ${paging}">
             <td class="chang-checkbox-column"><input type="checkbox" class="nurse-checkbox" name="checkedIds" th:value="${nurseMain.id}" /></td>
-            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td style="max-width: 50px;" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td th:text="${nurseMain.dept}"></td>
             <td th:text="${nurseMain.rank}"></td>
             <td>

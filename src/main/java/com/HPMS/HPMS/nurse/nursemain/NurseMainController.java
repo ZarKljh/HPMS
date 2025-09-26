@@ -32,6 +32,9 @@ public class NurseMainController {
         model.addAttribute("kw", kw);
         model.addAttribute("size", size);
 
+        long totalCount = paging.getTotalElements();
+        model.addAttribute("totalCount", totalCount);
+
         // 페이지 번호 리스트 생성
         int totalPages = paging.getTotalPages();
         List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
@@ -87,7 +90,7 @@ public class NurseMainController {
 
             // 실제 삭제 전에 데이터 존재 확인
             for (Integer id : checkedIds) {
-                NurseMain nurse = nurseMainService.getById(id);
+                NurseMain nurse = nurseMainService.findById(id);
                 System.out.println("ID " + id + "의 간호사: " + (nurse != null ? nurse.getFirstName() : "없음"));
             }
 
