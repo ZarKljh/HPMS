@@ -365,6 +365,9 @@ td {
 div.d-flex > span {
     width: 300px;
 }
+div.input-list>label+span {
+    width: 300px;
+}
 
 
 
@@ -375,7 +378,6 @@ div.d-flex > span {
     align-items: center;
     width: 100%;
 }
-
 
 //--------------- 기본정보 등록 ---------------//
 .main-table {
