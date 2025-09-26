@@ -13,18 +13,22 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-    @Value("${file.upload.directory:uploads/nurse/pictures}")
+    @Value("${file.upload.directory}")
     private String uploadDirectory;
 
-    @Value("${file.upload.base-url:http://localhost:8080}")
+    @Value("${file.upload.base-url}")
     private String baseUrl;
 
     public String saveUploadedFile(MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get(uploadDirectory);
+        // 절대 경로 가져오기
+        Path uploadPath = Paths.get(uploadDirectory).toAbsolutePath();
+
+        // 폴더 없으면 생성
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
+        // 파일 이름
         String originalFilename = file.getOriginalFilename();
         String extension = "";
         if (originalFilename != null && originalFilename.contains(".")) {
@@ -32,9 +36,15 @@ public class FileService {
         }
         String fileName = UUID.randomUUID().toString() + extension;
 
+        // 실제 저장
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath);
 
+        // 디버그용 출력
+        System.out.println("📂 Upload absolute path = " + uploadPath);
+        System.out.println("✅ Saved file: " + filePath.toAbsolutePath());
+
+        // URL 리턴 (웹에서 접근할 경로)
         return baseUrl + "/uploads/nurse/pictures/" + fileName;
     }
 

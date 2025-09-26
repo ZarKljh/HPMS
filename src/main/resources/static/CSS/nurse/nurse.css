@@ -19,6 +19,10 @@ input::placeholder {
     color: #c9d1d6;
     font-size: 14px;
 }
+.input-group input::placeholder {
+    color: #c9d1d6;
+    font-size: 12px;
+}
 
 
 //--------------- 반응형 ---------------//
@@ -232,12 +236,13 @@ td {
 }
 .image {
 	width: 300px;
-	height: 400px;
-	overflow: hidden;
-	border: 1px solid gray;
-	background-color: white;
-	margin-left: 40px;
-	margin-bottom: 20px;
+    height: 400px;
+    overflow: hidden;
+    border: 1px solid gray;
+    background-color: white;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    border-radius: 0;
 }
 .image img {
     width: 100%;
@@ -379,17 +384,6 @@ input {
 }
 .info-value.empty {
     color: #adb5bd;
-}
-.image {
-    width: 120px;
-    height: 120px;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: #6c757d;
-    margin-bottom: 1rem;
 }
 
 

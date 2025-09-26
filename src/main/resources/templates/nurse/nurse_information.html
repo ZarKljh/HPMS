@@ -12,8 +12,7 @@
             <div class="image">
                 <img th:if="${nurseDTO.nurseInformation?.picture != null}"
                      th:src="${nurseDTO.nurseInformation.picture}"
-                     alt="nurse Image"
-                     style="max-width:150px; max-height:150px; display:block;" />
+                     alt="nurse Image" />
                 <span th:if="${nurseDTO.nurseInformation?.picture == null}">사진 없음</span>
             </div>
 
