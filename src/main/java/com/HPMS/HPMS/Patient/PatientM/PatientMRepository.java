@@ -16,6 +16,7 @@ public interface PatientMRepository extends JpaRepository<PatientM, Integer> {
     Page<PatientM> findAll(Pageable pageable);
     Page<PatientM> findAll(Specification<PatientM> spec, Pageable pageable);
     Optional<PatientM> findByFirstNameAndLastName(String firstName, String lastName);
+
 }
 
 
