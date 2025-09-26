@@ -1,103 +1,216 @@
 <!doctype html>
 <html lang="ko"
+      layout:decorate="~{doctor/doctor_layout}"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{doctor/doctor_layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block layout:fragment="content">
-  <div class="container detail-container">
+<div layout:fragment="content" class="container">
 
-    <!-- 상단 타이틀 + 안내문 -->
-    <div class="mb-2">
-      <h3 class="listbox mt-2 h3">의사 상세 내역</h3>
-      <h4 class="detail-subtitle h4">현재 등록된 의사의 상세 정보입니다.</h4>
-    </div>
+    <!-- =========================================================
+         이 페이지 전용 hover 스타일
+         - 버튼(수정/삭제/공통 버튼링크) 호버 시 밑줄 제거
+       ========================================================= -->
 
-    <!-- 하나의 카드 컨테이너 -->
-    <div class="detail-card card shadow-sm">
-      <!-- 메인 정보 -->
-      <h4 class="section-heading">메인 정보</h4>
-      <div class="section-divider"></div>
 
-      <!-- 메인 정보 섹션을 1fr(내용) + 220px(사진) 그리드로 -->
-      <div class="main-info-grid">
-        <!-- 왼쪽: 메인 정보 필드들 -->
-        <div class="kv-grid">
-          <div class="kv-label">부서</div>       <div class="kv-value" th:text="${main.department}">DEPT</div>
-          <div class="kv-label">진료과</div>     <div class="kv-value" th:text="${main.medicalDepartment}">MED</div>
-          <div class="kv-label">직급</div>       <div class="kv-value" th:text="${main.rank}">RNK</div>
-          <div class="kv-label">직책</div>       <div class="kv-value" th:text="${main.position}">POS</div>
-          <div class="kv-label">성명</div>       <div class="kv-value"
-                                                    th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">홍 길동</div>
-          <div class="kv-label">성별</div>       <div class="kv-value" th:text="${main.gender}">M</div>
-          <div class="kv-label">생년월일</div>   <div class="kv-value"
-                                                  th:text="${main.dateOfBirth != null ? #temporals.format(main.dateOfBirth,'yyyy-MM-dd') : ''}">1990-01-01</div>
-          <div class="kv-label">전화</div>       <div class="kv-value" th:text="${main.telephone}">010-0000-0000</div>
-          <div class="kv-label">입사일</div>     <div class="kv-value"
-                                                   th:text="${main.hireDate != null ? #temporals.format(main.hireDate,'yyyy-MM-dd') : ''}">2020-01-01</div>
-          <div class="kv-label">상태</div>       <div class="kv-value" th:text="${main.status}">ACT</div>
-          <div class="kv-label">근무형태</div>   <div class="kv-value" th:text="${main.workType}">FULL</div>
+    <form class="doctor_detail"
+          th:action="@{|/doctor/dtl/${main.id}|}"
+          method="post">
+
+        <h3 class="border-bottom mt-2"
+            th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">
+            홍 길동
+        </h3>
+
+        <div class="main card my-3 p-3">
+            <h4 class="border-bottom py-2">의사 상세페이지 입니다.</h4>
+
+            <!-- 사진 -->
+            <div class="image mb-3">
+                <img th:if="${detail != null and detail.image != null}"
+                     th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${detail.image})}"
+                     alt="프로필 사진">
+                <div class="kv-2" th:if="${detail == null or detail.image == null}">
+                    <span class="value">등록된 프로필 사진이 없습니다.</span>
+                </div>
+            </div>
+
+            <!-- 기본 정보 1 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">부서:</label>
+                <span class="col-4" th:text="${main.department ?: '정보 없음'}">DEPT</span>
+
+                <label class="col-2 text-end">진료과:</label>
+                <span class="col-4" th:text="${main.medicalDepartment ?: '정보 없음'}">MED</span>
+            </div>
+
+            <!-- 기본 정보 2 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">직급:</label>
+                <span class="col-4" th:text="${main.rank ?: '정보 없음'}">RNK</span>
+
+                <label class="col-2 text-end">직책:</label>
+                <span class="col-4" th:text="${main.position ?: '정보 없음'}">POS</span>
+            </div>
+
+            <!-- 기본 정보 3 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">성명:</label>
+                <span class="col-4"
+                      th:text="|${main.lastName} ${main.middleName != null ? main.middleName + ' ' : ''}${main.firstName}|">홍 길동</span>
+
+                <label class="col-2 text-end">성별:</label>
+                <span class="col-4" th:text="${main.gender ?: '정보 없음'}">M</span>
+            </div>
+
+            <!-- 기본 정보 4 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">생년월일:</label>
+                <span class="col-4"
+                      th:text="${main.dateOfBirth != null ? #temporals.format(main.dateOfBirth,'yyyy-MM-dd') : '정보 없음'}">1990-01-01</span>
+
+                <label class="col-2 text-end">전화:</label>
+                <span class="col-4" th:text="${main.telephone ?: '정보 없음'}">010-0000-0000</span>
+            </div>
+
+            <!-- 고용/상태 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">입사일:</label>
+                <span class="col-4"
+                      th:text="${main.hireDate != null ? #temporals.format(main.hireDate,'yyyy-MM-dd') : '정보 없음'}">2020-01-01</span>
+
+                <label class="col-2 text-end">상태:</label>
+                <span class="col-4" th:text="${main.status ?: '정보 없음'}">ACT</span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">근무형태:</label>
+                <span class="col-4" th:text="${main.workType ?: '정보 없음'}">FULL</span>
+
+                <label class="col-2 text-end">사무실 전화:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.officeTelephone ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">이메일:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.email ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">우편번호:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.postcode ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">주소:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.defaultAddress ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">상세주소:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.detailedAddress ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <!-- 전문/자격 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">면허번호:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.registrationNumber ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">학력:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.educationalBackground ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">전공과:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.major ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">외국어:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.foreignLanguage ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">기타 자격증:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.license ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">근무경력:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.workDependsOnExperience ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <!-- 수상/학회 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">수상경력:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.awards ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">학회활동:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.societyActivity ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">학회인증:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.certificateOfSociety ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">병역:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.militaryService ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <!-- 기타 인적 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">국적:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.nationality ?: '정보 없음') : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">장애여부:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.disabilityStatus ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <!-- 비상연락 -->
+            <div class="row align-items-start mb-2" th:if="${detail != null}">
+                <label class="col-2 text-end">비상연락처:</label>
+                <span class="col-4" th:text="${detail.emergencyContact ?: '정보 없음'}"></span>
+
+                <label class="col-2 text-end">관계:</label>
+                <span class="col-4" th:text="${detail.emergencyRelation ?: '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2" th:if="${detail != null}">
+                <label class="col-2 text-end">성명(비상):</label>
+                <span class="col-4"
+                      th:text="|${detail.emergencyLastName ?: ''} ${detail.emergencyMiddleName ?: ''} ${detail.emergencyFirstName ?: ''}|">
+                </span>
+
+                <label class="col-2 text-end">비고(비상):</label>
+                <span class="col-4" th:text="${detail.emergencyNote ?: '정보 없음'}"></span>
+            </div>
+
+            <!-- 생성/수정/비고 -->
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">최초 생성일시:</label>
+                <span class="col-4" th:text="${detail != null && detail.createDate != null ? detail.createDate : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">최초 작성자:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.writer ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">최종 수정일시:</label>
+                <span class="col-4" th:text="${detail != null && detail.modifyDate != null ? detail.modifyDate : '정보 없음'}"></span>
+
+                <label class="col-2 text-end">최종 수정자:</label>
+                <span class="col-4" th:text="${detail != null ? (detail.modifier ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">비고:</label>
+                <span class="col-10" th:text="${detail != null ? (detail.note ?: '정보 없음') : '정보 없음'}"></span>
+            </div>
+
+            <div th:if="${detail == null}" class="mt-2 text-muted">디테일 정보가 없습니다.</div>
         </div>
 
-        <!-- 오른쪽: 사진 (섹션의 오른쪽-하단 정렬) -->
-        <div class="detail-photo aside">
-          <img th:if="${detail != null and detail.image != null}"
-               th:src="@{/img/hpms/Doctor/Doctor_profile/{file}(file=${detail.image})}"
-               alt="프로필 사진">
-          <div th:if="${detail == null or detail.image == null}" class="kv-value no-photo">
-            등록된 프로필 사진이 없습니다.
-          </div>
+        <!-- 버튼 -->
+        <div class="m-d-btn">
+            <div class="m-d-btn_box">
+                <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
+                <a href="javascript:void(0);"
+                   th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
+                   class="d-btn"
+                   onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
+            </div>
         </div>
-      </div>
-
-      <!-- 상세 정보 -->
-      <h4 class="section-heading mt-4">상세 정보</h4>
-      <div class="section-divider"></div>
-
-      <div class="kv-grid">
-        <div class="kv-label">사무실 전화</div>   <div class="kv-value" th:text="${detail.officeTelephone}"></div>
-        <div class="kv-label">비상연락처</div>     <div class="kv-value" th:text="${detail.emergencyContact}"></div>
-        <div class="kv-label">비상연락처 성명</div>
-        <div class="kv-value"
-             th:text="|${detail.emergencyLastName} ${detail.emergencyMiddleName != null ? detail.emergencyMiddleName + ' ' : ''}${detail.emergencyFirstName}|"></div>
-        <div class="kv-label">비상연락처 관계</div> <div class="kv-value" th:text="${detail.emergencyRelation}"></div>
-        <div class="kv-label">비상연락처 비고</div> <div class="kv-value" th:text="${detail.emergencyNote}"></div>
-        <div class="kv-label">이메일</div>         <div class="kv-value" th:text="${detail.email}"></div>
-        <div class="kv-label">우편번호</div>       <div class="kv-value" th:text="${detail.postcode}"></div>
-        <div class="kv-label">주소</div>           <div class="kv-value" th:text="${detail.defaultAddress}"></div>
-        <div class="kv-label">상세주소</div>       <div class="kv-value" th:text="${detail.detailedAddress}"></div>
-        <div class="kv-label">면허번호</div>       <div class="kv-value" th:text="${detail.registrationNumber}"></div>
-        <div class="kv-label">학력</div>           <div class="kv-value" th:text="${detail.educationalBackground}"></div>
-        <div class="kv-label">전공과</div>         <div class="kv-value" th:text="${detail.major}"></div>
-        <div class="kv-label">외국어</div>         <div class="kv-value" th:text="${detail.foreignLanguage}"></div>
-        <div class="kv-label">기타 자격증</div>     <div class="kv-value" th:text="${detail.license}"></div>
-        <div class="kv-label">근무경력</div>       <div class="kv-value" th:text="${detail.workDependsOnExperience}"></div>
-        <div class="kv-label">수상경력</div>       <div class="kv-value" th:text="${detail.awards}"></div>
-        <div class="kv-label">학회활동</div>       <div class="kv-value" th:text="${detail.societyActivity}"></div>
-        <div class="kv-label">학회인증</div>       <div class="kv-value" th:text="${detail.certificateOfSociety}"></div>
-        <div class="kv-label">병역</div>           <div class="kv-value" th:text="${detail.militaryService}"></div>
-        <div class="kv-label">국적</div>           <div class="kv-value" th:text="${detail.nationality}"></div>
-        <div class="kv-label">장애여부</div>       <div class="kv-value" th:text="${detail.disabilityStatus}"></div>
-        <div class="kv-label">최초 생성일시</div>  <div class="kv-value" th:text="${detail.createDate}"></div>
-        <div class="kv-label">최초 작성자</div>    <div class="kv-value" th:text="${detail.writer}"></div>
-        <div class="kv-label">최종 수정일시</div>  <div class="kv-value" th:text="${detail.modifyDate}"></div>
-        <div class="kv-label">최종 수정자</div>    <div class="kv-value" th:text="${detail.modifier}"></div>
-        <div class="kv-label">비고</div>           <div class="kv-value" th:text="${detail.note}"></div>
-      </div>
-
-      <div th:if="${detail == null}" class="kv-value" style="padding-top:12px;">디테일 정보가 없습니다.</div>
-
-      <div class="detail-actions-outer">
-        <a th:href="@{/doctor/edit/{id}(id=${main.id})}" class="m-btn">수정</a>
-        <a href="javascript:void(0);"
-           th:data-uri="@{/doctor/delete/{id}(id=${main.id})}"
-           class="d-btn"
-           onclick="if(confirm('삭제하시겠습니까?')) window.location.href=this.getAttribute('data-uri')">삭제</a>
-      </div>
-    </div><!-- /detail-card -->
-    <!-- ✅ 카드 바깥, 우측 정렬 버튼 -->
-
-  </div>
-</th:block>
-
+    </form>
+</div>
 </html>
