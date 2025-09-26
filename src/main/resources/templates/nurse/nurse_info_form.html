@@ -72,7 +72,7 @@
         <h4 class="border-bottom py-2">자격 / 학력</h4>
         <div class="input-list">
           <label>간호사 자격증 번호:</label>
-          <input type="text" th:field="*{rnNo}" maxlength="6"  required />
+          <input type="text" th:field="*{rnNo}" maxlength="20"  required />
           <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
 
@@ -145,9 +145,15 @@
 
         <h4 class="border-bottom py-2">사진 / 비고</h4>
         <div class="input-list">
-          <label>사진 URL:</label>
-          <input type="file" name="picture" th:field="*{picture}" accept="image/*" required />
-          <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+          <label>사진:</label>
+          <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
+
+          <div class="mt-2">
+            <img id="picturePreview"
+                 src="/images/default.png"
+                 alt="사진 미리보기"
+                 style="max-width:150px; max-height:150px; display:block;" />
+          </div>
         </div>
 
         <div class="input-list">

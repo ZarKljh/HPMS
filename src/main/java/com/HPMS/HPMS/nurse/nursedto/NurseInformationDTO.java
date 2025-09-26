@@ -4,6 +4,7 @@ import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -32,6 +33,7 @@ public class NurseInformationDTO {
     private String dss;
     private String carr;
     private String picture;
+    private MultipartFile pictureFile;
     private String note;
 
     public NurseInformationDTO(String firstName, String lastName, String middleName, String tel,

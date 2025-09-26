@@ -380,7 +380,7 @@ input {
 .info-value.empty {
     color: #adb5bd;
 }
-.picture-placeholder {
+.image {
     width: 120px;
     height: 120px;
     background-color: #e9ecef;

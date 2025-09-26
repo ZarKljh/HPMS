@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function clearError(field) {
+        if (!field) return;
         const error = field.parentNode.querySelector('.error-message');
         if (error) error.remove();
         field.style.borderColor = '';
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if(!value){ showError(field,'날짜를 입력해주세요.'); isValid=false; }
                 else if(!/^\d{8}$/.test(value)){ showError(field,'YYYYMMDD 형식으로 입력해주세요.'); isValid=false; }
                 break;
-            case 'picture':
+            case 'pictureFile':
                 const fileInput = document.getElementById('pictureFile');
                 const existingPicture = document.querySelector('input[name="existingPicture"]');
                 const hasNewFile = fileInput && fileInput.files.length>0;
@@ -90,7 +91,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 break;
             case 'ms':
-                if(!value){ showError(field,'병역을 선택해주세요.'); isValid=false; }
+                const hiddenInput = document.querySelector('input[name="ms"]');
+                if (!hiddenInput || !hiddenInput.value) {
+                    showError(hiddenInput, '병역을 선택해주세요.');
+                    isValid = false;
+                }
                 break;
             case 'natn':
                 if(!value){ showError(field,'국적을 선택해주세요.'); isValid=false; }
@@ -147,6 +152,19 @@ document.addEventListener("DOMContentLoaded", function() {
             if(existingPicture) existingPicture.value="";
         });
     }
+    // ----------- function previewImage(event){...} 정의 -----------
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("picturePreview");
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        } else {
+            preview.src = "";
+            preview.style.display = "none";
+        }
+    }
+
 
     // ----------- selectbox 처리 -----------
     document.querySelectorAll(".select-wrapper").forEach(wrapper=>{
@@ -156,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
         toggleBtn.addEventListener("click",()=> options.classList.toggle("hide"));
         options.querySelectorAll(".option-btn").forEach(opt=>{
             opt.addEventListener("click",()=>{
-                hiddenInput.value=opt.getAttribute("value");
+                hiddenInput.value=opt.getAttribute("data-value");
                 toggleBtn.textContent=opt.textContent;
                 options.classList.add("hide");
             });
