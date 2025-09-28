@@ -80,6 +80,10 @@ public class PatientMService {
         return this.patientMRepository.findAll(spec, pageable);
     }
 
+    public Page<PatientM> patientMSimpleSearch(String kw, Pageable pageable) {
+        return this.patientMRepository.findAllByKeyword(kw, pageable);
+    }
+
 
     private Specification<PatientM> search(
             List<String> columns,
@@ -419,5 +423,6 @@ public class PatientMService {
         }
         return phone.replace("-", "");
     }
+
 }
 

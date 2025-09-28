@@ -262,6 +262,36 @@ public class PatientDTOService {
         return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
     }
 
+    // 단순조건으로 환자정보를 가져옵니다
+    public Page<PatientListDTO> searchSimple(String kw, Pageable pageable) {
+
+
+        //page형태로 patientM정보를 가져옵니다
+        Page<PatientM> patientMs = this.patientMService.patientMSimpleSearch(kw, pageable);
+
+        List<PatientListDTO> dtoList = new ArrayList<>();
+
+        for( PatientM m : patientMs.getContent()) {
+            PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+
+            //환자리스트html 전용 DTO 객체를 선언한다
+            PatientListDTO dto = new PatientListDTO();
+
+            dto.setId(m.getId());
+            dto.setName(m.getLastName() + " " + m.getFirstName());
+            dto.setGender(m.getGender());
+            dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
+            dto.setForeigner(m.getForeigner());
+            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+            dto.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
+            dto.setLastVisitDate(dtl.getLastVisitDate());
+            dto.setCreateDate(m.getCreateDate());
+
+            dtoList.add(dto);
+        }
+        //List<PatientListDTO> 의 데이터 타입을 Page<PatientListDTO> 형태로 변환합니다
+        return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
+    }
 
     //Integer 형으로 되어있는 날짜를 LocalDate로 변환하는 메소드
     public LocalDate stringToLocalDate(Integer dayOfbirth){
@@ -352,6 +382,5 @@ public class PatientDTOService {
         }
         return formatted;
     }
-
 
 }

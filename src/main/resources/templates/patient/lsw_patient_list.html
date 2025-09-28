@@ -1,7 +1,13 @@
 <html layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
-    <h2 class="listbox">Patient List <span class="sub_title">환자 리스트</span></h2>
-    <!--
+    <div class="header-listbox">
+        <h2 class="listbox">Patient List <span class="sub_title">환자 리스트</span></h2>
+        <div class="multi-condition-search-button">
+            <span class="input-text">다중조건으로 검색가능합니다.(단축키 F10) </span>
+            <a type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>다중조건검색</span></a>
+        </div>
+    </div>
+        <!--
     <div style="display:flex; align-items:baseline; gap:20px;">
         <h3 class="listbox" style="margin:0;">Patient List</h3>
         <h7 style="margin:0;">환자 리스트</h7>
@@ -26,18 +32,19 @@
                 </select>
             <!--  </div> -->
         </form>
-        <form method="get" action="/patient/list" class="d-flex align-items-center">
+        <form method="get" action="/patient/simplesearch" class="d-flex align-items-center">
+            <input type="hidden" id="page" name="page" th:value="${currentPage}">
+            <input type="hidden" name="size" th:value="${size}" />
             <div class="search_box row">
                 <div>
                     <div class="input-group">
-                        <span class="input-text">성별/성명/국적/작성자/전화번호/주소 검색가능</span>
-                        <input type="text" id="simplesearch_kw" class="form-control" th:value="${kw}" name="kw"/>
+                        <span class="input-text">성명 이름/보호자 연락처 뒷자리/휴대전화 뒷자리 검색가능</span>
+                        <input type="text" id="simplesearch_kw" class="form-control" th:value="${kw}" name="kw"  style="margin-left:5px;"/>
                         <button class="search_btn" type="submit" id="btn_search">검색</button>
                     </div>
                 </div>
             </div>
         </form>
-        <!-- <a type="button" class="search_btn card" id="btn_search" onclick="toggleSearchForm()"><span>검색하기</span></a> -->
     </div>
     <div class="d-flex flex-wrap justify-content-between align-items-center">
         <div class="card my-3" style="width:100%; border: 0 solid white;">
@@ -46,7 +53,8 @@
             -->
 
             <form id="searchForm" method="get" action="/patient/search" class="card p-3" style="display:none;">
-                <input type="hidden" id="page" name="page" th:value="${currentPage}">
+                <input type="hidden" name="page" th:value="${currentPage}">
+                <input type="hidden" name="size" th:value="${size}" />
                 <div id="searchConditions">
                     <!-- 🔹 검색 조건 한 줄 -->
                     <div class="search-row row mb-2" style="font-size:12px;">

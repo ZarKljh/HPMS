@@ -129,10 +129,43 @@ h3, h4 {
 	flex-direction: column;
 	box-sizing: border-box;
 }
+div.header-listbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 /*최상단 h2태그*/
 .listbox {
 	padding-top: 10px;
 }
+
+div.header-listbox > div.multi-condition-search-button {
+    padding-top: 10px;
+    margin-bottom: 8px;
+    display:flex;
+    align-items: flex-end;
+}
+
+div.header-listbox > div.multi-condition-search-button > span.input-text {
+    margin-top:auto;
+    padding-right: 10px;
+}
+div.header-listbox > div.multi-condition-search-button > a.search_btn{
+    margin-top:auto;
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 1px 6px;
+}
+
+div.header-listbox > div.multi-condition-search-button > a.search_btn:hover {
+    background-color: #dee2e6;
+    text-decoration:none;
+    color:inherit;
+}
+
 
 .patient-totalnum > strong, .patient-totalnum > span, .patient-totalnum > select{
     font-size: 12px;
