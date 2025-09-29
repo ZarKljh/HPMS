@@ -182,6 +182,7 @@ public class PatientController {
         for (int i = startPage; i <= endPage; i++) pageNumbers.add(i);
 
         // 모델에 담기
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("patients", patients);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
@@ -196,6 +197,49 @@ public class PatientController {
         // 기존 patient/list 의 화면 폼을 그대로 사용합니다
         return "patient/lsw_patient_list";
     }
+    //단순조건으로 환자를 검색합니다
+    // 성명 이름. 보호자 연락처 뒷자리, 휴대전화 뒷자리 3가지 조건으로 검색가능합니다
+    @GetMapping("/patient/simplesearch")
+    public String simpleSearchPatient(
+            Model model,
+            @RequestParam(value="page", defaultValue="0") int page,
+            @RequestParam(value="size", defaultValue="10") int size,
+            @RequestParam(value="kw", defaultValue = "") String kw){
+
+        //페이징처리를 위한 pageRequest 생성
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        Page<PatientListDTO> patients;
+        if (kw != null && !kw.isBlank()) {
+            patients = patientDTOService.searchSimple(kw, pageable);
+        } else {
+            patients = patientDTOService.getPatientListDTO(pageable);
+        }
+
+        int totalPages = patients.getTotalPages();
+        if (page >= totalPages) {
+            page = 0;
+        }
+        int currentPage = page;
+
+        int startPage = Math.max(currentPage - 2, 0);
+        int endPage = Math.min(currentPage + 2, totalPages-1);
+
+        List<Integer> pageNumbers = new ArrayList<>();
+
+        for (int i = startPage; i <= endPage; i++) {
+            pageNumbers.add(i);
+        }
+
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("patients", patients);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+
+        return "patient/lsw_patient_list";
+    }
+
 
 
 }

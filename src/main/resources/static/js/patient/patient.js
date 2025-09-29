@@ -13,6 +13,8 @@ $('.navbar-toggle').click(function() {
             const toggleBtn = wrapper.querySelector(".toggle_btn");
             const options = wrapper.querySelector(".selectbox_option");
             const hiddenInput = wrapper.querySelector("input[type='hidden']");
+
+
             toggleBtn.addEventListener("click",()=> options.classList.toggle("hide"));
             options.querySelectorAll(".option-btn").forEach(opt=>{
                 opt.addEventListener("click",()=>{
