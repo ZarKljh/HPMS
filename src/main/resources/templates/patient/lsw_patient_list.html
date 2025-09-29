@@ -155,7 +155,7 @@
                 <form id="patientForm" method="post" action="/patient/search">
                     <input name="size" type="hidden" th:value="${size}" >
                     <!--<input name="page" type="text" th:value="${page}" hidden="hidden">-->
-                    <input type="hidden" name="page" th:value="${currentPage}" />
+                    <input name="page" type="hidden"  th:value="${currentPage}" />
                 </form>
                 <a th:if="${currentPage > 0}" th:href="@{|?page=${currentPage-1}&size=${size}|}">이전</a>
                 <a th:each="pageNum : ${pageNumbers}"
