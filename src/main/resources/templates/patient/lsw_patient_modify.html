@@ -81,8 +81,8 @@
       <div class="input-list">
         <label>내/외국인:</label>
         <div class="select-wrapper" data-role="selectbox">
-          <button type="button" class="toggle_btn" th:text="${patientForm.gender == '0'} ? '내국인'
-                  : (${patientForm.gender == '1'} ? '외국인'
+          <button type="button" class="toggle_btn" th:text="${patientForm.foreigner == '0'} ? '내국인'
+                  : (${patientForm.foreigner == '1'} ? '외국인'
                   : '내/외국인 선택')">
             내/외국인 선택
             <span class="material-symbols-rounded">arrow_drop_down</span>
