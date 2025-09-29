@@ -466,39 +466,44 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // ----------- 사진 미리보기 -----------
-    const fileInput = document.getElementById("pictureFile");
-    const previewImg = document.getElementById("picturePreview");
+    /* ----------- 사진 미리보기 (등록 + 수정) ----------- */
+        const fileInput = document.getElementById("pictureFile");
+        const previewImg = document.getElementById("picturePreview");
+        const existingPicture = document.getElementById("pictureFileInput");
 
-    if (fileInput && previewImg) {
-        fileInput.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        if (fileInput && previewImg) {
+            fileInput.addEventListener("change", function(e) {
+                const file = fileInput.files[0];
+                if (!file) {
+                    // 선택 취소 시 기존 이미지 또는 기본 이미지
+                    previewImg.src = hiddenInput.value || '/images/default.png';
+                    return;
+                }
 
-            const maxSize = 5 * 1024 * 1024;
-            const allowed = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
+                const maxSize = 5 * 1024 * 1024;
+                const allowed = ["image/jpeg","image/png","image/jpg","image/gif","image/webp"];
 
-            if (file.size > maxSize) {
-                alert("파일 크기는 5MB 이하만 업로드 가능합니다.");
-                fileInput.value = "";
-                return;
-            }
-            if (!allowed.includes(file.type)) {
-                alert("허용되지 않는 파일 형식입니다.");
-                fileInput.value = "";
-                return;
-            }
+                if (file.size > maxSize) {
+                    alert("파일 크기는 5MB 이하입니다.");
+                    fileInput.value = "";
+                    return;
+                }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImg.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
+                if (!allowed.includes(file.type)) {
+                    alert("지원하지 않는 파일 형식입니다.");
+                    fileInput.value = "";
+                    return;
+                }
 
-            const existingPicture = document.querySelector('input[name="existingPicture"]');
-            if (existingPicture) existingPicture.value = "";
-        });
-    }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result; // 새 이미지 미리보기
+                }
+                reader.readAsDataURL(file);
+
+                hiddenInput.value = ""; // 새 이미지 선택 시 기존 값 제거
+            });
+        }
 
     window.previewImage = function(event) {
         const file = event.target.files[0];
