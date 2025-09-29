@@ -21,7 +21,7 @@
         <!-- 메뉴 카드들 -->
         <div class="row g-4 justify-content-center" style="flex-wrap: nowrap;">
             <!-- 사용자 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('SYSTEM','ADMIN')">
                 <a href="/user/list" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
@@ -36,7 +36,7 @@
             </div>
 
             <!-- 의사 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('DOCTOR','SYSTEM','ADMIN')">
                 <a href="/doctor" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
@@ -51,7 +51,7 @@
             </div>
 
             <!-- 간호사 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('NURSE','SYSTEM','ADMIN')">
                 <a href="/nurse" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
@@ -66,7 +66,7 @@
             </div>
 
             <!-- 환자 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('NURSE','DOCTOR','SYSTEM','ADMIN')">
                 <a href="/patient/list" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
@@ -75,6 +75,20 @@
                             </div>
                             <h4 class="card-title text-dark">환자</h4>
                             <p class="card-text text-muted">환자 관리</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- 로그인 -->
+            <div class="col-md-6 col-lg-3" sec:authorize="isAnonymous()">
+                <a href="/hpms/login" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 hover-card">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <span class="material-symbols-sharp" style="font-size: 50px;">person_add</span>
+                            </div>
+                            <h4 class="card-title text-dark">로그인</h4>
+                            <p class="card-text text-muted">로그인</p>
                         </div>
                     </div>
                 </a>
