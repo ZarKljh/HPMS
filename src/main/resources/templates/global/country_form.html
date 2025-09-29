@@ -4,78 +4,134 @@
 <head>
     <meta charset="UTF-8"/>
     <title>국적 검색</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous">
+
+    <!-- 공통 스타일 (doctor.css) -->
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/doctor/doctor.css}">
+
     <style>
-        body { font-family: system-ui, sans-serif; padding: 14px; }
-        .searchbar { display:flex; gap:8px; margin-bottom:12px; }
-        table { width:100%; border-collapse: collapse; }
-        th, td { border:1px solid #ddd; padding:8px; }
-        tr:hover { background:#f7f7f7; cursor:pointer; }
-        .pagination { margin-top: 12px; display:flex; gap:8px; align-items:center; }
+        .popup-container.container { width:auto !important; max-width:860px; padding:12px 16px; }
+        .sub_title { font-size:14px; color:#6c757d; }
+
+        /* 포커스 파란 테두리 제거 */
+        .form-control:focus, .button-link:focus, a:focus, input[type="text"]:focus {
+          outline:none !important; box-shadow:none !important; border-color:#dee2e6 !important;
+        }
+        /* 선택 링크만 호버 시 밑줄 */
+        .select-link:hover { text-decoration: underline !important; }
+
+        .reset-link { margin-left:8px; }
     </style>
 </head>
 <body>
+<div class="container popup-container">
+    <h2 class="listbox">국적 검색 <span class="sub_title">Country Selector</span></h2>
 
-<h3>국적 검색</h3>
+    <!-- 검색: a로 submit -->
+    <form id="searchForm" method="get" th:action="@{/global/country_form}" class="d-flex align-items-center">
+        <div class="search_box row my-3" style="width:100%;">
+            <div style="width:100%;">
+                <div class="input-group">
+                    <input type="text" id="search_kw" class="form-control" name="kw"
+                           placeholder="국가명(한/영) 또는 ISO(예: KR, KOR) / 숫자코드" th:value="${kw}">
+                    <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">검색</a>
+                    <a th:href="@{/global/country_form}" class="button-link reset-link">전체보기</a>
+                </div>
+            </div>
+        </div>
+    </form>
 
-<form class="searchbar" method="get" th:action="@{/global/country_form}">
-    <input type="text" name="kw" placeholder="국가명/ISO/숫자" th:value="${kw}" />
-    <button type="submit">검색</button>
-    <a th:href="@{/global/country_form}" style="margin-left:auto">전체보기</a>
-</form>
+    <!-- 결과 -->
+    <table class="table table-hover card country-table chang-table-layout listTable">
+        <thead class="table-light">
+        <tr class="list text-center">
+            <th>ID</th>
+            <th>ISO2</th>
+            <th>ISO3</th>
+            <th>NUM</th>
+            <th>국가명(한)</th>
+            <th>국가명(EN)</th>
+            <th>대륙(공통)</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+        <tr th:each="c : ${page.content}">
+            <td th:text="${c.id}">1</td>
+            <td th:text="${c.isoAlpha2}">KR</td>
+            <td th:text="${c.isoAlpha3}">KOR</td>
+            <td th:text="${c.numeric}">410</td>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>ISO2</th>
-        <th>ISO3</th>
-        <th>NUM</th>
-        <th>국가명(한)</th>
-        <th>국가명(EN)</th>
-        <th>대륙(공통)</th>
-        <th>선택</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="c : ${page.content}"
-        th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}"
-        ondblclick="choose(this.dataset.iso2, this.dataset.country)">
-        <td th:text="${c.id}">1</td>
-        <td th:text="${c.isoAlpha2}">KR</td>
-        <td th:text="${c.isoAlpha3}">KOR</td>
-        <td th:text="${c.numeric}">410</td>
-        <td th:text="${c.countryKr}">대한민국</td>
-        <td th:text="${c.countryEn}">Korea, Republic of</td>
-        <td th:text="${c.continentCommon}">Asia</td>
-        <td>
-            <button type="button"
-                    th:attr="data-iso2=${c.isoAlpha2}, data-country=${c.countryKr}"
-                    onclick="choose(this.dataset.iso2, this.dataset.country)">
-                선택
-            </button>
-        </td>
-    </tr>
-    <tr th:if="${page.content.isEmpty()}">
-        <td colspan="8" style="text-align:center">검색 결과가 없습니다.</td>
-    </tr>
-    </tbody>
-</table>
+            <!-- 국가명(한)만 클릭 가능: 파라미터로 선택값 전달 -->
+            <td>
+                <a class="name_hover select-link"
+                   th:text="${c.countryKr}"
+                   th:href="@{/global/country_form(
+                       selectIso2=${c.isoAlpha2},
+                       selectName=${c.countryKr},
+                       kw=${kw},
+                       page=${page.number}
+                     )}">대한민국</a>
+            </td>
 
-<div class="pagination" th:if="${page.totalPages > 1}">
-    <a th:if="${!page.first}"
-       th:href="@{/global/country_form(page=${page.number - 1}, size=${page.size}, kw=${kw})}">&lt; 이전</a>
-    <span th:text="|${page.number + 1} / ${page.totalPages}|">1/1</span>
-    <a th:if="${!page.last}"
-       th:href="@{/global/country_form(page=${page.number + 1}, size=${page.size}, kw=${kw})}">다음 &gt;</a>
+            <td th:text="${c.countryEn}">Korea, Republic of</td>
+            <td th:text="${c.continentCommon}">Asia</td>
+        </tr>
+
+        <tr th:if="${page.content.isEmpty()}">
+            <td colspan="7" class="muted" style="text-align:center">검색 결과가 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징 -->
+    <div class="pagination" th:if="${page.totalPages > 1}" style="justify-content:center; margin-top:12px;">
+        <a th:if="${!page.first}"
+           th:href="@{/global/country_form(page=${page.number - 1}, size=${page.size}, kw=${kw})}">이전</a>
+
+        <a th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+           th:if="${i >= page.number - 3 and i <= page.number + 3}"
+           th:href="@{/global/country_form(page=${i}, size=${page.size}, kw=${kw})}"
+           th:text="${i + 1}"
+           th:classappend="${i == page.number} ? ' active-page' : ''"></a>
+
+        <a th:if="${!page.last}"
+           th:href="@{/global/country_form(page=${page.number + 1}, size=${page.size}, kw=${kw})}">다음</a>
+    </div>
+
+    <div class="d-flex justify-content-end" style="gap:10px; margin-top:12px;">
+        <a href="javascript:void(0)" class="button-link" onclick="window.close()">창 닫기</a>
+    </div>
 </div>
 
+<!-- 선택 파라미터 감지 → 부모창 전달 → 닫기 -->
 <script>
-    function choose(iso2, countryKr) {
-      if (window.opener && !window.opener.closed && typeof window.opener.setCountry === 'function') {
-        window.opener.setCountry(iso2, countryKr);
+    (function () {
+      const p = new URLSearchParams(location.search);
+      const iso2 = p.get('selectIso2');
+      const name = p.get('selectName');
+      if (!iso2 || !name) return;
+
+      try {
+        if (window.opener && !window.opener.closed) {
+          let delivered = false;
+          if (typeof window.opener.setCountry === 'function') {
+            window.opener.setCountry(iso2, name);
+            delivered = true;
+          }
+          if (!delivered && window.opener.postMessage) {
+            window.opener.postMessage({ source: 'country-popup', payload: { iso2, name } }, '*');
+          }
+        }
+      } finally {
+        window.close();
       }
-      window.close();
-    }
+    })();
 </script>
 </body>
 </html>

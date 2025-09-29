@@ -4,123 +4,196 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{doctor/doctor_layout}">
 
-<th:block layout:fragment="script">
-    <!-- 필요시 페이지 전용 JS -->
-</th:block>
+<div layout:fragment="content" class="container">
 
-<th:block layout:fragment="content">
-    <div class="container">
-        <h2 class="listbox mt-2">의사 목록</h2>
-        <p class="detail-subtitle">현재 등록된 의사 정보입니다.</p>
-        <!-- 상단 상태/검색 바 -->
+    <!-- =========================================================
+         페이지 전용 hover 스타일 (이 문서 안에서만 적용)
+         - 성명 링크만 밑줄 유지
+         - 버튼/페이지네이션 등은 호버 시 밑줄 제거
+       ========================================================= -->
+
+
+    <h2 class="listbox">Doctor List <span class="sub_title">의사 리스트</span></h2>
+
+    <!-- =========================================================
+         정렬 파라미터 계산: 인덱스 번호 오름/내림 전용
+         - 기본 정렬: index,DESC
+         - 헤더 "번호" 클릭 시 ASC/DESC 토글
+       ========================================================= -->
+    <th:block th:with="
+      sortParam=${param.sort != null ? param.sort[0] : 'index,DESC'},
+      sortLower=${#strings.toLowerCase(sortParam)},
+      isIdxAsc=${#strings.startsWith(sortLower,'index') and #strings.endsWith(sortLower,'asc')},
+      nextIndexSort=${isIdxAsc} ? 'index,DESC' : 'index,ASC'
+    ">
+
         <div class="d-flex flex-wrap justify-content-between align-items-center">
+
+            <!-- 좌: 페이지 사이즈/현재 페이지 정보 -->
             <form method="get" action="/doctor" class="size_bar d-flex align-items-center mb-2 mb-md-0">
                 <div class="d-flex align-items-center">
                     <strong class="me-1">등록 건수:</strong>
-                    <span th:text="${page != null ? page.totalElements : 0}">0</span>명
-                    <strong class="mx-2">현재 페이지:</strong>
-                    <span th:text="${page != null ? page.number + 1 : 1}">1</span>
-                    <span>/</span>
-                    <span th:text="${page != null ? page.totalPages : 1}">1</span>
-                    <strong class="mx-2">페이지당 행 수:</strong>
+                    <span th:text="${totalCount}">0</span>명 /
+                    <strong class="mx-1">현재 페이지:</strong>
+                    <span th:text="${(paging != null ? paging.number : 0) + 1}">1</span> /
+                    <strong class="mx-1">페이지당 행 수:</strong>
                     <select name="size" id="size" onchange="this.form.submit();">
-                        <option th:value="5" th:selected="${(page != null ? page.size : size) == 5}">5</option>
-                        <option th:value="10" th:selected="${(page != null ? page.size : size) == 10}">10</option>
-                        <option th:value="20" th:selected="${(page != null ? page.size : size) == 20}">20</option>
+                        <option th:value="5"  th:selected="${size == 5}">5</option>
+                        <option th:value="10" th:selected="${size == 10}">10</option>
+                        <option th:value="20" th:selected="${size == 20}">20</option>
                     </select>
-                    <input type="hidden" name="page" th:value="${page != null ? page.number : 0}"/>
-                    <input type="hidden" name="q" th:value="${q}"/>
+                    <!-- 상태 유지용 히든 -->
+                    <input type="hidden" name="page" th:value="${paging != null ? paging.number : 0}"/>
+                    <input type="hidden" name="kw"   th:value="${kw}"/>
+                    <input type="hidden" name="sort" th:value="${sortParam}"/>
                 </div>
             </form>
 
+            <!-- 우: 검색 -->
             <form method="get" action="/doctor" class="d-flex align-items-center">
                 <div class="search_box row my-3">
                     <div>
                         <div class="input-group">
-                            <input type="text" id="search_kw" name="q" class="form-control"
-                                   th:value="${q}"/>
+                            <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw"/>
                             <button class="search_btn" type="submit" id="btn_search">검색</button>
                         </div>
                     </div>
-                    <input type="hidden" name="page" th:value="${page != null ? page.number : 0}"/>
-                    <input type="hidden" name="size" th:value="${page != null ? page.size : size}"/>
+                    <!-- 상태 유지용 히든 -->
+                    <input type="hidden" name="page" th:value="${paging != null ? paging.number : 0}"/>
+                    <input type="hidden" name="size" th:value="${size}"/>
+                    <input type="hidden" name="sort" th:value="${sortParam}"/>
                 </div>
             </form>
         </div>
 
-        <!-- 리스트 테이블 -->
-        <table class="table table-hover card doctor-table">
+        <!-- 선택 삭제용 폼 (CSRF) -->
+        <form id="deleteForm" method="post" action="/doctor/deleteSelected" style="display:none;">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        </form>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-
+        <table class="table table-hover card">
             <thead class="table-light">
             <tr class="list text-center">
-                <th><input type="checkbox" id="selectAll"/></th>
-                <th>번호</th>
+
+                <!-- 체크박스 -->
+                <th class="chang-checkbox-column">
+                    <input type="checkbox" id="checkAll"/>
+                </th>
+
+                <!-- ✅ 체크박스와 인덱스 사이 더 좁게 (고정 44px) -->
+                <th
+                        style="width:44px;min-width:44px;max-width:44px;flex-shrink:0;
+                           display:flex;align-items:center;justify-content:center;padding:4px 6px;">
+                    <a th:href="@{|/doctor?page=${paging != null ? paging.number : 0}
+                                   &size=${size}
+                                   &kw=${kw}
+                                   &sort=${nextIndexSort}|}">
+                        번호
+                    </a>
+                    <span class="muted" th:text="${isIdxAsc} ? '▲' : '▼'"></span>
+                </th>
+
                 <th>부서</th>
                 <th>진료과</th>
                 <th>직급</th>
                 <th>직책</th>
                 <th>성명</th>
-                <th class="mobile_hidden">성별</th>
-                <th class="mobile_hidden">생년월일</th>
+                <th>성별</th>
+                <th>생년월일</th>
                 <th>전화</th>
-                <th class="mobile_hidden">입사일</th>
-                <th class="mobile_hidden">상태</th>
-                <th class="mobile_hidden">근무형태</th>
+                <th>입사일</th>
+                <th>상태</th>
+                <th>근무형태</th>
             </tr>
             </thead>
 
-            <tbody>
-            <tr th:each="row, loop : ${page.content}">
-                <td><input type="checkbox" name="ids" th:value="${row.id}"/></td>
-                <td th:text="${page.totalElements - (page.number * page.size) - loop.index}">1</td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.department}">부서</a></td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.medicalDepartment}">진료과</a></td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.rank}">직급</a></td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.position}">직책</a></td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.lastName + ' ' + (row.middleName != null ? row.middleName + ' ' : '') + row.firstName}">성명</a></td>
-                <td class="mobile_hidden" th:text="${row.gender == 'M' ? '남' : (row.gender == 'F' ? '여' : row.gender)}">성별</td>
-                <td class="mobile_hidden" th:text="${#temporals.format(row.dateOfBirth, 'yyyy-MM-dd')}">생년월일</td>
-                <td><a th:href="@{/doctor/dtl/detail(id=${row.id})}" class="name_hover"
-                       th:text="${row.telephone}">전화</a></td>
-                <td class="mobile_hidden" th:text="${#temporals.format(row.hireDate, 'yyyy-MM-dd')}">입사일</td>
+            <tbody class="text-center">
+            <tr class="text-center" th:each="row, loop : ${paging != null ? paging.content : {}}">
+
+                <!-- 체크박스 -->
+                <td class="chang-checkbox-column">
+                    <input type="checkbox" class="doctor-checkbox" name="checkedIds" th:value="${row.id}"/>
+                </td>
+
+                <!-- 인덱스 번호 (ASC/DESC 계산) -->
+                <td
+                        style="width:44px;min-width:44px;max-width:44px;flex-shrink:0;
+                           display:flex;align-items:center;justify-content:center;padding:4px 6px;"
+                        th:text="${isIdxAsc
+                              ? (paging.number * paging.size) + loop.index + 1
+                              : (paging.totalElements - (paging.number * paging.size) - loop.index)}">
+                    1
+                </td>
+
+                <td th:text="${row.department}">부서</td>
+                <td th:text="${row.medicalDepartment}">진료과</td>
+                <td th:text="${row.rank}">직급</td>
+                <td th:text="${row.position}">직책</td>
+
+                <!-- 성명만 상세로 이동 + 호버 밑줄 유지 -->
+                <td>
+                    <a th:href="@{/doctor/dtl/detail(id=${row.id})}"
+                       class="name_hover"
+                       th:text="${row.lastName + ' ' + (row.middleName != null ? row.middleName + ' ' : '') + row.firstName}">
+                        성명
+                    </a>
+                </td>
+
+                <td class="mobile_hidden"
+                    th:text="${row.gender == 'M' ? '남' : (row.gender == 'F' ? '여' : row.gender)}">성별</td>
+                <td class="mobile_hidden"
+                    th:text="${#temporals.format(row.dateOfBirth, 'yyyy-MM-dd')}">생년월일</td>
+                <td th:text="${row.telephone}">전화</td>
+                <td class="mobile_hidden"
+                    th:text="${#temporals.format(row.hireDate, 'yyyy-MM-dd')}">입사일</td>
                 <td class="mobile_hidden" th:text="${row.status}">상태</td>
                 <td class="mobile_hidden" th:text="${row.workType}">근무형태</td>
             </tr>
             </tbody>
         </table>
 
-        <!-- 하단 영역 -->
-        <div class="d-flex justify-content-between align-items-center mt-3">
+        <!-- 페이저 -->
+        <div class="page-navigation" th:if="${paging != null}">
+            <div class="pagination">
+                <a th:if="${currentPage > 0}"
+                   th:href="@{|/doctor?page=${currentPage - 1}
+                                &size=${size}
+                                &kw=${kw}
+                                &sort=${sortParam}|}">이전</a>
 
-            <!-- 중앙 페이징 -->
-            <div class="flex-grow-1 d-flex justify-content-center">
-                <div class="pagination" th:if="${page != null}">
-                    <a th:if="${page.number > 0}"
-                       th:href="@{/doctor(q=${q}, page=${page.number - 1}, size=${page.size})}">이전</a>
+                <a th:each="pageNum : ${pageNumbers}"
+                   th:if="${pageNum >= currentPage - 3 and pageNum <= currentPage + 3}"
+                   th:href="@{|/doctor?page=${pageNum}
+                                &size=${size}
+                                &kw=${kw}
+                                &sort=${sortParam}|}"
+                   th:text="${pageNum + 1}"
+                   th:classappend="${pageNum == currentPage} ? ' active-page' : ''"></a>
 
-                    <a th:each="p : ${#numbers.sequence(0, page.totalPages - 1)}"
-                       th:href="@{/doctor(q=${q}, page=${p}, size=${page.size})}"
-                       th:text="${p + 1}"
-                       th:classappend="${p == page.number} ? ' active-page' : ''"></a>
-
-                    <a th:if="${page.number + 1 < page.totalPages}"
-                       th:href="@{/doctor(q=${q}, page=${page.number + 1}, size=${page.size})}">다음</a>
-                </div>
+                <a th:if="${currentPage < totalPages - 1}"
+                   th:href="@{|/doctor?page=${currentPage + 1}
+                                &size=${size}
+                                &kw=${kw}
+                                &sort=${sortParam}|}">다음</a>
             </div>
 
-            <!-- 우측 버튼 -->
-            <div class="d-flex justify-content-end gap-2">
-                <a th:href="@{/doctor/new}" class="page-btn">등록</a>
-                <a href="javascript:void(0);" class="page-btn" id="deleteSelected">삭제</a>
-                <a th:href="@{/doctor/history}" class="page-btn">수정내역</a>
+            <div class="create">
+                <a th:href="@{/doctor/history}" class="button-link">수정내역</a>
+                <a th:href="@{/doctor/new}" class="button-link">등록</a>
+                <button type="button" class="d-btn" id="deleteSelectedBtn">선택 삭제</button>
             </div>
-
         </div>
-</th:block>
+
+        <!-- 검색 hidden 폼 (상태 유지용) -->
+        <form th:action="@{/doctor}" method="get" id="searchForm">
+            <input type="hidden" id="kw"   name="kw"   th:value="${kw}">
+            <input type="hidden" id="page" name="page" th:value="${paging != null ? paging.number : 0}">
+            <input type="hidden" id="size" name="size" th:value="${size}">
+            <input type="hidden" id="sort" name="sort" th:value="${sortParam}">
+        </form>
+
+    </th:block>
+</div>
 </html>

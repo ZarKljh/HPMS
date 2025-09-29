@@ -5,6 +5,7 @@ import com.HPMS.HPMS.Doctor.DoctorM.DoctorM;
 import com.HPMS.HPMS.Doctor.DoctorM.DoctorMForm;
 import com.HPMS.HPMS.Doctor.DoctorM.DoctorMService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class DoctorDTLController {
 
     /** 상세 페이지 */
     @GetMapping("/detail")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String detailPage(@RequestParam("id") Integer doctorId,
                              Model model,
                              RedirectAttributes redirect) {
@@ -45,6 +47,7 @@ public class DoctorDTLController {
 
     /** 수정 폼 */
     @GetMapping("/edit")
+   // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
     public String editPage(@RequestParam("id") Integer doctorId,
                            Model model,
                            RedirectAttributes redirect) {
@@ -69,7 +72,8 @@ public class DoctorDTLController {
     }
 
     /** 저장 */
-    @PostMapping("/edit/{id}") // ✅ 최종 경로: /doctor/dtl/edit/{id}
+    @PostMapping("/edit/{id}")
+   // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")// ✅ 최종 경로: /doctor/dtl/edit/{id}
     public String update(@PathVariable Integer id,
                          @ModelAttribute("mForm") DoctorMForm mForm,
                          @ModelAttribute("dForm") DoctorDTLForm dForm,

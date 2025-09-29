@@ -34,6 +34,7 @@ public class DoctorM {
 
     /** 직급: VARCHAR(4), NOT NULL */
     @NotBlank
+    @Convert(converter = com.HPMS.HPMS.Doctor.DoctorM.DoctorMCoverter.class)
     @Size(max = 4)
     @Column(name = "RANK", length = 4, nullable = false)
     private String rank;

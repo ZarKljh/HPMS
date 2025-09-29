@@ -1,87 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{doctor/doctor_layout}">
 
-<th:block layout:fragment="script">
-  <!-- 필요시 페이지 전용 JS -->
-</th:block>
-<th:block layout:fragment="content">
-  <div class="page-narrow">
-    <h2 class="listbox mt-2">의사 히스토리</h2>
-    <p class="detail-subtitle">현재 등록된 의사의 히스토리 정보입니다.</p>
-    <!-- ▲ 상태/검색 바 (메인과 동일 패턴) -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center">
+<div layout:fragment="content" class="container">
+  <h2 class="listbox">Doctor History <span class="sub_title">의사 히스토리</span></h2>
+  <p class="detail-subtitle">현재 등록된 의사의 히스토리 정보입니다.</p>
 
-      <!-- 좌측: 등록건수/현재페이지/페이지당 행수 -->
-      <form method="get" action="/doctor/history" class="size_bar d-flex align-items-center mb-2 mb-md-0">
-        <div class="d-flex align-items-center">
-          <strong class="me-1">등록 건수:</strong>
-          <span th:text="${page != null ? page.totalElements : 0}">0</span>명
+  <!-- ✅ 호버 스타일: 데이터 링크만 밑줄, 버튼형 링크는 밑줄 제거 -->
 
-          <strong class="mx-2">현재 페이지:</strong>
-          <span th:text="${page != null ? page.number + 1 : 1}">1</span>
-          <span>/</span>
-          <span th:text="${page != null ? page.totalPages : 1}">1</span>
 
-          <strong class="mx-2">페이지당 행 수:</strong>
-          <select name="size" id="size" onchange="this.form.submit();">
-            <option th:value="10"  th:selected="${(page != null ? page.size : 10) == 10}">10</option>
-            <option th:value="20"  th:selected="${(page != null ? page.size : 10) == 20}">20</option>
-            <option th:value="50"  th:selected="${(page != null ? page.size : 10) == 50}">50</option>
-            <option th:value="100" th:selected="${(page != null ? page.size : 10) == 100}">100</option>
-          </select>
+  <!-- 상단 좌우 바 (List와 동일한 배치) -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center">
 
-          <!-- 상태 유지용 히든 -->
-          <input type="hidden" name="page"     th:value="${page != null ? page.number : 0}"/>
-          <input type="hidden" name="sort"     th:value="${param.sort != null ? param.sort[0] : 'createDate,DESC'}"/>
-          <input type="hidden" name="fromDate" th:value="${cond != null ? cond.fromDate : null}"/>
-          <input type="hidden" name="toDate"   th:value="${cond != null ? cond.toDate   : null}"/>
-          <input type="hidden" name="keyword"  th:value="${cond != null ? cond.keyword  : null}"/>
-          <input type="hidden" name="doctorId" th:value="${cond != null ? cond.doctorId : null}"/>
-        </div>
-      </form>
+    <!-- 좌: 건수/현재 페이지/페이지당 행수 -->
+    <form method="get" action="/doctor/history" class="size_bar d-flex align-items-center mb-2 mb-md-0">
+      <div class="d-flex align-items-center">
+        <strong class="me-1">등록 건수:</strong>
+        <span th:text="${page != null ? page.totalElements : 0}">0</span>건 /
+        <strong class="mx-1">현재 페이지:</strong>
+        <span th:text="${page != null ? page.number + 1 : 1}">1</span> /
+        <strong class="mx-1">페이지당 행 수:</strong>
+        <select name="size" id="size" onchange="this.form.submit();">
+          <option th:value="10"  th:selected="${(page != null ? page.size : 10) == 10}">10</option>
+          <option th:value="20"  th:selected="${(page != null ? page.size : 10) == 20}">20</option>
+          <option th:value="50"  th:selected="${(page != null ? page.size : 10) == 50}">50</option>
+          <option th:value="100" th:selected="${(page != null ? page.size : 10) == 100}">100</option>
+        </select>
 
-      <!-- 우측: 검색 (기간 + 키워드) -->
-      <form method="get" action="/doctor/history" class="d-flex align-items-center">
-        <div class="search_box row my-3">
-          <div>
-            <div class="input-group">
-              <input type="date" class="form-control" name="fromDate" th:value="${cond != null ? cond.fromDate : null}"/>
-              <input type="date" class="form-control" name="toDate"   th:value="${cond != null ? cond.toDate   : null}"/>
-              <input type="text"  id="search_kw" name="keyword" class="form-control"
-                     placeholder="이름/부서/비고 등"
-                     th:value="${cond != null ? cond.keyword : null}"/>
-              <button class="search_btn" type="submit" id="btn_search">검색</button>
-            </div>
+        <!-- 상태 유지용 히든 -->
+        <input type="hidden" name="page"     th:value="${page != null ? page.number : 0}"/>
+        <input type="hidden" name="sort"     th:value="${param.sort != null ? param.sort[0] : 'createDate,DESC'}"/>
+        <input type="hidden" name="fromDate" th:value="${cond != null ? cond.fromDate : null}"/>
+        <input type="hidden" name="toDate"   th:value="${cond != null ? cond.toDate   : null}"/>
+        <input type="hidden" name="keyword"  th:value="${cond != null ? cond.keyword  : null}"/>
+        <input type="hidden" name="doctorId" th:value="${cond != null ? cond.doctorId : null}"/>
+      </div>
+    </form>
+
+    <!-- 우: 검색 (기간 + 키워드) -->
+    <form method="get" action="/doctor/history" class="d-flex align-items-center">
+      <div class="search_box row my-3">
+        <div>
+          <div class="input-group">
+            <input type="date" class="form-control" name="fromDate" th:value="${cond != null ? cond.fromDate : null}"/>
+            <input type="date" class="form-control" name="toDate"   th:value="${cond != null ? cond.toDate   : null}"/>
+            <input type="text"  id="search_kw" name="keyword" class="form-control"
+                   placeholder="이름/부서/비고 등" th:value="${cond != null ? cond.keyword : null}"/>
+            <button class="search_btn" type="submit" id="btn_search">검색</button>
           </div>
-
-          <!-- 상태 유지용 히든 -->
-          <input type="hidden" name="page"     th:value="${page != null ? page.number : 0}"/>
-          <input type="hidden" name="size"     th:value="${page != null ? page.size : 10}"/>
-          <input type="hidden" name="sort"     th:value="${param.sort != null ? param.sort[0] : 'createDate,DESC'}"/>
-          <input type="hidden" name="doctorId" th:value="${cond != null ? cond.doctorId : null}"/>
         </div>
-      </form>
 
-    </div>
+        <!-- 상태 유지용 히든 -->
+        <input type="hidden" name="page"     th:value="${page != null ? page.number : 0}"/>
+        <input type="hidden" name="size"     th:value="${page != null ? page.size : 10}"/>
+        <input type="hidden" name="sort"     th:value="${param.sort != null ? param.sort[0] : 'createDate,DESC'}"/>
+        <input type="hidden" name="doctorId" th:value="${cond != null ? cond.doctorId : null}"/>
+      </div>
+    </form>
+  </div>
 
-
-    <!-- 정렬 값 계산 -->
-    <th:block th:with="
+  <!-- 정렬 파라미터 계산 -->
+  <th:block th:with="
       sortParam=${param.sort != null ? param.sort[0] : 'createDate,DESC'},
-      nextDateSort=${sortParam.startsWith('createDate') and sortParam.endsWith('ASC') ? 'createDate,DESC' : 'createDate,ASC'}
+      sortLower=${#strings.toLowerCase(sortParam)},
+      isAsc=${#strings.endsWith(sortLower,'asc')},
+      nextDateSort=${isAsc} ? 'createDate,DESC' : 'createDate,ASC'
   ">
 
-      <!-- 결과 테이블 -->
-      <table class="table table-hover card doctor-table">
-
-
-        <thead>
-        <tr>
-          <th>
-            <a th:href="@{/doctor/history(
+    <!-- 결과 테이블 -->
+    <table class="table table-hover card">
+      <thead class="table-light">
+      <tr class="list text-center">
+        <th>
+          <a th:href="@{/doctor/history(
               doctorId=${cond != null ? cond.doctorId : null},
               fromDate=${cond != null ? cond.fromDate : null},
               toDate=${cond != null ? cond.toDate : null},
@@ -90,105 +83,98 @@
               size=${page != null ? page.size : 10},
               sort=${nextDateSort}
           )}">생성일</a>
-            <span class="muted"
-                  th:text="${sortParam} == 'createDate,DESC' ? '▼' : (sortParam == 'createDate,ASC' ? '▲' : '')"></span>
-          </th>
-          <th>작성자</th>
-          <th>부서</th>
-          <th>진료과</th>
-          <th>직책</th>
-          <th>성</th>
-          <th>중간이름</th>
-          <th>이름</th>
-          <th>성별</th>
-          <th>전화</th>
-          <th>입사일</th>
-          <th>상태</th>
-          <th>근무형태</th>
-        </tr>
-        </thead>
+          <span class="muted" th:text="${isAsc} ? '▲' : '▼'"></span>
+        </th>
+        <th>작성자</th>
+        <th>부서</th>
+        <th>진료과</th>
+        <th>직급</th>
+        <th>성</th>
+        <th>중간이름</th>
+        <th>이름</th>
+        <th>성별</th>
+        <th>전화</th>
+        <th>입사일</th>
+        <th>상태</th>
+        <th>근무형태</th>
+      </tr>
+      </thead>
 
-        <tbody>
-        <tr th:if="${page == null or page.totalElements == 0}">
-          <td colspan="13" class="muted">데이터가 없습니다.</td>
-        </tr>
+      <tbody class="text-center">
+      <tr th:if="${page == null or page.totalElements == 0}">
+        <td colspan="13" class="muted">데이터가 없습니다.</td>
+      </tr>
 
-        <tr th:each="h : ${page != null ? page.content : {}}">
-          <td class="nowrap">
-            <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
-               th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}"></a>
-          </td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.writer}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.department}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.medicalDepartment}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.rank}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.lastName}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.middleName}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.firstName}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.gender}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.telephone}">-</a></td>
-          <td class="nowrap">
-            <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
-               th:text="${h.hireDate != null ? #temporals.format(h.hireDate, 'yyyy-MM-dd') : ''}">-</a>
-          </td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.status}">-</a></td>
-          <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.workType}">-</a></td>
-        </tr>
-        </tbody>
-      </table>
+      <tr th:each="h : ${page != null ? page.content : {}}">
+        <td class="nowrap">
+          <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
+             th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}">-</a>
+        </td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.writer}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.department}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.medicalDepartment}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.rank}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.lastName}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.middleName}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.firstName}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.gender}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.telephone}">-</a></td>
+        <td class="nowrap">
+          <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
+             th:text="${h.hireDate != null ? #temporals.format(h.hireDate, 'yyyy-MM-dd') : ''}">-</a>
+        </td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.status}">-</a></td>
+        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.workType}">-</a></td>
+      </tr>
+      </tbody>
+    </table>
 
-      <!-- 페이징 -->
-      <div class="pager" th:if="${page != null}">
-      <span class="muted">
-        페이지 <b th:text="${page.number + 1}"></b> / <span th:text="${page.totalPages}"></span>
-        (총 <span th:text="${page.totalElements}"></span>건)
-      </span>
-
+    <!-- 페이저 -->
+    <div class="page-navigation" th:if="${page != null}">
+      <div class="pagination">
         <a th:if="${!page.first}"
            th:href="@{/doctor/history(
-             doctorId=${cond != null ? cond.doctorId : null},
-             fromDate=${cond != null ? cond.fromDate : null},
-             toDate=${cond != null ? cond.toDate : null},
-             keyword=${cond != null ? cond.keyword : null},
-             page=${0},
-             size=${page.size},
-             sort=${sortParam}
-         )}">« 첫 페이지</a>
+              doctorId=${cond != null ? cond.doctorId : null},
+              fromDate=${cond != null ? cond.fromDate : null},
+              toDate=${cond != null ? cond.toDate : null},
+              keyword=${cond != null ? cond.keyword : null},
+              page=${page.number - 1},
+              size=${page.size},
+              sort=${sortParam}
+           )}">이전</a>
 
-        <a th:if="${page.hasPrevious()}"
+        <!-- 중앙 페이지 번호 (±3 범위) -->
+        <a th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+           th:if="${i >= page.number - 3 and i <= page.number + 3}"
            th:href="@{/doctor/history(
-             doctorId=${cond != null ? cond.doctorId : null},
-             fromDate=${cond != null ? cond.fromDate : null},
-             toDate=${cond != null ? cond.toDate : null},
-             keyword=${cond != null ? cond.keyword : null},
-             page=${page.number - 1},
-             size=${page.size},
-             sort=${sortParam}
-         )}">‹ 이전</a>
-
-        <a th:if="${page.hasNext()}"
-           th:href="@{/doctor/history(
-             doctorId=${cond != null ? cond.doctorId : null},
-             fromDate=${cond != null ? cond.fromDate : null},
-             toDate=${cond != null ? cond.toDate : null},
-             keyword=${cond != null ? cond.keyword : null},
-             page=${page.number + 1},
-             size=${page.size},
-             sort=${sortParam}
-         )}">다음 ›</a>
+              doctorId=${cond != null ? cond.doctorId : null},
+              fromDate=${cond != null ? cond.fromDate : null},
+              toDate=${cond != null ? cond.toDate : null},
+              keyword=${cond != null ? cond.keyword : null},
+              page=${i},
+              size=${page.size},
+              sort=${sortParam}
+           )}"
+           th:text="${i + 1}"
+           th:classappend="${i == page.number} ? ' active-page' : ''"></a>
 
         <a th:if="${!page.last}"
            th:href="@{/doctor/history(
-             doctorId=${cond != null ? cond.doctorId : null},
-             fromDate=${cond != null ? cond.fromDate : null},
-             toDate=${cond != null ? cond.toDate : null},
-             keyword=${cond != null ? cond.keyword : null},
-             page=${page.totalPages - 1},
-             size=${page.size},
-             sort=${sortParam}
-         )}">끝 페이지 »</a>
+              doctorId=${cond != null ? cond.doctorId : null},
+              fromDate=${cond != null ? cond.fromDate : null},
+              toDate=${cond != null ? cond.toDate : null},
+              keyword=${cond != null ? cond.keyword : null},
+              page=${page.number + 1},
+              size=${page.size},
+              sort=${sortParam}
+           )}">다음</a>
       </div>
-  </div>
-</th:block>
-</th:block>
+
+      <!-- 우측 버튼 영역 -->
+      <div class="create">
+        <a th:href="@{/doctor}" class="button-link">메인으로</a>
+      </div>
+    </div>
+  </th:block>
+</div>
 </html>

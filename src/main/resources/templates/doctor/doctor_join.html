@@ -4,114 +4,268 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{doctor/doctor_layout}">
 
+<!--
+  ✅ 이 페이지는 레이아웃(doctor_layout)을 데코레이트하고,
+     실제 화면 내용은 아래 th:block(layout:fragment="content") 안에만 둡니다.
+  ✅ 숫자/필수 검증은 전역 /js/hpms-validators.js 에서 처리됩니다.
+-->
+
 <th:block layout:fragment="content">
-    <div class="container detail-container page-narrow">
-        <div class="mb-2">
-            <h2 class="mt-2 fw-bolder detail-title">의사 등록</h2>
+    <div class="container my-3">
+        <!-- 에러 메시지(옵션) -->
+        <div th:if="${errorMessage != null}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <!-- 폼: 액션/바인딩은 기존 join 코드 유지 -->
+        <form th:action="@{/doctor/new}" method="post" th:object="${mForm}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <h3 class="border-bottom mt-2">의사 등록</h3>
             <p class="detail-subtitle">의사의 정보를 등록합니다.</p>
-        </div>
 
-        <!-- ✅ 단 하나의 카드만 -->
-        <div class="detail-card card shadow-sm">
-            <form th:action="@{/doctor/new}" method="post" th:object="${mForm}">
+            <!-- DoctorMain: 기본 정보 -->
+            <div class="doctormain card my-3 p-3">
+                <h4 class="border-bottom mt-2">기본 정보</h4>
 
-                <!-- 메인 정보 -->
-                <h3 class="section-heading">메인 정보</h3>
-                <div class="section-divider"></div>
-                <fieldset>
-                    <div class="grid">
-                        <label>부서</label> <input type="text" th:field="*{department}" maxlength="4" required/>
-                        <label>진료과</label> <input type="text" th:field="*{medicalDepartment}" maxlength="50"/>
-
-                        <label>직책</label> <input type="text" id="rank" th:field="*{rank}" maxlength="4"/>
-                        <label>직급</label> <input type="text" id="position" th:field="*{position}" maxlength="4"/>
-                        <div class="job-actions">
-                            <button type="button" class="page-btn" onclick="openJobPopup()">직급/직책 선택</button>
-                        </div>
-
-                        <label>이름</label> <input type="text" th:field="*{firstName}" maxlength="50" required/>
-                        <label>성</label>   <input type="text" th:field="*{lastName}" maxlength="50" required/>
-                        <label>중간이름</label> <input type="text" th:field="*{middleName}" maxlength="50"/>
-
-                        <label>성별</label>
-                        <div style="display:flex;gap:12px;align-items:center;">
-                            <label><input type="radio" th:field="*{gender}" value="M" required> M</label>
-                            <label><input type="radio" th:field="*{gender}" value="F"> F</label>
-                        </div>
-
-                        <label>생년월일</label> <input type="date" th:field="*{dateOfBirth}" required/>
-                        <label>전화번호</label> <input type="text" th:field="*{telephone}" maxlength="20" required/>
-                        <label>입사일</label> <input type="date" th:field="*{hireDate}" required/>
-                        <label>상태</label> <input type="text" th:field="*{status}" maxlength="3" required/>
-                        <label>근무형태</label> <input type="text" th:field="*{workType}" maxlength="4" required/>
-                    </div>
-                </fieldset>
-
-                <!-- 상세 정보 -->
-                <h3 class="section-heading mt-4">상세 정보</h3>
-                <div class="section-divider"></div>
-                <fieldset th:object="${dForm}">
-                    <div class="grid">
-                        <label>이미지 URL</label> <input type="text" th:field="*{image}" maxlength="250" required/>
-                        <label>User ID</label>   <input type="text" th:field="*{userId}" maxlength="20" required/>
-                        <label>Password</label>  <input type="password" th:field="*{userPassword}" maxlength="100" required/>
-
-                        <label>사무실 전화</label> <input type="text" th:field="*{officeTelephone}" maxlength="20" required/>
-                        <label>비상연락처</label>  <input type="text" th:field="*{emergencyContact}" maxlength="20"/>
-
-                        <label>비상-이름</label> <input type="text" th:field="*{emergencyFirstName}" maxlength="50"/>
-                        <label>비상-성</label>   <input type="text" th:field="*{emergencyLastName}" maxlength="50"/>
-                        <label>비상-중간이름</label> <input type="text" th:field="*{emergencyMiddleName}" maxlength="50"/>
-                        <label>비상-관계</label> <input type="text" th:field="*{emergencyRelation}" maxlength="10"/>
-                        <label>비상-비고</label> <input type="text" th:field="*{emergencyNote}" maxlength="250"/>
-
-                        <label>이메일</label>    <input type="email" th:field="*{email}" maxlength="250"/>
-                        <label>우편번호</label>  <input type="text" th:field="*{postcode}" maxlength="6"/>
-
-                        <label>도로명주소</label>
-                        <div style="display:flex;gap:8px;align-items:center;">
-                            <input type="text" th:field="*{defaultAddress}" id="addr1" maxlength="250"/>
-                            <button type="button" class="page-btn" onclick="openRoadPopup()">도로명 검색</button>
-                        </div>
-
-                        <label>상세주소</label>  <input type="text" th:field="*{detailedAddress}" id="addr2" maxlength="250"/>
-
-                        <label>면허번호</label>  <input type="text" th:field="*{registrationNumber}" maxlength="10" required/>
-                        <label>학력</label>      <input type="text" th:field="*{educationalBackground}" maxlength="100"/>
-                        <label>외국어</label>    <input type="text" th:field="*{foreignLanguage}" maxlength="250"/>
-                        <label>기타자격증</label> <input type="text" th:field="*{license}" maxlength="250"/>
-
-                        <label>전공과</label>    <input type="text" th:field="*{major}" maxlength="50" required/>
-                        <label>근무경력</label>  <input type="text" th:field="*{workDependsOnExperience}" maxlength="250"/>
-                        <label>수상경력</label>  <input type="text" th:field="*{awards}" maxlength="250"/>
-                        <label>학회활동</label>  <input type="text" th:field="*{societyActivity}" maxlength="250"/>
-                        <label>학회인증</label>  <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
-
-                        <label>병역</label>      <input type="text" th:field="*{militaryService}" maxlength="10"/>
-
-                        <label>국적</label>
-                        <div>
-                            <span id="nationalityDisplay" th:text="*{nationality} ?: '-'">-</span>
-                            <input type="hidden" th:field="*{nationality}" id="nationalityInput"/>
-                            <button type="button" class="page-btn" style="margin-left:8px;" onclick="openCountryPopup()">국적 검색</button>
-                        </div>
-
-                        <label>장애 여부</label>
-                        <div style="display:flex;gap:12px;align-items:center;">
-                            <label><input type="radio" th:field="*{disabilityStatus}" value="Y" required> Y</label>
-                            <label><input type="radio" th:field="*{disabilityStatus}" value="N"> N</label>
-                        </div>
-
-                        <label>비고</label> <input type="text" th:field="*{note}" maxlength="255"/>
-                    </div>
-                </fieldset>
-
-                <!-- 하단 우측 버튼 -->
-                <div class="detail-actions-outer">
-                    <button class="page-btn" type="submit">등록</button>
+                <div class="input-list">
+                    <label>부서:</label>
+                    <input type="text" th:field="*{department}" maxlength="4" required/>
                 </div>
-            </form>
-        </div>
+
+                <div class="input-list">
+                    <label>진료과:</label>
+                    <input type="text" th:field="*{medicalDepartment}" maxlength="50"/>
+                </div>
+
+                <div class="input-list">
+                    <label>직급:</label>
+                    <input type="text" id="rank" th:field="*{rank}" maxlength="4"/>
+                </div>
+
+                <div class="input-list">
+                    <label>직책:</label>
+                    <input type="text" id="position" th:field="*{position}" maxlength="4"/>
+                </div>
+
+                <div style="display:flex; gap:8px; align-items:center; width:100%;">
+                    <button type="button" class="button-link" onclick="openJobPopup()">직급/직책 선택</button>
+                </div>
+
+                <div class="input-list">
+                    <label>이름:</label>
+                    <input type="text" th:field="*{firstName}" maxlength="50" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>성:</label>
+                    <input type="text" th:field="*{lastName}" maxlength="50" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>중간이름:</label>
+                    <input type="text" th:field="*{middleName}" maxlength="50"/>
+                </div>
+
+                <div class="input-list">
+                    <label>성별:</label>
+                    <div class="form-check" style="display:flex; gap:16px; align-items:center;">
+                        <label class="mb-0"><input type="radio" th:field="*{gender}" value="M" required/> 남</label>
+                        <label class="mb-0"><input type="radio" th:field="*{gender}" value="F"/> 여</label>
+                    </div>
+                </div>
+
+                <div class="input-list">
+                    <label>생년월일:</label>
+                    <input type="date" th:field="*{dateOfBirth}" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>전화번호:</label>
+                    <!-- ✅ 숫자만 허용: 전역 JS가 keypress/submit 시 제어 -->
+                    <input type="text" th:field="*{telephone}" maxlength="20" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>입사일:</label>
+                    <input type="date" th:field="*{hireDate}" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>상태:</label>
+                    <input type="text" th:field="*{status}" maxlength="3" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>근무형태:</label>
+                    <input type="text" th:field="*{workType}" maxlength="4" required/>
+                </div>
+            </div>
+
+            <!-- DoctorDetail: 상세 정보 (dForm) -->
+            <div class="doctordetail card my-3 p-3" th:object="${dForm}">
+                <h4 class="border-bottom mt-2">상세 정보</h4>
+
+                <div class="input-list">
+                    <label>이미지 URL:</label>
+                    <input type="text" th:field="*{image}" maxlength="250" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>User ID:</label>
+                    <input type="text" th:field="*{userId}" maxlength="20" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>Password:</label>
+                    <input type="password" th:field="*{userPassword}" maxlength="100" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>사무실 전화:</label>
+                    <!-- ✅ 숫자만 허용 -->
+                    <input type="text" th:field="*{officeTelephone}" maxlength="20" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>비상연락처:</label>
+                    <!-- ✅ 숫자만 허용 -->
+                    <input type="text" th:field="*{emergencyContact}" maxlength="20"/>
+                </div>
+
+                <!-- (선택) 팩스/휴대전화 필드가 있는 경우 자동 바인딩됨: id='faxNumber', 'mobilePhone' -->
+
+                <div class="input-list">
+                    <label>비상-이름:</label>
+                    <input type="text" th:field="*{emergencyFirstName}" maxlength="50"/>
+                </div>
+
+                <div class="input-list">
+                    <label>비상-성:</label>
+                    <input type="text" th:field="*{emergencyLastName}" maxlength="50"/>
+                </div>
+
+                <div class="input-list">
+                    <label>비상-중간이름:</label>
+                    <input type="text" th:field="*{emergencyMiddleName}" maxlength="50"/>
+                </div>
+
+                <div class="input-list">
+                    <label>비상-관계:</label>
+                    <input type="text" th:field="*{emergencyRelation}" maxlength="10"/>
+                </div>
+
+                <div class="input-list">
+                    <label>비상-비고:</label>
+                    <input type="text" th:field="*{emergencyNote}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>이메일:</label>
+                    <input type="email" th:field="*{email}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>우편번호:</label>
+                    <!-- ✅ 숫자만 허용 -->
+                    <input type="text" th:field="*{postcode}" maxlength="6"/>
+                </div>
+
+                <div class="input-list">
+                    <label>도로명주소:</label>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <input type="text" th:field="*{defaultAddress}" id="addr1" maxlength="250"/>
+                        <button type="button" class="button-link" onclick="openRoadPopup()">도로명 검색</button>
+                    </div>
+                </div>
+
+                <div class="input-list">
+                    <label>상세주소:</label>
+                    <!-- ✅ Null/빈값 등록불가 (submit에서 전역 JS가 체크) -->
+                    <input type="text" th:field="*{detailedAddress}" id="addr2" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>면허번호:</label>
+                    <input type="text" th:field="*{registrationNumber}" maxlength="10" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>학력:</label>
+                    <input type="text" th:field="*{educationalBackground}" maxlength="100"/>
+                </div>
+
+                <div class="input-list">
+                    <label>외국어:</label>
+                    <input type="text" th:field="*{foreignLanguage}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>기타자격증:</label>
+                    <input type="text" th:field="*{license}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>전공과:</label>
+                    <input type="text" th:field="*{major}" maxlength="50" required/>
+                </div>
+
+                <div class="input-list">
+                    <label>근무경력:</label>
+                    <input type="text" th:field="*{workDependsOnExperience}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>수상경력:</label>
+                    <input type="text" th:field="*{awards}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>학회활동:</label>
+                    <input type="text" th:field="*{societyActivity}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>학회인증:</label>
+                    <input type="text" th:field="*{certificateOfSociety}" maxlength="250"/>
+                </div>
+
+                <div class="input-list">
+                    <label>병역:</label>
+                    <input type="text" th:field="*{militaryService}" maxlength="10"/>
+                </div>
+
+                <div class="input-list">
+                    <label>국적:</label>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <span id="nationalityDisplay" th:text="*{nationality} ?: '-'">-</span>
+                        <input type="hidden" th:field="*{nationality}" id="nationalityInput"/>
+                        <button type="button" class="button-link" onclick="openCountryPopup()">국적 검색</button>
+                    </div>
+                </div>
+
+                <div class="input-list">
+                    <label>장애 여부:</label>
+                    <div class="form-check" style="display:flex; gap:16px; align-items:center;">
+                        <label class="mb-0"><input type="radio" th:field="*{disabilityStatus}" value="Y" required/> 유</label>
+                        <label class="mb-0"><input type="radio" th:field="*{disabilityStatus}" value="N"/> 무</label>
+                    </div>
+                </div>
+
+                <div class="input-list">
+                    <label>비고:</label>
+                    <input type="text" th:field="*{note}" maxlength="255"/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class="c_c_btn_box d-flex justify-content-end">
+                <button type="submit" class="button-link me-2">등록</button>
+                <a th:href="@{/doctor}" class="button-link">취소</a>
+            </div>
+        </form>
+
+        <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
     </div>
 </th:block>
 </html>

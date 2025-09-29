@@ -3,6 +3,7 @@ package com.HPMS.HPMS.nurse.nursehistory;
 import com.HPMS.HPMS.nurse.nursemain.NurseMain;
 import com.HPMS.HPMS.nurse.nursemain.NurseMainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -104,3 +104,135 @@ function submitFormIfValid() {
 
   form.submit();
 }
+
+function personnel_registration(event){
+    event.preventDefault(); // 폼 제출 막기
+    //const txtNationality = document.forms['registration'].nationality.value;
+/*        console.log(document.forms['registration']); // 폼 객체 확인
+        console.log(document.forms['registration'].nationality); // 필드 객체 확인
+        console.log(document.forms['registration'].nationality.value); // 값 확인
+        console.log(document.forms['registration'].nationality.value); // 값 확인
+        console.log(document.forms['registration'].lastName.value); // 값 확인
+        console.log(document.forms['registration'].firstName.value); // 값 확인*/
+
+    const form = document.forms['registration'];
+
+    // const lastName = form.lastName.value.trim();  // 앞뒤 공백 제거
+    // const firstName = form.firstName.value.trim();
+
+    const firstName = document.forms['registration'].firstName.value.trim();
+    const lastName = document.forms['registration'].lastName.value.trim();
+    const nameRegex = /^[가-힣a-zA-Z]+$/;
+
+    if (!nameRegex.test(firstName)) {
+        alert("이름은 한글 또는 영문만 입력해주세요.");
+    }
+    if (firstName.length < 1) {
+        alert("성은 필수입력 대상입니다.");
+        return;
+    }
+
+    if (!nameRegex.test(lastName)) {
+        alert("이름은 한글 또는 영문만 입력해주세요.");
+    }
+    if (lastName.length < 1) {
+        alert("이름은 필수 입력대상입니다.");
+        return;
+    }
+
+    const newEmail = document.forms['registration'].email.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const atCount = (newEmail.match(/@/g) || []).length;
+    console.log("이메일:", newEmail);
+
+    if (newEmail.length > 0) {
+        if (!emailRegex.test(newEmail)) {
+            alert(newEmail + "은 정상적인 이메일 주소가 아닙니다.");
+            return false;
+        }
+        if (atCount !== 1) {
+            alert(newEmail + " 은 '@' 기호가 정확히 한 번 포함되어야 합니다.");
+            return false;
+        }
+    }
+
+    const cellPhone = document.forms['registration'].cellPhone.value.trim();
+    // 숫자만 있는지 확인하는 정규표현식
+    const numberOnlyRegex = /^[0-9]{10,12}$/;
+
+    if (cellPhone.length === 0) {
+        alert("휴대전화번호는 필수 입력 항목입니다.");
+        return false;
+    }
+
+    if (!numberOnlyRegex.test(cellPhone)) {
+        alert("휴대전화번호는 숫자만으로 10~12자리여야 합니다.");
+        return false;
+    }
+
+    document.forms['registration'].submit();
+
+    //alert(txtNationality);
+}
+function personnel_update(event){
+    //onclick="document.forms['updatePersonnel'].submit(); return false;"
+    event.preventDefault(); // 폼 제출 막기
+
+        const form = document.forms['updatePersonnel'];
+
+        // const lastName = form.lastName.value.trim();  // 앞뒤 공백 제거
+        // const firstName = form.firstName.value.trim();
+
+        const firstName = document.forms['updatePersonnel'].firstName.value.trim();
+        const lastName = document.forms['updatePersonnel'].lastName.value.trim();
+        const nameRegex = /^[가-힣a-zA-Z]+$/;
+/*
+        console.log(firstName);
+        console.log(lastName);
+*/
+    if (!nameRegex.test(firstName)) {
+        alert("이름은 한글 또는 영문만 입력해주세요.");
+    }
+    if (firstName.length < 1) {
+        alert("성은 필수입력 대상입니다.");
+        return;
+    }
+
+    if (!nameRegex.test(lastName)) {
+        alert("이름은 한글 또는 영문만 입력해주세요.");
+    }
+    if (lastName.length < 1) {
+        alert("이름은 필수 입력대상입니다.");
+        return;
+    }
+
+    const newEmail = document.forms['updatePersonnel'].email.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const atCount = (newEmail.match(/@/g) || []).length;
+    console.log("이메일:", newEmail);
+    if (newEmail.length > 0) {
+        if (!emailRegex.test(newEmail)) {
+            alert(newEmail + "은 정상적인 이메일 주소가 아닙니다.");
+            return false;
+        }
+        if (atCount !== 1) {
+            alert(newEmail + " 은 '@' 기호가 정확히 한 번 포함되어야 합니다.");
+            return false;
+        }
+    }
+    const cellPhone = document.forms['updatePersonnel'].cellPhone.value.trim();
+    // 숫자만 있는지 확인하는 정규표현식
+    const numberOnlyRegex = /^[0-9]{10,12}$/;
+
+    if (cellPhone.length === 0) {
+        alert("휴대전화번호는 필수 입력 항목입니다.");
+        return false;
+    }
+
+    if (!numberOnlyRegex.test(cellPhone)) {
+        alert("휴대전화번호는 숫자만으로 10~12자리여야 합니다.");
+        return false;
+    }
+
+    document.forms['updatePersonnel'].submit();
+}
