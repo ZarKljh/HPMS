@@ -285,23 +285,5 @@
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
-
 </div>
-<script>
-  const fileInput = document.getElementById('pictureFileInput');
-  const preview = document.getElementById('picturePreview');
-  const hiddenInput = document.getElementById('pictureUrl');
-
-  fileInput.addEventListener('change', function() {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        preview.src = e.target.result;      // 미리보기 이미지 변경
-        hiddenInput.value = e.target.result; // hidden 필드에 Base64 저장
-      }
-      reader.readAsDataURL(file);
-    }
-  });
-</script>
 </html>

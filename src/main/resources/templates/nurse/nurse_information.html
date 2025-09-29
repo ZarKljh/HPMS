@@ -10,10 +10,10 @@
 
             <!-- 사진 -->
             <div class="image">
-                <img th:if="${nurseDTO.nurseInformation?.picture != null}"
-                     th:src="${nurseDTO.nurseInformation.picture}"
+                <img th:if="${nurseDTO.nurseInformation.picture != null}"
+                     th:src="@{${nurseDTO.nurseInformation.picture}}"
                      alt="nurse Image" />
-                <span th:if="${nurseDTO.nurseInformation?.picture == null}">사진 없음</span>
+                <span th:if="${nurseDTO.nurseInformation.picture == null}">사진 없음</span>
             </div>
 
             <!-- 작성자 정보 -->

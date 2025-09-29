@@ -40,8 +40,8 @@ public class NurseHistory {
     @Column(name = "MIDDLE_NAME", length = 50)
     private String middleName;
 
-    @Size(max = 4)
-    @Column(name = "DEPT", length = 4)
+    @Size(max = 10)
+    @Column(name = "DEPT", length = 10)
     private String dept;
 
     @Size(max = 4)

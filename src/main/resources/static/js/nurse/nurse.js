@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const file = fileInput.files[0];
                 if (!file) {
                     // 선택 취소 시 기존 이미지 또는 기본 이미지
-                    previewImg.src = hiddenInput.value || '/images/default.png';
+                    previewImg.src = existingPicture.value || '/images/default.png';
                     return;
                 }
 
@@ -501,7 +501,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 reader.readAsDataURL(file);
 
-                hiddenInput.value = ""; // 새 이미지 선택 시 기존 값 제거
+                existingPicture.value = ""; // 새 이미지 선택 시 기존 값 제거
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/nurse/existingPicture', { method: 'POST', body: formData })
+                    .then(res => res.text())
+                    .then(url => { existingPicture.value = url; }) // hidden 필드에 URL 넣기
+                    .catch(err => { alert('업로드 실패'); console.error(err); });
             });
         }
 
