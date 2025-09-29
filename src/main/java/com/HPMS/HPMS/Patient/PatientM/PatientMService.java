@@ -45,6 +45,7 @@ public class PatientMService {
         return this.patientMRepository.findAll(spec,pageable);
     }
 
+
     // 쿼리를 생성하는 메소드
     private Specification<PatientM> findAllExceptDel(){
         return new Specification<PatientM>() {
@@ -59,6 +60,7 @@ public class PatientMService {
             }
         };
     }
+
 
     //다중조건에 따른 환자의 Main정보를 가져온다
     public Page<PatientM>  patientMSearch( List<String> columns,
@@ -76,6 +78,10 @@ public class PatientMService {
         // 다중조건에 부합한 환자를 찾기 위한 쿼리 생성 메소드를 호출합니다
         Specification<PatientM> spec = search(columns, operators, values, logicalOperators);
         return this.patientMRepository.findAll(spec, pageable);
+    }
+
+    public Page<PatientM> patientMSimpleSearch(String kw, Pageable pageable) {
+        return this.patientMRepository.findAllByKeyword(kw, pageable);
     }
 
 
@@ -256,6 +262,7 @@ public class PatientMService {
         dtl.setPatientM(m);
         dtl.setMobilePhone(removeHyphen(pf.getMobilePhone()));
         dtl.setHomePhone(removeHyphen(pf.getHomePhone()));
+        dtl.setOfficePhone(removeHyphen(pf.getOfficePhone()));
         dtl.setFax(removeHyphen(pf.getFax()));
         dtl.setEmail(pf.getEmail());
 
@@ -287,12 +294,11 @@ public class PatientMService {
         //정보수정을 위핸 PatientM 과 PatientDTL이 준비되었다
 
         //PatientForm에 들어있는 정보들을 PatientM 과 PatientDTL에 셋팅한다
-
         m.setFirstName(pf.getFirstName());
         m.setLastName(pf.getLastName());
         m.setMiddleName(pf.getMiddleName());
         m.setPassFirstName(pf.getPassFirstName());
-        m.setPassLastName(pf.getLastName());
+        m.setPassLastName(pf.getPassLastName());
         m.setPassMiddleName(pf.getPassMiddleName());
         m.setGender(pf.getGender());
         m.setDayOfBirth(localDateToInteger(pf.getBirth()));
@@ -417,5 +423,6 @@ public class PatientMService {
         }
         return phone.replace("-", "");
     }
+
 }
 

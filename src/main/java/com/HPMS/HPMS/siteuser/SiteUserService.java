@@ -66,7 +66,8 @@ public class SiteUserService {
         String lastName = suf.getLastName();
         RoleAndId roleAndId = new RoleAndId();
 
-        DoctorM doctorM = this.doctorMService.getDoctorMByNameAndTelephone(firstName, lastName, formatedPhoneNumber);
+        //DoctorM doctorM = this.doctorMService.getDoctorMByNameAndTelephone(firstName, lastName, formatedPhoneNumber);
+        DoctorM doctorM = this.doctorMService.getDoctorMByNameAndTelephone(firstName, lastName, formatPhoneNumber(formatedPhoneNumber));
         ReferencePersonnelM referencePersonnelM1 = this.referencePersonnelMService.getReferencePersonnelMByNameAndCellPhone(firstName, lastName, formatedPhoneNumber);
         if( doctorM!= null){
             roleAndId.role = "ROLE_DOCTOR";

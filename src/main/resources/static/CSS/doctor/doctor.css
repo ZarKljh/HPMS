@@ -1,18 +1,89 @@
-// 노멀라이징
+//--------------- 노멀라이징 ---------------//
 body, ul, li {
-   margin: 0;
-   padding: 0;
-   list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 a {
-   text-decoration: none;
-   color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 #search_kw {
     font-size: 10px;
 }
+h3, h4 {
+    font-weight:bolder;
+}
 
-// 네비게이션
+
+//--------------- 반응형 ---------------//
+@media screen and (max-width: 1400px) {
+	.basic_info {
+		width: 760px;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.basic_info {
+		width: 580px;
+	}
+}
+@media screen and (max-width: 993px) {
+    .mobile_hidden {
+		display: none;
+		width: 300px;
+	}
+	.nursemain {
+        display: flex;
+        justify-content: center;
+    }
+    .basic_info {
+        display: none;
+    }
+    .info_1 {
+        display: block;
+    }
+    .image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name_list input {
+        width: 100px;
+    }
+    .navbar-box {
+        display: none !important;
+    }
+    .pagination {
+        text-wrap: nowrap;
+        height: 43px;
+    }
+    .create {
+        margin-top: 120px;
+    }
+    .size_bar {
+        display: none !important;
+    }
+}
+@media screen and (min-width: 992px) {
+	.navbar-toggle {
+		display: none;
+	}
+	.menubox_2 {
+	    display: none;
+	}
+}
+@media screen and (max-width: 767px) {
+    .middle_name {
+            display: none;
+        }
+}
+@media (min-width: 768px) {
+    .middle_name {
+        display: block;
+    }
+}
+
+
+//--------------- 네비게이션 ---------------//
 .navbar {
     position: fixed;
     top: 0;
@@ -21,58 +92,73 @@ a {
     z-index: 1030;
 }
 .navbar-toggle {
-   border: 1px solid gray;
-   border-radius: 5px;
+	border: 1px solid gray;
+	border-radius: 5px;
 }
 .nav-link:hover {
     color: #0d6efd;
     text-decoration: underline;
 }
-@media screen and (max-width: 992px) {
-    .navbar-box {
-        display: none !important;
-    }
-}
-@media screen and (min-width: 992px) {
-   .navbar-toggle {
-      display: none;
-   }
-   .menubox_2 {
-       display: none;
-   }
+.nav-item {
+    display: flex;
 }
 .menubox_2 {
-   position: absolute;
-   right: -200px;
-   top: 101%;
-   width: 200px;
-   height: 100vh;
-   z-index: 999;
-   border-left: 1px solid #dee2e6;
-   background-color: #f8f9fa;
-   transition: right 0.3s;
+	position: absolute;
+	right: -200px;
+	top: 101%;
+	width: 200px;
+	height: 100vh;
+	z-index: 999;
+	border-left: 1px solid #dee2e6;
+	background-color: #f8f9fa;
+	transition: right 0.3s;
 }
 .menubox_2.active {
-   right: 0;
+	right: 0;
 }
 .nav-link {
-   padding: 10px 20px;
+	padding: 10px 20px;
 }
 
-// 리스트 페이지
+
+//--------------- 리스트 페이지 ---------------//
 .container {
-   width: 1920px;
-   display: flex;
-   justify-content: center;
-   flex-direction: column;
-   box-sizing: border-box;
+	width: 1920px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	box-sizing: border-box;
 }
 .listbox {
-   padding-top: 10px;
+	padding-top: 10px;
+}
+.chang-checkbox-column {
+    width: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+}
+.chang-checkbox-column input[type="checkbox"] {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    cursor: pointer;
+}
+.sub_title {
+    font-size: 14px;
+}
+.input-text {
+    line-height: 30px;
+    font-size: 12px;
+    color: #6c757d;
+    margin-right: 5px;
 }
 .search_box {
     display:flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .search_btn {
     border: 1px solid #dee2e6;
@@ -83,71 +169,406 @@ a {
 .search_btn:hover {
     background-color: #dee2e6;
 }
-table {
-   display: flex;
-   justify-content: center;
-   flex-direction: column;
-}
 .name_hover:hover {
     color: #0d6efd;
     text-decoration: underline;
 }
 tr {
-   display: flex;
-   flex-grow: 1;
-   justify-content: space-around;
+	display: flex;
+	flex-grow: 1;
+	justify-content: space-around;
 }
 .list {
-   justify-content: space-around;
-   text-align: center;
-   line-height: 40px;
-   overflow: hidden;
-   text-overflow: ellipsis;
+	justify-content: space-around;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 th {
-   width: 100%;
-   text-wrap: nowrap;
-   font-size: 16px;
-   border-right: 1px solid #dee2e6;
+    display: table-cell;
+	width: 100%;
+	text-wrap: nowrap;
+	font-size: 16px;
 }
 td {
-   width: 80px;
-   text-wrap: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   flex-grow: 1;
-   font-size: 12px;
+    display: table-cell;
+	width: 80px;
+	text-wrap: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-grow: 1;
+	font-size: 12px;
 }
-.create_btn {
-   position: absolute;
-   top: 85%;
-   right: 15%;
-   text-wrap: nowrap;
-}
-.history_btn {
-    position: absolute;
-    top: 90%;
-    right: 15%;
-    text-wrap: nowrap;
-}
-@media screen and (max-width: 993px) {
-   .mobile_hidden {
-      display: none;
-      width: 300px;
-   }
-}
-@media screen and (max-width: 412px) {
-    .create_btn {
-        top: 90%;
-        right: 5px;
-    }
-    .history_btn {
-        top: 95%;
-        right: 5px;
-    }
+.size_bar {
+    font-size: 12px;
 }
 
-// 페이징 버튼 영역
+
+//--------------- 페이징 버튼 영역 ---------------//
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+    position: relative;
+}
+.pagination {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.page-navigation > div:last-child {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+.pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    min-width: 40px;
+    text-align: center;
+}
+.pagination a:hover {
+    background-color: #cce6ff;
+    border-color: #99ccff;
+    color: #000;
+}
+.pagination .active-page {
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+    pointer-events: none;
+}
+
+
+//--------------- 버튼 스타일 ---------------//
+.button-link {
+    gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    min-height: 42px;
+    background-color: #f0f0f0 !important;
+    color: #333 !important;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.button-link:hover {
+    background-color: #cce6ff;
+    border-color: #99ccff !important;
+    color: #000 !important;
+}
+.m-btn, .d-btn {
+    gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    min-height: 42px;
+    background-color: #f0f0f0 !important;
+    color: #333 !important;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.m-d-btn_box .m-btn:hover {
+    background-color: #cce6ff !important;
+    border-color: #99ccff !important;
+    color: #000 !important;
+}
+.m-d-btn_box .d-btn:hover, .create .d-btn:hover {
+    background-color: #f54747 !important;
+    color: #fff !important;
+    border-color: #f54747 !important;
+}
+
+
+//--------------- 상세 페이지 ---------------//
+.main, .information {
+	background-color: #f8f9fa;
+	transition: .5s;
+}
+.main {
+	position: relative;
+	overflow: hidden;
+}
+.m-d-btn_box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.image {
+	width: 300px;
+	height: 400px;
+	overflow: hidden;
+	border: 1px solid gray;
+	background-color: white;
+	margin-left: 40px;
+	margin-bottom: 20px;
+}
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 비율 유지하면서 박스를 꽉 채움 */
+    object-position: center; /* 중앙 기준 크롭 */
+}
+.basic_info {
+	position: absolute;
+	top: 220px;
+	left: 350px;
+	width: 945px;
+	height: 200px;
+}
+.info, .info_1 {
+	padding: 10px;
+	margin: 20px;
+	border: 1px solid #dee2e6;
+	background-color: white;
+}
+.info_1 {
+	display: none;
+}
+.txt {
+    display: inline-block;
+    width: 100px;
+}
+
+
+//--------------- 수정 페이지 ---------------//
+.c_c_btn_box {
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+
+//--------------- 기본정보 등록 ---------------//
+.main-table {
+	position: relative;
+	background-color: #f8f9fa;
+}
+label {
+	width: 100px;
+	font-size: 16px;
+	font-weight: bold;
+}
+input {
+    border: 1px solid #dee2e6;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+}
+.input-list {
+    display: flex;
+	margin: 5px;
+	background-color: #fff;
+	font-size: 16px;
+}
+.name {
+    margin-bottom: 5px;
+}
+.next_btn_box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+//--------------- 상세정보 등록 ---------------//
+.save_btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+//--------------- 자격증 등록 ---------------//
+.li_btn {
+    display: flex;
+    justify-content: flex-end;
+}
+.li_btn > a, .li_c_btn, .li_cancel_btn {
+    padding: 5px 10px;
+    height: 40px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+.li_btn > a:hover, .li_c_btn:hover, .li_cancel_btn:hover {
+    background-color: #dee2e6;
+}
+.list_form {
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    flex-direction: column;
+}
+.li_list_form {
+    display: block;
+    width:100%;
+}
+
+
+//--------------- 메인 페이지 ---------------//
+.hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+
+//--------------- 히스토리 상세 페이지 ---------------//
+.history-card {
+    margin-bottom: 1.5rem;
+}
+.history-header {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+.history-meta div {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+.section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.info-label {
+    font-weight: 500;
+}
+.info-value.empty {
+    color: #adb5bd;
+}
+.picture-placeholder {
+    width: 120px;
+    height: 120px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+//--------------- personnel ---------------//
+/* 목록리스트*/
+.chang-table-layout {/* 컬럼 넓이 고정을 강하게 적용하기 위해 */
+    table-layout: fixed;
+}
+.chang-nurse-th { /*nurse.css 내 th overwrite*/
+    width: 100%;
+    text-wrap: nowrap;
+    font-size: 14px;
+    /*border-right: 1px solid #dee2e6;*/
+}
+
+.listTable {
+  width: 100%;
+  table-layout: fixed; /* 셀 너비 고정에 필수 */
+}
+
+.chang-checkbox-column {/* 체크박스 컬럼 넓이 고정*/
+    width: 50px;
+    text-align: center;
+    min-width: 50px;
+    max-width: 50px;
+    /*display: flex; */
+    /*justify-content: center; align-items: center;*/
+    /*height: 100%;*/
+}
+.chang_text_center{
+    text-align: center;
+}
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* 목록리스트*/
+.material-symbols-outlined {/* 붉은 귀 : 필수입력대상*/
+	color: red;
+	font-size: 12px;
+	line-height: 3px;
+}
+
+.input-list {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 14px;
+}
+
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.page-navigation a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 왼쪽 버튼 영역 */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* 버튼 스타일 */
+.button-link {
+  gap:5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  min-height: 42px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-link:hover {
+  background-color: #cce6ff;
+  border-color: #666;
+  color: #000;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+
+/* 페이징 버튼 영역 */
 .pagination {
     display: flex;
     gap: 6px;
@@ -180,1035 +601,122 @@ td {
     pointer-events: none;
 }
 
-//상세 페이지
-.main, .information {
-   background-color: #f8f9fa;
-   transition: .5s;
-}
-.main {
-   position: relative;
-}
-.m-d-btn_box {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 20px;
-    gap: 10px;
-    width: 100%;
-    height: 80px;
-}
-.m-btn, .d-btn {
-    padding: 5px 10px;
-    margin-top: 20px;
-    height: 40px;
-    text-align: center;
-    line-height: 30px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-}
-.m-btn:hover {
-  background-color: lightblue; /* ✅ 호버 시 라이트블루 */
-  border-color: #99ccff;       /* 경계선도 살짝 파란 톤 */
-  color: #000;                 /* 글씨는 검정 */
-}
-.d-btn:hover {
-    background-color: #f54747;
-}
-.image {
-   width: 300px;
-   height: 400px;
-   overflow: hidden;
-   border: 1px solid gray;
-   background-color: white;
-   margin-left: 40px;
-   margin-bottom: 20px;
-}
-.basic_info {
-   position: absolute;
-   top: 220px;
-   left: 350px;
-   width: 945px;
-   height: 200px;
-}
-.info, .info_1 {
-   padding: 10px;
-   margin: 20px;
-   border: 1px solid #dee2e6;
-   background-color: white;
-}
-.info_1 {
-   display: none;
-}
-.txt {
-    display: inline-block;
-    width: 100px;
-}
-@media screen and (max-width: 1400px) {
-   .basic_info {
-      width: 760px;
-   }
-}
 
-@media screen and (max-width: 1200px) {
-   .basic_info {
-      width: 580px;
-   }
+/* 기본: 데스크탑에서는 전체 텍스트 보이기 */
+/*.text-full {
+    display: inline;
 }
-
-@media screen and (max-width: 993px) {
-   .nursemain {
-        display: flex;
-        justify-content: center;
-    }
-    .basic_info {
-        display: none;
-    }
-    .info_1 {
-        display: block;
-    }
-    .image {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .name_list input {
-        width: 100px;
-    }
-}
-@media screen and (max-width: 767px) {
-    .size_bar {
-        display: none !important;
-    }
-}
-
-
-// 수정 페이지
-.c_c_btn_box {
-    display: flex;
-    justify-content: end;
-    margin-top: 10px;
-    align-items: center;
-    width: 100%;
-}
-.c-btn, .cancel-btn {
-    border-radius: 10px;
-    border: 1px solid #dee2e6;
-    color: #fff;
-}
-.c-btn {
-    background-color: #0d6efd;
-    width: 70px;
-    height: 45px;
-}
-.cancel-btn {
-    background-color: #dee2e6;
-    padding: 10px 16px;
-}
-
-
-// 기본정보 등록
-.main-table {
-   position: relative;
-   border: 1px solid #dee2e6;
-   background-color: #f8f9fa;
-   font-size: 14px;
-}
-label {
-   width: 100px;
-}
-input {
-    border: 1px solid #dee2e6;
-}
-.input-list {
-    display: flex;
-   padding: 10px;
-   margin: 20px;
-   border: 1px solid #dee2e6;
-   background-color: white;
-   font-size: 14px;
-}
-.name {
-    margin-bottom: 5px;
-}
-@media (min-width: 768px) {
-    .middle_name {
-        display: block;
-    }
-    .save_btn_1 {
-        display: block;
-    }
-    .save_btn_2 {
-        display: none;
-    }
-}
-@media (max-width: 767px) {
-    .middle_name {
-        display: none;
-    }
-    .save_btn_1 {
-        display: none;
-    }
-    .save_btn_2 {
-        display: block;
-    }
-}
-.next_btn_box {
-    display: flex;
-    justify-content: end;
-    margin-bottom: 20px;
-    margin-right: 20px;
-}
-.next_btn {
-    padding: 8px 10px;
-   border: 1px solid #dee2e6;
-   border-radius: 10px;
-   background-color: #0d6efd;
-   color: #fff;
-}
-
-// 자격증 등록
-.li_btn {
-    display: flex;
-    justify-content: flex-end;
-}
-.li_btn > a, .li_c_btn, .li_cancel_btn {
-    padding: 5px 10px;
-    height: 40px;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-}
-.li_btn > a:hover, .li_c_btn:hover, .li_cancel_btn:hover {
-    background-color: #dee2e6;
-}
-.list_form {
-    width:100%;
-    max-width:500px;
-    margin:auto;
-    flex-direction: column;
-}
-.li_list_form {
-    display:block;
-    width:100%;
-}
-
-//메인 페이지
-.hover-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-}
-
-// 상세정보 등록 페이지
-.save_btn_1 {
-    display: block;
-}
-
-//히스토리 상세 페이지
-.history-card {
-    margin-bottom: 1.5rem;
-}
-.history-header {
-    background-color: #f8f9fa;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #dee2e6;
-}
-.history-meta div {
-    font-size: 0.875rem;
-    color: #6c757d;
-}
-.section-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-.info-label {
-    font-w eight: 500;
-}
-.info-value.empty {
-    color: #adb5bd;
-}
-.picture-placeholder {
-    width: 120px;
-    height: 120px;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: #6c757d;
-    margin-bottom: 1rem;
-}
-
-
-/*FOOTER 전체 적용*/
-/*.footer_fixed_bottom{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  min-height: 60px;   *//* 최소 높이 *//**//*
-  max-height: 60px;   *//**//* 최대 높이 *//**//*
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  border-top : 1px lightgray solid;
-  overflow: hidden;   *//**//* 내용이 넘치지 않도록 *//**//*
+.text-short {
+    display: none;
 }*/
-/*.footer_fixed_bottom{
- *position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  min-height: 140px;   *//* 최소 높이 *//*
-  max-height: 140px;   *//* 최대 높이 *//*
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  *//*z-index: 1000;*//*
-  *//*border-top : 0px lightgray solid;*//*
-  overflow: hidden;   *//* 내용이 넘치지 않도록 *//*
-}
-*/
-/* table frame */
-.footer-custom-table {
-  border:0px;
-  width: 1200px;
-  padding: 0px;
-  margin:0px;
-  border-collapse: collapse;
-  table-layout: fixed;
+
+@media (min-width: 769px) {
+    .text-full {
+        display: inline;
+    }
+    .text-short {
+        display: none;
+    }
 }
 
-.footer-custom-table tr:first-child,
-.fotter-custom-table tr:last-child {
-  height: 20px;
-}
-.footer-custom-table td {
-  /*padding: 0px;*/
-  /*border: 1px solid #ccc;*/
+/* 모바일: 768px 이하에서는 짧은 텍스트만 보이기 */
+@media (max-width: 768px) {
+    .text-full { /*모바일에서 버튼 문자열 변경 */
+        display: none;
+    }
+
+    .text-short {
+        display: inline;
+    }
+
+   .delete-button { /*모바일에서 버튼 완전히 가리기 */
+        display: none;
+   }
+
+     .responsive-logo {
+       display: none;
+     }
+
+
 }
 
-/* 첫 번째 컬럼 */
-.footer-custom-table td:first-child {
-  width: 20px;
-}
 
-/* 마지막 컬럼 */
-.footer-custom-table td:last-child {
-  width: 20px;
-}
-
-/* 두 번째 컬럼 (전체 너비에서 20px + 20px 제외 후 70%) */
-.footer-custom-table td:nth-child(2) {
-  /*background-color: lightyellow;*/
-  width: calc((1200px - 40px) * 0.6);
-  text-align: left;
-}
-
-/* 세 번째 컬럼 (전체 너비에서 20px + 20px 제외 후 30%) */
-.footer-custom-table td:nth-child(3) {
-  /*background-color: lightblue;*/
-  width: calc((1200px - 40px) * 0.4);
-  text-align: right;
-}
-/*테이블 내 모든 ul li 기본 세팅*/
-.footer-custom-table td ul li {
-  list-style:none;
-  list-style-type: none; /* 불릿 제거 */
-  margin: 0;              /* 외부 여백 제거 */
-  padding: 0;             /* 내부 여백 제거 */
-}
-
-.inner-ul-menu > li{
-  display:inline-block;
-  /*text-align:center;*/
-  padding-left:10px;
-  padding-right:10px;
-}
-
-.name_hover:hover {
-color: #0d6efd !important;
-text-decoration: underline !important;
-}
-/* 목록 하단 액션 버튼: 페이징과 동일 스타일 */
-.page-btn {
-  display: inline-block;
-  padding: 8px 14px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  color: #333;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
-  min-width: 40px;
-  text-align: center;
-}
-.page-btn:hover {
-  background-color: #cce6ff;
-  border-color: #99ccff;
-  color: #000;
-}
-
-/* 상세페이지 라벨/값 공통 스타일 */
-.label-reform {
-  font-family: 'Malgun Gothic','맑은 고딕', system-ui, sans-serif;
+/* 상세정보 */
+.detail_content{
+  font-family: 'Malgun Gothic', sans-serif;
   font-size: 16px;
-  font-weight: 700;  /* Bold */
-  color: #333;
+}
+.detail_content label {
+  font-weight: bold;
 }
 
-.value-reform {
-  font-family: 'Malgun Gothic','맑은 고딕', system-ui, sans-serif;
-  font-size: 16px;
-  font-weight: 400;  /* Normal */
-  color: #000;
+/*  footer  */
+.chang-footer{
+    display:flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 */
+    width: 100%;
+}
+/*.chang-footer{
+    display:flex;
+    background-color:darkblue;
+    flex-grow:0;
+}*/
+.chang-footer-inforamtion{
+    /*background-color:yellow;*/
+    flex:1;
+    max-width:1190px;
+    margin-left: 20px;
+    /*min-width:1290px;*/
 }
 
-.detail-title {
-  white-space: nowrap;   /* 줄바꿈 방지 */
-  font-family: "Malgun Gothic", sans-serif;
-  font-size: 30px;       /* 원하는 크기 */
+.chang-footer-logo{
+    display:flex;
+    width:100px;
 }
 
-    .detail-title{
-      white-space: nowrap;            /* 한 줄 유지 */
-      line-height: 1.2;               /* 살짝 컴팩트 */
-    }
-    .kv-grid{
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 8px 12px;
-    }
-    .kv-label{
-      font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
-      font-size: 16px;
-      font-weight: 700; /* Bold */
-      color: #222;
-    }
-    .kv-value{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "맑은 고딕", sans-serif;
-      font-size: 16px;
-      font-weight: 400; /* Normal */
-      color: #333;
-      word-break: break-word;
-    }
-    fieldset{
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      background: #fff;
-    }
-    legend{
-      padding: 0 8px;
-      font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
-      font-size: 16px;
-      font-weight: 700; /* Bold */
-      color: #333;
-    }
-    /* 사진 영역 정리 */
-    .detail-photo{
-      width: 200px;
-      flex: 0 0 200px;
-    }
-    .detail-photo img{
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-/* 기존 .section-heading 정의에 이어서(또는 교체) */
-.section-heading {
-  font-family: "맑은 고딕", Malgun Gothic, system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 800; /* h2의 fw-bolder와 유사 굵기 */
+.chang-inner-ul-menu li {
+  display: block;         /* 한 줄씩 내려쓰기 */
+  margin-bottom: 1px;     /* 항목 간 간격 (선택사항) */
+  font-family: 'Malgun Gothic', sans-serif;
+  font-size: 10px;
 }
-/* ===== Doctor list / history table FIX ===== */
-
-/* 전역 table{display:flex}를 무력화 */
-table.doctor-table {
-  display: table;                 /* ✅ table 형식 복구 */
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;             /* 내용에 맞춰 열 너비 */
+.responsive-logo{
+    width:80px; height:auto;
 }
 
-/* 전역 tr{display:flex}를 무력화 */
-table.doctor-table tr {
-  display: table-row;             /* ✅ 행 복구 */
-}
 
-/* 전역 th/td에 display 영향 방지 + 세로줄 제거 + 가운데 정렬 */
-table.doctor-table th,
-table.doctor-table td {
-  display: table-cell;            /* ✅ 셀 복구 */
-  padding: 10px 8px;
-  font-size: 14px;
-  text-align: center;
-  vertical-align: middle;
-  border-left: none !important;   /* 세로줄 제거 */
-  border-right: none !important;  /* 세로줄 제거 */
-  border-top: 1px solid #ddd;     /* 가로줄 유지 */
-  border-bottom: 1px solid #eee;  /* 가로줄 유지 */
-  white-space: nowrap;
-}
-
-/* 헤더 배경/굵기 */
-table.doctor-table th {
-  background: #fafafa;
-  font-weight: 600;
-}
-
-/* 행 hover */
-table.doctor-table tbody tr:hover {
-  background: #f8f9fa;
-}
-
-/* 히스토리 페이지 유틸 (누락 분) */
-form.search {
-  margin-bottom: 16px;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(160px, 1fr));
-  gap: 8px;
-  align-items: end;
-}
-form.search .full { grid-column: 1 / -1; }
-.right { text-align: right; }
-.pager { margin-top: 12px; display: flex; gap: 8px; align-items: center; }
-.muted { color: #666; }
-.nowrap { white-space: nowrap; }
-
-/* 세로줄을 다시 만드는 전역 th 보더 무력화(안 지울 경우 대비) */
-table.doctor-table th { border-right: none !important; }
-
-/* Doctor 테이블 최종 패치 (세로줄 차단 & table 레이아웃 강제) */
-.table.doctor-table,
-table.doctor-table { border-collapse: collapse; border-left:0!important; border-right:0!important; }
-
-.table.doctor-table thead th,
-.table.doctor-table tbody th,
-.table.doctor-table tbody td,
-table.doctor-table thead th,
-table.doctor-table tbody th,
-table.doctor-table tbody td {
-  border-left:0!important; border-right:0!important;
-}
-
-.table.doctor-table > :not(caption) > * > * {
-  border-left:0!important; border-right:0!important;
-  border-top:1px solid #ddd; border-bottom:1px solid #eee;
-}
-
-/* 전역 table/tr flex 규칙 무력화 (혹시 남아있다면) */
-table.doctor-table { display: table; width:100%; table-layout:auto; }
-table.doctor-table tr { display: table-row; }
-table.doctor-table th, table.doctor-table td { display: table-cell; text-align:center; vertical-align:middle; white-space:nowrap; }\
-
-/* ===== Doctor 테이블 전역 충돌 무력화(최종) ===== */
-/* 목적: 전역 table/tr flex, th/td width, th border-right를 완전히 무력화 */
-
-/* 1) 테이블 자체를 진짜 'table'로 강제 */
-.table.doctor-table,
-table.doctor-table {
-  display: table !important;
-  width: 100% !important;
-  border-collapse: collapse !important;
-  table-layout: auto !important; /* 내용에 맞춰 */
-  border-left: 0 !important;
-  border-right: 0 !important;
-}
-
-/* 2) tr을 진짜 'table-row'로 강제 */
-table.doctor-table tr {
-  display: table-row !important;
-}
-
-/* 3) 셀을 진짜 'table-cell'로 강제 + 가운데 정렬 + 세로줄 제거 */
-table.doctor-table th,
-table.doctor-table td {
-  display: table-cell !important;
-  text-align: center !important;       /* 가로 가운데 */
-  vertical-align: middle !important;   /* 세로 가운데 */
-  white-space: nowrap !important;
-
-  /* 전역 width/flex 속성 무력화 */
-  width: auto !important;
-  max-width: none !important;
-  flex: none !important;
-  flex-grow: 0 !important;
-
-  /* 세로줄 제거 */
-  border-left: 0 !important;
-  border-right: 0 !important;
-
-  /* 가로줄만 유지 */
-  border-top: 1px solid #ddd !important;
-  border-bottom: 1px solid #eee !important;
-
-  padding: 10px 8px !important;
-  font-size: 14px !important;
-}
-
-/* 4) 헤더 스타일 + 전역 th 보더 차단 */
-table.doctor-table thead th {
-  background: #fafafa !important;
-  font-weight: 600 !important;
-  border-right: 0 !important;
-}
-
-/* 5) Bootstrap/기타 중첩 선택자에서 그리는 보더도 차단 */
-.table.doctor-table > :not(caption) > * > * {
-  border-left: 0 !important;
-  border-right: 0 !important;
-  border-top: 1px solid #ddd !important;
-  border-bottom: 1px solid #eee !important;
-}
-
-/* 6) 히스토리 유틸 (누락 방지) */
-form.search {
-  margin-bottom: 16px !important;
-  display: grid !important;
-  grid-template-columns: repeat(6, minmax(160px, 1fr)) !important;
-  gap: 8px !important;
-  align-items: end !important;
-}
-form.search .full { grid-column: 1 / -1 !important; }
-.right { text-align: right !important; }
-.pager { margin-top: 12px !important; display: flex !important; gap: 8px !important; align-items: center !important; }
-.muted { color: #666 !important; }
-.nowrap { white-space: nowrap !important; }
-
-/* 디테일 페이지 컨테이너 */
-.detail-container { position: relative; }
-
-/* 카드 박스 */
-.detail-card {
-  position: relative;
-  padding: 16px 16px 72px; /* 하단 버튼 공간 확보 */
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-}
-
-/* 섹션 제목 아래 구분선 */
-.section-divider {
-  height: 1px;
-  background: #e5e7eb;
-  margin: 8px 0 16px;
-}
-
-/* 카드 하단 우측 고정 버튼 영역 */
-.detail-actions {
-  position: sticky;        /* 카드 안에서 스크롤해도 우측 하단에 고정처럼 보이게 */
-  bottom: 12px;            /* 뷰포트 하단에서 약간 위 */
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding-top: 12px;
-
-  /* 배경 그라스로 내용과 분리감 */
-  background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
-}
-
-/* 버튼 스타일(기존 클래스 재사용) */
-.m-btn, .d-btn {
-  padding: 8px 14px;
-  height: 40px;
-  line-height: 24px;
-  text-align: center;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  background: #f8f9fa;
-}
-
-/* 더 확실한 위치 고정이 필요하면 absolute로 전환 (주석 해제해서 사용) */
 /*
-.detail-actions {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  background: none;
+
+.chang-content-div {
+    height: 100px; */
+/* 예시 높이 *//*
+
+    background-image: url('/img/weed.png'); */
+/* 이미지 경로 *//*
+ *//*
+
+    background-repeat: no-repeat;
+    background-position: right 20px bottom 20px;
+    background-size: 80px auto; */
+/* 이미지 자체 크기 조정 *//*
+
+
 }
 */
 
-/* 상단 안내문 */
-.detail-subtitle{
-  margin: 4px 0 12px;
-  color: #6b7280; /* muted */
-  font-size: 14px;
-}
+/*추가css*/
+        /* 이름 링크만 호버 시 밑줄 */
+        .name_hover:hover { text-decoration: underline !important; }
 
-/* 카드 컨테이너: 우측 사진 공간 확보 */
-.detail-card{
-  position: relative;
-  padding: 16px 16px 72px;      /* 하단 버튼 공간 */
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-
-  /* 우측 상단 사진 공간만큼 오른쪽 패딩 추가 */
-  padding-right: 240px;         /* 사진 width + 여백 */
-}
-
-/* 구분선 */
-.section-divider{
-  height: 1px;
-  background: #e5e7eb;
-  margin: 8px 0 16px;
-}
-
-/* 우측 상단 프로필(절대 위치) */
-.detail-photo.floating{
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 200px;
-  text-align: center;
-}
-.detail-photo.floating img{
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
-}
-.detail-photo.floating .no-photo{
-  padding: 8px 0;
-  color: #6b7280;
-  font-size: 14px;
-  border: 1px dashed #e5e7eb;
-  border-radius: 8px;
-  background: #fafafa;
-}
-
-/* 하단 우측 버튼 (sticky 유지) */
-.detail-actions{
-  position: sticky;
-  bottom: 12px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding-top: 12px;
-  background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
-}
-
-/* 카드 기본 패딩: 오른쪽 여백 더 이상 필요 없음 */
-.detail-card { padding: 16px 16px 72px; }
-
-/* 메인 정보: 내용(좌) + 사진(우) 그리드 */
-.main-info-grid{
-  display: grid;
-  grid-template-columns: 1fr 220px; /* 왼쪽 내용, 오른쪽 사진 */
-  gap: 8px 24px;
-  align-items: start;
-}
-
-/* 사진을 그리드의 오른쪽-하단에 정렬 */
-.detail-photo.aside{
-  width: 200px;
-  justify-self: end;  /* 오른쪽 */
-  align-self: end;    /* 하단 */
-  text-align: center;
-}
-.detail-photo.aside img{
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
-}
-.detail-photo.aside .no-photo{
-  padding: 8px 0;
-  color: #6b7280;
-  font-size: 14px;
-  border: 1px dashed #e5e7eb;
-  border-radius: 8px;
-  background: #fafafa;
-}
-
-/* 반응형: 좁을 때 한 컬럼으로 내리고 사진은 아래쪽에 오른쪽 정렬 유지 */
-@media (max-width: 992px){
-  .main-info-grid{ grid-template-columns: 1fr; }
-  .detail-photo.aside{ width: 160px; justify-self: end; margin-top: 8px; }
-}
-/* 카드 바깥 버튼 영역 */
-.detail-actions-outer{
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-/* 모바일에서 여백 조금 더 */
-@media (max-width: 576px){
-  .detail-actions-outer{ margin-top: 16px; }
-}
-
-/* 메인과 동일 톤의 좌우 폭 제한 래퍼 */
-.page-narrow{
-  width: 100%;
-  max-width: 1200px;      /* 메인과 동일 목표 폭 */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;     /* 좌우 여백 */
-  padding-right: 16px;
-}
-
-/* 큰 화면에서 살짝 더 컴팩트하게 보이고 싶으면(선택) */
-/*
-@media (min-width: 1600px){
-  .page-narrow{ max-width: 1140px; }
-}
-*/
-
-@media (max-width: 992px){
-  .page-narrow{ max-width: 100%; padding-left: 12px; padding-right: 12px; }
-}
-
-/* ===== Edit/Detail 공통: 폼 그리드 여백 + 2열 라벨/입력 페어 ===== */
-.detail-card fieldset .grid{
-  display: grid;
-  /* 라벨-입력 한 쌍을 2세트(=4칸)로: |label|input|label|input| */
-  grid-template-columns: 160px 1fr 160px 1fr;
-  column-gap: 16px;   /* 좌우 간격 */
-  row-gap: 14px;      /* 위아래 간격 */
-  align-items: center;
-  position: relative; /* (선택) 세로 구분선용 */
-}
-
-/* 라벨은 우측 정렬로 줄맞춤 */
-.detail-card fieldset .grid > label{
-  justify-self: end;
-  padding-right: 8px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* 전체 너비를 차지해야 하는 줄(버튼행 등)은 .full 로 처리 */
-.detail-card fieldset .grid .full{
-  grid-column: 1 / -1;
-}
-
-/* (선택) 두 쌍 사이에 아주 옅은 세로 구분선 */
-.detail-card fieldset .grid::after{
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: #eee;
-}
-
-/* 반응형: 태블릿/모바일에서는 한 쌍만(=2칸) 보이게 */
-@media (max-width: 992px){
-  .detail-card fieldset .grid{
-    grid-template-columns: 140px 1fr;
-  }
-  .detail-card fieldset .grid::after{ display: none; }
-}
-
-/* =========================
-   타이포 통일: 16px, 라벨(컬럼명)=Bold, 데이터=Normal
-   ========================= */
-:root{
-  --hpms-font-label: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
-  --hpms-font-data: system-ui, -apple-system, "Segoe UI", Roboto,
-                    "Malgun Gothic","맑은 고딕", sans-serif;
-  --hpms-font-size: 16px;
-  --hpms-line: 1.45;
-}
-
-/* 목록/히스토리 테이블 */
-.table.doctor-table th, table.doctor-table th{
-  font-family: var(--hpms-font-label) !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 700 !important;    /* Bold */
-  line-height: var(--hpms-line);
-}
-.table.doctor-table td, table.doctor-table td{
-  font-family: var(--hpms-font-data) !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 400 !important;    /* Normal */
-  line-height: var(--hpms-line);
-}
-
-/* 디테일/수정: 라벨(컬럼명) */
-.kv-label,
-.label-reform,
-.detail-card fieldset .grid > label{
-  font-family: var(--hpms-font-label) !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 700 !important;    /* Bold */
-  line-height: var(--hpms-line);
-}
-
-/* 디테일/수정: 데이터(값/입력) */
-.kv-value,
-.value-reform,
-.detail-card fieldset .grid > div:not(.kv-label),
-.detail-card fieldset .grid > input,
-.detail-card fieldset .grid > select,
-.detail-card fieldset .grid > textarea{
-  font-family: var(--hpms-font-data) !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 400 !important;    /* Normal */
-  line-height: var(--hpms-line);
-}
-
-/* (선택) 상단 상태/검색 바 입력 크기도 16px 맞춤 */
-.size_bar,
-.search_box input,
-.search_btn{
-  font-size: var(--hpms-font-size) !important;
-  line-height: var(--hpms-line);
-}
-/* ===== 폼을 한 줄(라벨 1 + 값 1)씩 배치 ===== */
-.detail-card fieldset .grid{
-  display: grid;
-  grid-template-columns: 160px 1fr; /* ✅ 한 줄: 라벨 1칸 + 값 1칸 */
-  column-gap: 16px;
-  row-gap: 14px;
-  align-items: center;
-}
-
-/* 두 세트 구분선(있었다면) 숨김 */
-.detail-card fieldset .grid::after{
-  display: none !important;
-}
-
-/* 라벨 정렬과 타이포 */
-.detail-card fieldset .grid > label{
-  justify-self: end;
-  padding-right: 8px;
-  font-weight: 700;
-  white-space: nowrap;
-  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif;
-  font-size: 16px;
-}
-
-/* 입력/값 영역은 꽉 차게 */
-.detail-card fieldset .grid > input,
-.detail-card fieldset .grid > select,
-.detail-card fieldset .grid > textarea,
-.detail-card fieldset .grid > div:not(.kv-label){
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-/* 한 줄 전체를 써야 하는 요소(버튼 행 등)는 .full */
-.detail-card fieldset .grid .full{
-  grid-column: 1 / -1;
-}
-
-/* 반응형에서도 동일(원래도 1세트라 별도 처리 불필요하지만 명시적으로 유지) */
-@media (max-width: 992px){
-  .detail-card fieldset .grid{
-    grid-template-columns: 140px 1fr;
-  }
-}
-
-/* === 데이터 타이포: 맑은 고딕 + Normal, 16px === */
-:root{ --hpms-font-size: 16px; }
-
-/* 표(td)와 링크 */
-.table.doctor-table td,
-table.doctor-table td,
-.table.doctor-table td a,
-table.doctor-table td a {
-  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 400 !important; /* Normal */
-}
-
-/* 디테일/수정 값 영역 + 폼 입력들 */
-.kv-value,
-.value-reform,
-.detail-card fieldset .grid > div:not(.kv-label),
-.detail-card fieldset .grid > input,
-.detail-card fieldset .grid > select,
-.detail-card fieldset .grid > textarea {
-  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 400 !important; /* Normal */
-}
-
-/* (선택) 검색/버튼 텍스트도 데이터 톤에 맞추고 싶다면 */
-.search_box input,
-.page-btn,
-.pagination a,
-.size_bar {
-  font-family: "Malgun Gothic","맑은 고딕", system-ui, sans-serif !important;
-  font-size: var(--hpms-font-size) !important;
-  font-weight: 400 !important;
-}
-.detail-card fieldset .grid .full{ display:flex; justify-content:flex-end; }
-
-/* edit / join 폼 전용: 라벨-값 1줄 정렬 고정 */
-.detail-card fieldset > .grid{
-  display: grid !important;
-  grid-template-columns: 160px 1fr !important; /* ← 라벨, 값 */
-  gap: 10px 12px;
-  align-items: center;
-  direction: ltr; /* 혹시 rtl 영향 차단 */
-}
-.detail-card fieldset > .grid > label{
-  text-align: left;
-  justify-self: start;
-  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
-  font-size: 16px;
-  font-weight: 700;  /* 컬럼명 Bold */
-  color: #333;
-}
-.detail-card fieldset > .grid > input,
-.detail-card fieldset > .grid > select,
-.detail-card fieldset > .grid > textarea{
-  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif; /* 데이터 글꼴 */
-  font-size: 16px;
-  font-weight: 400;  /* 데이터 Normal */
-}
-.detail-card fieldset > .grid .job-actions{
-  grid-column: 2 / 3 !important;  /* 값 칸(오른쪽) 위치 */
-  justify-self: end;               /* 우측 정렬 */
-}
-
-/* 한 카드 레이아웃 + 제목/구분선 */
-.detail-container.page-narrow{max-width:1200px;margin:0 auto;}
-.detail-card{padding:16px 20px;border-radius:12px;}
-.section-heading{font-size:20px;font-weight:700;margin:8px 0 6px;color:#333;}
-.section-divider{height:1px;background:#e5e7eb;margin:8px 0 16px;border:0;}
-
-/* 1줄 라벨-값 정렬 */
-.detail-card fieldset>.grid{
-  display:grid!important;grid-template-columns:160px 1fr!important;
-  gap:10px 12px;align-items:center;
-}
-.detail-card fieldset>.grid>label{
-  text-align:left;justify-self:start;
-  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-  font-size:16px;font-weight:700;color:#333;
-}
-.detail-card fieldset>.grid>input,
-.detail-card fieldset>.grid>select,
-.detail-card fieldset>.grid>textarea{
-  font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-  font-size:16px;font-weight:400;
-}
-
-/* 직급/직책 버튼을 우측으로 */
-.detail-card .job-actions{grid-column:2/3!important;justify-self:end;}
-
-/* 카드 하단 우측 버튼 정렬 */
-.detail-actions-outer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;}
-
+        /* ✅ 버튼·링크류 호버 밑줄 제거 */
+        .button-link:hover,
+        .search_btn:hover,
+        .pagination a:hover,
+        .create .d-btn:hover,
+        .m-btn:hover,
+        .d-btn:hover {
+            text-decoration: none !important;
+        }
+             .search_btn:hover,
+             .pagination a:hover { text-decoration: none !important; }

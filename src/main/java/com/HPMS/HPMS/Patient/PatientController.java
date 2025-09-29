@@ -57,7 +57,8 @@ public class PatientController {
     @GetMapping("/patient/list")
     public String list(Model model,
                        @RequestParam(value="page", defaultValue="0") int page,
-                       @RequestParam(value="size", defaultValue="10") int size) {
+                       @RequestParam(value="size", defaultValue="10") int size
+                       ) {
         //id 칼럼을 기준으로 내림차순(descending())
         //오름차순으로 하고 싶을 때에는 (ascending()) 변경
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"). descending());
@@ -70,7 +71,7 @@ public class PatientController {
         int currentPage = page;
 
         int startPage = Math.max(currentPage - 2, 0);
-        int endPage = Math.min(currentPage + 2, totalPages - 1);
+        int endPage = Math.min(currentPage + 2, totalPages-1);
 
         List<Integer> pageNumbers = new ArrayList<>();
 
@@ -78,10 +79,12 @@ public class PatientController {
             pageNumbers.add(i);
         }
 
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("patients", patients);
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
+
 
         return "patient/lsw_patient_list";
     }
@@ -89,7 +92,7 @@ public class PatientController {
 
     //환자 1명의 상세정보 id값으로 찾아서 가져옵니다
     @GetMapping("/patient/detail/{id}")
-    public String patientDetial(Model model, @PathVariable("id") Integer id){
+    public String patientDetail(Model model, @PathVariable("id") Integer id){
         PatientDetailDTO detailDTO = this.patientDTOService.getPatientDetailDTO(id);
         model.addAttribute("detailDTO", detailDTO);
         return "patient/lsw_patient_detail";
@@ -117,9 +120,9 @@ public class PatientController {
         return "patient/lsw_patient_modify";
     }
     //수정된 환자정보를 저장합니다
-    @PostMapping("/patient/modify/{id}")
-    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult, @PathVariable("id") Integer id){
-        PatientM patientM = this.patientMService.getPatientM(id);
+    @PostMapping("/patient/modify")
+    public String patientModify(@Valid PatientForm patientForm, BindingResult bindingResult){
+        PatientM patientM = this.patientMService.getPatientM(patientForm.getId());
         if (bindingResult.hasErrors()) {
             return "patient/lsw_patient_modify";
         }
@@ -179,6 +182,7 @@ public class PatientController {
         for (int i = startPage; i <= endPage; i++) pageNumbers.add(i);
 
         // 모델에 담기
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("patients", patients);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
@@ -193,6 +197,49 @@ public class PatientController {
         // 기존 patient/list 의 화면 폼을 그대로 사용합니다
         return "patient/lsw_patient_list";
     }
+    //단순조건으로 환자를 검색합니다
+    // 성명 이름. 보호자 연락처 뒷자리, 휴대전화 뒷자리 3가지 조건으로 검색가능합니다
+    @GetMapping("/patient/simplesearch")
+    public String simpleSearchPatient(
+            Model model,
+            @RequestParam(value="page", defaultValue="0") int page,
+            @RequestParam(value="size", defaultValue="10") int size,
+            @RequestParam(value="kw", defaultValue = "") String kw){
+
+        //페이징처리를 위한 pageRequest 생성
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        Page<PatientListDTO> patients;
+        if (kw != null && !kw.isBlank()) {
+            patients = patientDTOService.searchSimple(kw, pageable);
+        } else {
+            patients = patientDTOService.getPatientListDTO(pageable);
+        }
+
+        int totalPages = patients.getTotalPages();
+        if (page >= totalPages) {
+            page = 0;
+        }
+        int currentPage = page;
+
+        int startPage = Math.max(currentPage - 2, 0);
+        int endPage = Math.min(currentPage + 2, totalPages-1);
+
+        List<Integer> pageNumbers = new ArrayList<>();
+
+        for (int i = startPage; i <= endPage; i++) {
+            pageNumbers.add(i);
+        }
+
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("patients", patients);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
+
+        return "patient/lsw_patient_list";
+    }
+
 
 
 }

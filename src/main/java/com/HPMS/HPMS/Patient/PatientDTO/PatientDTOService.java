@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -67,9 +68,10 @@ public class PatientDTOService {
     //페이징 기능 추가된 getPatientListDTO
     public Page<PatientListDTO> getPatientListDTO(Pageable pageable){
 
-
         //환자메인정보 모든 리스트를 service를 통해 가져온다
+
         Page<PatientM> patientMs = this.patientMService.getAllPatientM(pageable);
+
         //환자리스트html전용 DTO를 담아놓을 신규 List를 생성한다
         List<PatientListDTO> dtoList = new ArrayList<>();
         //날짜출력용 포멧을 정해놓았다
@@ -108,6 +110,7 @@ public class PatientDTOService {
         //환자 1명의 상세정보를 화면에 띄우기 위해 비어있는 DTO객체를 준비한다
         PatientDetailDTO detailDTO = new PatientDetailDTO();
 
+
         //환자 1명의 main정보를 바탕으로 환자상세정보를 가져온다.
         PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
 
@@ -126,11 +129,12 @@ public class PatientDTOService {
         detailDTO.setMiddleName(m.getMiddleName());
         detailDTO.setPassFirstName(m.getPassFirstName());
         detailDTO.setPassLastName(m.getPassLastName());
-        detailDTO.setMiddleName(m.getPassMiddleName());
+        detailDTO.setPassMiddleName(m.getPassMiddleName());
+        detailDTO.setPassport(m.getPassport());
 
         // 전화번호에 포함되어있는 '-'을 제거합니다
         detailDTO.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
-        detailDTO.setHomePhone(dtl.getHomePhone());
+        detailDTO.setHomePhone(formatPhoneNumber(dtl.getHomePhone()));
         detailDTO.setOfficePhone(formatPhoneNumber(dtl.getOfficePhone()));
         detailDTO.setEmail(dtl.getEmail());
         detailDTO.setFax(formatPhoneNumber(dtl.getFax()));
@@ -258,6 +262,36 @@ public class PatientDTOService {
         return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
     }
 
+    // 단순조건으로 환자정보를 가져옵니다
+    public Page<PatientListDTO> searchSimple(String kw, Pageable pageable) {
+
+
+        //page형태로 patientM정보를 가져옵니다
+        Page<PatientM> patientMs = this.patientMService.patientMSimpleSearch(kw, pageable);
+
+        List<PatientListDTO> dtoList = new ArrayList<>();
+
+        for( PatientM m : patientMs.getContent()) {
+            PatientDTL dtl = this.patientDTLService.getPatientDTLByPatientId(m);
+
+            //환자리스트html 전용 DTO 객체를 선언한다
+            PatientListDTO dto = new PatientListDTO();
+
+            dto.setId(m.getId());
+            dto.setName(m.getLastName() + " " + m.getFirstName());
+            dto.setGender(m.getGender());
+            dto.setBirth(stringToLocalDate(m.getDayOfBirth()));
+            dto.setForeigner(m.getForeigner());
+            dto.setMobilePhone(formatPhoneNumber(dtl.getMobilePhone()));
+            dto.setGuardianTel(formatPhoneNumber(dtl.getGuardianTel()));
+            dto.setLastVisitDate(dtl.getLastVisitDate());
+            dto.setCreateDate(m.getCreateDate());
+
+            dtoList.add(dto);
+        }
+        //List<PatientListDTO> 의 데이터 타입을 Page<PatientListDTO> 형태로 변환합니다
+        return new PageImpl<>(dtoList, pageable, patientMs.getTotalElements());
+    }
 
     //Integer 형으로 되어있는 날짜를 LocalDate로 변환하는 메소드
     public LocalDate stringToLocalDate(Integer dayOfbirth){
@@ -348,6 +382,5 @@ public class PatientDTOService {
         }
         return formatted;
     }
-
 
 }

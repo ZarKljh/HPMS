@@ -1,7 +1,7 @@
 <html lang="kr" layout:decorate="~{patient/patient_layout}">
 <div layout:fragment="content" class="container">
 <h3 class="mt-2">신규 환자 등록</h3>
-<form th:action="@{/patient/create}" th:object="${patientForm}" method="post">
+<form th:action="@{/patient/create}" th:object="${patientForm}" method="post" name="patientCreateForm">
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
         <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
@@ -11,144 +11,194 @@
 
 
 
-    <div class="patient-info card my-3 p-3">
-        <div class="title-patient-name"><h4 class="title-h4-header border-bottom py-2">신규환자 등록을 위한 공간입니다</h4></div>
+    <div class="patient-info main-table card my-3 p-3">
+        <h4 class="border-bottom py-2">신규환자의 등록을 위하여 정보를 적는 페이지 입니다</h4>
 
         <!-- 인적사항 -->
-        <h5 class="mt-5">인적사항</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">생년월일</label>
-            <input type="date" class="form-control" th:field="*{birth}" required>
+        <h4 class="border-bottom py-2">인적사항</h4>
+        <div class="input-list">
+            <label>생년월일:</label>
+            <input type="date" th:field="*{birth}">
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">성별</label>
-            <select class="form-select" th:field="*{gender}" required>
+        <!--
+        <div class="input-list">
+            <label>성별:</label>
+            <select th:field="*{gender}" required>
                 <option value="">선택하세요</option>
                 <option value="M">남</option>
                 <option value="F">여</option>
                 <option value="X">그외</option>
             </select>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">내/외국인</label>
-            <select class="form-select" th:field="*{foreigner}">
+        -->
+
+        <div class="input-list">
+            <label>성별:</label>
+            <div class="select-wrapper" data-role="selectbox">
+              <button type="button" class="toggle_btn">
+                성별 선택
+                <span class="material-symbols-rounded">arrow_drop_down</span>
+              </button>
+              <ul class="hide selectbox_option">
+                <li><button type="button" class="option-btn" data-value="M">남</button></li>
+                <li><button type="button" class="option-btn" data-value="F">여</button></li>
+                <li><button type="button" class="option-btn" data-value="X">그외</button></li>
+              </ul>
+                <input type="hidden" name="gender" required/>
+            </div>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        </div>
+        <!--
+        <div class="input-list">
+            <label>내/외국인:</label>
+            <select th:field="*{foreigner}">
                 <option value="0">내국인</option>
                 <option value="1">외국인</option>
             </select>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >성명 성</label>
-            <input type="text" class="form-control" th:field="*{lastName}" placeholder="성" required>
-            <label class="label-reform text-end flex-shrink-0" >성명 이름</label>
-            <input type="text" class="form-control" th:field="*{firstName}" placeholder="이름" required>
+        -->
+        <div class="input-list">
+            <label>내/외국인:</label>
+            <div class="select-wrapper" data-role="selectbox">
+                <button type="button" class="toggle_btn">
+                    내/외국인 선택
+                    <span class="material-symbols-rounded">arrow_drop_down</span>
+                </button>
+                <ul class="hide selectbox_option">
+                    <li><button type="button" class="option-btn" data-value="0">내국인</button></li>
+                    <li><button type="button" class="option-btn" data-value="1">외국인</button></li>
+                </ul>
+                <input type="hidden" name="foreigner" required/>
+            </div>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >중간이름</label>
-            <input type="text" class="form-control" th:field="*{middleName}" placeholder="중간이름">
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">여권번호</label>
-            <input type="text" class="form-control" th:field="*{passport}">
-        </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">여권성명 성</label>
-            <input type="text" class="form-control" th:field="*{passLastName}" placeholder="성">
-            <label class="label-reform text-end flex-shrink-0">여권성명 이름</label>
-            <input type="text" class="form-control" th:field="*{passFirstName}" placeholder="이름">
 
+        <div class="input-list name_list">
+            <label class="name" >성명:</label>
+            <input type="text" th:field="*{lastName}" placeholder="성" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{firstName}" placeholder="이름" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+            <input type="text" th:field="*{middleName}" placeholder="중간이름">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0" >중간이름</label>
-            <input type="text" class="form-control" th:field="*{passMiddleName}" placeholder="중간이름">
+        <div class="input-list">
+            <label>여권번호:</label>
+            <input type="text" th:field="*{passport}">
+        </div>
+        <div class="input-list name_list">
+            <label class="name">여권성명:</label>
+            <input type="text" th:field="*{passLastName}" placeholder="성">
+            <input type="text" th:field="*{passFirstName}" placeholder="이름">
+            <input type="text" th:field="*{passMiddleName}" placeholder="중간이름">
         </div>
         <!-- 연락처 -->
-        <h5 class="mt-5">연락처</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">MOBILE</label>
-            <input type="text" class="form-control" th:field="*{mobilePhone}" required>
-            <label class="label-reform text-end flex-shrink-0">HOME</label>
-            <input type="text" class="form-control" th:field="*{homePhone}">
+        <h4 class="border-bottom py-2">연락처</h4>
+        <div class="input-list name_list">
+            <label>MOBILE:</label>
+            <input type="text" th:field="*{mobilePhone}" required>
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+        </div>
+        <div class="input-list name_list">
+            <label>HOME:</label>
+            <input type="text" th:field="*{homePhone}">
         </div>
 
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">OFFICE</label>
-            <input type="text" class="form-control" th:field="*{officePhone}">
-            <label class="label-reform text-end flex-shrink-0">FAX</label>
-            <input type="text" class="form-control" th:field="*{fax}">
+        <div class="input-list name_list">
+            <label>OFFICE:</label>
+            <input type="text" th:field="*{officePhone}">
+
+        </div>
+        <div class="input-list name_list">
+            <label>FAX:</label>
+            <input type="text" th:field="*{fax}">
         </div>
 
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">EMAIL</label>
-            <input type="email" class="form-control" th:field="*{email}">
+        <div class="input-list name_list">
+            <label>EMAIL:</label>
+            <input type="email" th:field="*{email}">
         </div>
 
         <!-- 보호자 -->
-        <h5 class="mt-5">보호자 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">성명</label>
-            <input type="text" class="form-control" th:field="*{guardianLastName}" placeholder="성">
-            <input type="text" class="form-control" th:field="*{guardianFirstName}" placeholder="이름">
+        <h4 class="border-bottom py-2">보호자 정보</h4>
+        <div class="input-list name_list">
+            <label>성명:</label>
+            <input type="text" th:field="*{guardianLastName}" placeholder="성">
+            <input type="text" th:field="*{guardianFirstName}" placeholder="이름">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">연락처</label>
-            <input type="text" class="form-control" th:field="*{guardianTel}">
+        <div class="input-list name_list">
+            <label>연락처:</label>
+            <input type="text" th:field="*{guardianTel}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">관계</label>
-            <input type="text" class="form-control" th:field="*{guardianRelation}">
+        <div class="input-list name_list">
+            <label>관계:</label>
+            <input type="text" th:field="*{guardianRelation}">
         </div>
 
         <!-- 주소 -->
-        <h5 class="mt-5">주소 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">우편번호</label>
-            <input type="text" class="form-control mb-2" th:field="*{homePcd}" placeholder="우편번호">
+        <h4 class="border-bottom py-2">실거주기준 주소정보</h4>
+        <div class="input-list name_list">
+            <label>우편번호:</label>
+            <input type="text" th:field="*{homePcd}" placeholder="우편번호">
+            <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">기본주소</label>
-            <input type="text" class="form-control mb-2" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소">
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+        <div class="input-list name_list">
+            <label>기본주소:</label>
+            <input type="text" id="currentAdd" th:field="*{homeDefAdd}" placeholder="기본주소" style="height:25px;">
+            <div style="display:flex; gap:8px;">
+                <span class="material-symbols-outlined align-text-top" style="color: red; font-size: 8px; line-height: 8px; margin-left: 2px;">emergency</span>
+                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('currentAdd'))">도로명 검색</button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">상세주소</label>
-            <input type="text" class="form-control" th:field="*{homeDetAdd}" placeholder="상세주소">
+        <div class="input-list name_list">
+            <label>상세주소:</label>
+            <input type="text" th:field="*{homeDetAdd}" placeholder="상세주소">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(우편번호)</label>
-            <input type="text" class="form-control mb-2" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
+        <h4 class="border-bottom py-2">등록기준 주소정보</h4>
+        <div class="input-list name_list">
+            <label>우편번호:</label>
+            <input type="text" th:field="*{regPcd}" placeholder="등록주소(우편번호)">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(기본주소)</label>
-            <input type="text" class="form-control mb-2" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)">
-            <button type="button" class="btn btn-primary flex-shrink-0" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+        <div class="input-list name_list">
+            <label>기본주소:</label>
+            <input type="text" id="regAdd" th:field="*{regDefAdd}" placeholder="등록주소(기본주소)" style="height:25px;"/>
+            <div style="margin-left:16px; align-items:center; flex-direction:row;">
+                <button type="button" class="button-link" onclick="openRoadPopup(document.getElementById('regAdd'))">도로명 검색</button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">등록주소(상세주소)</label>
-            <input type="text" class="form-control" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
+        <div class="input-list name_list">
+            <label>상세주소:</label>
+            <input type="text" th:field="*{regDetAdd}" placeholder="등록주소(상세주소)">
         </div>
 
 
         <!-- 기타 -->
-        <h5 class="mt-5">기타 정보</h5>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">직업</label>
-            <input type="text" class="form-control" th:field="*{occupation}">
+        <h4 class="border-bottom py-2">기타 정보</h4>
+        <div class="input-list name_list">
+            <label>직업:</label>
+            <input type="text" th:field="*{occupation}">
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">국적</label>
-            <input type="text" class="form-control" th:field="*{natn}" id="nationality">
-            <button type="button" class="btn btn-primary flex-shrink-0"  onclick="openCountryPopup()">국적검색</button>
+        <div class="input-list name_list">
+            <label>국적</label>
+            <input type="text" th:field="*{natn}" id="nationality" style="height:25px;">
+            <div style="margin-left:16px; align-items:center; flex-direction:row;">
+                <button type="button" class="button-link"  onclick="openCountryPopup()"> 국적검색 </button>
+            </div>
         </div>
-        <div class="d-flex align-items-start gap-2 mb-3">
-            <label class="label-reform text-end flex-shrink-0">특이사항</label>
-            <input type="text" class="form-control" th:field="*{note}"/>
+        <div class="input-list name_list">
+            <label>특이사항</label>
+            <input type="text" th:field="*{note}"/>
         </div>
 
     </div>
 
     <!-- 버튼 -->
     <div class="form-actions">
-        <button type="submit" class="button-link text-full">등록</button>
+        <a href="#" class="button-link text-full" onclick="return validateCreateForm(event)">등록</a>
+        <!--
+        <button type="submit" class="button-link text-full" onsubmit="return validateCreateForm(this);">등록</button>
+        -->
         <a th:href="@{/patient/list}" class="button-link text-full">취소</a>
     </div>
 

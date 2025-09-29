@@ -208,6 +208,7 @@ public class ReferencePersonnelDTOService {
 
         ReferencePersonnelDtl dtl = new ReferencePersonnelDtl();
         dtl.setCompanyName(dto.getCompanyName());
+        dtl.setCompanyName(dto.getPosition());
         dtl.setDeptName(dto.getDeptName());
         dtl.setOfficeAddress(dto.getOfficeAddress());
         dtl.setOfficeDetailAddress(dto.getOfficeDetailAddress());
