@@ -45,12 +45,12 @@ public class FileService {
         System.out.println("✅ Saved file: " + filePath.toAbsolutePath());
 
         // URL 리턴 (웹에서 접근할 경로)
-        return baseUrl + "/resource/static/img/nurse/" + fileName;
+        return baseUrl + "/img/hpms/nurse/" + fileName;
     }
 
     public void deleteExistingFile(String fileUrl) {
         try {
-            if (fileUrl != null && fileUrl.contains("/img/")) {
+            if (fileUrl != null && fileUrl.contains("/img/hpms/nurse/")) {
                 String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
                 Path filePath = Paths.get(uploadDirectory, fileName);
 
