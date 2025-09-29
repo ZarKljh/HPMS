@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Configuration
+@Configuration("nurseConfig")
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${file.upload.directory}")
@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         Path uploadPath = Paths.get(uploadDirectory).toAbsolutePath();
         System.out.println("📂 ResourceHandler maps to: " + uploadPath);
 
-        registry.addResourceHandler("/uploads/nurse/pictures/**")
+        registry.addResourceHandler("/resource/static/img/nurse/**")
                 .addResourceLocations("file:" + uploadPath.toString() + "/");
     }
 }

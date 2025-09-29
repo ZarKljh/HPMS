@@ -257,15 +257,19 @@
 
       <div class="input-list">
         <label>사진:</label>
-        <!-- 파일 업로드 -->
-        <input type="file" id="pictureFile" name="pictureFile" accept="image/*" />
         <!-- 미리보기 -->
-        <div class="mt-2">
+        <div class="mt-2 ps-1">
           <img id="picturePreview"
                th:src="${nurseDTO?.nurseInformation?.picture ?: '/images/default.png'}"
                alt="사진 미리보기"
                style="width: 150px; height: 150px; object-fit: cover; display:block;" />
+
+          <!-- 새 파일 업로드 (기존 파일은 자동으로 안 들어감) -->
+          <input type="file" id="pictureFileInput" accept="image/*" />
+          <!-- 기존 DB 값 유지 -->
+          <input type="hidden" id="pictureFile" name="pictureFile" accept="/img/hpms/nurse/*" />
         </div>
+
           <!-- 실제 DB 저장용 hidden 필드 -->
         <input type="hidden" th:field="*{nurseInformation.picture}" id="pictureUrl"/>
       </div>
@@ -281,5 +285,23 @@
       <a th:href="@{|/nurse/info/${nurseDTO.nurseMain.id}|}" class="button-link">취소</a>
     </div>
   </form>
+
 </div>
+<script>
+  const fileInput = document.getElementById('pictureFileInput');
+  const preview = document.getElementById('picturePreview');
+  const hiddenInput = document.getElementById('pictureUrl');
+
+  fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;      // 미리보기 이미지 변경
+        hiddenInput.value = e.target.result; // hidden 필드에 Base64 저장
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
 </html>
