@@ -528,28 +528,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // ----------- 자격증 -----------
     const showBtn = document.getElementById("showLicenseFormBtn");
-        const cancelBtn = document.getElementById("cancelLicenseFormBtn");
-        const form = document.getElementById("newLicenseForm");
-        const noMsg = document.getElementById("noLicenseMsg");
-        const btnBox = document.getElementById("addLicenseBtnBox");
+    const cancelBtn = document.getElementById("cancelLicenseFormBtn");
+    const form = document.getElementById("newLicenseForm");
+    const noMsg = document.getElementById("noLicenseMsg");
+    const btnBox = document.getElementById("addLicenseBtnBox");
 
-        // 자격증 추가 버튼 클릭 시
+    // 자격증 추가 버튼 클릭 시
+    if (showBtn) { // null 체크
         showBtn.addEventListener("click", function() {
+            console.log("자격증 추가 버튼 클릭됨");
             form.style.display = "block";     // 폼 보여주기
             btnBox.style.display = "none";    // 버튼 숨기기
             if (noMsg) noMsg.style.display = "none";  // 메시지 숨기기
             form.scrollIntoView({ behavior: "smooth", block: "start" }); // 스크롤 이동
         });
+    }
 
         // 취소 버튼 클릭 시
+    if (cancelBtn) {
         cancelBtn.addEventListener("click", function() {
+            console.log("취소 버튼 클릭됨");
             form.style.display = "none";      // 폼 숨기기
             btnBox.style.display = "block";   // 버튼 복원
             if (noMsg) noMsg.style.display = "block"; // 메시지 복원
             btnBox.scrollIntoView({ behavior: "smooth", block: "center" }); // 스크롤 이동
         });
+    }
 
-    // ----------- selectbox 처리 -----------
+    /* ----------- selectbox 처리 ----------- */
     document.querySelectorAll(".select-wrapper").forEach(wrapper => {
         const toggleBtn = wrapper.querySelector(".toggle_btn");
         const options = wrapper.querySelector(".selectbox_option");
@@ -570,6 +576,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         options.querySelectorAll(".option-btn").forEach(opt => {
             opt.addEventListener("click", () => {
+                e.stopPropagation();
+                console.log("토글 클릭됨!");
+
                 hiddenInput.value = opt.getAttribute("data-value");
                 toggleBtn.innerHTML = opt.textContent + '<span class="material-symbols-rounded">arrow_drop_down</span>';
                 options.classList.add("hide");
