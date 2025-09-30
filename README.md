@@ -28,7 +28,6 @@
       <td><img width="420" height="400" alt="image" src="https://github.com/user-attachments/assets/c2d7b8d2-fce3-45aa-8c36-5386aa84d097" /></td>
       <td><img width="420" height="400" alt="image" src="https://github.com/user-attachments/assets/01bffddd-5e48-420e-a7c4-3a6f12dfc682" /></td>
       <td><img width="420" height="400" alt="image" src="https://github.com/user-attachments/assets/72596b8d-3436-4731-a72f-d9af06cc9d19" /></td>
-     
     </tr>
     <tr>
       <td>@ZarKljh</td>
@@ -111,8 +110,7 @@
 </ul>
 <br>
 <h3>5.프로젝트구조</h3>
-![Image](https://github.com/user-attachments/assets/0c63e648-7c31-4dcc-b978-ea4f9fb932af)
-
+<img src="https://github.com/user-attachments/assets/0c63e648-7c31-4dcc-b978-ea4f9fb932af" style="height:50%; width:50%;"></img>
 
 <br>
 <h3>6.역할분담</h3>
