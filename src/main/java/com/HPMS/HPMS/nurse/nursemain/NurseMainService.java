@@ -1,8 +1,7 @@
 package com.HPMS.HPMS.nurse.nursemain;
 
 import com.HPMS.HPMS.nurse.NurseDataNotFoundException;
-import com.HPMS.HPMS.nurse.nurseinformation.NurseInformation;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,41 +59,32 @@ public class NurseMainService {
         if (kw == null || kw.isEmpty()) {
             return nurseMainRepository.findAll(pageable);
         } else {
-            return nurseMainRepository.findByFirstNameContaining(kw, pageable);
+            // 검색어 있으면 Specification 사용
+            Specification<NurseMain> spec = search(kw);
+            return nurseMainRepository.findAll(spec, pageable);
         }
     }
 
     private Specification<NurseMain> search(String kw) {
-        return (Root<NurseMain> m, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
-            query.distinct(true); // 중복 제거
-            Join<NurseMain, NurseInformation> i = m.join("nurseInformation", JoinType.LEFT);
+        return (root, query, cb) -> {
+            query.distinct(true);
 
-            // 공백 기준으로 키워드 분리
-            String[] keywords = kw.trim().split("\\s+");
-            List<Predicate> andPredicates = new ArrayList<>();
+            String pattern = "%" + kw + "%"; // 한글/영어 그대로 사용
+            ArrayList<Predicate> orList = new ArrayList<>();
 
-            for (String keyword : keywords) {
-                String pattern = "%" + keyword + "%";
+            orList.add(cb.like(cb.coalesce(root.get("firstName"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("lastName"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("dept"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("rank"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("sts"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("wt"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("writer"), ""), pattern));
+            orList.add(cb.like(cb.coalesce(root.get("modifier"), ""), pattern));
 
-                // 각 키워드가 걸릴 수 있는 컬럼들 (OR 조건)
-                Predicate orPredicate = cb.or(
-                        cb.like(m.get("firstName"), pattern),   // 이름
-                        cb.like(m.get("lastName"), pattern),    // 성
-                        cb.like(m.get("dept"), pattern),        // 부서
-                        cb.like(m.get("rank"), pattern),        // 직급
-                        cb.like(m.get("sts"), pattern),         // 상태
-                        cb.like(m.get("wt"), pattern),          // 근무형태
-                        cb.like(m.get("writer"), pattern),      // 작성자
-                        cb.like(i.get("tel"), pattern),         // 전화번호
-                        cb.like(m.get("modifier"), pattern)     // 수정자
-                );
-
-                // 여러 키워드는 AND로 묶음
-                andPredicates.add(orPredicate);
-            }
-            return cb.and(andPredicates.toArray(new Predicate[0]));
+            return cb.or(orList.toArray(new Predicate[0]));
         };
     }
+
 
     // 다중 삭제 메서드
     @Transactional

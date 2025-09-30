@@ -439,7 +439,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log('✓ Attaching validation to button:', btnText);
 
             btn.addEventListener('click', function(e) {
-                e.preventDefault();
                 e.stopPropagation();
 
                 console.log('=== Button Clicked ===');
