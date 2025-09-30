@@ -576,9 +576,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         options.querySelectorAll(".option-btn").forEach(opt => {
             opt.addEventListener("click", () => {
-                e.stopPropagation();
-                console.log("토글 클릭됨!");
-
                 hiddenInput.value = opt.getAttribute("data-value");
                 toggleBtn.innerHTML = opt.textContent + '<span class="material-symbols-rounded">arrow_drop_down</span>';
                 options.classList.add("hide");
