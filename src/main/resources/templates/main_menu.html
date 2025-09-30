@@ -19,91 +19,91 @@
         <h1 class="display-4 fw-bold mb-5">HMPS 메인페이지</h1>
 
         <!-- 메뉴 카드들 -->
-        <div class="row g-4 justify-content-center" style="flex-wrap: nowrap;">
+        <div class="row g-4 justify-content-center main_box">
             <!-- 사용자 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('SYSTEM','ADMIN')">
+            <div class="col-3 col-sm-3 col-md-4 col-lg-6" sec:authorize="hasAnyRole('SYSTEM','ADMIN')">
                 <a href="/user/list" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <i class="fas fa-users fa-3x text-primary"></i>
                             </div>
-                            <h4 class="card-title text-dark">사용자</h4>
-                            <p class="card-text text-muted">사용자 관리</p>
+                            <h4 class="card-title text-dark" style="text-wrap: nowrap;">사용자</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">사용자 관리</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- 의사 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('DOCTOR','SYSTEM','ADMIN')">
+            <div class="col-3 col-sm-3 col-md-4 col-lg-6" sec:authorize="hasAnyRole('DOCTOR','SYSTEM','ADMIN')">
                 <a href="/doctor" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <i class="fas fa-user-md fa-3x text-success"></i>
                             </div>
-                            <h4 class="card-title text-dark">의사</h4>
-                            <p class="card-text text-muted">의사 관리</p>
+                            <h4 class="fs-2 card-title text-dark" style="text-wrap: nowrap;">의사</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">의사 관리</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- 간호사 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('NURSE','SYSTEM','ADMIN')">
+            <div class="col-3 col-sm-3 col-md-4 col-lg-6" sec:authorize="hasAnyRole('NURSE','SYSTEM','ADMIN')">
                 <a href="/nurse" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <i class="fas fa-user-nurse fa-3x text-info"></i>
                             </div>
-                            <h4 class="card-title text-dark">간호사</h4>
-                            <p class="card-text text-muted">간호사 관리</p>
+                            <h4 class="card-title text-dark" style="text-wrap: nowrap;">간호사</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">간호사 관리</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- 환자 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="hasAnyRole('NURSE','DOCTOR','SYSTEM','ADMIN')">
+            <div class="col-3 col-sm-3 col-md-4 col-lg-6" sec:authorize="hasAnyRole('NURSE','DOCTOR','SYSTEM','ADMIN')">
                 <a href="/patient/list" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <i class="fas fa-procedures fa-3x text-warning"></i>
                             </div>
-                            <h4 class="card-title text-dark">환자</h4>
-                            <p class="card-text text-muted">환자 관리</p>
+                            <h4 class="card-title text-dark" style="text-wrap: nowrap;">환자</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">환자 관리</p>
                         </div>
                     </div>
                 </a>
             </div>
             <!-- 로그인 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="isAnonymous()">
+            <div class="col-3 col-md-4 col-lg-6" sec:authorize="isAnonymous()">
                 <a href="/hpms/login" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <span class="material-symbols-sharp" style="font-size: 50px;">login</span>
                             </div>
-                            <h4 class="card-title text-dark">로그인</h4>
-                            <p class="card-text text-muted">로그인</p>
+                            <h4 class="card-title text-dark" style="text-wrap: nowrap;">로그인</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">로그인</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- 회원가입 -->
-            <div class="col-md-6 col-lg-3" sec:authorize="isAnonymous()">
+            <div class="col-3 col-md-4 col-lg-6" sec:authorize="isAnonymous()">
                 <a href="/hpms/signup" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 hover-card">
                         <div class="card-body text-center p-4">
                             <div class="mb-3">
                                 <span class="material-symbols-sharp" style="font-size: 50px;">person_add</span>
                             </div>
-                            <h4 class="card-title text-dark">회원가입</h4>
-                            <p class="card-text text-muted">회원 가입</p>
+                            <h4 class="card-title text-dark" style="text-wrap: nowrap;">회원가입</h4>
+                            <p class="card-text text-muted" style="text-wrap: nowrap;">회원 가입</p>
                         </div>
                     </div>
                 </a>
@@ -112,9 +112,17 @@
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-
 </body>
+<style>
+.main_box {
+    flex-wrap: wrap;
+}
+@media (min-width: 768px) {
+    .main_box {
+        flex-wrap: nowrap;
+    }
+}
+</style>
 </html>
