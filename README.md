@@ -111,6 +111,9 @@
 </ul>
 <br>
 <h3>5.프로젝트구조</h3>
+![Image](https://github.com/user-attachments/assets/0c63e648-7c31-4dcc-b978-ea4f9fb932af)
+
+
 <br>
 <h3>6.역할분담</h3>
 
