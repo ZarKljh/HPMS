@@ -85,18 +85,9 @@
           )}">생성일</a>
           <span class="muted" th:text="${isAsc} ? '▲' : '▼'"></span>
         </th>
-        <th>작성자</th>
-        <th>부서</th>
-        <th>진료과</th>
-        <th>직급</th>
-        <th>성</th>
-        <th>중간이름</th>
-        <th>이름</th>
-        <th>성별</th>
-        <th>전화</th>
-        <th>입사일</th>
+        <th>수정자</th>
+        <th>성명</th>
         <th>상태</th>
-        <th>근무형태</th>
       </tr>
       </thead>
 
@@ -107,24 +98,11 @@
 
       <tr th:each="h : ${page != null ? page.content : {}}">
         <td class="nowrap">
-          <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
-             th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}">-</a>
+          <a th:text="${h.createDate != null ? #temporals.format(h.createDate, 'yyyy-MM-dd HH:mm:ss') : ''}">-</a>
         </td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.writer}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.department}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.medicalDepartment}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.rank}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.lastName}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.middleName}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.firstName}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.gender}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.telephone}">-</a></td>
-        <td class="nowrap">
-          <a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}"
-             th:text="${h.hireDate != null ? #temporals.format(h.hireDate, 'yyyy-MM-dd') : ''}">-</a>
-        </td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.status}">-</a></td>
-        <td><a class="name_hover" th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.workType}">-</a></td>
+        <td><a  th:text="${h.writer}">-</a></td>
+        <td><a th:href="@{/doctor/history/{hid}(hid=${h.id})}" th:text="${h.lastName +' '+(h.middleName != null ? h.middleName +' ' : ' ')+h.firstName}">-</a></td>
+        <td><a th:text="${h.status}">-</a></td>
       </tr>
       </tbody>
     </table>

@@ -5,21 +5,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block layout:fragment="script">
-    <!-- 필요시 페이지 전용 JS -->
+    <!-- 필요 시 페이지 전용 JS -->
 </th:block>
 
 <th:block layout:fragment="content">
     <div class="container detail-container page-narrow">
 
-        <!-- ✅ 호버 스타일: 버튼형 링크 밑줄 제거 -->
-
-        <!-- 상단 타이틀 + 이름 -->
+        <!-- 상단 타이틀 (이름) -->
         <h3 class="border-bottom mt-2"
             th:text="|${h.lastName} ${h.middleName != null ? h.middleName + ' ' : ''}${h.firstName}|">
             홍 길동
         </h3>
 
-        <!-- 메인 카드 -->
         <div class="main card my-3 p-3">
             <h4 class="border-bottom py-2">의사 히스토리 상세페이지 입니다.</h4>
 
@@ -33,25 +30,8 @@
                 </div>
             </div>
 
-            <!-- 기본 정보 1 -->
-            <div class="row align-items-start mb-2">
-                <label class="col-2 text-end">부서:</label>
-                <span class="col-4" th:text="${h.department ?: '정보 없음'}">DEPT</span>
-
-                <label class="col-2 text-end">진료과:</label>
-                <span class="col-4" th:text="${h.medicalDepartment ?: '정보 없음'}">MED</span>
-            </div>
-
-            <!-- 기본 정보 2 -->
-            <div class="row align-items-start mb-2">
-                <label class="col-2 text-end">직급:</label>
-                <span class="col-4" th:text="${h.rank ?: '정보 없음'}">RANK</span>
-
-                <label class="col-2 text-end">상태:</label>
-                <span class="col-4" th:text="${h.status ?: '정보 없음'}">ACT</span>
-            </div>
-
-            <!-- 기본 정보 3 -->
+            <!-- 섹션: 기본정보 -->
+            <h4 class="border-bottom py-2 mt-2">기본정보</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">성명:</label>
                 <span class="col-4"
@@ -60,8 +40,6 @@
                 <label class="col-2 text-end">성별:</label>
                 <span class="col-4" th:text="${h.gender ?: '정보 없음'}">M</span>
             </div>
-
-            <!-- 기본 정보 4 -->
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">생년월일:</label>
                 <span class="col-4"
@@ -71,7 +49,25 @@
                 <span class="col-4" th:text="${h.telephone ?: '정보 없음'}">010-0000-0000</span>
             </div>
 
-            <!-- 고용/상태 -->
+            <!-- 섹션: 조직정보 -->
+            <h4 class="border-bottom py-2 mt-3">조직정보</h4>
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">부서:</label>
+                <span class="col-4" th:text="${h.department ?: '정보 없음'}">DEPT</span>
+
+                <label class="col-2 text-end">진료과:</label>
+                <span class="col-4" th:text="${h.medicalDepartment ?: '정보 없음'}">MED</span>
+            </div>
+            <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">직급:</label>
+                <span class="col-4" th:text="${h.rank ?: '정보 없음'}">RANK</span>
+
+                <label class="col-2 text-end">상태:</label>
+                <span class="col-4" th:text="${h.status ?: '정보 없음'}">ACT</span>
+            </div>
+
+            <!-- 섹션: 고용상태 -->
+            <h4 class="border-bottom py-2 mt-3">고용상태</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">입사일:</label>
                 <span class="col-4"
@@ -81,7 +77,8 @@
                 <span class="col-4" th:text="${h.workType ?: '정보 없음'}">FULL</span>
             </div>
 
-            <!-- 비상 연락 -->
+            <!-- 섹션: 비상연락 -->
+            <h4 class="border-bottom py-2 mt-3">비상연락</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">비상연락처:</label>
                 <span class="col-4" th:text="${h.emergencyContact ?: '정보 없음'}"></span>
@@ -89,20 +86,18 @@
                 <label class="col-2 text-end">관계:</label>
                 <span class="col-4" th:text="${h.emergencyRelation ?: '정보 없음'}"></span>
             </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">성명(비상):</label>
                 <span class="col-10"
-                      th:text="|${h.emergencyLastName ?: ''} ${h.emergencyMiddleName != null ? h.emergencyMiddleName + ' ' : ''}${h.emergencyFirstName ?: ''}|">
-                </span>
+                      th:text="|${h.emergencyLastName ?: ''} ${h.emergencyMiddleName != null ? h.emergencyMiddleName + ' ' : ''}${h.emergencyFirstName ?: ''}|"></span>
             </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">비고(비상):</label>
                 <span class="col-10" th:text="${h.emergencyNote ?: '정보 없음'}"></span>
             </div>
 
-            <!-- 전문/자격 -->
+            <!-- 섹션: 자격정보 -->
+            <h4 class="border-bottom py-2 mt-3">자격정보</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">면허번호:</label>
                 <span class="col-4" th:text="${h.registrationNumber ?: '정보 없음'}"></span>
@@ -110,7 +105,6 @@
                 <label class="col-2 text-end">학력:</label>
                 <span class="col-4" th:text="${h.educationalBackground ?: '정보 없음'}"></span>
             </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">전공과:</label>
                 <span class="col-4" th:text="${h.major ?: '정보 없음'}"></span>
@@ -118,7 +112,6 @@
                 <label class="col-2 text-end">외국어:</label>
                 <span class="col-4" th:text="${h.foreignLanguage ?: '정보 없음'}"></span>
             </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">기타 자격증:</label>
                 <span class="col-4" th:text="${h.license ?: '정보 없음'}"></span>
@@ -127,7 +120,8 @@
                 <span class="col-4" th:text="${h.workDependsOnExperience ?: '정보 없음'}"></span>
             </div>
 
-            <!-- 수상/학회 -->
+            <!-- 섹션: 경력/학회 -->
+            <h4 class="border-bottom py-2 mt-3">경력 / 학회</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">수상경력:</label>
                 <span class="col-4" th:text="${h.awards ?: '정보 없음'}"></span>
@@ -135,46 +129,38 @@
                 <label class="col-2 text-end">학회활동:</label>
                 <span class="col-4" th:text="${h.societyActivity ?: '정보 없음'}"></span>
             </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">학회인증:</label>
                 <span class="col-4" th:text="${h.certificateOfSociety ?: '정보 없음'}"></span>
-
-                <label class="col-2 text-end">병역:</label>
-                <span class="col-4" th:text="${h.militaryService ?: '정보 없음'}"></span>
             </div>
 
-            <!-- 기타 인적 -->
+            <!-- 섹션: 기타 인적사항 -->
+            <h4 class="border-bottom py-2 mt-3">기타 인적사항</h4>
             <div class="row align-items-start mb-2">
+                <label class="col-2 text-end">병역:</label>
+                <span class="col-4" th:text="${h.militaryService ?: '정보 없음'}"></span>
+
                 <label class="col-2 text-end">국적:</label>
                 <span class="col-4" th:text="${h.nationality ?: '정보 없음'}"></span>
-
+            </div>
+            <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">장애여부:</label>
                 <span class="col-4" th:text="${h.disabilityStatus ?: '정보 없음'}"></span>
             </div>
 
-            <!-- 메타(히스토리) -->
+            <!-- 섹션: 메타 정보 -->
+            <h4 class="border-bottom py-2 mt-3">메타 정보</h4>
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">히스토리 ID:</label>
                 <span class="col-4" th:text="${h.id}">1</span>
 
-                <label class="col-2 text-end">히스토리 생성일:</label>
+                <label class="col-2 text-end">수정일:</label>
                 <span class="col-4"
                       th:text="${h.createDate != null ? #temporals.format(h.createDate,'yyyy-MM-dd HH:mm:ss') : '정보 없음'}"></span>
             </div>
-
-            <div class="row align-items-start mb-2">
-                <label class="col-2 text-end">작성자:</label>
-                <span class="col-4" th:text="${h.writer ?: '정보 없음'}"></span>
-
-                <label class="col-2 text-end">수정일시:</label>
-                <span class="col-4"
-                      th:text="${h.modifyDate != null ? #temporals.format(h.modifyDate,'yyyy-MM-dd HH:mm:ss') : '정보 없음'}"></span>
-            </div>
-
             <div class="row align-items-start mb-2">
                 <label class="col-2 text-end">수정자:</label>
-                <span class="col-4" th:text="${h.modifier ?: '정보 없음'}"></span>
+                <span class="col-4" th:text="${h.writer ?: '정보 없음'}"></span>
 
                 <label class="col-2 text-end">비고:</label>
                 <span class="col-4" th:text="${h.note ?: '정보 없음'}"></span>

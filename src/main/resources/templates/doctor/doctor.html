@@ -54,7 +54,8 @@
                 <div class="search_box row my-3">
                     <div>
                         <div class="input-group">
-                            <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw"/>
+                            <span class="input-text">이름/부서/직급/직책/성별/상태/입사일/근무형태/진료과/생년월일/전화번호 검색가능</span>
+                            <input type="text" id="search_kw" class="form-control" th:value="${kw}" name="kw" placeholder="검색어를 입력하세요"/>
                             <button class="search_btn" type="submit" id="btn_search">검색</button>
                         </div>
                     </div>
@@ -97,9 +98,9 @@
 
                 <th>부서</th>
                 <th>진료과</th>
+                <th>성명</th>
                 <th>직급</th>
                 <th>직책</th>
-                <th>성명</th>
                 <th>성별</th>
                 <th>생년월일</th>
                 <th>전화</th>
@@ -114,7 +115,7 @@
 
                 <!-- 체크박스 -->
                 <td class="chang-checkbox-column">
-                    <input type="checkbox" class="doctor-checkbox" name="checkedIds" th:value="${row.id}"/>
+                    <input type="checkbox" class="doctor-checkbox" name="ids" th:value="${row.id}"/>
                 </td>
 
                 <!-- 인덱스 번호 (ASC/DESC 계산) -->
@@ -129,9 +130,6 @@
 
                 <td th:text="${row.department}">부서</td>
                 <td th:text="${row.medicalDepartment}">진료과</td>
-                <td th:text="${row.rank}">직급</td>
-                <td th:text="${row.position}">직책</td>
-
                 <!-- 성명만 상세로 이동 + 호버 밑줄 유지 -->
                 <td>
                     <a th:href="@{/doctor/dtl/detail(id=${row.id})}"
@@ -140,6 +138,9 @@
                         성명
                     </a>
                 </td>
+                <td th:text="${row.rank}">직급</td>
+                <td th:text="${row.position}">직책</td>
+
 
                 <td class="mobile_hidden"
                     th:text="${row.gender == 'M' ? '남' : (row.gender == 'F' ? '여' : row.gender)}">성별</td>

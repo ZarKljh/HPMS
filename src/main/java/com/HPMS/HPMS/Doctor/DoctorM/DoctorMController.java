@@ -29,7 +29,7 @@ public class DoctorMController {
 
     @GetMapping("/doctor")
    // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_SYSTEM','ROLE_DOCTOR','ROLE_NURSE')")
-    public String listPage(@RequestParam(required = false) String q,
+    public String listPage(@RequestParam(value = "kw", required = false) String q,
                            @RequestParam(defaultValue = "0") Integer page,
                            @RequestParam(defaultValue = "10") Integer size,
                            Model model) {
