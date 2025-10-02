@@ -4,63 +4,63 @@
     <div class="card my-3 p-3 mt-2 chang-content-div" >
         <h4 class="border-bottom py-2">비상주 지원인력 등록결과 입니다.</h4>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">등록일시:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">등록일시:</label>
             <span th:if="${personnel.createDate != null}"
                   th:text="${#temporals.format(personnel.createDate, 'yyyy-MM-dd HH:mm')}"></span>
             <span th:if="${personnel.createDate == null}">날짜 정보 없음</span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">등록자:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">등록자:</label>
             <span th:text="${personnel.creator ?: '등록자 정보 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">국적:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">국적:</label>
             <span th:text="${personnel.nationality ?: '국적 정보 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width:150px;">성명:</label>
+            <label class="label-reform flex-shrink-0" style="width:150px;">성명:</label>
     <!--        <span th:text="${personnel.middleName != null && personnel.middleName != ''
                     ? personnel.lastName + ' ' + personnel.middleName + ' ' + personnel.firstName
                     : personnel.lastName + ' ' + personnel.firstName}"></span>-->
             <span th:text="${(personnel.lastName ?: '') + ' ' + (personnel.middleName ?: '') + ' ' + (personnel.firstName ?: '')}"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">이메일 주소:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">이메일 주소:</label>
             <span th:text="${personnel.email ?: '이메일 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">휴대전화번호:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">휴대전화번호:</label>
             <span th:if="${personnel.cellPhone != null}" th:text="${personnel.cellPhone}"></span>
             <span th:if="${personnel.cellPhone == null}">휴대전화 없음</span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">회사명:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">회사명:</label>
             <span th:text="${personnel.companyName ?: '회사 정보 없음'}" style="width:300px;"></span>
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">홈페이지:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">홈페이지:</label>
             <span th:text="${personnel.companyWebsiteUrl ?: '홈페이지 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">직책/직급:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">직책/직급:</label>
             <span th:text="${personnel.position ?: '직책 정보 없음'}" style="width:300px;"></span>
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">부서명:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">부서명:</label>
             <span th:text="${personnel.deptName ?: '부서 정보 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">유선전화번호:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">유선전화번호:</label>
             <span th:text="${personnel.officeTel ?: '유선전화 없음'}" style="width:300px;"></span>
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">팩스번호:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">팩스번호:</label>
             <span th:text="${personnel.officeFax ?: '팩스 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">근무지 주소:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">근무지 주소:</label>
             <span th:text="${personnel.officeAddress ?: '주소 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">상세주소:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">상세주소:</label>
             <span th:text="${personnel.officeDetailAddress ?: '상세주소 없음'}" style="width:300px;"></span>
         </div>
         <div class="d-flex align-items-start gap-2 mb-3 detail_content">
-            <label class="label-reform text-end flex-shrink-0" style="width: 150px;">비고:</label>
+            <label class="label-reform flex-shrink-0" style="width: 150px;">비고:</label>
             <span th:text="${personnel.note ?: '비고 없음'}" style="width:70%;"></span>
         </div>
     </div>
