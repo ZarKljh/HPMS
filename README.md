@@ -19,8 +19,8 @@
   <thead>
     <th>이승운</th>
     <th>이창훈</th>
-    <th>서수한</th>
     <th>서지선</th>
+    <th>서수한</th>
   </thead>
   <tbody>
     <tr>
@@ -276,3 +276,4 @@
 
 
 <img width="1024" height="1024" alt="hpms logo" src="https://github.com/user-attachments/assets/c1e15b60-4bef-4ff0-b44c-542a0136eb2e" />
+
